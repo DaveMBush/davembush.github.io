@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Angular Ionic and Angular CLI | Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="As you might have noticed from last week’s post, I’ve shifted my focus from pure Angular to learning Angular Ionic.  And while last week’s post focused more on just getting Ionic setup on a Windows en">
+<meta name="keywords" content="angular,angular-cli,ionic">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Angular Ionic and Angular CLI">
+<meta property="og:url" content="http://davembush.github.com/angular-ionic-and-angular-cli/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:description" content="As you might have noticed from last week’s post, I’ve shifted my focus from pure Angular to learning Angular Ionic.  And while last week’s post focused more on just getting Ionic setup on a Windows en">
+<meta property="og:locale" content="English">
+<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/11/2017-11-14.jpg">
+<meta property="og:updated_time" content="2018-06-23T18:40:38.176Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Angular Ionic and Angular CLI">
+<meta name="twitter:description" content="As you might have noticed from last week’s post, I’ve shifted my focus from pure Angular to learning Angular Ionic.  And while last week’s post focused more on just getting Ionic setup on a Windows en">
+<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/11/2017-11-14.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-angular-ionic-angular-cli" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      Angular Ionic and Angular CLI
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/angular-ionic-and-angular-cli/" class="article-date"><time datetime="2017-11-14T11:30:12.000Z" itemprop="datePublished">2017-11-14</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Angular-2/">Angular 2</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>As you might have noticed from last week’s post, I’ve shifted my focus from pure Angular to learning Angular Ionic.  And while last week’s post focused more on just <a href="/angular-ionic-putty-ssh-authorized_keys-format">getting Ionic setup on a Windows environment</a>, this post will focus more on integrating Ionic and Angular CLI to work together. If you are familiar with Ionic, you should already know that it provides its own CLI that allows you to scaffold out a new application using a basic template.  This CLI is also used to help register the project with the Ionic Dashboard and scaffold out a limited number of file types if you use Ionic 3.  However, there are several problems I have with using the Ionic CLI.  First, and probably most important to me, is there is no test scaffolding!  Second, it neither follows the standard naming convention for files nor does it comply with the Angular Style Guide when it comes to directory structure. My first attempt at correcting the problem was to try to add Ionic to an existing Angular CLI project.  I almost had that working, but I got stuck trying to get the SCSS implementation working.  I finally gave up once I realized that Ionic seems to load files on demand, including SCSS files and templates.  I might come back to this once I’ve gained more experience with Ionic and have a better idea of how it works under the hood. So, my second thought was to just add the Angular CLI to an existing Ionic CLI project.  It turns out this was much easier to get working.  This allows me to use the standard <code>ng</code> commands to scaffold out my components, services, interfaces, etc… and because I’m using the Angular CLI scaffolding, the tests also get scaffold out for me. [caption id=”attachment_4505” align=”aligncenter” width=”800”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/11/2017-11-14.jpg" alt="Angular Ionic and Angular CLI" title="Angular Ionic and Angular CLI"> Photo credit: <a href="//www.flickr.com/photos/internetarchivebookimages/14762635481/">Internet Archive Book Images</a> via <a href="//visualhunt.com/re/09daa4">VisualHunt.com</a> / <a href="//flickr.com/commons/usage/"> No known copyright restrictions</a>[/caption]  For the purposes of this post, I’m going to assume you’ve already created a project using the Ionic CLI.  What follows are the steps you need to take to add in the Angular CLI.</p>
+<h2 id="Add-Angular-CLI"><a href="#Add-Angular-CLI" class="headerlink" title="Add Angular CLI"></a>Add Angular CLI</h2><p>All of the additions to the package.json file are in devDependencies.  The version numbers I’ve included are for the version at the time of this writing. You’ll want to modify for newer versions as they are released. First, of course, add the angular cli <code>&quot;@angular/cli&quot;: &quot;1.4.9&quot;</code> This will give you the ability to use the <code>ng</code> commands to scaffold out files.  To allow the tests to run, you’ll also want to add the following:</p>
+<p><code>&quot;@types/jasmine&quot;: &quot;~2.5.53&quot;,</code></p>
+<p><code>&quot;@types/jasminewd2&quot;: &quot;~2.0.2&quot;,</code></p>
+<p><code>&quot;@types/node&quot;: &quot;~6.0.60&quot;,</code></p>
+<p><code>&quot;jasmine-core&quot;: &quot;~2.6.2&quot;,</code></p>
+<p><code>&quot;jasmine-spec-reporter&quot;: &quot;~4.1.0&quot;,</code></p>
+<p><code>&quot;karma&quot;: &quot;~1.7.0&quot;,</code></p>
+<p><code>&quot;karma-chrome-launcher&quot;: &quot;~2.1.1&quot;,</code></p>
+<p><code>&quot;karma-cli&quot;: &quot;~1.0.1&quot;,</code></p>
+<p><code>&quot;karma-coverage-istanbul-reporter&quot;: &quot;^1.2.1&quot;,</code></p>
+<p><code>&quot;karma-jasmine&quot;: &quot;~1.1.0&quot;,</code></p>
+<p><code>&quot;karma-jasmine-html-reporter&quot;: &quot;^0.2.2&quot;,</code></p>
+<p><code>&quot;protractor&quot;: &quot;~5.1.2&quot;,</code></p>
+<p><code>&quot;ts-node&quot;: &quot;~3.2.0&quot;,</code></p>
+<p>I also use tslint quite extensively in my projects, so I also add in the following:</p>
+<p><code>&quot;codelyzer&quot;: &quot;~3.2.0&quot;,</code></p>
+<p><code>&quot;tslint&quot;: &quot;~5.7.0&quot;,</code></p>
+<p><code>&quot;tslint-immutable&quot;: &quot;^4.4.0&quot;,</code></p>
+<h2 id="angular-cli-json"><a href="#angular-cli-json" class="headerlink" title=".angular-cli.json"></a>.angular-cli.json</h2><p>The main file that makes the Angular CLI recognize the project as an Angular CLI project is the <code>.angular-cli.json</code> file.  The easiest thing to do is to take an existing file from another project and copy it into your Ionic project.  This file belongs in the root of your project. Once you’ve done that, there is one small change you need to make.  The <code>main.ts</code> file that is the entry point of the application lives under the <code>app</code> directory in an Ionic project rather than directly under <code>src</code> like it does with an Angular CLI project.  It would be tempting to change the location of the file, but the Ionic build process is looking for it under the <code>app</code> directory.  An easier fix is to change the location in our <code>.angular-cli.json</code> file so that our tests can find it.  It is the only place that needs to know of the new location. Change .angular-cli.json so main points to the right location:</p>
+<p><code>{</code></p>
+<p><code>&quot;$schema&quot;: &quot;./node_modules/@angular/cli/lib/config/schema.json&quot;,</code></p>
+<p><code>&quot;project&quot;: {</code></p>
+<p><code>&quot;name&quot;: &quot;ionic-with-angular-cli&quot;</code></p>
+<p><code>},</code></p>
+<p><code>&quot;apps&quot;: [</code></p>
+<p><code>{</code></p>
+<p><code>&quot;root&quot;: &quot;src&quot;,</code></p>
+<p><code>&quot;outDir&quot;: &quot;dist&quot;,</code></p>
+<p><code>&quot;assets&quot;: [</code></p>
+<p><code>&quot;assets&quot;,</code></p>
+<p><code>&quot;favicon.ico&quot;</code></p>
+<p><code>],</code></p>
+<p><code>&quot;index&quot;: &quot;index.html&quot;,</code></p>
+<p><code>**&quot;main&quot;: &quot;app/main.ts&quot;,**</code></p>
+<p><code>&quot;polyfills&quot;: &quot;polyfills.ts&quot;,</code></p>
+<p><code>&quot;test&quot;: &quot;test.ts&quot;,</code> <code>...</code></p>
+<p><code>}</code></p>
+<h2 id="karma-conf-js"><a href="#karma-conf-js" class="headerlink" title="karma.conf.js"></a>karma.conf.js</h2><p>To run your tests, you’ll need a <code>karma.conf.js</code> file in your root directory.  Again, the easiest thing to do is to copy this file over from a project you created with the Angular CLI.</p>
+<h2 id="tsconfig-json"><a href="#tsconfig-json" class="headerlink" title="tsconfig.json"></a>tsconfig.json</h2><p>You should already have a <code>tsconfig.json</code> file in your project root directory.  If you open it, you’ll see it has an exclude section that is excluding <code>node_modules</code>.  You’ll need to tell it to exclude <code>test.ts</code> and <code>*.spec.ts</code> files so it doesn’t pick up the test files during a normal compile cycle.</p>
+<p><code>&quot;exclude&quot;: [</code></p>
+<p><code>&quot;node_modules&quot;,</code></p>
+<p><code>&quot;test.ts&quot;,</code></p>
+<p><code>&quot;**/*.spec.ts&quot;</code></p>
+<p><code>],</code></p>
+<h2 id="polyfills-ts"><a href="#polyfills-ts" class="headerlink" title="polyfills.ts"></a>polyfills.ts</h2><p>The tests use the <code>polyfills.ts</code> file, so you’ll need to add one that was originally created using the Angular CLI.  This belongs in your <code>src</code> directory.</p>
+<h2 id="test-ts"><a href="#test-ts" class="headerlink" title="test.ts"></a>test.ts</h2><p>Copy a <code>test.ts</code> file into your <code>src</code> directory from a project that you created with the <code>Angular CLI</code>.  If you don’t put this file in, you won’t be able to run any tests.</p>
+<h2 id="tsconfig-spec-json"><a href="#tsconfig-spec-json" class="headerlink" title="tsconfig.spec.json"></a>tsconfig.spec.json</h2><p>The tests use <code>tsconfig.spec.json</code> located in the <code>src</code> directory.  The problem is, a standard <code>tsconfig.spec.json</code> file inherits from the <code>tsconfig.json</code> file we just modified above which doesn’t look at all like the <code>tsconfig.json</code> file in an Angular CLI project.  I found the easiest thing to do was to create a new copy of <code>tsconfig.spec.json</code> that is a merge of the two files in an Angular CLI project.  This worked at the time of this writing, if you run into trouble, you may need to merge the two files you started with on your own.  My result looks like this:</p>
+<p><code>{</code></p>
+<p><code>&quot;compileOnSave&quot;: false,</code></p>
+<p><code>&quot;compilerOptions&quot;: {</code></p>
+<p><code>&quot;outDir&quot;: &quot;../out-tsc/spec&quot;,</code></p>
+<p><code>&quot;sourceMap&quot;: true,</code></p>
+<p><code>&quot;declaration&quot;: false,</code></p>
+<p><code>&quot;moduleResolution&quot;: &quot;node&quot;,</code></p>
+<p><code>&quot;emitDecoratorMetadata&quot;: true,</code></p>
+<p><code>&quot;experimentalDecorators&quot;: true,</code></p>
+<p><code>&quot;target&quot;: &quot;es5&quot;,</code></p>
+<p><code>&quot;typeRoots&quot;: [</code></p>
+<p><code>&quot;node_modules/@types&quot;</code></p>
+<p><code>],</code></p>
+<p><code>&quot;lib&quot;: [</code></p>
+<p><code>&quot;es2017&quot;,</code></p>
+<p><code>&quot;dom&quot;</code></p>
+<p><code>],</code></p>
+<p><code>&quot;baseUrl&quot;: &quot;./&quot;,</code></p>
+<p><code>&quot;module&quot;: &quot;commonjs&quot;,</code></p>
+<p><code>&quot;types&quot;: [</code></p>
+<p><code>&quot;jasmine&quot;,</code></p>
+<p><code>&quot;node&quot;</code></p>
+<p><code>]</code></p>
+<p><code>},</code></p>
+<p><code>&quot;files&quot;: [</code></p>
+<p><code>&quot;test.ts&quot;</code></p>
+<p><code>],</code></p>
+<p><code>&quot;include&quot;: [</code></p>
+<p><code>&quot;**/*.spec.ts&quot;,</code></p>
+<p><code>&quot;**/*.d.ts&quot;</code></p>
+<p><code>]</code></p>
+<p><code>}</code></p>
+<h2 id="typings-d-ts"><a href="#typings-d-ts" class="headerlink" title="typings.d.ts"></a>typings.d.ts</h2><p>I’m not sure this file was needed, but it was another file I found in an Angular CLI project that wasn’t in my Ionic CLI project, so I added it.  It goes in your <code>src</code> directory and is just a copy of the file that is in your Angular CLI project.</p>
+<h2 id="pages"><a href="#pages" class="headerlink" title="pages"></a>pages</h2><p>You’ll notice that your <code>pages</code> directory is at the same level as your <code>src</code> directory which doesn’t comply with the Angular CLI.  I moved mine so that it is under the <code>src</code> directory just to keep things consistent.  You’ll need to fix up imports once you move it of course.</p>
+<h2 id="Regenerate-Pages"><a href="#Regenerate-Pages" class="headerlink" title="Regenerate Pages"></a>Regenerate Pages</h2><p>Because the pages that got generated don’t conform to the style guide and don’t have any tests, I just regenerated mine and copied the relevant code into the newly generated files.</p>
+<h2 id="Tests"><a href="#Tests" class="headerlink" title="Tests"></a>Tests</h2><p>At this point, you should have a project that looks a lot more like an Angular CLI project.  You’ll still use the Ionic command to do your regular build and development cycle and the ng commands for testing and generating new files.  Running tests works the same as you should already be used to from using Angular.  The one thing you will notice is that you’ll see a warning in your test: <code>Critical dependency: the request of a dependency is an expression</code> This is a known “error” that neither the Angular CLI group or the Ionic group seem interested in addressing. At this point, I haven’t tried any E2E tests using this setup so I don’t know if there are any additional tweaks that need to be made. You can find the code for this at this branch of a project I’m working on. <a href="//github.com/DaveMBush/ionic-crud/tree/Add-Angular-CLI">https://github.com/DaveMBush/ionic-crud/tree/Add-Angular-CLI</a></p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/angular-ionic-and-angular-cli/" data-id="cjiw7ubwf002ddghijq9sompx" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular-cli/">angular-cli</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ionic/">ionic</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/angular-ionic-putty-ssh-and-authorized-keys-format/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">Angular IONIC, Putty SSH, and authorized_keys Format</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/replacing-an-element-in-an-array-with-rxjs/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">Replacing an Element in an Array with RxJS</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/vmware-s-clarity-design-system-for-angular/">VMWare&#39;s Clarity Design System for Angular</a>
+        </li>
+      
+        <li>
+          <a href="/the-full-stack-developer-myth/">The Full Stack Developer Myth</a>
+        </li>
+      
+        <li>
+          <a href="/how-you-do-anything/">How you do Anything ...</a>
+        </li>
+      
+        <li>
+          <a href="/property-based-testing-in-angular-with-jsverify/">Property Based Testing in Angular with jsVerify</a>
+        </li>
+      
+        <li>
+          <a href="/property-based-testing-revealed-a-better-way-to-test/">Property Based Testing Revealed - A Better Way to Test</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

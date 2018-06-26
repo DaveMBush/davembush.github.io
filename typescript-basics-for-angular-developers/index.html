@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>TypeScript Basics for Angular Developers | Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="For the most part, TypeScript feels a lot like JavaScript.  Most people pick it up without having any formal training.   But, here’s the deal.  “Just because you can, doesn’t mean you should.” The thi">
+<meta name="keywords" content="angular 2,typescript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TypeScript Basics for Angular Developers">
+<meta property="og:url" content="http://davembush.github.com/typescript-basics-for-angular-developers/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:description" content="For the most part, TypeScript feels a lot like JavaScript.  Most people pick it up without having any formal training.   But, here’s the deal.  “Just because you can, doesn’t mean you should.” The thi">
+<meta property="og:locale" content="English">
+<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/07/TypescriptBasicsForAngular.jpg">
+<meta property="og:updated_time" content="2018-06-23T18:40:38.155Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TypeScript Basics for Angular Developers">
+<meta name="twitter:description" content="For the most part, TypeScript feels a lot like JavaScript.  Most people pick it up without having any formal training.   But, here’s the deal.  “Just because you can, doesn’t mean you should.” The thi">
+<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/07/TypescriptBasicsForAngular.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-typescript-basics-angular-developers" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      TypeScript Basics for Angular Developers
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/typescript-basics-for-angular-developers/" class="article-date"><time datetime="2017-08-01T10:30:30.000Z" itemprop="datePublished">2017-08-01</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Angular-2/">Angular 2</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>For the most part, TypeScript feels a lot like JavaScript.  Most people pick it up without having any formal training.   But, here’s the deal.  “Just because you can, doesn’t mean you should.” The thing that makes me most nervous about Angular is that it is structured so that you can write some really clean code.  But, you don’t have to.  Which mean most won’t. In fact, recruiters continue to contact me about Angular jobs with rates that make it obvious that hiring an Angular programmer is the same as hiring an HTML “programmer” 10 years ago.  Sorry gang, JavaScript has grown up and so has Angular. So, here are a few things you need to know about TypeScript that will make you a better Angular developer. [caption id=”attachment_4407” align=”aligncenter” width=”800”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/07/TypescriptBasicsForAngular.jpg" alt="TypeScript Basics for Angular Developers" title="TypeScript Basics for Angular Developers"> Photo credit: <a href="//www.flickr.com/photos/mujitra/8059355303/">MIKI Yoshihito. (#mikiyoshihito)</a> via <a href="//visualhunt.com/re/b6d829">VisualHunt.com</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a>[/caption] </p>
+<h2 id="Variable-Declaration"><a href="#Variable-Declaration" class="headerlink" title="Variable Declaration"></a>Variable Declaration</h2><p>There are three ways of declaring a variable in TypeScript.  You can either use the JavaScript ‘var’ keyword like you’ve always done or you can use the ‘let’ keyword or the ‘const’ keyword. But first, what problem are we trying to solve? In the old JavaScript world, we would declare variables in a block of code, but where-ever we declared that variable, the actual declaration was “hoisted” to the top of the function.  In fact, there never was anything like block scope.  Just function scope. This caused one particular problem that was rather common.  If I created a for/next loop that called an asynchronous function, the asynchronous function would use the last value of the for/next incrementer. The primary benefit of using <code>let</code> or <code>const</code> is that they effectively provide for block level scope so that we can write code like I described above and it will behave in the way we would expect from other languages. Unless you explicitly want to avoid block level scope, you should never use the <code>var</code> keyword to declare a variable in TypeScript.  This falls under the “just because you can, doesn’t mean you should” rule. In my experience, you will use <code>const</code> more often than <code>let</code>.  Here’s the difference. If you are declaring a variable that will only ever be assigned one value, you declare it using <code>const</code>.  What isn’t obvious is that changing the contents of an object does not change the value of an object.  So, doing something like this:</p>
+<p><strong>let</strong> myArray = [];  myArray.push({});</p>
+<p>Would be more valid as:</p>
+<p><strong>const</strong> myArray = [];  myArray.push({});</p>
+<p>Because pushing something into the array doesn’t change the value, or the pointer, of myArray.  It only changes the content of the array.</p>
+<h2 id="Types"><a href="#Types" class="headerlink" title="Types"></a>Types</h2><p>The main thing that makes TypeScript what it is, is that it allows us to type-check our code.  You don’t have to.  In fact, there are times when this might get in your way.  But, you have a choice. By default, TypeScript uses inference when it can to figure out the type of a variable.  This is important because I can bet one of the first errors you are going to see is a type mismatch error. You might try to do something like this:</p>
+<p><strong>let</strong> v = ‘abc’;  // some other code, and then …  v = 20;</p>
+<p>That’s not going to compile. But you could do something like this:</p>
+<p><strong>let</strong> v: any = ‘abc’;  // some other code, and then …  v = 20;</p>
+<p>That is telling the TypeScript compiler that we are OK with the variable v being any type. Other than the Classes and Interfaces that are either part of JavaScript or that we, or a third party, create, there are boolean, number, string, array, enum, any, void, tuple, never, null, and undefined. I’m going to assume that until I mentioned “tuple” you were ok with the types I mentioned.  So, let’s dig a little deeper on those last few. A tuple is a type that wars have been fought over.  OK, well not that bad.  But it is a highly controversial type.  But here is what it lets you do.  It allows you to return a highly defined array or object directly into local variables.  That is, I can specify that a function returns an array or object that has a specific number of elements and each element is a specific type.  It has its uses, but it is probably one of the types that you want to reserve for special cases.  It saves you from having to access array elements or object fields or properties.  That’s the long and short of it. The never type allows you to specify that a function never returns.  There are two reasons why this would be true.  First, you’ve entered an infinite loop or second, you’ve thrown an exception.  Again, not something you are likely to use. You can also explicitly specify that a type can only handle null or undefined.  But what is much more likely is that you specify that you don’t want to use these.</p>
+<h2 id="Combined-Types"><a href="#Combined-Types" class="headerlink" title="Combined Types"></a>Combined Types</h2><p>So, let’s say you have a parameter or a variable that accepts multiple types.  You could just use any and go on your merry way.  But, wouldn’t it be nice if you could say, “I want this type to be either a string or a number.”?  Well, you can.  Simply by using the pipe operator between types.</p>
+<p><strong>let</strong> v: string | number;</p>
+<p>But we can take this even further.  Let’s say we want to make sure that the variable is a particular class type that we also want to be sure implements a specific interface.  For that, we use the ampersand.</p>
+<p><strong>let</strong> v: Person &amp; Manager;</p>
+<p>And while we are at it, what if we want to make sure that a variable only accepts string types that are not null or undefined?  By default, the compiler allows null and undefined to be assigned to anything, but there is a compiler switch that turns that feature off.  If you use the compiler switch and you want to allow null or undefined, you’ll need to use the pipe operator to include them.</p>
+<h2 id="Interface"><a href="#Interface" class="headerlink" title="Interface"></a>Interface</h2><p>For the most part, a TypeScript Interface looks a lot like an Interface in other languages, but there are some differences that you need to know about. First, you don’t need to create a class that implements an Interface and then instantiate an object from that class in order to have an object of a particular interface type.  Actually, if you stop to think about it, this makes sense.  The problem is, there are a lot of people teaching TypeScript who are still using interfaces this way. But, in JavaScript, you can create an Object Literal.  TypeScript adds to JavaScript.  So, it only makes sense that TypeScript also allows you to create an Object Literal.  So, let’s say you have a parameter that takes an interface of type Name.  As long as the object we pass in conforms to the interface definition, the code will compile.</p>
+<p>// interface Name with firstName and lastName as properties  interface Name {   firstName: string;   lastName: string;  }  // function that takes a Name as a parameter  foo(name: Name) {  }  // call the function with an object literal  foo({firstName: ‘Dave’, lastName: ‘Bush’});</p>
+<h2 id="Optional"><a href="#Optional" class="headerlink" title="Optional"></a>Optional</h2><p>We’ve been talking a lot about Parameters and Interfaces.  In both cases, we often want to define a parameter or a property as optional. For example, most people have a middle name, but our Name interface doesn’t account for that.  If we added it, we’d want to make it optional since it is possible for that to not be included.  On the other hand, we don’t want people added whatever they want. The way we make sure a parameter is optional is by placing a question mark after the property, but before the colon.</p>
+<p>interface Name {   firstName: string;  // middleName is optional   middleName?: string;   lastName: string;  }  // foo() now takes an optional name parameter  foo(name?: Name) {}</p>
+<p>I would highly recommend that you tweak your tslint rules to require type annotations on all of your code.  Out of the box, the tslint rules that come with the Angular-CLI are a bit too lax in this area.</p>
+<h2 id="this"><a href="#this" class="headerlink" title="this"></a>this</h2><p>The <code>this</code> keyword in JavaScript is probably the hardest concept to fully understand.  And while recent advances in the language have helped tame it, it still doesn’t fully conform to the model most people have in their mind of how an Object-Oriented language should behave.  This is because, of course, JavaScript isn’t an Object-Oriented language.  It is a Prototypal language.  There are similarities, but they aren’t they same. TypeScript, on the other hand, is more object oriented.  I say “more” because it is really only object-oriented in the places where you are taking advantage of TypeScript specific features, such as a Class.  If you create an object literal that has an inline function, you are back in JavaScript land. In a class, if you have a method that calls another method in the same class, you must use the <code>this</code> keyword to go after it.</p>
+<p><strong>class</strong> <strong>SomeClass</strong> {   someFunction() {   }   someOtherFunction() {  <strong>this</strong>.someFunction();   }  }</p>
+<p>This may take some getting used to if you are coming from JavaScript where you can call any function that is in scope without using the this keyword.  But, I can assure you that having this rule imposed on the language solves a lot of bugs caused the “this” side effects, that it is well worth the adjustment.</p>
+<h2 id="Arrow-Functions"><a href="#Arrow-Functions" class="headerlink" title="Arrow Functions"></a>Arrow Functions</h2><p>Fat Arrow functions, Arrow Functions, or Lambda Expressions all refer to the same concept.  They are probably one of my favorite features of the latest version of TypeScript and JavaScript both because they allow me to write code with fewer characters and because they solve a very real problem that has confused JavaScript developers for years. First the problem. If you’ve written any serious application using JavaScript, one of the following scenarios will be familiar to you. Any time you create an event handler, when the function gets called, the ‘this’ keyword isn’t pointing to the object you are in, it is pointing to the context of the event that fired it.  This could be null, a windows object, or something else.  We often get around this problem by using the bind() function to wrap the context of the function. What the arrow functions in TypeScript do is that they form a closure around the current ‘this’ context by taking advantage of how TypeScript is compiled into JavaScript. You see, when your TypeScript code is compiled, every place you referred to ‘this’ it refers to a variable named ‘_this’.  Inside the arrow function, they refer to this same _this instead of creating a new one or looking at the context the function was called from. The main difference between a regular anonymous function and an arrow function is that we leave out a lot of junk. <strong>let</strong> newFunc = <strong>function</strong>(x) {  // do something with x  }  Compared to:  <strong>let</strong> newFunc = (x) =&gt; {  // do something with x  } But wait! There’s more.  If you only have one line, you can remove the curly braces. Let’s say you want to create an arrow function that returns the square of some number.  You could write this as:</p>
+<p><strong>let</strong> newFunct = (x) =&gt; x * x;</p>
+<p>Fat arrow functions return the value from the function automatically.</p>
+<h2 id="Decorators"><a href="#Decorators" class="headerlink" title="Decorators"></a>Decorators</h2><p>I don’t want to spend a lot of time on decorators.  If you’ve been using .NET, you’ll recognized decorators as “Attributes”. Java programmers are probably used to calling them annotations. Effectively, what a decorator does is that it adds additional information to a function, field, or class that marks it for special use.  While you can create your own decorators, we will only concentrate on implementing decorators that have already been defined for us. You’ll know that something is a decorator because it is a symbol prefixed with the at symbol.</p>
+<h2 id="Import-and-Export"><a href="#Import-and-Export" class="headerlink" title="Import and Export"></a>Import and Export</h2><p>Last in our discussion of TypeScript are the keywords import and export. But first, why do we need these keywords? Well, if you are familiar with other languages such as C#, VB.NET or Java, you will recognize the concept of Import as the keyword that says, “Tell this file I’m going to reference code from that other file over there in here.”  And then when we compile our code, the compiler makes sure that we are using that other code correctly. A similar thing happens in TypeScript, but in Angular we get the added benefit of also being able to use this information so that we only include the code we are actually using. You see, in the old days, we would suck in entire JavaScript libraries just because we were using a few functions.  But now with concepts like “Tree Shaking” that we will cover later, we can look at the actual code we are referencing and only include that code.  This reduces the size and number of files that our customer has to download to use our applications. The export keyword, on the other hand, tells the compiler what functions, classes, and interfaces external code is able to reference.  If it isn’t exported, it is only available to code in the file it was declared in.</p>
+<h2 id="More"><a href="#More" class="headerlink" title="More"></a>More</h2><p>I have barely scratched the surface of TypeScript here.  There is a lot more available in the language than what I’ve introduced to you here and knowing the parts I’ve left out will ultimately make you a better programmer and make your code more stable.  But the parts I have introduced will get you going and will make you familiar with the parts you will see most often.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/typescript-basics-for-angular-developers/" data-id="cjiw7ucnz00tvdghi8jzs0fxi" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular-2/">angular 2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/enforce-typescript-functional-programming/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">Enforce TypeScript Functional Programming</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/angular-observable-secrets-revealed/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">Angular Observable Secrets Revealed</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/vmware-s-clarity-design-system-for-angular/">VMWare&#39;s Clarity Design System for Angular</a>
+        </li>
+      
+        <li>
+          <a href="/the-full-stack-developer-myth/">The Full Stack Developer Myth</a>
+        </li>
+      
+        <li>
+          <a href="/how-you-do-anything/">How you do Anything ...</a>
+        </li>
+      
+        <li>
+          <a href="/property-based-testing-in-angular-with-jsverify/">Property Based Testing in Angular with jsVerify</a>
+        </li>
+      
+        <li>
+          <a href="/property-based-testing-revealed-a-better-way-to-test/">Property Based Testing Revealed - A Better Way to Test</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

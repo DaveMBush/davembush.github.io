@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Multi-Threaded JavaScript - Not The Problem You Think | Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="A couple of weeks ago, I posted 7 Reasons Every Programmer Needs to Learn JavaScript.  In the comments, Dean tried to refute my arguments first by claiming that my sources for JavaScript’s popularity">
+<meta name="keywords" content="javascript,threading">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Multi-Threaded JavaScript - Not The Problem You Think">
+<meta property="og:url" content="http://davembush.github.com/multi-threaded-javascript-not-the-problem-you-think/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:description" content="A couple of weeks ago, I posted 7 Reasons Every Programmer Needs to Learn JavaScript.  In the comments, Dean tried to refute my arguments first by claiming that my sources for JavaScript’s popularity">
+<meta property="og:locale" content="English">
+<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2015/10/image2.png">
+<meta property="og:updated_time" content="2018-06-23T18:40:37.988Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Multi-Threaded JavaScript - Not The Problem You Think">
+<meta name="twitter:description" content="A couple of weeks ago, I posted 7 Reasons Every Programmer Needs to Learn JavaScript.  In the comments, Dean tried to refute my arguments first by claiming that my sources for JavaScript’s popularity">
+<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2015/10/image2.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-multi-threaded-javascript-not-the-problem-you-think" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      Multi-Threaded JavaScript - Not The Problem You Think
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/multi-threaded-javascript-not-the-problem-you-think/" class="article-date"><time datetime="2015-10-22T11:30:00.000Z" itemprop="datePublished">2015-10-22</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Javascript/">Javascript</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>A couple of weeks ago, I posted <a href="//blog.dmbcllc.com/7-reasons-every-programmer-needs-to-learn-javascript/">7 Reasons Every Programmer Needs to Learn JavaScript</a>.  In the comments, Dean tried to refute my arguments first by claiming that my sources for JavaScript’s popularity were “a problem” because JavaScript is used in combination with other languages.  A point I refute in the comments.  But then he goes on to claim that “JavaScript is poorly suited for client side applications” because JavaScript is “Single Threaded”.  At this point, I just sighed and realized that Dean doesn’t want to learn JavaScript and that there MUST be some reason I’m not seeing for why he is so critical of JavaScript. But then Brandon jumped in and offered a very clear defense of JavaScript on the server side.  Nearly making this post unnecessary. And yet, there are things that were not said, and most people will never see the great comments that Brandon supplied.  And so we look at Multi-Threaded JavaScript in depth. <img src="//blog.dmbcllc.com/wp-content/uploads/2015/10/image2.png" alt="image" title="image"> </p>
+<h2 id="JavaScript-vs-Node-js"><a href="#JavaScript-vs-Node-js" class="headerlink" title="JavaScript vs Node.js"></a>JavaScript vs Node.js</h2><p>In Brandon’s first comment, he accurately points out that it is not fair to equate JavaScript the language to Node.js the environment.  This is because Node.js does actually spin up multiple threads as needed to handle the incoming traffic.  In fact, there have been several performance test comparing Node.js to ASP.NET applications which have all found that Node.js either keeps up with, or out performs ASP.NET.  This is because of the way that traffic is handled.  In ASP.NET the default implementation is for an incoming request to block until the response for that request is sent back to the client, while the default mechanism in Node is for the request to NOT block.  In node, everything that should be none-blocking is none-blocking.  This is a HUGE win, essentially making node “Multi-threaded” in the places that matter without having to think about it.</p>
+<blockquote>
+<p>Speed comparisons:</p>
+<ul>
+<li><a href="//www.haneycodes.net/to-node-js-or-not-to-node-js/">Node.js Compared to ASP.NET without IIS</a></li>
+<li><a href="//mikaelkoskinen.net/post/asp-net-web-api-vs-node-js-benchmark">WEBAPI vs Node.js</a></li>
+<li><a href="//blog.shinetech.com/2013/10/22/performance-comparison-between-node-js-and-java-ee/">Node.js Compared to J2EE</a></li>
+<li><a href="//strongloop.com/strongblog/node-js-is-faster-than-java/">What makes Node.js Faster than Java?</a></li>
+</ul>
+</blockquote>
+<p>Here’s a simple example.  You post data from the web browser to the server that needs to go into a database.  In ASP.NET, the default way of handling this would be to receive the request, send the data to the database, wait for the return value from the database, and return to the server.  All as a blocking call. In Node.js, you would/could see this default behavior.  Information is sent to the server, the server sends to the database asynchronously and immediately returns to the client.  Of course, there are error handling issues that need to be addressed here, but the main point is that you don’t HAVE to wait and you probably shouldn’t.  If you need to send an error message back, that would be handled separately. So, I ask, which is going to appear to be faster?</p>
+<h2 id="Who-Needs-Multi-threading"><a href="#Who-Needs-Multi-threading" class="headerlink" title="Who Needs Multi-threading?"></a>Who Needs Multi-threading?</h2><p>OK.  So, we’ve addressed the environment issue.  But now I have to ask, when is the last time you really needed your application to be multi-threaded?  I can count the number of times that I used multi-threading capabilities in one of my applications (sever side or desktop application) one two hands in the last 28 years of programming.  The need for multi-threading is quite low relative to the number of programs written.  And even if you COULD write a multi-threaded application, the benefit compared to the complexity in your code tends to be relatively minor.</p>
+<h2 id="Multi-threading-If-You-Need-It-–-Client-Side"><a href="#Multi-threading-If-You-Need-It-–-Client-Side" class="headerlink" title="Multi-threading If You Need It – Client Side"></a>Multi-threading If You Need It – Client Side</h2><p>A little known and often under-utilized feature of JavaScript on the client side is Web Workers, which allow us to run a JavaScript file in a separate thread on the client side.  The “disadvantage” of using workers is that 1) they can’t access the DOM and 2) you have to use messaging to have the parent page and the worker talk to each other.  If you absolutely needed multi-threading on the Client Side, this would be the way to make it work today.  If you structure your code correctly, the separation from the DOM shouldn’t be an issue and messaging is a great way of communicating between a View Model and the View, even without the web worker process.</p>
+<h2 id="Multi-threading-If-You-Need-It-–-Server-Side"><a href="#Multi-threading-If-You-Need-It-–-Server-Side" class="headerlink" title="Multi-threading If You Need It – Server Side"></a>Multi-threading If You Need It – Server Side</h2><p>In the response I initially added to the multi-threading issue, I suggested running child processes.  This is the server side equivalent of using a worker process on the client side.  You spawn off some worker processes, wait for them all to return, collect the information they provide, and continue on.  As was pointed out, this is not “true multi-threading” because in a real multi-threaded application, every thread has access to the same memory space.  But you could argue that this is a good thing too.  There are a lot of issues with multiple threads accessing the same shared memory.  I’m not sure I would want the average programmer ABLE to do this.</p>
+<h2 id="Today-is-Not-Tomorrow"><a href="#Today-is-Not-Tomorrow" class="headerlink" title="Today is Not Tomorrow"></a>Today is Not Tomorrow</h2><p>Just because JavaScript doesn’t handle REAL multi-threading today, doesn’t mean this won’t be added in the future.  The language is still evolving.  I could see a point in the next 5 years where this capability is added in, or a framework is created that will make this available, or both.</p>
+<h2 id="Only-Use-Multi-Threading-Where-You-Need-It"><a href="#Only-Use-Multi-Threading-Where-You-Need-It" class="headerlink" title="Only Use Multi-Threading Where You Need It"></a>Only Use Multi-Threading Where You Need It</h2><p>OK.  But what if you REALLY need Multi-threading capabilities? As was pointed out, then JavaScript may not be the right language for the job.  But then, you could easily argue that C#, Java, and many other languages aren’t either.  If you REALLY need that kind of speed, you probably want to drop down to C/C++ or even Assembly Language.  But why not mix and match.  It is rarely the case that your entire application needs to be multi-threaded.  In my experience, it is only some small percentage of the overall application that needs that ability.  So, why not create a node module that does the multi-threaded bit and wire it into your broader JavaScript application?</p>
+<h2 id="Wrapping-It-Up"><a href="#Wrapping-It-Up" class="headerlink" title="Wrapping It Up"></a>Wrapping It Up</h2><p>Clearly, JavaScript is a young language and Node.js is a young environment.  There are still issues that need to be worked out.  But for as young as it is, they have some pretty robust capabilities “out-of-the-box” that will only get better in the future. I’m excited and optimistic.  Excited about the potential and optimistic about the future capabilities for threading in JavaScript. But maybe you aren’t.  You know what, while I think it might be a career mistake, it is your career.  You don’t have to agree with me.  And since neither of us are omniscient, only time will tell which of us made the better choice.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/multi-threaded-javascript-not-the-problem-you-think/" data-id="cjiw7ucf500lydghiie6i1l4o" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/threading/">threading</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/create-a-desktop-application-using-angular-bootstrap-and-c/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">Create A Desktop Application using Angular, Bootstrap and C#</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/javascript-crazy-talk-are-you-guilty/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">JavaScript Crazy Talk - Are you guilty?</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/vmware-s-clarity-design-system-for-angular/">VMWare&#39;s Clarity Design System for Angular</a>
+        </li>
+      
+        <li>
+          <a href="/the-full-stack-developer-myth/">The Full Stack Developer Myth</a>
+        </li>
+      
+        <li>
+          <a href="/how-you-do-anything/">How you do Anything ...</a>
+        </li>
+      
+        <li>
+          <a href="/property-based-testing-in-angular-with-jsverify/">Property Based Testing in Angular with jsVerify</a>
+        </li>
+      
+        <li>
+          <a href="/property-based-testing-revealed-a-better-way-to-test/">Property Based Testing Revealed - A Better Way to Test</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

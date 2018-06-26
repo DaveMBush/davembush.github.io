@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Dave&#39;s Notebook">
+<meta property="og:url" content="http://davembush.github.com/page/20/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:locale" content="English">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dave&#39;s Notebook">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          
+  
+    <article id="post-automated-web-application-functional-testing" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/automated-web-application-functional-testing/">Automated Web Application Functional Testing</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/automated-web-application-functional-testing/" class="article-date"><time datetime="2014-04-01T17:01:00.000Z" itemprop="datePublished">2014-04-01</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/TDD/">TDD</a> / <a class="article-category-link" href="/categories/TDD/Testing/">Testing</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/03/WebTestingCloud.png" alt="WebTestingCloud" title="WebTestingCloud"></p>
+<p>One problem we often have when performing application test is that if we are testing  applications that modify the database in some way, we can’t test without modifying the database.</p>
+<p>In an ideal world, one way you could deal with this issue is to create a test database that has known data.  But even then, you have to go through the effort of setting up the data prior to each test.</p>
+<p>To be clear, I’m not talking about unit test.  You should have unit test for most of your code.  I’ll handle what not to test in some other post.  But, at some point you will want to put together a suite of test that ensures that the application, as a whole, does what you expect it to do.</p>
+<p>So, the stated problem is this, “How do  we test a web application in such a way that we are always working with known data and in such a way that we do not ever modify the data in the database?”</p>
+<p>So far, I’ve not found a way that test the whole web application from the user interface down to the database.  But, I think I’ve found the next best thing.  Split the application in half between the view and the database and perform two, overlapping, integration test.  If both work, we can reasonably assume that the whole application works.</p>
+<h2 id="So-how-would-we-go-about-doing-this"><a href="#So-how-would-we-go-about-doing-this" class="headerlink" title="So how would we go about doing this?"></a>So how would we go about doing this?</h2><p>If you’ve designed your application correctly, you should have a seam somewhere in the center.  In my code it tends to either be at the business logic layer or at the data access layer.  What we want to do is to create a separate class, or set of classes that look just like the classes at that layer and swap them in while testing the top half of our application and use the real classes when testing the bottom half of the application and when using the application in production.</p>
+<p>We do this using dependency injection using your favorite dependency injection framework.  I’m not going to go into the details of dependency injection here.  Maybe some other day.  But this is a place where you would use it.</p>
+<h2 id="Test-the-top-half"><a href="#Test-the-top-half" class="headerlink" title="Test the top half"></a>Test the top half</h2><p>In the fake DAL or BLL classes, what you are going to do is return what amounts to hard coded values.  In a recent implementation, I stored the JSON representation of the values in a resource (RESX) file  using the parameters that were passed into the method call as keys so that I could retrieve that data. If you need to do an update, you will need to store that some place so that your test code can verify that it got passed down to the function that should have saved it to the database.</p>
+<p>By doing this, you can verify that your code from the presentation layer down to this seam works as it should.  Now we need to test the bottom half of our code.</p>
+<h2 id="Test-the-bottom-half"><a href="#Test-the-bottom-half" class="headerlink" title="Test the bottom half"></a>Test the bottom half</h2><p>This will be a bit easier.  What we do here is we have our test code run the code directly.  But, unlike when we run the code in production, we will wrap the code in transaction tracking starting with our setup method.  We turn on transaction tracking, get the database into the state that we need for testing, run our test, and then rollback the changes.  Assuming the transaction tracking works correctly, and we have to assume that our third party tools do, this test everything without modifying the database.</p>
+<p>Because we’ve tested both the top half of the code and the bottom half of the code, we now have a reasonable assurance that the code as a whole works as it should.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/automated-web-application-functional-testing/" data-id="cjiw7uc2v008vdghihsvfo8u8" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/application-testing/">application testing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dependency-injection/">dependency injection</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-tdd-isnt-all-about-testing" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/tdd-isn’t-all-about-testing/">TDD Isn’t All About Testing</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/tdd-isn’t-all-about-testing/" class="article-date"><time datetime="2014-03-25T17:07:00.000Z" itemprop="datePublished">2014-03-25</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/TDD/">TDD</a> / <a class="article-category-link" href="/categories/TDD/Testing/">Testing</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/03/tran-land-045.jpg" alt="tran-land-045" title="tran-land-045">While the artifact of Test Driven Development is test code, what you get out of test driven development far exceeds the test themselves. </p>
+<h2 id="Maintainable-Code"><a href="#Maintainable-Code" class="headerlink" title="Maintainable Code"></a>Maintainable Code</h2><p>By writing test first, you tend to write code that is more highly maintainable than if you just wrote the code to solve the problem.  By writing a class so that it can be used in both the system you are writing it for and so that it can be tested, you’ve been forced to think about the code in at least one other way from what you would have initially.  The result is your code tends to be more structured than it would have been otherwise.</p>
+<h2 id="Clear-Specifications"><a href="#Clear-Specifications" class="headerlink" title="Clear Specifications"></a>Clear Specifications</h2><p>By writing test first, you are forced to develop clearer specifications.  I’ve run into this recently on a project that I’m currently working on.  I can’t write a test for the code I’m about to implement because I don’t clearly understand how this is supposed to interact with the rest of the application.  Until I do, I really can’t move forward.  If I were not writing a test, this would not be as clear now as it is.  Although, one could argue that eventually it would become clear.  But it is more likely I would leave the feature out completely because I forgot about it entirely.  Something I’ve been known to do in the past.</p>
+<h2 id="Up-To-Date-Specifications"><a href="#Up-To-Date-Specifications" class="headerlink" title="Up To Date Specifications"></a>Up To Date Specifications</h2><p>This leads to another advantage to test driven development that <a href="//blog.dmbcllc.com/test-driven-specifications/">I’ve mentioned before</a>.  By writing test in advance, you have the specification coded.  This forces you to keep the specification up to date if it changes because your test won’t run unless you do.  How many other programming methods are there that force the specifications to be kept up to date?  I can’t think of any.</p>
+<h2 id="A-Safety-Net-For-Refactoring"><a href="#A-Safety-Net-For-Refactoring" class="headerlink" title="A Safety Net For Refactoring"></a>A Safety Net For Refactoring</h2><p>If you’ve ever looked at bad code and thought, “I bet I could make this better.”  But then you were afraid to make any changes because you aren’t sure your improvement wouldn’t break something, you’ll really appreciate TDD.  If there is a good test suite for the code you want to refactor, you can be sure that any changes you make won’t break something it should do.  I’ve left a lot of code alone for fear of breaking something else.</p>
+<h2 id="Preventing-Feature-Creep"><a href="#Preventing-Feature-Creep" class="headerlink" title="Preventing Feature Creep"></a>Preventing Feature Creep</h2><p>Another thing TDD does is that it prevents feature creep on the part of developers.  Face it, how many times have you added a feature into the system that no one asked for?  By coding to the test, you reduce this urge.</p>
+<p>Many people start TDD by writing test after the fact and wonder how this can possibly be helpful.  This is because they’ve written them after they’ve written the code and they’ve completely bypass 80% of the benefits.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/tdd-isn’t-all-about-testing/" data-id="cjiw7ucl200rldghizctwx7m6" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programming/">programming</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/">tdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test-driven-development/">test driven development</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-when-you-really-need-all-of-your-nunit-test-in-one-class" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/when-you-really-need-all-of-your-nunit-test-in-one-class/">When You Really Need All Of Your NUnit Test In One Class</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/when-you-really-need-all-of-your-nunit-test-in-one-class/" class="article-date"><time datetime="2014-03-18T17:16:00.000Z" itemprop="datePublished">2014-03-18</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/TDD/">TDD</a> / <a class="article-category-link" href="/categories/TDD/Testing/">Testing</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/03/arct-034.jpg" alt=""></p>
+<p>Last week <a href="//blog.dmbcllc.com/unit-test-structure/">I proposed a structure for unit test that follows the pre-condition, action, post-condition workflow</a>.  Basically what you would see in a Use Case document.</p>
+<p>The result of this structure when applied to a general NUnit class is that we will end up with our pre-condition and action in our setup method and our post-condition asserts in our test methods.</p>
+<p>The problem with this is that sometimes this doesn’t always fit what we are trying to do.</p>
+<p>For example, I’ve been writing selenium test to test web applications I am working on.  Each page I am testing is essentially a form that computes a result at the bottom.  If I were a purest, I would put the page load object and the setup of the state of the page in the setup method.  One for each permutation.  And the assert to verify that it computed correctly.</p>
+<p>In this case, however, I vary slightly because what I really want is all of these similar test together where I can see them.</p>
+<p>But I still keep my code clean by using a TestCaseSource.</p>
+<p>What we are going to do is move just about everything into the TestCaseSource.  The code that is common between each TestCaseSource is going to still go in the SetUp method, but everything else will be declared in the TestCaseSource.</p>
+<p>The basics of how TestCaseSource works is that we setup a Property or a member variable that returns an IEnumerable.  By using the built in TestCaseData class we get a lot of control over what displays.  I’m not going to go over that here.  I’m sure you can <a href="//www.nunit.org/index.php?p=testCaseSource&amp;r=2.6.3">read the documentation</a> as well as I can.</p>
+<p>But what you may not realize when you first look that this documentation is that we can pass in functions and not just objects.  This gives us quite a bit of freedom in what we do here.</p>
+<p>So by setting up our Test method to look like this:</p>
+<p>[Test]<br>[TestCaseSource(“DataSource”)]<br>public void Test(Action pre,<br>                          List<action> actions,<br>                          Action assert)<br>{<br>    pre();<br>    foreach (var action in actions)<br>        action();<br>    assert();<br>}</action></p>
+<p>What we are doing is saying that we expect to find a property or member variable called “DataSource” that will pass us a function, a list of functions, and another function.</p>
+<p>The test body runs the first function to do any pre-condition work.  Then it loops through all of the function in the actions list to get the code to the state we need it to be in and then we finally call the assert to test our code.</p>
+<p>Here is a sample of what our DataSource property looks like:</p>
+<p>public IEnumerable DataSource<br>{<br>    get<br>    {<br>        Action pre = () =&gt; Console.WriteLine(“given”);<br>        var actions = new List<action><br>        {<br>            () => Console.WriteLine(“when one”),<br>            ()=> Console.WriteLine(“when two”)<br>        };<br>        Action assert = () =&gt;<br>            Assert.That(1, Is.EqualTo(1));<br>        yield return new<br>            TestCaseData(pre,actions,assert);<br>    }<br>}</action></p>
+<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+<p>I’ve broken out the lambda expressions individually so that you can better see what I’m doing.  But in real life, your code will probably look more like this:</p>
+<p>public IEnumerable DataSource<br>{<br>    get<br>    {<br>        yield return new TestCaseData(<br>            (Action)(() =&gt; Console.WriteLine(“given”)),<br>            new List<action><br>            {<br>                () => Console.WriteLine(“when one”),<br>                () => Console.WriteLine(“when two”)<br>            },<br>            (Action)(() =&gt; Assert.That(1, Is.EqualTo(1)))<br>        );<br>    }<br>}</action></p>
+<p>You will need the (Action) cast to make the compiler understand what you are trying to do.  It isn’t smart enough to know that a lambda express is an Action which is a delegate that take no parameters and returns void.</p>
+<p>When you run the code, above, we get this output:</p>
+<p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/03/GivenWhenThenTest.png" alt="GivenWhenThenTest" title="GivenWhenThenTest"></p>
+<p>By chaining on the SetName() call, you can make each iteration show up as it’s own unique test so you can see what is occuring in your test runner.</p>
+<p>public IEnumerable DataSource<br>{<br>    get<br>    {<br>        yield return new TestCaseData(<br>            (Action)(() =&gt; Console.WriteLine(“given”)),<br>            new List<action><br>            {<br>                () => Console.WriteLine(“when one”),<br>                () => Console.WriteLine(“when two”)<br>            },<br>            (Action)(() =&gt; Assert.That(1, Is.EqualTo(1)))<br>        ).SetName(“First Test”);<br>    }<br>}</action></p>
+<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+<p>And this looks like this in the test runner:</p>
+<p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/03/GivenWhenThen2.png" alt="GivenWhenThen2" title="GivenWhenThen2"></p>
+<p>Once again, I have to reiterate, this is not something I would do a lot of, but it is a pretty neat trick when you need it. .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/when-you-really-need-all-of-your-nunit-test-in-one-class/" data-id="cjiw7ucsp00xhdghiek0kt667" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nunit/">nunit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/">tdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test-driven-development/">test driven development</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/testcasedata/">testcasedata</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/testcasesource/">testcasesource</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-unit-test-structure" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/unit-test-structure/">Unit Test Structure</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/unit-test-structure/" class="article-date"><time datetime="2014-03-11T08:38:00.000Z" itemprop="datePublished">2014-03-11</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/TDD/">TDD</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/03/UnitTestingScreen.png" alt="UnitTestingScreen" title="UnitTestingScreen">One of the recurring reasons I hear from people for why they are not implementing unit test in their code is because it takes too long.  On one level I get that.  But, my experience tells me that the real problem is more likely that they just don’t understand enough about how to implement unit testing to be able to do it well.</p>
+<p>This is like knowing you are supposed to “eat right” and “exercise” but not having anyone tell you how to do either in such a way that you can maintain the habit.</p>
+<h2 id="Start-Small"><a href="#Start-Small" class="headerlink" title="Start Small"></a>Start Small</h2><p>So the first rule of unit testing structure, just like the first rule of diet and exercise, is to start small.</p>
+<p>When I first started to take a look at unit testing, the general advice was to create a unit test class for each class.  Then you were suppose to create a test method for each class.  I still see a lot of code as I travel that looks like this as I watch people try to implement the practice.</p>
+<p>But how frustrating.  And how is that suppose to work when I’m modifying existing code?</p>
+<h2 id="Here-is-how-I-write-unit-test…"><a href="#Here-is-how-I-write-unit-test…" class="headerlink" title="Here is how I write unit test…"></a>Here is how I write unit test…</h2><p>I’ve had exposure to UML and the most useful part of UML that I tend to use over and over again is the Use Case document.  I don’t care so much about the diagram.  But the document is really helpful.</p>
+<p>In the document we have three parts.</p>
+<ul>
+<li>Pre conditions</li>
+<li>Actions</li>
+<li>Post conditions</li>
+</ul>
+<p>If you start thinking about your test under this framework, I think you’ll find that writing test become much easier.</p>
+<p>You may be thinking, “But Dave, that’s application level testing, not unit testing.”  And my answer would be, “Yes, it is, but your class is a mini application so it can apply to it as well.</p>
+<h2 id="So-let’s-take-the-classic-Person-class-as-an-example"><a href="#So-let’s-take-the-classic-Person-class-as-an-example" class="headerlink" title="So, let’s take the classic Person class as an example:"></a>So, let’s take the classic Person class as an example:</h2><p>public class Person<br>{<br>    public Person()<br>    {<br>    }</p>
+<pre><code>public string FirstName { get; set; }
+public string LastName { get; set; }
+
+public string FullName
+{
+    get
+    {
+        return FirstName + &quot; &quot; 
+            \+ LastName;
+    }
+}
+</code></pre><p>}</p>
+<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+<p>Our preconditions might be:</p>
+<ul>
+<li>The object has been created</li>
+<li>The FirstName has been set to a known value</li>
+</ul>
+<p>One of our actions is going to be:</p>
+<ul>
+<li>The LastName property is set to another known value</li>
+</ul>
+<p>The post condition will be:</p>
+<ul>
+<li>The FullName should end up being whatever we had in the first name plus a space plus whatever we added to the last name</li>
+</ul>
+<p>So now that we have a use case for our class, how do we model this in our unit test?</p>
+<h2 id="Converting-the-Use-Case-to-a-Test-Case"><a href="#Converting-the-Use-Case-to-a-Test-Case" class="headerlink" title="Converting the Use Case to a Test Case"></a>Converting the Use Case to a Test Case</h2><p>Using NUnit since it is still the most popular, our resulting code might look something like:</p>
+<p>namespace GivenAnObjectOfTypePersonWithFirstNameSetToBob<br>{<br>    class WhenISetTheLastNameToJones<br>    {<br>        private Person _person;</p>
+<pre><code>    \[SetUp\]
+    public void Setup()
+    {
+        // The precondition
+        _person = new Person
+        {
+            FirstName = &quot;Bob&quot;
+        };
+
+        // The action
+        _person.LastName = &quot;Jones&quot;;
+    }
+
+    \[Test\]
+    public void TheFullNameShouldBeBobJones()
+    {
+        Assert.That(_person.FullName,
+            Is.EqualTo(&quot;Bob Jones&quot;));
+    }
+}
+</code></pre><p>}</p>
+<p>Notice how I created a namespace for the given.  This makes the code readable in our test runner.  I put the precondition and the action in the SetUp method because I want to start fresh with each test.  In this case, I only have one test, but in most scenarios, you will have multiple test.  You should plan for multiple test.</p>
+<p>In this particular case, I only have one post condition.  But if I had multiple post conditions, each one would be it’s own Test method with it’s own Assert.</p>
+<p>One of the biggest issues I see is people putting multiple asserts inside of one Test method.    You don’t want to do this.  You want one and only one Assert per Test method.  Otherwise, you never know by looking at your test what exactly failed or if the code were to run, that any of the other Asserts fail. .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; } .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+<p>Because we named our namespace, class, and test methods what we are testing, when a test fails, our test runner will display the names for us.</p>
+<p>If you think it makes the code more readable, you can use underscores to separate the names.  The goal is to make the code read something like your use case.</p>
+<p>One final note before we end.  Your namespace should match up to the directory the class file is in and the class name should match the file name.  This will make the code easy to find.  This is something I shouldn’t have to mention, but once again, I’ve seen people ignore the simplest of organizational strategies.</p>
+<p>This is just one of several patterns I use for testing my code.  What I like about this particular pattern is that it forces my test code to follow the Single responsibility principle.  In the case above, this test class is only responsible for testing what happens when I set the LastName property when I’ve already set the FirstName property.  I can write another class to test what happens when the FirstName property has not yet been set and yet another for what happens when I set the LastName property first and then set the FirstName property.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/unit-test-structure/" data-id="cjiw7ucom00uddghimz5to23n" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/">tdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test-driven-development/">test driven development</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unit-test/">unit test</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-debbie-done" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/“debbie-done”/">“Debbie-Done”</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/“debbie-done”/" class="article-date"><time datetime="2014-03-04T10:38:00.000Z" itemprop="datePublished">2014-03-04</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Testing/">Testing</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/02/88Tr.png" alt="88Tr" title="88Tr"></p>
+<p>A long long time ago, in what seems now like another world, I worked for a company as a <a href="//en.wikipedia.org/wiki/Clipper_(programming_language">Clipper programmer</a>).  While I was there I heard this story about a lady named Debbie.</p>
+<p>I was told that Debbie was a programmer who used to work for this company.  Debbie was a lazy programmer.  She worked harder at avoiding work than if she just did the job she was supposed to do.</p>
+<h2 id="The-ultimate-lazy-programmer"><a href="#The-ultimate-lazy-programmer" class="headerlink" title="The ultimate lazy programmer"></a>The ultimate lazy programmer</h2><p>For example.  Once my boss had stopped by her desk to see how she was progressing on a report she was supposed to be writing:</p>
+<p>Debbie: Oh, that’s done.  Here.  Take a look.</p>
+<p>The boss looked it over and found an error.  Some of the numbers didn’t match up.</p>
+<p>Debbie: Oh, I know what that is.  I can get that fixed right away.</p>
+<p>Which she did.  At least that’s what she made everyone believe.</p>
+<p>After she left (shortly after this) they found out that she hadn’t even connected to a database to create that report.  The whole report was hard coded.  Every time you ran it, it gave you the same numbers.</p>
+<h2 id="“Debbie-Done”"><a href="#“Debbie-Done”" class="headerlink" title="“Debbie-Done”"></a>“Debbie-Done”</h2><p>The one thing I was told that sticks in my mind the most is that Debbie considered a project “done” if it compiled in linked.  She almost never ran the code.  Or if she did, she certainly didn’t run enough of it, or run it more than to make sure it didn’t crash.  Anyhow, the perception she left is that she only compiled and linked the code.  Today, we’d say all she did was build the project or solution.</p>
+<p>But recently, I’ve discovered that many programmers work at the “Debbie-Done” level more than we’d like to admit.</p>
+<p>I’ve always thought that programmers wrote code like I do:</p>
+<ul>
+<li>Write a bit of code. </li>
+<li>Build the code.</li>
+<li>Run the code to see if that change works as expected. </li>
+<li>Write a bit more code. </li>
+<li>Build the code.</li>
+<li>Run the code to see if that change works as expected. </li>
+<li>Rinse, lather, repeat.</li>
+</ul>
+<p>But what I’m discovering is that MANY programmers do not program that way at all.  No, many of them look like some version of “Debbie-Done” programming:</p>
+<ul>
+<li>Write some code. </li>
+<li>Build the project to make sure it will build</li>
+<li>Write some more code</li>
+<li>Build the project</li>
+<li>Rinse, lather, repeat</li>
+<li>Run the code and “test” all of the changes at once.</li>
+</ul>
+<p>The problem with this method is that no one can remember all of the changes they make so, in the end, the code I write tends to be more completely tested than the code that was tested in bulk.  The only difference between this method of development and “Debbie-Done” is the degree of completeness with which each developer is able “test” their code.</p>
+<h2 id="Avoid-“Debbie-Done”-with-Test-First-Development"><a href="#Avoid-“Debbie-Done”-with-Test-First-Development" class="headerlink" title="Avoid “Debbie-Done” with Test First Development"></a>Avoid “Debbie-Done” with Test First Development</h2><p>It is no wonder that many programmers I talk to think that test driven development takes too much time.  Compared to how they are programming, it does.</p>
+<p>But think about this.  If you were to code like I do, suddenly writing test for every change you make suddenly makes sense because instead of you running the application and getting to the place that will trigger your code and observing if it will work or not, you can write a test for just the piece of code you are working on and run that each time you want to verify if it is working or not.  Yes, initially, this will take more time.  But over the life of the program, and I would say even over the time span that it takes to initially write the code, writing at least the Unit Test as you are writing the features will actually save you time.  Not only that, you will end up with test you can repeat every time the code is changed.</p>
+<p>Even my method of “code, build, test, code, build, test” is “Debbie-Done” compared to writing test for each change as you make the change.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/“debbie-done”/" data-id="cjiw7uc5500bddghi2yo43l6u" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/agile/">agile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programming/">programming</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/">tdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/testing/">testing</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-test-driven-specifications" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/test-driven-specifications/">Test Driven Specifications</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/test-driven-specifications/" class="article-date"><time datetime="2014-02-25T08:44:00.000Z" itemprop="datePublished">2014-02-25</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/TDD/">TDD</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/02/spider.jpg" alt="spider" title="spider">Several years ago, long before the community was actively talking about Test Driven Development, I worked for a short time at a company as a “bug fixer.”  That was my role.  They had hired me because they had some software that was “basically done” but “had some issues.”  It should only take a few weeks.</p>
+<p>The first thing they needed me to fix was that the web site was supposed to send out email.  It turns out it was a configuration problem.  But they were so impressed (“the last guy we had in here spent two weeks on that problem and still hadn’t solved the problem.”) that they gave me more and more bugs.</p>
+<h2 id="This-Is-The-Job-That-Never-Ends"><a href="#This-Is-The-Job-That-Never-Ends" class="headerlink" title="This Is The Job That Never Ends"></a>This Is The Job That Never Ends</h2><p>The gig that was suppose to be a couple of weeks long was quickly turning into a perpetual job.  Soon I learned that what I was working with was a system that had a lot of bugs, but no one was willing to admit that.  Eventually, frustrated by the fact that this system seemed to have a new bug every day, I asked for the specs so that I could create a test plan.  That’s when I found out the worse news of all about this system.</p>
+<h2 id="Lost-Specifications"><a href="#Lost-Specifications" class="headerlink" title="Lost Specifications"></a>Lost Specifications</h2><p>They had lost the specs.  Not only had they lost the specs, but they were unwilling to admit this to the client and instead they were relying on the process of fixing the bugs to eventually squash all of the bugs so they could end up with a stable system.</p>
+<p>Since I was not yet familiar with the concepts of unit testing or Test Driven Development, I accepted this as the best we could do.  Hey!  At least I was getting paid well.</p>
+<p>Oh, but the story gets worse.</p>
+<h2 id="The-Plot-Thickens"><a href="#The-Plot-Thickens" class="headerlink" title="The Plot Thickens"></a>The Plot Thickens</h2><p>About three months into this gig, the manager of my project went on vacation which left the project in HIS manager’s hands.  That’s when the poop hit the fan.</p>
+<p>The Oracle consultant that was working with me and I were called into the office.</p>
+<p>“Why does this system still have bugs?!!”  Oh, he was angry.  That should be all bold and all caps and all underlined.</p>
+<p>Well sir, several weeks ago I asked for the requirements document so that I could write a test plan and I was told the requirements were lost.  If we can’t write a test plan, we never will be able to ensure that the system is working the way that it should.</p>
+<p>“I want you to write a test plan.”</p>
+<p>To which I repeated my need for a requirements document.</p>
+<p>We went back and forth with him insisting that I write a test plan and me stating that it could not be done until I finally said, “I think I’ve done all I can do here.”  Walked out of the office, packed up my stuff, went home, and immediately called my recruiter to make sure he got MY version of what happened first.</p>
+<p>But, it didn’t have to end like that.</p>
+<h2 id="A-Better-Way"><a href="#A-Better-Way" class="headerlink" title="A Better Way"></a>A Better Way</h2><p>Had I known about test driven development, every time a new bug came in, I could have written a new test, even if it was only unit test and not acceptance test, every time a new bug came in.  Eventually, I would have created not only the test plan, but I would have created the specification, or at least the parts that tended to break, and we would have ended up with a stable system like they thought they were going to get.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/test-driven-specifications/" data-id="cjiw7ucln00s3dghisdaovw3e" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/agile/">agile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/">tdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test-driven-development/">test driven development</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/testing/">testing</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-why-dont-you-practice-test-first-development" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/why-don-t-you-practice-test-first-development/">Why Don&#39;t You Practice Test First Development?</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/why-don-t-you-practice-test-first-development/" class="article-date"><time datetime="2014-02-21T00:59:36.000Z" itemprop="datePublished">2014-02-20</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/TDD/">TDD</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="//www.flickr.com/photos/jotrox/6021140195/"><img src="//farm7.staticflickr.com/6012/6021140195_bc72406af3_q.jpg" alt="...compile and registrate Csharp dll" title="compiling Csharp file"></a>I would have said “Test Driven Development” but I want to make it clear that what I’m talking about is writing test first, or at least simultaneous to writing the code.  Not sometime after, even if that after is immediately after. Recently, I’ve been doing some Test First Development presentations and I’m finding a trend that I’d like for you to contribute more information to.  While just about everyone I talk to will say they believe that we should be practicing Test First Development, hardly anyone is actually doing it practicing Test First Development. So, the question I have to ask is, “Why?” So, leave me a comment and tell me why you aren’t writing test code first.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/why-don-t-you-practice-test-first-development/" data-id="cjiw7ucsj00xddghith921wxt" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-selenium-with-nunit-presentation" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/selenium-with-nunit-presentation/">Selenium with NUnit Presentation</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/selenium-with-nunit-presentation/" class="article-date"><time datetime="2014-02-17T23:00:00.000Z" itemprop="datePublished">2014-02-17</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Testing/">Testing</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/01/Selenium.png" alt=""></p>
+<p>On Monday 2/17/14 I gave a presentation at the CT .NET User’s Group on using Selenium and NUnit to test your web application.  The following is a list of resources from that presentation:</p>
+<ul>
+<li><a href="//blog.dmbcllc.com/wp-content/uploads/2014/02/SeleniumDemoTest.zip">The demo code</a>.</li>
+<li><a href="//docs.seleniumhq.org/download/">The Selenium IDE Plugin for FireFox and the IE Driver Server</a></li>
+<li><a href="//www.nunit.org/">NUnit</a> </li>
+<li><a href="//selenium.googlecode.com/git/docs/api/dotnet/index.html">Selenium CSharp API Documentation</a></li>
+<li><a href="//docs.seleniumhq.org/docs/">Selenium Users Manual</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/selenium-with-nunit-presentation/" data-id="cjiw7ucit00pgdghi1ee8yznf" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nunit/">nunit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/selenium/">selenium</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-sql-while-sql-for-programmers" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/sql-while-sql-for-programmers/">SQL WHILE - SQL For Programmers</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/sql-while-sql-for-programmers/" class="article-date"><time datetime="2014-02-13T04:41:49.000Z" itemprop="datePublished">2014-02-12</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL-For-Programmers/">SQL For Programmers</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>The IF statement we looked at on Tuesday was pretty tame compared to the WHILE construct. Actually, the main thing you need to keep in mind is that WHILE is all you have.  There is no such thing as a FOR loop or a DO WHILE loop.  So, you have to force WHILE to do those for you. The basic syntax of WHILE looks like this:</p>
+<p>DECLARE @someString as VARCHAR<br>WHILE @someString=’ABC’ BEGIN<br>   SELECT * FROM someTABLE<br>   SELECT * FROM someOtherTABLE<br>  END </p>
+<p>So if you want a FOR/NEXT loop, you’ll need to write:</p>
+<p>DECLARE @someInt as int<br>SET @someInt = 0<br>WHILE @someInt &lt; 20<br>  BEGIN /* useful code here */ SET @someInt = @someInt + 1<br>  END </p>
+<p><a href="//11011.net/software/vspaste"></a>and a DO WHILE loop would be something like:</p>
+<p>DECLARE @someInt as int<br>SET @someInt = 0<br>WHILE @someInt = 0<br>  BEGIN /* useful code here <em>/ IF </em>some exit condition */ SET @someInt = 1<br>  END </p>
+<p>Once you learn to substitute those constructs for your normal FOR/NET or DO WHILE code, it becomes rather easy to deal with. Now if they’d just replace BEGIN with { and END with } I think I could live with this.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/sql-while-sql-for-programmers/" data-id="cjiw7uck000qmdghicn0nfl3s" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/do-while/">do while</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/for-next/">for next</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ms-sql/">ms-sql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tsql/">tsql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/while/">while</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-vb-net-nullable-value-types" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/vb-net-nullable-types/">VB.NET Nullable Types</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/vb-net-nullable-types/" class="article-date"><time datetime="2014-01-16T02:46:57.000Z" itemprop="datePublished">2014-01-15</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/VB-NET/">VB.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/07/tp_vol4_001.jpg" alt="tp_vol4_001" title="tp_vol4_001"> SQL has long had the ability to specify that a value is NULL even if it is a primitive type, but the only way you could have a NULL value in VB.NET is if you were dealing with an object. That is, until .NET 2.0 Even though .NET 2.0 has been out for a while, I would bet that few VB.NET programmers know about this new feature because it is one of those things most of us have grown to assume is not possible. Values must have content–objects don’t.  That’s just the way it is.  If we were to create an integer for example and then tried to assign a nothing to it, we would most certainly get a compiler error.</p>
+<pre><code>Dim i As Integer i = Nothing 
+</code></pre><p>However, the Nullable generic was added so that we can create a VB.NET Nullable Integer</p>
+<pre><code>Dim i As Nullable(Of Integer)
+i = Nothing 
+</code></pre><p>And by simply putting a question mark at the end of our variable name, we can shorten the syntax to</p>
+<pre><code>Dim i? As Integer i = Nothing
+</code></pre>
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/vb-net-nullable-types/" data-id="cjiw7ucqk00vvdghip1l7sri6" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nothing/">nothing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nullable/">nullable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/value-types/">value types</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vb-net/">vb.net</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <div id="page-nav">
+    <nav><ul class="pagination"><li><a class="page-prev" rel="prev" href="/page/19/"><i class="fa fa-chevron-left"></i> Prev</a></li><li><a class="page-number" href="/">1</a></li><li class="disabled"><span class="page-space">&hellip;</span></li><li><a class="page-number" href="/page/18/">18</a></li><li><a class="page-number" href="/page/19/">19</a></li><li class="active"><span class="page-number">20</span></li><li><a class="page-number" href="/page/21/">21</a></li><li><a class="page-number" href="/page/22/">22</a></li><li class="disabled"><span class="page-space">&hellip;</span></li><li><a class="page-number" href="/page/31/">31</a></li><li><a class="page-next" rel="next" href="/page/21/">Next <i class="fa fa-chevron-right"></i></a></li></ul></nav>
+  </div>
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/vmware-s-clarity-design-system-for-angular/">VMWare&#39;s Clarity Design System for Angular</a>
+        </li>
+      
+        <li>
+          <a href="/the-full-stack-developer-myth/">The Full Stack Developer Myth</a>
+        </li>
+      
+        <li>
+          <a href="/how-you-do-anything/">How you do Anything ...</a>
+        </li>
+      
+        <li>
+          <a href="/property-based-testing-in-angular-with-jsverify/">Property Based Testing in Angular with jsVerify</a>
+        </li>
+      
+        <li>
+          <a href="/property-based-testing-revealed-a-better-way-to-test/">Property Based Testing Revealed - A Better Way to Test</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

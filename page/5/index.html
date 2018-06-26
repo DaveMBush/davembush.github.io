@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Dave&#39;s Notebook">
+<meta property="og:url" content="http://davembush.github.com/page/5/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:locale" content="English">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dave&#39;s Notebook">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          
+  
+    <article id="post-jedi-angular-2-tips-and-tricks" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/jedi-angular-2-tips-and-tricks/">Jedi Angular 2 Tips and Tricks</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/jedi-angular-2-tips-and-tricks/" class="article-date"><time datetime="2017-03-28T10:30:00.000Z" itemprop="datePublished">2017-03-28</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Angular-2/">Angular 2</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>This week, I thought I’d collect a list of unrelated tricks and tips I’ve learned over the last couple of weeks into one post.  Unless you love to read documentation, or you’ve run into problems that these tips solve, I’m guessing you don’t know most of these. But first, the big new this week… [caption id=”” align=”aligncenter” width=”640”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/03/image-4.png" alt="Jedi Angular 2 Tips and Tricks" title="Jedi Angular 2 Tips and Tricks"> Photo credit: <a href="//www.flickr.com/photos/korymatthew/14211839966/">iamkory</a> via <a href="//visualhunt.com/re/4d4175">Visual Hunt</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a>[/caption] </p>
+<h2 id="Angular-Version-4-Released"><a href="#Angular-Version-4-Released" class="headerlink" title="Angular Version 4 Released"></a>Angular Version 4 Released</h2><p>You may have already seen this.  You can read all about it <a href="//angularjs.blogspot.com/2017/03/angular-400-now-available.html">on their blog</a>.  Yes, it makes the code smaller and faster.  Yes, it implements an “else” for *ngIf.  Yes, it works with the latest version of TypeScript.  But the one change I’m most looking forward to is the “source maps for templates.” If you’ve ever seen the error in your console window indicating an issue with your template with some obscure line number that has nothing to do with your template code, this should be great news for you as well.  Imagine being able to actually track down those errors in some more intelligent way than trying to guess exactly what line is causing the problem. There is one small breaking change in this release and that is that they’ve moved the Animations package out of Core and into its own location.  Since we’ve decided to wait to hear from our control vendor to see if that is going to have any impact, I can’t report on how much heart burn that’s going to cause you.</p>
+<h2 id="The-Official-Name-of-Angular"><a href="#The-Official-Name-of-Angular" class="headerlink" title="The Official Name of Angular"></a>The Official Name of Angular</h2><p>So, finally the Angular team has come up with an official way of distinguishing between Angular 1 and everything after it.  The official name of Angular 1 is “AngularJS.”  Everything else is just “Angular.”  For now, I’ll keep referring to it as Angular 2 until it actually catches on.</p>
+<h2 id="Periodic-Production-Compiles"><a href="#Periodic-Production-Compiles" class="headerlink" title="Periodic Production Compiles"></a>Periodic Production Compiles</h2><p>For the purposes of this article, I’m going to assume you are using the CLI, but if you are doing all of that work by hand, most of what I have to say will translate to what you are doing. A couple of weeks ago, we ran into a memory leak in our code that evidently is a known Angular 2 issue and only appears when you compile for DEV mode.  This caused us to go down the path of actually trying to compile our code in Production mode where I found that some of my code wouldn’t compile. As it turns out, when you compile in production mode it verifies that code more strictly so that it can use Ahead of Time compile if you choose to do that. Moral of the story is that you probably want to always work in production mode until you have an issue that you want to track down, where you can switch to DEV mode for the debug session.  Or, at the very least, compile for production prior to running the code in debug mode just so you are sure you can compile.  I prefer always running in production mode so that I’m sure the code is working correctly. Before you get all, “it should work the same way in both environments” on me.  Stop and think about this for a few seconds.  This is JavaScript we are talking about here.  A dynamic language.  You can’t have things like tree shaking and ahead of time compile AND get all of the benefits of a dynamic language at the same time.  I’m sure if it were possible, it would have been built to work closer to the same way to start with.  Not that I don’t agree with you, but unless you know how to fix it and have issued a pull request to address this issue, you have very little room to complain.</p>
+<h2 id="Direct-Access-to-CSS"><a href="#Direct-Access-to-CSS" class="headerlink" title="Direct Access to CSS"></a>Direct Access to CSS</h2><p>When I wrote about how to <a href="//blog.dmbcllc.com/adding-css-and-javascript-to-an-angular-2-cli-project/">add CSS to an Angular project</a>, someone commented asking how to see the raw CSS instead of the JavaScript that it turns into.  Well, as it turns out, there is a build flag to control that. <code>ng serve --extract-css</code> I personally never need this because my files are organized in such a way that I know where stuff is, but I can see where this would be helpful if I wanted to track down CSS in someone else’s code.</p>
+<h2 id="Accessing-the-Component-Host-Element"><a href="#Accessing-the-Component-Host-Element" class="headerlink" title="Accessing the Component Host Element"></a>Accessing the Component Host Element</h2><h3 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h3><p>If you need to access the host element for your component using CSS, the selector you want to use is <code>:host.</code> When you use this, keep in mind that your element has no default style so you will need to provide all of the styling.  Otherwise, it will show up as an empty element with overflow set to show.  This is probably not what you want. By using <code>:host</code>, you can avoid creating an inner <code>DIV</code> in your component just so you can display everything else.  The host element can function as that <code>DIV</code>.</p>
+<h3 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h3><p>You can access the host element directly from your typescript using <code>this.elementRef</code> You will need to inject <code>ElementRef</code> in your constructor for this to work.</p>
+<h3 id="Events"><a href="#Events" class="headerlink" title="Events"></a>Events</h3><p>Finally, if you need to bind to events on the host element, you can use the @HostEvent() attribute prior to the function that is going to handle the event <code>@HostListener(&#39;click&#39;,[&#39;$event&#39;]) foo(event) {</code> }</p>
+<h2 id="Accessing-Child-Components"><a href="#Accessing-Child-Components" class="headerlink" title="Accessing Child Components"></a>Accessing Child Components</h2><h3 id="CSS-1"><a href="#CSS-1" class="headerlink" title="CSS"></a>CSS</h3><p>If you need to style a child component from one of your components in some way that is unique from the rest of the system, you will need to add CSS in your component.  The proper way to access the child component is by using this directive: <code>:host &gt;&gt;&gt; child-component</code> Where, <code>child-component</code> is the tag you are using to load the child component. The trick is the triple &gt; selector.</p>
+<h3 id="TypeScript-1"><a href="#TypeScript-1" class="headerlink" title="TypeScript"></a>TypeScript</h3><p>To access the child component in your TypeScript, all you need to do is give the element you are interested in a variable using the #variable identifier.  Notice, this is standalone.  We are not using the ID of the element, although it could have the same name if you wanted. Then, in your typescript, you’ll declare a public variable that is prefixed with the <code>@ViewChild()</code> decorator.  There are several ways that you can use this.  But using the variable method that I’m describing here, you just specify the variable name, in quotes. <code>@ViewChild(&#39;variable&#39;) variable: ElementRef;</code> Everything is an <code>ElementRef</code>.  If you need to type it more strongly, you can. You can use whatever variable name you want to for the member variable.  But I normally name it the same as what I named the element.</p>
+<h2 id="Animations"><a href="#Animations" class="headerlink" title="Animations"></a>Animations</h2><p>One of the cool things we can do with CSS is animate DOM elements using CSS.  If you haven’t discovered this yet, you want to because it avoids the JavaScript –&gt; DOM overhead making it smoother and more energy efficient on handheld devices. The problem is, because the elements we want to animate in and out often don’t exist in the DOM at the right time, using straight CSS to do the animations is problematic or impossible.  This is where the Animations package comes in. On the project I’m working on now, I define my animations in an animations directory and apply them to my components as needed.  So, for example, I have an animation defined that fades my pages (routes) in and out.  It is defined once and applied to all my top level components.</p>
+<h2 id="Flex-Layout"><a href="#Flex-Layout" class="headerlink" title="Flex Layout"></a>Flex Layout</h2><p>Another rather new CSS development is the flex-box layout system.  This solves all kinds of problems that we’ve had in the past.  The problem is, it is so new that it doesn’t work exactly the same way on all of the browsers. What the flex-box layout system does is that it allow us to layout rows and columns specifying the width of the columns or rows within them.  The Flex Layout package takes that concept and expands on it as well as making sure it works the same way across all browsers. First, instead of using CSS, it does all of the same work using directives.  This puts the layout closer to the code we want to impact without violating the single responsibility principle.  Think about it.  Layout stuff like this is generally component specific.  Not something we want to  generalize beyond that.  In the old days, we did need to generalize layout like this more because we were applying it to multiple pages.  But our common layout is typically handled by our top most component in a SPA. Beyond all of this, it also allows you to specify when a particular directive, or element, should apply based on screen size.  So, it takes the Bootstrap grid layout system and makes it even more powerful.  I’ll probably still use Boostrap for what a component looks like, but I’m planning to move the bulk of my page layout to Flex Layout.</p>
+<h2 id="Optimize-Change-Detection"><a href="#Optimize-Change-Detection" class="headerlink" title="Optimize Change Detection"></a>Optimize Change Detection</h2><p>If you are coming from the AngularJS world, you are use to Angular doing all of your change detection for you.  And by default, this works similarly in Angular.  But, you can improve the performance of your Angular application by using OnPush change detection.  This makes it so that the component will be marked for change detection when the pointers it is looking at change.  This way, it doesn’t have to (for example) evaluate all of the elements in an array just to figure out if it need to redraw the component. However, sometimes this doesn’t work.  In this case, you’ll need to tell the component that it should redraw.  To do this, make sure you’ve injected <code>ChangeDetectorRef</code>and then call the member function <code>markForChange()</code> to let the system know, this component should be updated. I don’t know about you, but I’m loving Angular!</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/jedi-angular-2-tips-and-tricks/" data-id="cjiw7uccr00jddghi9256z2kq" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular-2/">angular 2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/">css</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tips/">tips</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tricks/">tricks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-coasting-curiosity-diversification-and-being-awesome" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/coasting-curiosity-diversification-and-being-awesome/">Coasting, Curiosity, Diversification and Being Awesome</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/coasting-curiosity-diversification-and-being-awesome/" class="article-date"><time datetime="2017-03-21T10:30:00.000Z" itemprop="datePublished">2017-03-21</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Opinion/">Opinion</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>There are two twin evils that I see in the programming community.  The first is the programmer who knows what he knows and has no desire to learn more.  I call these, “coasters”.  And then there are the programmers who are so curious that they try to learn every new thing that comes along, with no focus.  The interesting thing is, both of these types of people end up at the same place. Out of work.  The cure for both is the same.  Being Awesome. [caption id=”” align=”aligncenter” width=”640”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/03/image-3.png" alt="Coasting, Curiosity, Diversification and Being Awesome" title="Coasting, Curiosity, Diversification and Being Awesome"> Photo credit: <a href="//www.flickr.com/photos/pedalfreak/3745777389/">aaronHwarren</a> via <a href="//visualhunt.com/re/1b14eb">Visual hunt</a> / <a href="//creativecommons.org/licenses/by-nd/2.0/"> CC BY-ND</a>[/caption] </p>
+<h2 id="Coasting-Is-for-Morons"><a href="#Coasting-Is-for-Morons" class="headerlink" title="Coasting Is for Morons"></a>Coasting Is for Morons</h2><p>If you are reading this blog, you are probably not in this category.  In fact, it probably frustrates you to watch these types of programmers as much as it does me. But for completeness, let’s describe the coasting moron. These are the programmers who learned how to program more than 5 years ago and got a job and have never moved since.  They are still programming in the same language they learned originally.  They are probably still at the same job they started at.  And, if they had to get a new job, they probably would not be able to find one because their skills are SO out of date. They are still using Web Forms or MVC in ASP.NET, have no idea how to use anything beyond .NET 2.0.  Or worse, they learned how to program in Visual Basic back in the day and couldn’t write a proper .NET application to save their life. They know HTML 3.2 and maybe xHTML, but have no idea what HTML5 is. And if they had to use JavaScript, they are probably still stuck using ECMA Script 3.  This is to say nothing of knowing the dangers of global variables or what prototypal inheritance is. They are doomed because they are so far behind, it would be impossible to to catch up.</p>
+<h2 id="Curiosity-Killed-the-Cat"><a href="#Curiosity-Killed-the-Cat" class="headerlink" title="Curiosity Killed the Cat"></a>Curiosity Killed the Cat</h2><p>On the opposite end of the spectrum is the programmer who chases every new programming idea that comes out.  These are the programmers who typically complain about things like <a href="//blog.dmbcllc.com/javascript-fatigue-makes-me-scream/">JavaScript Fatigue</a>.  While they are slightly better off than the programmer who learns nothing, they problem they face is that because they are trying to learn too much at once, they learn nothing.  You have to commend their curiosity though. Fortunately, with a bit of structure, we can help the curious programmer.  They are already motivated.  And while I might be able to help the coaster in a one on one situation, I’m not going to spend a lot of time trying in this post.  Why write to people who aren’t even likely to read? But I can help you.</p>
+<h2 id="Diversification-for-Programmers"><a href="#Diversification-for-Programmers" class="headerlink" title="Diversification for Programmers"></a>Diversification for Programmers</h2><p>So, first, what should you learn next?  Another language?  A new operating system? Well, the first thing you need to do is list out all of the things you are interested in.  Once you have that list, the next thing you want to try to figure out is which of those things is going to make you more valuable where you are today without causing you to learn more than one new thing. For example, you may currently know how to program in C# or VB.NET but only have a rough idea of how to use SQL other than basic CRUD operations.  Maybe a deep dive into <a href="//blog.dmbcllc.com/SqlForNetProgrammers">learning SQL</a> would be the next path. Or maybe you are doing some web development and know a bit of JavaScript, but haven’t looked at any of the SPA frameworks that are currently available.  Pick one and learn it.  I recommend Angular2 at this point, but it doesn’t really matter. Find something on your list and learn it. Anything you learn is good. Or maybe you are interested in a brand new language, but you can stay within the same basic framework.  For example, I know C#, but I’m intrigued by functional programming.  F# is on my short list of things I might learn next. The idea is to move incrementally rather than leaping to something where everything is new again.  If you can somehow work this all into your day job, even better.  You can’t always, but it is the fastest way to learn new stuff.</p>
+<h3 id="Learn-Outside-of-Programming"><a href="#Learn-Outside-of-Programming" class="headerlink" title="Learn Outside of Programming"></a>Learn Outside of Programming</h3><p>But it isn’t all about programming, is it?  What can you learn that isn’t directly related to programming?  There are all kinds of things.  And the broader knowledge can help your programming as well.  Maybe you have a side interest in business, finance, or marketing.  Maybe you find yourself having trouble with interpersonal relationships.  There are all kinds of other things you could be studying that really have nothing to do with programming directly, but have everything to do with making you more valuable both as a person and as an employee. Find outside interest!</p>
+<h2 id="Focus-Make-Awesome"><a href="#Focus-Make-Awesome" class="headerlink" title="Focus Make Awesome"></a>Focus Make Awesome</h2><p>Having said all of this.  The real trick is focus.  As I pointed out above, it is great to be curious.  We can do something with that. But, if you try to learn more than 3 things at a time, you will end up learning nothing well. One of the guys I work with has a Trello board with a list of possible things to learn.  I have a stack of sample kindle books to read someday, maybe.  They are things I was curious about at one point.  If I’m still interested when I’m looking for something new to read, I’ll pull them down and read the sample. But here’s the thing.  I only focus on learning 2 or 3 new things at a time.  Generally, one new programming thing and one new not programming thing. So, currently, I’m learning all things Angular2.  My goal is to be THE Angular2/JavaScript expert in Connecticut.  I’m well on my way. I have two other interest that have nothing to do with programming.  One is Options Trading.  I’m at a point with that where it only takes a few minutes a day.  So, I have room for something else. That something else is everything brain science.  Psychology, Sociology, Hypnosis, Memory, and more.  It is a fascinating world.</p>
+<h2 id="Be-Awesome"><a href="#Be-Awesome" class="headerlink" title="Be Awesome"></a>Be Awesome</h2><p>There is a story about two guys who were in the woods when they ran into a bear.  Being smart hikers, they agreed to try standing still to see if the bear would just ignore them.  This worked well. But, after the bear left, one of the guys said to the other, “What would you have done if standing still didn’t work?”  To which the second guy said, “I would have run as fast as I can.”  The first guy responded, “But, do you really think you can outrun a bear?!”  And then the second guy says, “I wouldn’t have to out run the bear.  I only need to out run you.” And that is the market we live in.  The good news is, there are so many people that are coasting right now that “awesome” is a pretty easy level to achieve in life. So, go out, do some focused learning and be awesome</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/coasting-curiosity-diversification-and-being-awesome/" data-id="cjiw7uc4200acdghiyzcxse29" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/net/">.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programming/">programming</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-3-javascript-fallacies-you-might-believe" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/3-javascript-fallacies-you-might-believe/">3 JavaScript Fallacies You Might Believe</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/3-javascript-fallacies-you-might-believe/" class="article-date"><time datetime="2017-03-14T11:30:00.000Z" itemprop="datePublished">2017-03-14</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Javascript/">Javascript</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>You know, you think the whole world knows something is true until you hear someone people respect say something really dumb.  The three JavaScript fallacies I have here are actual statements I’ve heard over the last week during a discussion about Angular2 and Rect.  What makes these fallacies particularly interesting is that they sound plausible.  In fact, there are time when they are even true.  But in the larger context of a JavaScript application they are nearly always false. So, here are 3 JavaScript Fallacies you may still believe that you may want to reevaluate. [caption id=”” align=”aligncenter” width=”640”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/03/image-2.png" alt="3 JavaScript Fallacies You Might Believe" title="3 JavaScript Fallacies You Might Believe"> Photo credit: <a href="//www.flickr.com/photos/barkbud/4341791754/">bark</a> via <a href="//visualhunt.com/re/8dc251">VisualHunt</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a>[/caption] </p>
+<h2 id="Direct-Access-to-the-DOM-is-Faster-than-using-a-Virtual-DOM"><a href="#Direct-Access-to-the-DOM-is-Faster-than-using-a-Virtual-DOM" class="headerlink" title="Direct Access to the DOM is Faster than using a Virtual DOM"></a>Direct Access to the DOM is Faster than using a Virtual DOM</h2><p>OK.  I will grant that if you only ever want to change one thing on the screen at a time, yes accessing the DOM directly from JavaScript is probably going to be faster than going through some kind of Virtual DOM layer as is common in React, Angular2 and several other libraries and frameworks that are available today. But, let’s fact is, that’s not how most of code works.  If you are writing this kind of application and you are using a library or framework that uses a virtual DOM layer, something is wrong.  I would argue you’ve probably chosen the wrong library for what you are trying to do. But, let’s assume that you are writing a typical SPA application that doesn’t just update one area of the screen.  In this case, the fastest way to make this update is all at once.  One call to the DOM from JavaScript.  I’ve written before about how <a href="//blog.dmbcllc.com/javascript-performance-tweaks/">slow accessing the DOM is</a>. And for all of the performance enhancements since I wrote that article, accessing the DOM is still one of the slowest things you can do.  So, a framework that lets you write your code in a way similar to how you would write to the DOM directly, but lets you do this in a way that doesn’t actually write to the DOM until the last minute is FASTER than writing to the DOM directly.</p>
+<h2 id="Immutable-Objects-are-Necessarily-Slower-than-Mutable-Objects"><a href="#Immutable-Objects-are-Necessarily-Slower-than-Mutable-Objects" class="headerlink" title="Immutable Objects are Necessarily Slower than Mutable Objects"></a>Immutable Objects are Necessarily Slower than Mutable Objects</h2><p>Functional JavaScript programming has become the latest cool new buzzword in the JavaScript community, for a lot of good reasons, but one main concept that comes along for the ride is the idea of making all of our object immutable.  This means, for example, that if I want to modify an array, instead of changing the current array, I would create a new array and copy the elements and the new element into it.  No more push. Similarly, for a regular object that isn’t a list, we would create a new object and copy the existing elements into it and then overwrite the items that have changed.</p>
+<h3 id="Why"><a href="#Why" class="headerlink" title="Why?"></a>Why?</h3><p>Now, why would we want to go to all of this work?  It does seem like it would be faster to just modify the existing object.  Right? But you see, there is this little thing called “change detection” that more than makes up for all of this overhead I just described. In most of our applications, at some point we want to know if an object has changed, right?  If we can’t rely on the fact that we have a new object, we have to do a deep comparison of the two objects until we’ve determined that there is a difference, or we’ve been through the whole list and verified that the nothing has changed. Once we can rely on objects being immutable, we can use the equals operator (==, or ===) to see if the object has changed.  I’m sure you can see that this takes much less time than evaluating an entire object tree, even if you object only has two properties in it that need to be compared.</p>
+<h3 id="Real-Problem"><a href="#Real-Problem" class="headerlink" title="Real Problem?"></a>Real Problem?</h3><p>But let’s step back and look at the bigger picture.  In most of the code that I write, what we are really talking about is immutable arrays.  Yes there are other non-array places where we would use immutable objects, but my guess is that immutable objects impacts 80% of my code.  Get a list of records from the database for example. The fact of the matter is, every time I access the database, I get a new array back anyhow.  Even in the case of retrieving a single record, I still get a new object back. If I need to delete an element from an array, here again, I’ll end up creating a new object. In fact, with the exception of modifying a row, or adding a record to the end of a list, just about everything I tend to do with an array ends up being an immutable operation anyhow.  By making everything immutable, we are forcing the areas that we aren’t already implementing immutability to be immutable.  The point is, in terms of performance the net is an obvious gain both in terms of performance and in terms of consistency. And, going back to the issue of rendering our data into the DOM, because the change detection is faster, we can determine that a particular component doesn’t need to have the DOM updated quicker rather than re-rendering the entire DOM.</p>
+<h2 id="Backwards-Compatibility-means-I-can’t-upgrade-my-Development-Environment"><a href="#Backwards-Compatibility-means-I-can’t-upgrade-my-Development-Environment" class="headerlink" title="Backwards Compatibility means I can’t upgrade my Development Environment"></a>Backwards Compatibility means I can’t upgrade my Development Environment</h2><p>Continuing on.  Remember the conversation I’m referencing was about React and Angular2.  And the guy who was making these statements about performance was asserting that he couldn’t upgrade his React environment to use the latest and greatest tool chain because he had to support older browsers.  He specifically stated IE6.  Now, knowing the site he’s talking about, I doubt we make any money at all from people who run IE6.  But, let’s just assume for a second that we do.</p>
+<h3 id="So-what-you’re-telling-me…"><a href="#So-what-you’re-telling-me…" class="headerlink" title="So, what you’re telling me…"></a>So, what you’re telling me…</h3><p>is that you are willing to let performance suffer for 99% of your very large customer based because you need to support the 1% (I’m being generous here) of the people who have refused to upgrade and probably aren’t producing any revenue for the company?  Maybe I’m missing something, but this seems rather short sighted.  That, or maybe you just don’t know that the new features in the newer browsers allow you to not just write better JavaScript but also allow you to do things without JavaScript that perform better.  If you are really interested in writing fast web sites, you should be moving to the latest and greatest tool chain as often as is humanly possible.</p>
+<h3 id="Bugs-and-Security-Risk"><a href="#Bugs-and-Security-Risk" class="headerlink" title="Bugs and Security Risk"></a>Bugs and Security Risk</h3><p>Just this last week I saw a study that said that over a third of the web sites on the Internet were running code that left them venerable to security risk.  That is, the code they were running had known security risk.  By not upgrading your tools for public facing sites, you are leaving your company at risk.  When your site is compromised, do you want to be the one who has to explain to your boss that it is because you refused to upgrade your tools?  I sure don’t.</p>
+<h3 id="But-what-about-the-old-browsers"><a href="#But-what-about-the-old-browsers" class="headerlink" title="But what about the old browsers?"></a>But what about the old browsers?</h3><p>Well, if you really need to support the old stuff, there are polyfills that you can apply that will let you run the newer stuff in the older browsers.  Seems to me you get the best of both worlds.  Your customers who are up to date benefit with a better performing, and less buggy web site, and the customers using older browser still get to see something.  Are there places where you might still have to make some compromises.  Sure.  There are a few places.  But not enough that you shouldn’t upgrade.</p>
+<h2 id="What-is-the-Bigger-Problem"><a href="#What-is-the-Bigger-Problem" class="headerlink" title="What is the Bigger Problem?"></a>What is the Bigger Problem?</h2><p>So, how can this happen?  How can really smart people make really bad choices like this? I don’t really know, but I have a few theories. One is just plain arrogance.  Being so sure you are right that you never stop to think you might be wrong. I have to admit, when I first learned about immutability, I thought it sounded slow too.  But, my thinking went along the lines of, “well, much smarter people than me are working on this, they must think it makes sense.  I wonder why?”  And then I started digging for answers. So, I would encourage those who are responsible for making decisions to make sure that the people they are listening to can actually back up what they are saying and not just assume they are right because they seem so confident.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/3-javascript-fallacies-you-might-believe/" data-id="cjiw7ubua0003dghi7p0e7lkr" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular-2/">angular 2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/performance/">performance</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react-js/">react.js</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-confident-programmer-secrets-revealed" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/confident-programmer-secrets-revealed/">Confident Programmer Secrets, Revealed</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/confident-programmer-secrets-revealed/" class="article-date"><time datetime="2017-03-07T12:30:00.000Z" itemprop="datePublished">2017-03-07</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Opinion/">Opinion</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>To say there are secrets to being a confident programmer may seem a bit over the top.  But, you would be surprised at what makes a programmer seem confident, how you can be more confident, why confidence is no real indicator of truth, and why you need to arm yourself against confidence. [caption id=”” align=”aligncenter” width=”640”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/03/image.png" alt="Confident Programmer Secrets Revealed" title="Confident Programmer Secrets Revealed"> Photo via <a href="//visualhunt.com/re/7edea7">VisualHunt.com</a>[/caption] </p>
+<h2 id="Why-Be-Confident"><a href="#Why-Be-Confident" class="headerlink" title="Why Be Confident"></a>Why Be Confident</h2><h3 id="Persuade-the-Decision-Makers"><a href="#Persuade-the-Decision-Makers" class="headerlink" title="Persuade the Decision Makers"></a>Persuade the Decision Makers</h3><p>Look around the organization you work at.  Have you ever noticed that there are one or two people who have your manager’s ear?  Every time a decision needs to be made, the boss goes to them?  Why is that?  Why don’t they come to you?  You know just as much as they do, right?  Could it be that you simply don’t portray yourself as confident?  I didn’t say you weren’t confident.  Just that you aren’t perceived as confident.  Don’t worry, we’ll fix that shortly.</p>
+<h3 id="Better-Pay"><a href="#Better-Pay" class="headerlink" title="Better Pay"></a>Better Pay</h3><p>You will also notice that people who seem more confident also command a larger salary.  This is both because their confidence has moved them up the corporate ladder faster and because they are better able to interview for positions that most people would feel like are out of their reach.  Confidence, and the ability to communicate confidence is better for your bottom line.</p>
+<h3 id="Interview-Skills"><a href="#Interview-Skills" class="headerlink" title="Interview Skills"></a>Interview Skills</h3><p>Anyone who knows me knows I’m a big proponent of interviewing for new jobs even if you like where you are.  But let’s raise the bar on that.  Don’t just interview.  Practice interviewing for jobs that are a bit out of your reach projecting confidence that you do, indeed, qualify.  I can tell you from firsthand experience.  If you know your stuff and you project confidence that you know your stuff, you’ll end up being asked to fill positions you never dreamed of filling.</p>
+<h3 id="Consistency-with-Who-You-Are"><a href="#Consistency-with-Who-You-Are" class="headerlink" title="Consistency with Who You Are"></a>Consistency with Who You Are</h3><p>You are confident, right?  Imagine what would happen if you projected that confidence?  How would you feel if everyone else thought you were confident as well?</p>
+<h3 id="Feel-better"><a href="#Feel-better" class="headerlink" title="Feel better"></a>Feel better</h3><p>Let’s just assume for a second that nothing else I’ve said comes true.  I can tell you that if you follow my suggestions on how to be confident, you will feel better about yourself.  The fact of the matter is, you may have to exercise this confidence muscle a bit.  But the good news is that by following my confidence tips, you’ll also end up feeling more confident which will make the tips easier to implement, which will make you feel more confidence.  Confidence breeds confidence.  And, confidence feels really good.</p>
+<h2 id="How-to-Be-Confident"><a href="#How-to-Be-Confident" class="headerlink" title="How to Be Confident"></a>How to Be Confident</h2><h3 id="Know-your-stuff"><a href="#Know-your-stuff" class="headerlink" title="Know your stuff"></a>Know your stuff</h3><p>While it is possible to fake confidence, eventually that is going to catch up with you.  Confidence isn’t a con game.  Confidence is a projection of something that already exist.  So, the foundation of confidence is to know your stuff.  If you are projecting confidence about all things JavaScript, you’d better know all things JavaScript.  Follow podcast.  Read blogs.  Read books.  Rinse, later, repeat. But the simple fact is, there are some of you who know all there is to know about a subject and you still aren’t confident.</p>
+<h3 id="Stand-up-straight"><a href="#Stand-up-straight" class="headerlink" title="Stand up straight"></a>Stand up straight</h3><p>I’ve written before about how <a href="//blog.dmbcllc.com/the-psychology-of-programming/">your body language impacts your perception of yourself</a>.  I’ll say it again here.  If you want to feel more confident, stand up straight.  It isn’t just good for your posture.  It’s good for your emotional health.  And the fastest way I know of feeling more confident and being perceived as more confident is to stand up as straight as I can.  As you stand, walk and sit, imagine a string attached to your scalp pulling you up.  Be as tall as you possibly can.  Tuck in your belly.</p>
+<h3 id="Spread-out"><a href="#Spread-out" class="headerlink" title="Spread out"></a>Spread out</h3><p>Another body position that communicates confidence is spreading out.  The open, spread out posture communicates that you are comfortable in your own skin.  Avoid the closed off posture.  This communicates that you are protecting yourself.  The obvious question the brain has to ask is, “what are they protecting themselves from?”</p>
+<h3 id="Speak-with-authority"><a href="#Speak-with-authority" class="headerlink" title="Speak with authority"></a>Speak with authority</h3><p>The more confidently you can state a fact, the more likely it is to be accepted.  In fact, I’ve seen people state things that were verifiably false with such confidence even I wanted to believe them.  The only thing that kept me from doing so is that I intentionally went into that meeting keeping in mind that I was probably the most authoritative person on the subject in the room even though the person we were meeting with was the one who had been designated the authority for the moment.</p>
+<h3 id="Start-a-blog"><a href="#Start-a-blog" class="headerlink" title="Start a blog"></a>Start a blog</h3><p>Starting a blog is a confidence muscle exercise.  The more you write, the more you will end up knowing about what you are writing about.  It will also be the place where you are told you are wrong the most often.  I’ve written articles in the past where people have told me I was wrong.  Many times, they haven’t been very nice in how they tell me.  But this has been good because now I have learned to take criticism and correction even of the worst kind without losing confidence in my overall knowledge. I’ve learned stuff in the process which has made me even more confident.</p>
+<h3 id="Be-willing-to-be-wrong"><a href="#Be-willing-to-be-wrong" class="headerlink" title="Be willing to be wrong"></a>Be willing to be wrong</h3><p>Which leads to the last point.  Be willing to be wrong.  You can be confident.  As long as you are right most of the time, you can be wrong a few times and no one will care.  What you don’t want to do is to be wrong all of the time.  Soon, no one will listen to you.  This is what happened in the situation I mentioned above.  There were so many things the “authority” said during our meeting that were verifiably wrong that I left not trusting anything he had said.</p>
+<h2 id="Defending-against-confidence"><a href="#Defending-against-confidence" class="headerlink" title="Defending against confidence"></a>Defending against confidence</h2><p>And this leads nicely into my next point.  Just because someone is confident, doesn’t mean they are right.  And some people will, knowingly or not, project confidence to bullshit their way to where they want to go.</p>
+<h3 id="When-Two-People-Meet"><a href="#When-Two-People-Meet" class="headerlink" title="When Two People Meet"></a>When Two People Meet</h3><p>Basic social interaction theory says that when two people meet, a pecking order will be established such that one will be the leader and the other the follower.  In a group, a leader will emerge.  If you are a speaker, you can leverage this by identifying the perceived leader and speaking to them.  Everyone else will follow. In our situation, you want to go into meetings with the knowledge that you know as much as the person leading.  That everything that person says is subject to how you understand the world.  If they say something that contradicts your understanding, you can do one of two things.  You can contradict on the spot.  Or, you can verify later.  This depends on the situation and how well each strategy will advance your cause.  In the meeting I’ve been referencing, I kept my mouth shut.  He was already going the direction we wanted him to go, contradicting him would have worked against us and would not have served our purposes even a small amount. But, I maintained my status as the authority in the room, even if I said nothing.</p>
+<h3 id="Fact-Checking"><a href="#Fact-Checking" class="headerlink" title="Fact Checking"></a>Fact Checking</h3><p>I already mentioned this, but let’s bring this further into focus.  Just because someone says something is true doesn’t mean it is.  If someone says something and this is the first you’ve heard of it.  You’d better make sure it really is true.  This goes double if you’ve already heard him say things you know are wrong. Which items you actually point out will depend on the situation.  Again, in the case above, while we were told several things that were wrong, I only pointed out one that could have been a potential stumbling block.</p>
+<h3 id="Emotional-Awareness"><a href="#Emotional-Awareness" class="headerlink" title="Emotional Awareness"></a>Emotional Awareness</h3><p>One thing I think programmers tend to have a really hard time doing is listening to their emotions.  But, if you get good at this, you will often know that something is not right before you can articulate why.  Listen to that inner voice.</p>
+<h2 id="Authority-and-Confidence"><a href="#Authority-and-Confidence" class="headerlink" title="Authority and Confidence"></a>Authority and Confidence</h2><h3 id="Confidence-Without-Speaking"><a href="#Confidence-Without-Speaking" class="headerlink" title="Confidence Without Speaking"></a>Confidence Without Speaking</h3><p>You might think that authority and confidence are the same thing.  But they aren’t.  I can be the perceived authority on a subject without confidence and I can portray confidence without being the authority.  In fact, just how I hold myself shows that I am confident even if I have no authority or don’t perceive myself as an authority.</p>
+<h3 id="Confidence-vs-Respect"><a href="#Confidence-vs-Respect" class="headerlink" title="Confidence vs Respect"></a>Confidence vs Respect</h3><p>In the same way, I can be confident while still respecting those who are in authority.  We all have people who are in authority over us.  This does not have to reduce our confidence.  I’m good at what I am good at.  They are good at what they do.  We each have jobs that we are best suited for.  Confidence doesn’t mean we take over, it just means we have influence.</p>
+<h2 id="Don’t-Get-Caught"><a href="#Don’t-Get-Caught" class="headerlink" title="Don’t Get Caught"></a>Don’t Get Caught</h2><h3 id="Don’t-Assert-Something-You-Can’t-Defend"><a href="#Don’t-Assert-Something-You-Can’t-Defend" class="headerlink" title="Don’t Assert Something You Can’t Defend."></a>Don’t Assert Something You Can’t Defend.</h3><p>Do yourself a favor. If you aren’t sure, keep your mouth shut.  As I’ve already illustrated, if you say something that someone else can verify is inaccurate, everything else you say is subject to evaluations.</p>
+<h3 id="Know-Your-Topic-Inside-Out"><a href="#Know-Your-Topic-Inside-Out" class="headerlink" title="Know Your Topic Inside Out"></a>Know Your Topic Inside Out</h3><p>The danger, of course, is that you may think you know, but you really don’t.  Make sure you are a student of what you think you know.  Don’t be that guy who thinks he knows, but really knows nothing.  Or that guy who is working with old information.</p>
+<h4 id="4-Levels-of-Learning"><a href="#4-Levels-of-Learning" class="headerlink" title="4 Levels of Learning"></a>4 Levels of Learning</h4><p>There are four levels of learning.  Or knowledge.  The first level is that we don’t even know that there is something to know.  Most of us start there.  But the second level is probably the most dangerous.  Knowing just enough to think you know when you really know relatively little.  As you progress, you’ll eventually end up realizing there is a whole lot more to know than what you thought until finally, you know the subject so well you aren’t even thinking about it anymore.  Kind of like breathing. You want to make sure you are working from the level of knowing the subject so well, it is like breathing.  The problem is, many people who are in the second level think they are in the fourth level.  If you are not reading the latest on the subject, not reading blog post, not listening to podcast, you are probably still in level 2 and working off of assumptions rather than facts.</p>
+<h4 id="One-eyed-Man-is-King"><a href="#One-eyed-Man-is-King" class="headerlink" title="One-eyed Man is King"></a>One-eyed Man is King</h4><blockquote>
+<p>In the kingdom of the blind, the one-eyed man is king.</p>
+</blockquote>
+<p>The point is this, you may currently be that one-eyed man.  The only reason you have the authority you do is because you are the best they have.  In fact, most of us are where we are because that’s the best they have.  But, don’t rest there.  Try to gain that second eye.  You really don’t want to be in a position where a two-eyed man can come in and point out all that isn’t right.  This is why you want to go for the fourth level of learning in all that is important to you.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/confident-programmer-secrets-revealed/" data-id="cjiw7uc4b00amdghi0niszckh" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/authority/">authority</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/confidence/">confidence</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programming/">programming</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-accessing-private-fields-in-typescript" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/accessing-private-fields-in-typescript/">Accessing Private Fields in TypeScript</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/accessing-private-fields-in-typescript/" class="article-date"><time datetime="2017-02-28T12:30:00.000Z" itemprop="datePublished">2017-02-28</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/TypeScript/">TypeScript</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Have you ever needed to access a private field in TypeScript?  The most common place you may find yourself needing to do this is while writing a unit test.  But, I also found myself needing to do this while using a JavaScript library where the field wasn’t declared in the type file for the library I was using. Now, suppose you could access those private fields effortlessly and easily.  How valuable would that be to you? [caption id=”” align=”aligncenter” width=”640”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/02/image-3.png" alt="Accessing Private Fields in TypeScript" title="Accessing Private Fields in TypeScript"> Photo via <a href="//visualhunt.com/">VisualHunt</a>[/caption] </p>
+<h2 id="Unit-Test"><a href="#Unit-Test" class="headerlink" title="Unit Test"></a>Unit Test</h2><p>In general, when you write a unit test, you only want to access public fields for both the purposes of setting up your tests and for evaluating the success or failure of the tests. But, occasionally, this is not possible. Now, what most people don’t realize is that, unlike private members in JavaScript, where the members aren’t accessible, in TypeScript, the resulting JavaScript has the variables just as public as the public members.  In fact, the only thing that makes a member private in TypeScript is the compiler. This means that this TypeScript code:</p>
+<p>class Foo {<br>    private member1: string;<br>    private bar() { }<br>}</p>
+<p>Ends up looking something like this in JavaScript</p>
+<p>function Foo() {<br>    this.member1 = null;<br>    this.bar = function() { }<br> }</p>
+<p>Which means that</p>
+<p>var v = new Foo();<br>var x = v.member1;<br>v.bar();</p>
+<p>Should be working code. But, if you type that code into JavaScript and try to compile it, it won’t compile.  Which means you can’t write your unit test in TypeScript and access the private variables. Or can you?</p>
+<h2 id="TypeScript-is-just-JavaScript-with-Sugar"><a href="#TypeScript-is-just-JavaScript-with-Sugar" class="headerlink" title="TypeScript is just JavaScript with Sugar"></a>TypeScript is just JavaScript with Sugar</h2><p>One small little fact about TypeScript that we seem to forget is that it is just JavaScript with some sugar.  What this means in practical terms is that, if we want to, or in this case, need to, we can write plain old boring JavaScript as part of our TypeScript code. And then the other little bit we tend to forget is that we can access a field using the name of the field as an indexer. That is, this:</p>
+<p>v.member = ‘x’;</p>
+<p>is functionally the same as this:</p>
+<p>v[‘member’] = ‘x’;</p>
+<p>And because it all compiles down to JavaScript, and the private fields are public JavaScript fields, we can use the named index to access the field.</p>
+<h2 id="JavaScript-Libraries"><a href="#JavaScript-Libraries" class="headerlink" title="JavaScript Libraries"></a>JavaScript Libraries</h2><p>Similarly, this past week I was working on finishing up some Angular 2 code.  And one of my tests was failing.  Even though the code was working in Chrome fine.  The issue was that I was using PhantomJS which doesn’t have the latest JavaScript spec implemented, so it relies on polyfills.  One of the polyfills I was using was not compressing the Regular Expressions that I was indirectly using correctly which resulting in the test throwing an exception. After tracking down the source of the problem for a day, I finally found a line at the bottom of the GitHub page that told me that I could turn the routine off by calling a function.  And here is where the trouble begins. You see, I’m using an otherwise documented internal library that has a set of types already defined for it.  This particular function is not a part of the types for this class.  So, when I tried to call it, I got a compiler error. So, I pulled out the named index trick above and got the code to compile and ultimately got my test to run successfully. It all just requires that we think outside the box a bit and most any problem can be solved.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/accessing-private-fields-in-typescript/" data-id="cjiw7ubvi0018dghiscj67zoe" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/private/">private</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/testing/">testing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-javascript-fatigue-makes-me-scream" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/javascript-fatigue-makes-me-scream/">JavaScript Fatigue Makes Me Scream</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/javascript-fatigue-makes-me-scream/" class="article-date"><time datetime="2017-02-21T12:30:00.000Z" itemprop="datePublished">2017-02-21</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Javascript/">Javascript</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Maybe JavaScript Fatigue makes you scream too. Are you annoyed with the constantly changing JavaScript environment?  Do you wish things could just settle down for a bit?  Have you decided that you won’t learn anything new because there will just be something new to learn tomorrow? Welcome to JavaScript Fatigue. But frankly, unlike many people who talk about JavaScript Fatigue, I see JavaScript Fatigue and the much broader subject of language fatigue as a symptom of a much larger problem that has less to do with JavaScript and more to do with human psychology and the state of the programming community at large. <img src="//blog.dmbcllc.com/wp-content/uploads/2017/02/image-2.png" alt="image" title="image"> </p>
+<h2 id="What-is-JavaScript-Fatigue"><a href="#What-is-JavaScript-Fatigue" class="headerlink" title="What is JavaScript Fatigue"></a>What is JavaScript Fatigue</h2><p>JavaScript Fatigue is the belief that there are so many different ways of assembling a JavaScript project that instead of just having to learn JavaScript, you have to learn several other related technologies.  It is in essence, more about decision overload than it is about JavaScript specifically. Think about the average JavaScript project that goes beyond the (now) old school “Augment my form with some jQuery.” Here are a sample of decisions that need to be made:</p>
+<ul>
+<li>Should you use a JavaScript framework, or just write native JavaScript?</li>
+<li>If you decide to use a framework, which one should you use?</li>
+<li>What tool(s) will you use to bundle, minify, cache bust, and tree shake your code?</li>
+<li>Should you bother lazy loading?</li>
+<li>Will you use MVVM, MVC, Redux or something else as a basic architecture?</li>
+<li>How do you plan on dealing with AJAX calls?  Callback hell?  Promises? RxJS?  Something yet to be created?</li>
+<li>What directory structure will you use?</li>
+<li>What component libraries will you use?</li>
+<li>How will you style your application?  Raw CSS? Bootstrap? Material Design?</li>
+<li>What development environment will you use?</li>
+<li>Oh and by the way.  To use most of these tools you’ll need to learn node and may need to decide between NPM and YARN.</li>
+</ul>
+<p>I recently heard that for a basic React application there are about 40 different decisions of this kind that need to be made.</p>
+<h2 id="Why-JavaScript-Fatigue-Is-Considered-a-Problem"><a href="#Why-JavaScript-Fatigue-Is-Considered-a-Problem" class="headerlink" title="Why JavaScript Fatigue Is Considered a Problem"></a>Why JavaScript Fatigue Is Considered a Problem</h2><p>If you are working on your own, or working in a small shop without any clear architectural direction, the choices can seem overwhelming. For that matter, if you are an architect, this is still a pretty long list of things that you need to learn well enough to evaluate. But the reason JavaScript fatigue is a problem is because it triggers emotions of fear, anger, and depression. It all starts with fear.  You look at all the stuff that you “need to learn” and think, “I can’t possibly learn all of that.  And even if I do, there will be something newer tomorrow that I’ll need to learn.” And so your fear turns to anger.  I’m not talking rage kind of anger.  Just that mild, “I’m not in control here and I’m feeling a bit uncomfortable” kind of anger.  And this point, the next most logical thing most of us attempt to do is to try to get some sort of control over the situation.  But in this case, the beast can’t be tamed.  So, we resign ourselves to the situation and decide that since we can’t control any of it, we’ll give it a name and in really extreme situations give up learning any of it. Yes, I’ve actually read comments and had conversations with people who have told me as much.  “Too much new stuff to keep track of, I’ve just given up.” Hey, OK.  Don’t complain to me when you can’t get a job though.</p>
+<h2 id="How-to-Fix-JavaScript-Fatigue"><a href="#How-to-Fix-JavaScript-Fatigue" class="headerlink" title="How to Fix JavaScript Fatigue"></a>How to Fix JavaScript Fatigue</h2><p>I used to think that the people who had given up like this had either lost their love of learning, or were so distracted by the bright and shiny that they had hit overload and couldn’t continue.  I now see that the real problem is depression.  A natural extension of anger. But, suppose there was a different way of looking a all of this JavaScript Fatigue stuff? Yes, there is a lot of stuff to learn.  A lot of stuff you could learn.  And you see, that’s the first step.  There is a world of difference from NEEDing to learn all that is out there and having that all be things you could learn. I doubt you evaluated all of the possible languages you could use prior to using the first language you used.  Maybe it was chosen for you by your first job.  Maybe it was the language you were most attracted to.  In my case, I tried three different languages prior to my first job and when I started my first job, I wasn’t using any of them. Even today.  How many languages are there?  How many do you know? The point is, you don’t HAVE to know everything about anything.  You really only need to know enough to get your work done.  Sure, there will be something new and shiny.  Take your time and evaluate if it is even worth looking at.  Dip your toes in.  Does what you’ve seen so far make sense? Go further. Recently, YARN has become the “hot new thing.”  I tried it.  It didn’t work in my current environment.  At least for now, we are sticking with NPM.  We’ll take another look when it matures a bit further. I love learning.  But, I also realize I can only learn one thing at a time.  I can’t be awesome at everything.  So, I focus.  Everything else I might need to know, I learn well enough to get the core thing done.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>And so, the cure for JavaScript Fatigue lies not outside of us, but within.  Fix your perspective.  Focus on what you need to know now.  Learn bits at a time.  Don’t worry about what is coming.  There will always be new stuff.  Not just with JavaScript but in the programming world in general.  Even in the world at large.  Don’t worry, be happy!</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/javascript-fatigue-makes-me-scream/" data-id="cjiw7ucbi00i0dghijol95ijd" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-reasons-software-architecture-matters" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/reasons-software-architecture-matters/">Reasons Software Architecture Matters</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/reasons-software-architecture-matters/" class="article-date"><time datetime="2017-02-14T12:30:00.000Z" itemprop="datePublished">2017-02-14</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Software-Architecture/">Software Architecture</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Several weeks ago, I was talking to a programmer and we got into a discussion about the importance of software architecture.  I maintained that having a defined architecture is important regardless of the team size, the person I was talking to asserted that architecture wasn’t necessary when there was just one person involved. But here’s the thing.  All software has an architecture.  Even the most junior of programmers has an idea of how code should fit together.  At issue isn’t really about architecture.  It is about having a defined architecture, based on experience and best practices, that will allow the team to develop the software in question as efficiently as possible.  Software architecture, at its core, says, “this is how we build software.” To find the reasons why software architecture matters, it is helpful to think about what happens when there isn’t any defined architecture in place.  For the purposes of this article, I’m going to generalize on how architecture impacts teams and where appropriate show why that is also important when your team is just you. [caption id=”” align=”aligncenter” width=”640”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/02/image-1.png" alt="Reasons Software Architecture Matters" title="Reasons Software Architecture Matters"> Photo via <a href="//visualhunt.com/">VisualHunt</a>[/caption] </p>
+<h2 id="Assumptions"><a href="#Assumptions" class="headerlink" title="Assumptions"></a>Assumptions</h2><p>In a team, having an architecture is important simply because it means we can make certain assumptions about how someone wrote the code you are now looking at. Have you ever been in a situation where you wrote some code assuming that the programmers who would be using it had written their code in a particular way only to find out that they hadn’t and because of that, your code needs to be rewritten? Or, how about the time you went to work on a bug? Once again, you made some assumptions that weren’t true so it took you much longer to fix the bug than it would have had you known that your assumptions were wrong. Imagine what it would be like in those situations is the assumptions you were making were legitimate because everyone was using the same playbook.  How much easier would that make your life? Ah, but your team is just you, and you know how you put the code together.  OK.  Fine.  But what about two years from now?  Without a defined architecture, would you say you code things the same way every time?  I know, even with an architecture, sometimes I “cheat” and my code doesn’t always follow the rules I’ve set out.  If I do that WITH an architecture, I can just imagine how sloppy my code would be without it.</p>
+<h2 id="Arguments"><a href="#Arguments" class="headerlink" title="Arguments"></a>Arguments</h2><p>Get any two programmers in a room and you will almost always get two different opinions about how software should be written.  A good architecture reduces the number of arguments so we can get on with the craft of writing code.  I’ve been in situations where, even with an architecture, there are programmers who disagree.  Some with good reason.  But if you don’t have any definition, all you end up with is two opinions with no rule book to say who is “right.”</p>
+<h2 id="Cognitive-Load"><a href="#Cognitive-Load" class="headerlink" title="Cognitive Load"></a>Cognitive Load</h2><p>With so much to consider in software development, the less decisions we have to make, the better.  This leaves brain power for solving problems that still need answers. There are people who wear the same thing every day, or nearly the same, so they don’t have to make that decision.  I’m actually one of those people.  I kind of fell into this mode of dressing because I’m color blind and this is one of my ways of compensating.  But I can tell you, it leaves me free to think about other things as I get ready in the morning. This is another place where software architecture will help you regardless of team size.  Even if you are the only one on the team, this is one less thing to think about.</p>
+<h2 id="Scrambled-Eggs"><a href="#Scrambled-Eggs" class="headerlink" title="Scrambled Eggs"></a>Scrambled Eggs</h2><p>Software built without an architecture will eventually take on the feel of scrambled eggs.  Imagine how hard it will be to modify the code when you have no idea where the different parts of your code should go. And once again, we end up with a system that is difficult to maintain simply because no one knows for sure where the various parts of the system should live.</p>
+<h2 id="Good-Architecture"><a href="#Good-Architecture" class="headerlink" title="Good Architecture"></a>Good Architecture</h2><p>You’ll notice I’ve been saying “Good” architecture.  This is because I’ve been in situations where the architecture has not been defined tightly enough leaving too many loop holes.  I’ve also seen architectures misapplied.  It is important when an architecture is defined that the person defining is knows something about the tools that will be used and the environment they will be used in. It is also helpful if the architectures that are defined are defined by consensus rather than having one person defining it.  We all have holes in our thinking.  Someone may be a great architect, but maybe they suffer from the old saying, “when all you have is a hammer, everything looks like a nail.”  More people bring more points of view.  This can fill in gaps and can produce an architecture that can be used rather than one that will be resisted.</p>
+<h2 id="Success"><a href="#Success" class="headerlink" title="Success"></a>Success</h2><p>This is all about building successful systems.  But just because you got some code working and into production doesn’t mean the code is going to hold up over time. There is one guy I know who brags about how fast he can write code.  Well, yes, you did get that into QA in a month.  But, it took you three months to get it out of QA. The test of a good architecture is:</p>
+<ol>
+<li>Does it help make the project successful?</li>
+<li>Is it relatively easy to understand?</li>
+<li>Has it been adopted by the team using it?</li>
+<li>Is it generally accepted as a valid architecture in the community at large for similar software.</li>
+<li>Does it make the code easier to maintain?</li>
+</ol>
+<h2 id="Getting-Started"><a href="#Getting-Started" class="headerlink" title="Getting Started"></a>Getting Started</h2><p>So, now I’ve convinced you that you should be using an architecture.  How do you get started? It is a lot easier than you think.  Most frameworks either have an architecture already defined, or somewhere the community has already defined one for it.  Start there.  Maybe refine it a bit and settle on something that works.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>If you don’t use an architecture yet, you are probably still thinking, “Yeah, but I don’t have any issues that this would solve.”  To which I would answer, “How do you know?  What if your wrong?” You see, most of my reasons have to do with making software development easier or better.  I’m not saying you can’t get something done without architecture.  What I am saying is that with architecture you can do everything you are already doing better, faster, cheaper, and easier.  Until you try it, you’ll never know if I’m right or not.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/reasons-software-architecture-matters/" data-id="cjiw7uchj00o9dghizug84f64" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/best-practices/">best practices</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/software-architecture/">software architecture</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-the-psychology-of-programming" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/the-psychology-of-programming/">The Psychology of Programming</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/the-psychology-of-programming/" class="article-date"><time datetime="2017-02-07T12:30:00.000Z" itemprop="datePublished">2017-02-07</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Opinion/">Opinion</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Over the past week, I’ve listened to and read several articles that have started me thinking more about the Psychology of Programming. Not that I haven’t been thinking about this for a while.  I’ve been quite intrigued by human behavior for a while now.  But more recently, there was this podcast over on dotNetRocks about “<a href="//dotnetrocks.com/?show=1406">Punishment Driven Development</a>”. And this comment:</p>
+<blockquote>
+<p>The happiest people in my experience are those that have options. They have transferable skills, see their employment as a personal choice, have self confidence that they are providing value to the company and are in a position professionally and personally where they could change job if they needed. The feeling of being trapped in a position from which you can’t escape (either a dissatisfying job, bad manager or whatever) will lead to negativity.</p>
+</blockquote>
+<p>Which I almost agree with, except I think it is the negativity that leads to feeling trapped. And then there is the book I am reading, “<a href="//amzn.to/2l4O96Y">Influence: The Psychology of Persuasion</a>” which goes into detail on why we make decisions that seem to go against our better judgment. Then there is another podcast that discusses <a href="//devchat.tv/js-jabber/jsj-247-building-a-development-environment-with-cory-house">the decisions we make as we start a new JavaScript project</a>. And all of this culminates into the following thoughts: [caption id=”” align=”aligncenter” width=”640”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/02/image.png" alt="The Psychology of Programming" title="The Psychology of Programming"> Photo credit: <a href="//www.flickr.com/photos/deltamike/751707089/">deltaMike</a> via <a href="//visualhunt.com">VisualHunt.com</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a>[/caption] </p>
+<h2 id="What-Makes-You-Happy"><a href="#What-Makes-You-Happy" class="headerlink" title="What Makes You Happy?"></a>What Makes You Happy?</h2><p>It really does amaze me that I work with people who seem so unhappy with their work place and yet, aren’t making any effort to find another place to work.  As a consultant with nearly 30 years of experience, I can tell you first hand that some places are better than others to work.  There is probably a place for you if you’d just try to find it. Or, maybe the problem is you.  Maybe you’ve never liked working. Or maybe you like complaining.  Maybe being happy is an attitude and isn’t really dependent on our circumstances.  Maybe, the happy people like their jobs? Or maybe it is just easier to blame the company than to take responsibility.  I find happy people take action.  Make opportunities.  Learn new stuff.  The unhappy people I know blame something or someone for who they are.</p>
+<h2 id="It’s-All-in-your-Head"><a href="#It’s-All-in-your-Head" class="headerlink" title="It’s All in your Head"></a>It’s All in your Head</h2><p>Here is a scary thought though.  All your ways of reacting to events in your life are learned responses.  Most of those responses you learned before you were 5.  But, here’s the good news.  Since they are learned responses, you can, if you want to, re-learn responses. We all have behaviors we don’t like.  Some of us get angry for stupid stuff.  Some of us over eat.  Some drink too much.  Some smoke.  In almost all cases, the behavior isn’t the real issue.  The question we need to ask ourselves is why do we do those things?  In what way to we believe doing these things is going to help us?  What would you need to believe differently in order to change?  What is keeping you from believing something different?</p>
+<h2 id="It’s-Just-an-Opinion"><a href="#It’s-Just-an-Opinion" class="headerlink" title="It’s Just an Opinion"></a>It’s Just an Opinion</h2><p>I have a rule.  “Never argue about opinion.”  I’ll present why I believe something is true.  State all my reasons.  Clarify if I think that is necessary.  But as soon as I realize that the discussion has turned into an argument where no one is going to convince the other of anything.  I disengage.  This is why some blog comments never get answered. Not everything is opinion.  I’ve had people leave comments correcting my understanding and pointing to authoritative documentation that says they are right.  Thank you.  But, in the grand scheme of life, there is very little that falls into the realm of fact.  Most of what we argue about as programmers is opinion. What is interesting about opinion is that the more you know about a subject, the more opinionated you are likely to be.  That can be a good thing.  Show me a programmer who doesn’t have opinions and I’ll show you a programmer who is just doing what they’ve been told to do.  Show me a programmer who has an opinion but can actually argue multiple sides of an argument and I’ll show you a programmer who really knows his stuff.  If you hold opinions so strongly that you are offended when someone disagrees with you, you have an issue.</p>
+<h2 id="Herd-Mentality"><a href="#Herd-Mentality" class="headerlink" title="Herd Mentality"></a>Herd Mentality</h2><p>For years, it has puzzled me how, as a community, we can know that writing unit test for our code is a worthwhile activity, and yet hardly anyone I know does this.  Truth be told, it is a struggle even for me. But, here’s an interesting fact.  We tend to do what we SEE others doing.  If no one on your team is writing test, you think, “we don’t write test here.”  This behavior explains why, in test after test, groups will ignore people who need help while individuals by themselves will provide aid.  This impacts a lot of our life if you think about it.  How many times have I assumed that someone else is going to call the power company when the power goes out during a snow storm?  Certainly, if the whole street is impacted, someone will call. The very fact that it has impacted the whole street is indication enough that no one else has called.  I hope I remember this the next time the power goes out.</p>
+<h2 id="Appeal-to-Authority"><a href="#Appeal-to-Authority" class="headerlink" title="Appeal to Authority"></a>Appeal to Authority</h2><p>Another scary statistic is that people will do whatever they are told to do if an authority figure has told them to do it.  If there is any question about what we should do, we will try to figure out what the authority figure wants. This is how con men work.  In a very scary experiment, a “doctor” calls the nursing desk and tells the person who answers the phone to administer a drug to a patient.  The problem is, the prescription is too high and is of a drug that is not approved for the nurses to give.  Yet, because a doctor has said so, they are willing to comply In a more humorous example, a patient had an ear ache in their right ear.  The doctor left a note with instructions to administer ear drops to the R ear.  So, the nurse administered ear drops to the patients rear.  Neither the nurse nor the patient questioned the instructions. Oh, but that would never happen to programmers now.  Or would it? Again, I go back to the point of testing.  I can’t tell you how many times I’ve heard programmers tell me they “aren’t allowed to write unit test.”  For the most part, I’m not sure anyone asked, they are just assuming that the boss won’t let them because of the Herd Mentality I mentioned above.  But let’s assume the boss really has made such an edict.  Is that a good reason to not tests?  I’m not sure it is.  At least no more so than administering ear drops to someone’s butt. But I’ve also seen this behavior first hand.  I was on a project once where the organization claimed to be “Agile.”  For the most part they were.  They worked iteratively.  They had something resembling sprints. But a “boss” several layers up the ladder who we never saw had “instructed” the team to do this project using a waterfall approach because “we already know what this product is supposed to do.” The problem is, while this project was a rewrite of an older system, the rewrite encompassed many changes to the existing system.  So, even using that argument, using waterfall made no sense.  But, everyone on the team also knew that what made a project an agile project vs a waterfall project had a lot more to do with being able to adjust.  Why no one ever told the manager he was wrong is beyond me.  What is further interesting is that even though that project received a new manager, the team STILL tried to obey the old rule because they hadn’t been given an alternate direction.</p>
+<h2 id="Inertia"><a href="#Inertia" class="headerlink" title="Inertia"></a>Inertia</h2><p>The famous last words of every dying group are, “But, we’ve never done it that way before.”  Why? Did you know that people will work twice as hard to keep the dollar in their pocket than they will to gain an extra dollar?  This explains so much of human behavior for me.  This is why startups have such an advantage over established companies.  The startup has nothing to lose.  As soon as they feel like making a change will cause them to lose something important, they’ll stop innovating.  They become the established company.  If an established company can survive long enough to have nothing to lose, they might innovate.  For an example of this, check out the turn around of both Apple and Microsoft.  If you look very closely, you’ll see that Apple is moving into the “we have something to lose” cycle.  (Don’t bother flaming me, I have no religious preference for either company.) Now how does this apply to you as the lonely programmer? Well, back to our sad programmer example.  Could it be that our sad programmer doesn’t change jobs because he’s holding on to his dollar instead of trying to get a new one? Could it be you aren’t testing your code with formal unit test because you are holding onto your dollar? When is the last time you tried anything new?</p>
+<h2 id="Break-Free"><a href="#Break-Free" class="headerlink" title="Break Free"></a>Break Free</h2><p>And so, the question naturally becomes, “How do we break free?” So much of this is a part of who we’ve learned to be.  Many of our behaviors have helped us get to where we are.  But like the company who has moved from startup to established player, we need to become comfortable with being uncomfortable so that we can not just break free, but break into a better version of ourselves. Maybe you are comfortable where you are.  I don’t know.  Personally, I’m always trying to improve.  I’d much rather have the new dollar than keeping the dirty old one.  You might have a different set of values.  Maybe a different opinion. I could be wrong.  But, what if I’m right?</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/the-psychology-of-programming/" data-id="cjiw7ucnb00tbdghidpqpinhl" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/behavior/">behavior</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programming/">programming</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/psychology/">psychology</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-secrets-to-styling-angular2" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/secrets-to-styling-angular2/">Secrets to Styling Angular2</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/secrets-to-styling-angular2/" class="article-date"><time datetime="2017-01-31T12:30:00.000Z" itemprop="datePublished">2017-01-31</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Angular-2/">Angular 2</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>This past week, while working on a new project, I discovered some secrets to styling Angular2 that I don’t think are very well known. There are two specific issues I needed to solve this week that took a bit of digging.  The first was that I wanted my routes to fade in and out as I move between routes.  The second was that I was using a grid control from a third party and I needed to style an inner component.  We will cover both as well as some more basic operations. [caption id=”” align=”aligncenter” width=”640”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/01/image-2.png" alt="Secrets to Styling Angular2" title="Secrets to Styling Angular2"> Photo via <a href="//visualhunt.com/">Visual hunt</a>[/caption] </p>
+<h2 id="Angular2-Version"><a href="#Angular2-Version" class="headerlink" title="Angular2 Version"></a>Angular2 Version</h2><p>Just so there isn’t any confusion, this article is accurate for Angular 2.x as of 2.5</p>
+<h2 id="The-Basics"><a href="#The-Basics" class="headerlink" title="The Basics"></a>The Basics</h2><p>Just to make sure we have the basics covered, we want to start with generic styling.  The temptation might be to style each of your components independently.  This would be a mistake.  Angular2 doesn’t throw out all the existing CSS rules.  Instead, it adds to them.  Therefore, anything you can do with a generic style should be handled at that level. Since I generally use Bootstrap to theme my applications, this is what I’ll reference here.  Using the angular-cli, the way you would add the CSS theme information is to include it in the angular-cli.json file of your application in the “styles” section.</p>
+<p>…<br>      “styles”: [<br>        “../node_modules/bootstrap/dist/css/bootstrap.css”,<br>        “styles.css”<br>      ],<br>…</p>
+<p>If you have a component that you need to style in a way that is outside the bounds of the general CSS you’ve included, you can add CSS to the components CSS file.  This all works as expected with one small exception.  The CSS you add to this file only applies to the component and will override any other CSS that might already be applied by the general CSS. This is Angular2 CSS 101 stuff.  I’ve written pretty extensively about this in the article “<a href="//blog.dmbcllc.com/adding-css-and-javascript-to-an-angular-2-cli-project/">Adding CSS and JavaScript to an Angular-CLI Project</a>”</p>
+<h2 id="Host-access"><a href="#Host-access" class="headerlink" title="Host access"></a>Host access</h2><p>But there are times when the thing you want to style is the host container of the component.  Not just the HTML inside it.  There are two ways that you might do this.</p>
+<h3 id="host"><a href="#host" class="headerlink" title=":host"></a>:host</h3><p>The first way is to use the <code>:host</code> directive in your CSS.  But you’ll need to be careful with this, as I found out recently. You see, you might expect that</p>
+<p>:host {<br>    background-color: blue;<br>}</p>
+<p>would cause the background color of the element to turn blue.  But if you try that with a simple component you’ll find out that nothing shows up with a background color of blue because by default an element that isn’t part of the HTML spec has no size and basically disappears from the display.  We want it to display an essentially be a container for all our other HTML so what you really want to do is something like:</p>
+<p>:host {<br>  background-color: blue;<br>  height: auto;<br>  width: auto;<br>  position: absolute;<br>}</p>
+<p>The only way it will show up, in my experience, is to make the position ‘absolute.’  Remember, we are doing this only because we want the :host to have some impact as a container for all of the other elements that might be in it.  Normally, you can get by styling the html inside it.</p>
+<h3 id="HostBinding"><a href="#HostBinding" class="headerlink" title="@HostBinding()"></a>@HostBinding()</h3><p>An alternate way of setting style on the component container is by using the @HostBinding() decorator.  What this does is that it binds a variable to the containers attribute so that you can change the value from your TypeScript code.</p>
+<p>@Component({<br>  selector: ‘app-view’,<br>  templateUrl: ‘./view.component.html’,<br>  styleUrls: [‘./view.component.css’]<br>})<br>export class ViewComponent implements OnInit {<br>  @HostBinding(‘style.backgroundColor’)<br>    backgroundColr = ‘blue’;</p>
+<p>  constructor() { }</p>
+<p>  ngOnInit() {<br>  }</p>
+<p>}</p>
+<h2 id="Child-Elements"><a href="#Child-Elements" class="headerlink" title="Child Elements"></a>Child Elements</h2><p>Now, the other problem you might run into is that you’ll be using some third-party control and you’ll want to style some container element inside of it to fit your needs.  Again, this isn’t a particularly common problem, but it might just take you a while to find the answer. The first thing you may try is to just style the markup.</p>
+<p>component-parent component-child {<br>    /* style stuff here */<br>}</p>
+<p>But, try as you might, you’ll never get those styles to show up.  You can style the <code>component-parent</code> all you want, but not the <code>component-child</code> no matter what you do. Here is the trick that allows you to style the <code>component-child</code>:</p>
+<p>component-parent &gt;&gt;&gt; component-child {<br>    /* style stuff here */<br>}</p>
+<p>That <code>&gt;&gt;&gt;</code> thing is call the “piercing” operator.  All you need to know is that it is how you get the child elements styled.</p>
+<h2 id="Animations"><a href="#Animations" class="headerlink" title="Animations"></a>Animations</h2><p>You might wonder, at first, why we would need an Animation API in Angular2.  Aren’t CSS animations good enough? Well, actually… It isn’t that CSS animations aren’t good enough, but because Angular2 “hide” and “shows” elements by putting them into and out of the DOM and does other DOM manipulations that conflict with CSS animations, you will find there are time you are going to need to use the Angular2 Animation API. The Animation API works in a similar way to how the CSS Animations work so this isn’t going to be a big stretch for you if you are already familiar with CSS Animations. To animate a component, you are going to need to add an animations section to the @Component decorator of your component:</p>
+<p>@Component({<br>  selector: ‘app-view’,<br>  templateUrl: ‘./view.component.html’,<br>  styleUrls: [‘./view.component.css’],<br>  animations: [<br>      /* animation definitions here */<br>  ]<br>})</p>
+<p>The question then, is “how do we define an animation” Since animations is obviously an array, we want to know, what is it an array of?  It is an array of triggers.  A trigger has two parts.  A name, an an array that specifies how the animation should work.  This name gets used in our template using the [@name] syntax to bind to a component property. Next, we define each of the states we want to respond to and style we want to end up with when that state is triggered. Finally, we define each of the transitions. The combination gives us a lot of flexibility.  While we can create the same kind of transitions that we might have using CSS, we can also create transitions the we never could have using CSS.  All we need to do is have our component change the value of some member variable in some predictable way and the transitions will kick into work. You can read more about transitions on the <a href="//angular.io/docs/ts/latest/guide/animations.html">Angular2 documentation page</a>.</p>
+<h2 id="Route-Animations"><a href="#Route-Animations" class="headerlink" title="Route Animations"></a>Route Animations</h2><p>Route animations are similar.  However, this is where everything I’ve said above comes together. The first problem you are going to run into trying to animate a route is that the state you want to base your animations on is the route, which is the parent component of your component you are probably trying to animate.  But the reality is, what you are really doing is animating something when it is first displayed and animating it again when it is going away.  That is, when it is placed into the DOM and when it is being removed from the DOM.  Angular2 has to predefined states for this, ‘:enter’ and ‘:leave’. So, we create a trigger named ‘routeAnimation’ and in our route components we bind to it using the @HostBinding() decorator.</p>
+<p>@HostBinding(‘@routeAnimation’) routeAnimation = true;</p>
+<p>Everything else you need to know I’ve already discussed above. For more information about routing animations, you can check the <a href="//angular.io/docs/ts/latest/guide/router.html">router documentation on the Angular2 documentation page</a>.</p>
+<h2 id="Finally"><a href="#Finally" class="headerlink" title="Finally"></a>Finally</h2><p>It took me way too long to figure this out because a lot of the information has changed since RC0.  Hopefully, it will point you in the right direction.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/secrets-to-styling-angular2/" data-id="cjiw7ucie00p1dghi6y9saer2" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular-2/">angular 2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/animation/">animation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/">css</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-how-to-be-a-lucky-programmer" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/how-to-be-a-lucky-programmer/">How to be a Lucky Programmer</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/how-to-be-a-lucky-programmer/" class="article-date"><time datetime="2017-01-24T12:30:00.000Z" itemprop="datePublished">2017-01-24</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Opinion/">Opinion</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I’ve been studying topics related to social science recently and one item that keeps popping up in various places is the idea of luck.  It turns out that lucky people aren’t really all that lucky.  There life has been arranged either by them directly or indirectly by their environment so they end up having more chances of good things happening to them. So, how can we apply this to programming?  How can you be a lucky programmer? [caption id=”” align=”aligncenter” width=”640”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/01/image-1.png" alt="How to be a Lucky Programmer" title="How to be a Lucky Programmer"> Photo <a href="//visualhunt.com/p/gaertringen/">Gaertringen</a> via <a href="//visualhunt.com/">Visual Hunt</a>[/caption] </p>
+<h2 id="What-You-Believe"><a href="#What-You-Believe" class="headerlink" title="What You Believe"></a>What You Believe</h2><p>It turns out that what you believe about yourself has a HUGE impact on how lucky you are.  In fact, lucky people see themselves as lucky.</p>
+<h3 id="Lucky-People-are-Lucky"><a href="#Lucky-People-are-Lucky" class="headerlink" title="Lucky People are Lucky"></a>Lucky People are Lucky</h3><p>Now, you might think that a lucky person seeing themselves as lucky would be self-evident, right?  I mean if good stuff keeps happening to you, you are obviously going to view yourself as lucky.  But, the dirty little secret is that bad stuff happens to lucky people too.  They just aren’t as likely to see it as unlucky and may even see it as lucky. To take an example from my own life, I was in an accident about a month and a half ago.  I totalled the car.  But,</p>
+<ul>
+<li>No one got hurt, and given the shape of the car, I’m still amazed.</li>
+<li>Someone showed up within minutes and stopped long enough to help me figure out what my next steps were.</li>
+<li>The police man showed up immediately after I hung up the phone with the dispatcher.</li>
+<li>We got more for the car than we would have if we had traded it in.</li>
+<li>We ended up with a much nicer car than we were planning on.</li>
+</ul>
+<p>Was I lucky or unlucky?  It is just a matter of what I focus on. In short, lucky people focus on what they have instead of what they don’t.  According to people who measure these things, if you made more than $34K (usd) in 2012 you made more than 99% of the world’s population.  Yes, I know, there are other factors, like cost of living to consider.  But really, by just about any standard, I’d say from an income perspective, we as programmers are pretty lucky!</p>
+<h3 id="Lucky-People-Ask-Good-Questions"><a href="#Lucky-People-Ask-Good-Questions" class="headerlink" title="Lucky People Ask Good Questions"></a>Lucky People Ask Good Questions</h3><p>It turns out that our brains answer any question we give it.  In fact, you’ve probably been in situations where someone has asked you a question you really didn’t want to answer and you’ve answered it anyhow.  This is how compelling question are. The problem lies in the questions we ask ourselves.  When you are struggling with an issue, are you more likely to ask, “How can I solve this?” or “Why can’t I solve this?”  Do you see the three things you’ve tried as proof that the problem can’t be solved or just three ways that it can’t be solved? I’m going to guess that if you are any good at programming, you’ll be more likely to ask “How can I…” questions.  But what about the rest of your life?  Does this carry over into finding your dream job?  Making friends?  Investing?</p>
+<h3 id="Entitled-vs-Deserving"><a href="#Entitled-vs-Deserving" class="headerlink" title="Entitled vs Deserving"></a>Entitled vs Deserving</h3><p>This last point is a little tricky to explain.  Lucky people feel like they deserve to have good things happen because they’ve put in the effort so that good things can happen.  This is different from either feeling entitled or wishful thinking.  Lucky people have studied hard, made connections, tried stuff, improved their social skills, and more.  So, you can believe you are lucky all you want, and that’s a really good start, but there is more to being lucky than just being “The Little Engine That Could” you need to be “The Little Engine That Does”</p>
+<h2 id="Try-New-Stuff"><a href="#Try-New-Stuff" class="headerlink" title="Try New Stuff"></a>Try New Stuff</h2><p>You could also call this “be curious.” I think my love of learning has helped make me lucky.  But again, the people who study this stuff agree with me.  The more stuff you try, the more likely you are to be lucky.  When you try lots of stuff, you can keep what works, toss what doesn’t.  Do more of what is working.  Do less of what is not. That sounds pretty simple.  But where most people goof this up is that they see themselves as failures when something doesn’t work.  It may not have worked for a lot of different reasons.  One may just be you don’t have enough other experience yet.  Some might be that it isn’t who you are deep down. Check this out.  Do an inventory of yourself and try to figure out what has always been true of you.  For me, it is learning.  I remember all through Jr High and High School, I would come home, finish whatever homework I had, and then I’d go learn something that was interesting to me.  I studied flying, weather, electronics.  And that hasn’t changed.  If you’ve been following this blog, you’ve benefited from a lot of what I’ve learned over the last several years. I also like to teach and help people get ahead.  Something I’ve been doing in some fashion since I was twelve. I got very involved in the Internet Marketing thing for a while.  I made about as much money as I spent learning, so it wasn’t an entire waste of time.  But, the year I gave up on that, I made significantly more money by using my resources in a more productive way.  Learn when you’ve done enough.  But don’t give up when something doesn’t work out right away either.  Doing several things at a time will help you figure out what you should be spending more time on.</p>
+<h2 id="Hone-Your-Skills"><a href="#Hone-Your-Skills" class="headerlink" title="Hone Your Skills"></a>Hone Your Skills</h2><p>One of the biggest frustrations I have is when I find someone “over 50” who has posted a comment saying he (most always it is a male) can’t find a job because of age discrimination.  I always wonder what skills he has, because where I live, we’ll hire anyone who has an up to date skill set who can prove to us they really do know what they are doing. So, you have a job.  Great.  Don’t coast, or you’ll be that guy. I almost was.  I got comfortable at a company and didn’t keep my programming skills up to date.  It took me three years to recover. Not only should you not coast.  If you are serious about programming, you should become an expert in something.  Full stack is crap!  Niche down.  This doesn’t mean you can’t do some other part of the stack.  But be awesome at something.  Trust me, it WILL pay off. But also, learn around the fringes.  It does no good for you to proclaim “Windows is the best operating system.” if you’ve never tried Linux or OSX.  (Just as an example).  In the same way, you can’t say a particular framework is the best if you don’t have several that you’ve tried.  Bonus points if you can explain what the differences are and why someone might choose one over the other, even if it isn’t what you would select. Since you are reading this, I have to assume you read several tech related blogs.  But how about podcasts?  How are you spending that time on your commute to work?  I have so many podcasts that I listen to that I have to listen to them on evenings and weekends to keep up.  And don’t just read blogs and listen to podcasts about tech.  Branch out.  Get a life. Finally, interview for a job at least once a year even if you aren’t looking for a new job.  Why?  Well, remember I told you I I got comfortable working for one company?  It turns out the whole interview process changed while I was sleeping.  Like Rip Van Winkle, nothing was the same to me.  The more you interview, the better you get at it.  This is why I recommend interviewing four times a year.  Once a year is the absolute minimum.  Better to try new interview strategies on an interview you don’t care about than when you really need a job.  And who knows, you might find a job you really like in the process.</p>
+<h2 id="Social-Skills"><a href="#Social-Skills" class="headerlink" title="Social Skills"></a>Social Skills</h2><p>But it doesn’t matter how great you are technically if you can’t convince someone else that you are.  And this means you are going to need to work on your social skills.  Yes, lucky people, and that means lucky programmers, need social skills.  And I’m not just talking “Please” and “Thank you”  But, that would be a great place to start.</p>
+<h3 id="Body-Language"><a href="#Body-Language" class="headerlink" title="Body Language"></a>Body Language</h3><p>Body language is a great place to start.  You’ve probably seen the Amy Cudy video where she talks about power poses.  But body language goes much further than power poses.  But let’dos start there. As I walk around the office, I notice that between typing on our keyboards and keeping our eyes glued to our phones, our default “pose” is one of submission and meekness.  Have you ever noticed that even people who aren’t looking at their phone when they walk are looking at the ground?  Doesn’t anyone make eye contact anymore? Over the last several months, I’ve focused on looking up and out as I walk.  What a difference in how I feel about myself, not to mention how people perceive me. Look out.  Not up.  You don’t want to look like a snob. On the off chance that someone makes eye contact with you, smile at them.  An interesting thing will happen, they’ll smile back which will make you want to smile more. An interesting story.  There is a guy in our office who seems to have caught the giggles.  He’s got this contagious smile and is almost always laughing.  It is a genuine laugh and I am going to try to incorporate laughing more into who I am.  The thing is, the more he smiles and laughs, the more people want to be around him.  Hmmmmm. The other thing you can do related to power posing is to just take up space.  Again, don’t overdo this.  Stand up straight.  Spread your arms.  Show you are comfortable more than that you are the boss.  Too much in the wrong place and you’ll just look like you are posing.  Think of the posing as something that changes how you feel about you, not how you want them to feel about you.</p>
+<h3 id="Make-Them-Like-You"><a href="#Make-Them-Like-You" class="headerlink" title="Make Them Like You"></a>Make Them Like You</h3><p>We’ve already discussed laughing.  That’s a great way to make people like you.  And smiling also makes people think you are smart.  But there are some other “tricks” you can learn that will help people like you. One simple one to implement is eye contact.  People feel like you are listening if you make eye contact.  How you pull this off is to look at one of their eyes.  Obviously, you can’t look at both of them.  But where people get this eye contact thing wrong is that they tend to stare instead of look.  Don’t be a robot about it.  And it is OK to look away for a second or two. The other way you can make people like you is by mirroring their words and body language.  Especially gestures. I find this fascinating. You may have heard that you should use “active listening” to make sure you understand what the other person is saying.  For those of you who don’t know, active listening is the process of paraphrasing what the person said and saying it back to them in your own words to make sure you got the idea of what they said. The problem is, using active listening won’t make the person FEEL like you understand them.  Mirroring does this.  And you mirror by using the same words and phrases they used.  In particular, you want to use the words that seem to have the most emotion attached to them.  What’s even crazier about this than the fact that it establishes rapport quickly is that the person you are mirroring won’t notice. Now all these tricks are just tools to grease the process.  But if you just take the attitude of genuinely being interested in other people, you’ll probably end up doing a lot of this stuff anyhow.  But if you are genuinely interested in people AND you add on some of the above skills, other people around you will feel the love and be attracted to you.  You’ll be that guy or gal everyone wants to hang with.</p>
+<h3 id="Networking"><a href="#Networking" class="headerlink" title="Networking"></a>Networking</h3><p>Yeah, networking.  It is amazing to me that I can go to a programming user group meeting where we are all there for the same reason.  That is we all KNOW we have something in common.  And no one is talking.  30 people in the room and barely a noise.  This is not good.  Your next job could be in that room. But, what should we do? One thing I’ve started doing is this.  You walk up to someone who isn’t already talking to someone and you shake their hand while saying, “Hi, I’m (your name here)”  And then you ask them a question to get things rolling.  Here are a few of my favorites:</p>
+<ul>
+<li><p>Ask them something about the event.</p>
+</li>
+<li><p>Are you using X yet?</p>
+</li>
+<li>What brought you here tonight?</li>
+<li>How did you get started in programming?</li>
+<li>What does a typical day look like for you?</li>
+</ul>
+<p>Once they’ve given you an answer, just ask them a question about something they just told you. It really isn’t that hard unless it becomes obvious that the person isn’t in the mood to talk.  But that hardly ever happens when you’ve asked them about something they care about. Some of these questions are appropriate even if you are talking with someone who doesn’t program and you can quickly use them to get people talking about things they care about. Once they start talking, just listen, mirror, and ask more questions.</p>
+<h2 id="Connections"><a href="#Connections" class="headerlink" title="Connections"></a>Connections</h2><p>Another interesting thing I’ve learned is that lucky people have lots of connections.  This doesn’t mean they have a lot of close friends.  But they are connected, even if all that means is that you are connected on the social networks.  So, when someone wants to connect to you on LinkedIn, FaceBook, Google+ or some other social network, connect.  If they end up being jerks, you can delete them. One of the most common objections I hear when I suggest that people connect to anyone and everyone on LinkedIn is that they will get all kinds of messages and emails from recruiters.  So, I want to address that now. You’re looking at something that has the biggest chance of making you lucky as an annoyance.  Yes, I have nearly 10,000 connections on LinkedIn.  Yes, every day I get a ton of email.  But, I’ve also been able to narrow down which recruiters I am willing to talk with and which ones I may want to talk with and the ones I never want to hear from again.  My white list, grey list, and black list. When I need a new contract, guess how long it will take me to find something I want to do?</p>
+<h2 id="Take-Action"><a href="#Take-Action" class="headerlink" title="Take Action"></a>Take Action</h2><p>Finally, lucky people do something.  The whole self-help industry is banking on the fact that you’ll never do anything they tell you to do.  A lot of what they tell you to do in those books would work if you did what they said.  But for various reasons, we think buying the book, or even reading the book, is going to change our life. So, pick something I’ve mentioned above that you aren’t already doing and do it. For a start, connect with me on social media using one of the buttons in the upper right corner.  I highly recommend LinkedIn because I am connected with so many people, you’ll automatically get all of my first-degree connections as your second-degree connections and all of my second-degree connections as your third-degree connections.  What this means is that by connecting to me, more people will be able to find you on LinkedIn when they search for you on LinkedIn. For more about how to use LinkedIn, check out my article, “<a href="//blog.dmbcllc.com/linkedin-tips-for-programmers/">LinkedIn Tips for Programmers</a>”</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/how-to-be-a-lucky-programmer/" data-id="cjiw7uc8o00f7dghievit6gfn" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/luck/">luck</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programming/">programming</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/social-skills/">social skills</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <div id="page-nav">
+    <nav><ul class="pagination"><li><a class="page-prev" rel="prev" href="/page/4/"><i class="fa fa-chevron-left"></i> Prev</a></li><li><a class="page-number" href="/">1</a></li><li class="disabled"><span class="page-space">&hellip;</span></li><li><a class="page-number" href="/page/3/">3</a></li><li><a class="page-number" href="/page/4/">4</a></li><li class="active"><span class="page-number">5</span></li><li><a class="page-number" href="/page/6/">6</a></li><li><a class="page-number" href="/page/7/">7</a></li><li class="disabled"><span class="page-space">&hellip;</span></li><li><a class="page-number" href="/page/31/">31</a></li><li><a class="page-next" rel="next" href="/page/6/">Next <i class="fa fa-chevron-right"></i></a></li></ul></nav>
+  </div>
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/vmware-s-clarity-design-system-for-angular/">VMWare&#39;s Clarity Design System for Angular</a>
+        </li>
+      
+        <li>
+          <a href="/the-full-stack-developer-myth/">The Full Stack Developer Myth</a>
+        </li>
+      
+        <li>
+          <a href="/how-you-do-anything/">How you do Anything ...</a>
+        </li>
+      
+        <li>
+          <a href="/property-based-testing-in-angular-with-jsverify/">Property Based Testing in Angular with jsVerify</a>
+        </li>
+      
+        <li>
+          <a href="/property-based-testing-revealed-a-better-way-to-test/">Property Based Testing Revealed - A Better Way to Test</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

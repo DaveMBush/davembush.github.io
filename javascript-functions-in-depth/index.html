@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>JavaScript Functions -- In-Depth | Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Last week I talked about JavaScript variables gotchas.  This week, we want to take an in-depth look at JavaScript functions. Why? Well, for the same reason we looked at variables last week.  If you ke">
+<meta name="keywords" content="javascript,functions">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaScript Functions -- In-Depth">
+<meta property="og:url" content="http://davembush.github.com/javascript-functions-in-depth/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:description" content="Last week I talked about JavaScript variables gotchas.  This week, we want to take an in-depth look at JavaScript functions. Why? Well, for the same reason we looked at variables last week.  If you ke">
+<meta property="og:locale" content="English">
+<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2016/02/image-1.png">
+<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2016/02/wlEmoticon-smile.png">
+<meta property="og:updated_time" content="2018-06-23T18:40:38.027Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaScript Functions -- In-Depth">
+<meta name="twitter:description" content="Last week I talked about JavaScript variables gotchas.  This week, we want to take an in-depth look at JavaScript functions. Why? Well, for the same reason we looked at variables last week.  If you ke">
+<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2016/02/image-1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-javascript-functions-in-depth" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      JavaScript Functions -- In-Depth
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/javascript-functions-in-depth/" class="article-date"><time datetime="2016-02-18T13:30:00.000Z" itemprop="datePublished">2016-02-18</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Javascript/">Javascript</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Last week I talked about <a href="//blog.dmbcllc.com/javascript-variable-gotchas/">JavaScript variables gotchas</a>.  This week, we want to take an in-depth look at JavaScript functions. Why? Well, for the same reason we looked at variables last week.  If you keep using JavaScript the way you think it works instead of the way it really works, at best, you will have a much harder time debugging your JavaScript code.  Worse case, you introduce some pretty nasty bugs into your code. So, let’s start with a pretty basic JavaScript function question.  One I would use as a question if I were interviewing someone for a hard core JavaScript job. What is the difference between the following two ways of declaring a function?</p>
+<p>function foo(){<br>}</p>
+<p>var foo = function(){<br>}</p>
+<p><img src="//blog.dmbcllc.com/wp-content/uploads/2016/02/image-1.png" alt="JavaScript Functions -- In-depth" title="JavaScript Functions -- In-depth"> </p>
+<h2 id="Declaring-JavaScript-Functions"><a href="#Declaring-JavaScript-Functions" class="headerlink" title="Declaring JavaScript Functions"></a>Declaring JavaScript Functions</h2><p>If you think these both do the same thing, you would be almost right.  But here is the key distinction. Remember our discussion last week about variable hoisting? When you declare a variable, the declaration is hoisted to the top of the variable scope but it isn’t assigned until the actual assignment in the code. So that the following code</p>
+<p>var foo = function(){<br>}</p>
+<p>Actually compiles to</p>
+<p>var foo;<br>// other code may occur here<br>foo = function(){<br>}</p>
+<p>On the other hand, if you declare functions using</p>
+<p>function foo(){<br>}</p>
+<p>What happens is that the variable is both declared and assigned at the top of the variable scope. In fact, when you use this second method to declare a function, the variable gets declared prior to variables declared with the <code>var</code> keyword.</p>
+<h2 id="Why-Does-This-Matter"><a href="#Why-Does-This-Matter" class="headerlink" title="Why Does This Matter?"></a>Why Does This Matter?</h2><p>“So,” I hear you thinking, “why the fuss?  My code runs either way.” Or does it. If you use <code>var foo()</code> instead of <code>function foo()</code>, you can run into a situation where you have one function calling another function before the function variable has been assigned the function pointer.  It doesn’t happen often, and it happens a lot less frequently when you are doing “object oriented” JavaScript, but it can happen. Here is an example:</p>
+<p>var foo = function(){<br>   bar();<br>}</p>
+<p>foo();</p>
+<p>var bar = function() {<br>}</p>
+<p>Yeah, I know, wrong on so many levels.  But this is how bad code happens.  Implementing best practices at multiple levels makes the code more solid. If we rewrite the code to see what is happening the problem becomes clear.</p>
+<p>var foo;<br>var bar;</p>
+<p>foo = function(){<br>    bar();<br>}</p>
+<p>foo();</p>
+<p>bar = function(){<br>}</p>
+<p>Bar is getting called before we ever assign the function to it. But by simply rewriting this using function declaration, we avoid the issue:</p>
+<p>function foo(){<br>   bar();<br>}</p>
+<p>foo();</p>
+<p>function bar() {<br>}</p>
+<p>When we rewrite this as it will compile, we see that we no longer have an issue:</p>
+<p>function foo() {<br>    bar();<br>}<br>function bar(){<br>}<br>foo();</p>
+<h2 id="Anonymous-Functions"><a href="#Anonymous-Functions" class="headerlink" title="Anonymous Functions"></a>Anonymous Functions</h2><p>A discussion on JavaScript functions would not be complete if we didn’t address the subject of anonymous functions. Anonymous functions are functions that show up most often as parameters to other functions.  Rather than declaring a function and passing the function in as a variable pointing to the function</p>
+<p>function callBackFoo(){<br>}</p>
+<p>function mainFoo(callBack){<br>    callBack();<br>}</p>
+<p>mainFoo(callBackFoo);</p>
+<p>We get lazy and just write the function as part of the parameter.</p>
+<p>function mainFoo(callBack){<br>    callBack();<br>}</p>
+<p>mainFoo(function(){});</p>
+<p>And here again, I hear you thinking, “Yep.  Do that all the time.  What’s wrong with that?”</p>
+<h2 id="The-Problem-with-Anonymous-Functions"><a href="#The-Problem-with-Anonymous-Functions" class="headerlink" title="The Problem with Anonymous Functions"></a>The Problem with Anonymous Functions</h2><p>Well, there are two problems. First, when you use an anonymous function and an exception is thrown.  If your anonymous function is part of the call stack for the exception, all you will see in your debugger is something about “anonymous” because it doesn’t have a name associated with it.  Yes, you’ll get a file name and a line number.  But you’ll have to go look at the code to see what function caused the problem. The second, and I think more compelling, issue with anonymous functions is “Callback Hell.” You know, a function that takes a callback that calls a function that takes a callback … etc. If you haven’t seen this yet, you haven’t coded anything significant in JavaScript yet. This isn’t to say that I haven’t used these same shortcuts.  But they ARE issues you need to consider.  At least when I take the shortcut, I think to myself, “Is the pain really worth it?”</p>
+<h2 id="Immediately-Invoked-Function-Expressions-IIFE"><a href="#Immediately-Invoked-Function-Expressions-IIFE" class="headerlink" title="Immediately Invoked Function Expressions (IIFE)"></a>Immediately Invoked Function Expressions (IIFE)</h2><p>Pronounced “iffy” the Immediately Invoked Function Expression is the one place where I think anonymous functions serve a very helpful purpose. The basic structure of an IIFE looks like this:</p>
+<p>(function(){<br>    // code goes here.<br>})();</p>
+<p>Or, if you prefer</p>
+<p>(function(){<br>    // code goes here.<br>}());</p>
+<p>The first way makes more sense to me.  But whatever. The idea is that we’ve created an anonymous function and executed it right away.  It is the same as if we had written:</p>
+<p>function foo(){<br>    // code goes here<br>}<br>foo();</p>
+<p>But, by doing this we’ve introduced a variable into our scope that we only plan to use once.  If we are doing this in our global namespace, we could be stomping over an existing variable we might want latter. Imagine if you were using jQuery and wrote:</p>
+<p>function $(){<br>}<br>$();</p>
+<p>or worse</p>
+<p>var $ = function(){<br>}<br>$();</p>
+<p>So, IIFEs take care of this issue.  It keeps all of the variables we declare in a file out of global scope while still making them accessible to all of the functions we declare within the IIFE.  Since it runs at load time, we really don’t need a function name for our debug stack.</p>
+<h2 id="A-Note-About-JavaScript-and-Node-js"><a href="#A-Note-About-JavaScript-and-Node-js" class="headerlink" title="A Note About JavaScript and Node.js"></a>A Note About JavaScript and Node.js</h2><p>While everything I’ve said above is true for browser based JavaScript.  When you get into the area of Node.js development, the rules change slightly.  Specifically, each JavaScript file is already wrapped in an IIFE, this is why we need module.exports and why if you assign a variable in one JavaScript file it is not available to you to use in another JavaScript file.  So as far as I can think, there is no valid reason for using anonymous functions in Node other than laziness.  But I’m sure someone will set me straight in the comments <img src="//blog.dmbcllc.com/wp-content/uploads/2016/02/wlEmoticon-smile.png" alt="Smile">.</p>
+<h2 id="JavaScript-Functions-Best-Practices"><a href="#JavaScript-Functions-Best-Practices" class="headerlink" title="JavaScript Functions Best Practices"></a>JavaScript Functions Best Practices</h2><p>All of this leads to the following best practices regarding the use of function in JavaScript</p>
+<ol>
+<li>Declare functions using the <code>function</code> keyword instead of the <code>var</code> keyword.</li>
+<li>Avoid anonymous functions</li>
+<li>Wrap globally accessible client side code in an IIFE to avoid polluting global variable scope.</li>
+</ol>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/javascript-functions-in-depth/" data-id="cjiw7ucby00ihdghiarn7hckr" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/functions/">functions</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/javascript-variable-gotchas/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">JavaScript Variable Gotchas</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/angular-2-–-first-impressions-compared-to-angular-1/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">Angular 2 – First Impressions [Compared to Angular 1]</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/vmware-s-clarity-design-system-for-angular/">VMWare&#39;s Clarity Design System for Angular</a>
+        </li>
+      
+        <li>
+          <a href="/the-full-stack-developer-myth/">The Full Stack Developer Myth</a>
+        </li>
+      
+        <li>
+          <a href="/how-you-do-anything/">How you do Anything ...</a>
+        </li>
+      
+        <li>
+          <a href="/property-based-testing-in-angular-with-jsverify/">Property Based Testing in Angular with jsVerify</a>
+        </li>
+      
+        <li>
+          <a href="/property-based-testing-revealed-a-better-way-to-test/">Property Based Testing Revealed - A Better Way to Test</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

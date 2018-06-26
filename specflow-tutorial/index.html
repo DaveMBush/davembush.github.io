@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>SpecFlow Tutorial | Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="A couple of weeks ago, I wrote a post describing how to setup SpecFlow in which I promised to continue with how to actually use it once you have it installed.  What follows is a SpecFlow Tutorial of t">
+<meta name="keywords" content="testing,bdd,specflow">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpecFlow Tutorial">
+<meta property="og:url" content="http://davembush.github.com/specflow-tutorial/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:description" content="A couple of weeks ago, I wrote a post describing how to setup SpecFlow in which I promised to continue with how to actually use it once you have it installed.  What follows is a SpecFlow Tutorial of t">
+<meta property="og:locale" content="English">
+<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2015/05/18Tr.png">
+<meta property="og:updated_time" content="2018-06-23T18:40:37.960Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpecFlow Tutorial">
+<meta name="twitter:description" content="A couple of weeks ago, I wrote a post describing how to setup SpecFlow in which I promised to continue with how to actually use it once you have it installed.  What follows is a SpecFlow Tutorial of t">
+<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2015/05/18Tr.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-specflow-tutorial" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      SpecFlow Tutorial
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/specflow-tutorial/" class="article-date"><time datetime="2015-06-04T10:00:00.000Z" itemprop="datePublished">2015-06-04</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Testing/">Testing</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2015/05/18Tr.png" alt="SpecFlow Tutorial Session" title="18Tr">A couple of weeks ago, I wrote a post describing <a href="//blog.dmbcllc.com/setting-up-specflow/">how to setup SpecFlow</a> in which I promised to continue with how to actually use it once you have it installed.  What follows is a SpecFlow Tutorial of the tips and tricks I wish I’d known when I was starting out. </p>
+<h2 id="Controlling-Associations-between-Features-and-Steps"><a href="#Controlling-Associations-between-Features-and-Steps" class="headerlink" title="Controlling Associations between Features and Steps"></a>Controlling Associations between Features and Steps</h2><p>With what you’ve learned so far, you might be able to successfully put together a set of tests for a particular page that you want to test. But as soon as you start working on the second page, you will probably discover that you have steps that seem to conflict with each other. It is at this point you will find that the ability to associate features with step files becomes critical. Fortunately, this is relatively easy. In your feature file, you will specify a category using the @category syntax and within your step file, you will use the category attribute within the step file at the class level to tie the two together. In your feature file:</p>
+<p>@stepFileOne<br>Feature: SpecFlowFeature1<br>    In order to avoid silly mistakes<br>    As a math idiot<br>    I want to be told the sum of two numbers</p>
+<p>And in your step file:</p>
+<p>namespace SpecFlowDemos<br>{<br>    [Binding]<br>    [Category(“stepFileOne”)]<br>    public sealed class StepFileOne<br>    { …<br>    }<br>}</p>
+<p>Note, if you put steps in a step file that doesn’t have a category associated with it or you create a feature file that doesn’t have a category assigned to it, you’ll see all of the steps that are available. So you will want to have categories applied to everything. If you need to, you can apply categories to specific scenarios in your feature file and specific steps in your step file to gain even more control.</p>
+<h2 id="Don’t-Repeat-Yourself-DRY"><a href="#Don’t-Repeat-Yourself-DRY" class="headerlink" title="Don’t Repeat Yourself (DRY)"></a>Don’t Repeat Yourself (DRY)</h2><h3 id="Background-section"><a href="#Background-section" class="headerlink" title="Background section"></a>Background section</h3><p>It is common to have a set of steps that repeat for each scenario. Much like a setup section in NUnit or MSTest. One of the ways you can handle this is by creating a background section.</p>
+<p>Background:<br>    Given I have entered 50 into the calculator<br>    And I have entered 70 into the calculator</p>
+<p>Scenario: Add two numbers<br>    When I press add<br>    Then the result should be 120 on the screen</p>
+<p>The background section runs for each scenario in the feature file.</p>
+<h3 id="Running-Steps-from-another-Step"><a href="#Running-Steps-from-another-Step" class="headerlink" title="Running Steps from another Step"></a>Running Steps from another Step</h3><p>You could also create a step that combines all of the common steps together and then have that step run all of the steps.</p>
+<p>Scenario: Add two numbers<br>    Given the calculator has been setup<br>    When I press add<br>    Then the result should be 120 on the screen</p>
+<p>  Then in your Step file, you’ll need to change your Step class to inherit from Step</p>
+<p>public sealed class StepFileOne : Steps<br>{<br> …<br>}</p>
+<p>And then create your step to call the other steps like this:</p>
+<p>[Given(@”the calculator has been setup”)]<br>public void GivenTheCalculatorHasBeenSetup()<br>{<br>    Given(“I have entered 50 into the calculator”);<br>    Given(“I have entered 70 into the calculator”);<br>}</p>
+<p>Yes, you could call the methods directly, but only if the methods are in the same class.  If you have step methods that span multiple classes, you’ll want to use this method so that you can maintain the context of the test you are running.</p>
+<h3 id="Before-After-Attributes"><a href="#Before-After-Attributes" class="headerlink" title="Before/After Attributes"></a>Before/After Attributes</h3><p>Finally, you may have setup steps that really have nothing to do with the actual test. In the case of testing web pages or other applications, you’ll probably have to load the page or start up the application and wait for the page to be ready to use prior to doing anything else. And once you have completed your test, you’ll want to do some clean up. At the very least, you’ll want to close the web page. For this, SpecFlow provides the Before attribute and the After attribute. Just like the step definitions, the methods attributed with Before and After will run based on the categories they are associated with.</p>
+<p>[Before]<br>public void BeforeScenario(“categoryToAssociateWith”)<br>{<br>    //TODO: implement logic that has to<br>    // run before executing each scenario<br>}</p>
+<p>[After]<br>public void AfterScenario(“categoryToAssociateWith”)<br>{<br>    //TODO: implement logic that has to<br>    //run after executing each scenario<br>}</p>
+<p>Other before/after attributes that you can use (from <a href="//www.specflow.org/documentation/Hooks/">//www.specflow.org/documentation/Hooks/</a>)</p>
+<p><strong>Attribute</strong></p>
+<p><strong>Tag filtering</strong></p>
+<p><strong>Description</strong></p>
+<p>[BeforeTestRun] [AfterTestRun]</p>
+<p>-</p>
+<p>automation logic that has to run before/after the entire test run_Note: As the most of the unit test runners do not provide a hook for executing logic after the test execution has been finished, the [AfterTestRun] event is triggered by the test assembly unload event. The exact timing and thread of this execution might be different for each test runner._The method it is applied to must be static.</p>
+<p>[BeforeFeature] [AfterFeature]</p>
+<p>+</p>
+<p>automation logic that has to run before/after executing each featureThe method it is applied to must be static.</p>
+<p>[BeforeScenario] or [Before] [AfterScenario] or [After]</p>
+<p>+</p>
+<p>automation logic that has to run before/after executing each scenario or scenario outline exampleThe short attribute names are available from v1.8.</p>
+<p>[BeforeScenarioBlock] [AfterScenarioBlock]</p>
+<p>+</p>
+<p>automation logic that has to run before/after executing each scenario block (e.g. between the “givens” and the “whens”)</p>
+<p>[BeforeStep] [AfterStep]</p>
+<p>+</p>
+<p>automation logic that has to run before/after executing each scenario step</p>
+<p>You can annotate a single method with multiple attributes.</p>
+<h2 id="Sharing-Data-Between-Step-and-Binding-Files"><a href="#Sharing-Data-Between-Step-and-Binding-Files" class="headerlink" title="Sharing Data Between Step and Binding Files"></a>Sharing Data Between Step and Binding Files</h2><p>Once you’ve setup your tests with the <code>Before</code> and <code>After</code> methods, you will probably need to save the information in a location where you can get to it while you are running the tests. You might be tempted to place this information in a member variable or a property but, if you’ve done as I’ve suggested, and placed your <code>Before</code> and <code>After</code> methods in separate files from your steps, you’ll see that this won’t make a lot of sense. Instead, what I recommend that you do is that you save the information into the <code>ScenarioContext</code> object using this syntax.</p>
+<p>ScenarioContext.Current[“page”] = someValue;</p>
+<p>Then, later on in your testing process, you can retrieve the value using:</p>
+<p>var x = (RealObjectType)ScenarioContext.Current[“page”])</p>
+<p>where “RealObjectType” is a class name that represents the type of the object that you originally stored. I typically use the Before and After scenarios to open and close the page I want to test while using Selenium. Without going into a whole lot of detail about how this works, my Before and After routine looks something like this:</p>
+<p>private ISpmInitial Page<br>{<br>    get { return (ISpmInitial)(ScenarioContext.Current[“page”]); }<br>    set { ScenarioContext.Current[“page”] = value; }<br>}</p>
+<p>[Before]<br>public void Before()<br>{<br>    const string id = “10039219”;<br>    var pages = new ConcurrentStack<ispminitial>();<br>    Parallel.Invoke(<br>        () => pages.Push(SpmPageFactory.GetPageModel(“FireFoxGrid”, id))<br>        ,<br>        () => pages.Push(SpmPageFactory.GetPageModel(“IE11Grid”, id))<br>    );<br>    var pagesArray = pages.ToArray();<br>    Page = new ParallelPage<ispminitial>(pagesArray).Cast();<br>}</ispminitial></ispminitial></p>
+<p>[After]<br>public void After()<br>{<br>    if (Page == null) return;<br>    Page.Dispose();<br>    Page = null;<br>}</p>
+<p>This code is using the Selenium parallelization code I’ve already talked about in my article, <a href="//blog.dmbcllc.com/running-selenium-in-parallel-with-any-net-unit-testing-tool/">Running Selenium In Parallel With Any .NET Unit Testing Tool</a>. The <code>Before</code> method creates my page object for the browsers I’m using. Once I have the page object, I store it into my private <code>Page</code> property which uses the <code>ScenarioContext</code> as the backing store. Then, in the step files that need access to this same page object, I create a similar <code>Page</code> property so that they can access the page object from the steps.</p>
+<h2 id="Parameterized-Tests"><a href="#Parameterized-Tests" class="headerlink" title="Parameterized Tests"></a>Parameterized Tests</h2><p>It is quite common to have tests for multiple scenarios that essentially look the same except for the parameters change. Instead of using copy/paste/modify, you can create parameterized test by using the Scenario Outline directive.</p>
+<p>Scenario Outline: Uses parameters<br>    Given I have entered <n1> into the calculator<br>    And I have entered <n2> into the calculator<br>    When I press <operation><br>    Then the result should be <result> on the screen</result></operation></n2></n1></p>
+<pre><code>Examples: 
+| n1 | n2 | operation | result |
+| 1  | 2  | add       | 3      |
+| 5  | 3  | subtract  | 2      |
+| 5  | -3 | add       | 2      |
+</code></pre><p>Keep in mind that the step that gets run is based on the merged result. So you could have multiple steps that implement any particular line in your scenario outline.</p>
+<h2 id="Alternate-ways-of-structuring-your-test"><a href="#Alternate-ways-of-structuring-your-test" class="headerlink" title="Alternate ways of structuring your test"></a>Alternate ways of structuring your test</h2><h3 id="Data-Tables"><a href="#Data-Tables" class="headerlink" title="Data Tables"></a>Data Tables</h3><p>Scenario: Data Table Example<br>    Given I’ve Entered The Following Information<br>    | Field     | Value                   |<br>    | FirstName | “Dave”                  |<br>    | LastName  | “Bush”                  |<br>    | email     | “<a href="mailto:davembush@dmbcllc.com" target="_blank" rel="noopener">davembush@dmbcllc.com</a>“ |</p>
+<p>  The first column is the names of the fields. The second column is the values. To pull the information out in the step, create, or use an existing class that has the same field names and write code similar to the following in your step.</p>
+<p>class Person<br>{<br>    string FirstName { get; set; }<br>    string LastName { get; set; }<br>    string email { get; set; }<br>}</p>
+<p>[Given(@”I’ve Entered The Following Information”)]<br>public void GivenIVeEnteredTheFollowingInformation(Table table)<br>{<br>    var person = table.CreateInstance<person>();<br>    // Do something with person here<br>}</person></p>
+<p>You can use a horizontal layout like this:</p>
+<p>Scenario: Data Table Example<br>    Given I’ve Entered The Following Information<br>    | FirstName | LastName | email                   |<br>    | “Dave”    | “Bush”   | “<a href="mailto:davembush@dmbcllc.com" target="_blank" rel="noopener">davembush@dmbcllc.com</a>“ |<br>    | “John”    | “Doe”    | “<a href="mailto:jdoe@gmail.com" target="_blank" rel="noopener">jdoe@gmail.com</a>“        |</p>
+<p>In this case you use the <code>CreateSet</code> call to create a list of Person objects.</p>
+<p>[Given(@”I’ve Entered The Following Information”)]<br>public void GivenIVeEnteredTheFollowingInformation<br>    (Table table)<br>{<br>    var people = table.CreateSet<person>();<br>    // Do something with people here<br>}</person></p>
+<p>Finally, you may have the need to enter parameter data that is longer than will reasonably fit on one line or that needs to be on multiple lines. To do that, you delimit the beginning and end of the multi-line section with three double quotes.</p>
+<p>[Given(@”I have lots of text”)]<br>public void GivenIHaveLotsOfText(string multilineText)<br>{<br>    ScenarioContext.Current.Pending();<br>}</p>
+<p>The multi-line text will be passed as the last parameter in your step method. There are probably some features I missed here.  But this is already more than what I use on a day to day basis in my own SpecFlow testing scenarios.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/specflow-tutorial/" data-id="cjiw7ucki00r2dghi0zjevrej" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bdd/">bdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/specflow/">specflow</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/testing/">testing</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/the-parable-of-the-road-line-painter/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">The Parable of The Road Line Painter</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/why-is-it-called-“inversion-of-control”/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">Why Is It Called “Inversion of Control”?</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/vmware-s-clarity-design-system-for-angular/">VMWare&#39;s Clarity Design System for Angular</a>
+        </li>
+      
+        <li>
+          <a href="/the-full-stack-developer-myth/">The Full Stack Developer Myth</a>
+        </li>
+      
+        <li>
+          <a href="/how-you-do-anything/">How you do Anything ...</a>
+        </li>
+      
+        <li>
+          <a href="/property-based-testing-in-angular-with-jsverify/">Property Based Testing in Angular with jsVerify</a>
+        </li>
+      
+        <li>
+          <a href="/property-based-testing-revealed-a-better-way-to-test/">Property Based Testing Revealed - A Better Way to Test</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

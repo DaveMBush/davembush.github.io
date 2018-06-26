@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Jedi Angular 2 Tips and Tricks | Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="This week, I thought I’d collect a list of unrelated tricks and tips I’ve learned over the last couple of weeks into one post.  Unless you love to read documentation, or you’ve run into problems that">
+<meta name="keywords" content="angular 2,typescript,css,tips,tricks">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Jedi Angular 2 Tips and Tricks">
+<meta property="og:url" content="http://davembush.github.com/jedi-angular-2-tips-and-tricks/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:description" content="This week, I thought I’d collect a list of unrelated tricks and tips I’ve learned over the last couple of weeks into one post.  Unless you love to read documentation, or you’ve run into problems that">
+<meta property="og:locale" content="English">
+<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/03/image-4.png">
+<meta property="og:updated_time" content="2018-06-23T18:40:38.121Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Jedi Angular 2 Tips and Tricks">
+<meta name="twitter:description" content="This week, I thought I’d collect a list of unrelated tricks and tips I’ve learned over the last couple of weeks into one post.  Unless you love to read documentation, or you’ve run into problems that">
+<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/03/image-4.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-jedi-angular-2-tips-and-tricks" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      Jedi Angular 2 Tips and Tricks
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/jedi-angular-2-tips-and-tricks/" class="article-date"><time datetime="2017-03-28T10:30:00.000Z" itemprop="datePublished">2017-03-28</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Angular-2/">Angular 2</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>This week, I thought I’d collect a list of unrelated tricks and tips I’ve learned over the last couple of weeks into one post.  Unless you love to read documentation, or you’ve run into problems that these tips solve, I’m guessing you don’t know most of these. But first, the big new this week… [caption id=”” align=”aligncenter” width=”640”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/03/image-4.png" alt="Jedi Angular 2 Tips and Tricks" title="Jedi Angular 2 Tips and Tricks"> Photo credit: <a href="//www.flickr.com/photos/korymatthew/14211839966/">iamkory</a> via <a href="//visualhunt.com/re/4d4175">Visual Hunt</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a>[/caption] </p>
+<h2 id="Angular-Version-4-Released"><a href="#Angular-Version-4-Released" class="headerlink" title="Angular Version 4 Released"></a>Angular Version 4 Released</h2><p>You may have already seen this.  You can read all about it <a href="//angularjs.blogspot.com/2017/03/angular-400-now-available.html">on their blog</a>.  Yes, it makes the code smaller and faster.  Yes, it implements an “else” for *ngIf.  Yes, it works with the latest version of TypeScript.  But the one change I’m most looking forward to is the “source maps for templates.” If you’ve ever seen the error in your console window indicating an issue with your template with some obscure line number that has nothing to do with your template code, this should be great news for you as well.  Imagine being able to actually track down those errors in some more intelligent way than trying to guess exactly what line is causing the problem. There is one small breaking change in this release and that is that they’ve moved the Animations package out of Core and into its own location.  Since we’ve decided to wait to hear from our control vendor to see if that is going to have any impact, I can’t report on how much heart burn that’s going to cause you.</p>
+<h2 id="The-Official-Name-of-Angular"><a href="#The-Official-Name-of-Angular" class="headerlink" title="The Official Name of Angular"></a>The Official Name of Angular</h2><p>So, finally the Angular team has come up with an official way of distinguishing between Angular 1 and everything after it.  The official name of Angular 1 is “AngularJS.”  Everything else is just “Angular.”  For now, I’ll keep referring to it as Angular 2 until it actually catches on.</p>
+<h2 id="Periodic-Production-Compiles"><a href="#Periodic-Production-Compiles" class="headerlink" title="Periodic Production Compiles"></a>Periodic Production Compiles</h2><p>For the purposes of this article, I’m going to assume you are using the CLI, but if you are doing all of that work by hand, most of what I have to say will translate to what you are doing. A couple of weeks ago, we ran into a memory leak in our code that evidently is a known Angular 2 issue and only appears when you compile for DEV mode.  This caused us to go down the path of actually trying to compile our code in Production mode where I found that some of my code wouldn’t compile. As it turns out, when you compile in production mode it verifies that code more strictly so that it can use Ahead of Time compile if you choose to do that. Moral of the story is that you probably want to always work in production mode until you have an issue that you want to track down, where you can switch to DEV mode for the debug session.  Or, at the very least, compile for production prior to running the code in debug mode just so you are sure you can compile.  I prefer always running in production mode so that I’m sure the code is working correctly. Before you get all, “it should work the same way in both environments” on me.  Stop and think about this for a few seconds.  This is JavaScript we are talking about here.  A dynamic language.  You can’t have things like tree shaking and ahead of time compile AND get all of the benefits of a dynamic language at the same time.  I’m sure if it were possible, it would have been built to work closer to the same way to start with.  Not that I don’t agree with you, but unless you know how to fix it and have issued a pull request to address this issue, you have very little room to complain.</p>
+<h2 id="Direct-Access-to-CSS"><a href="#Direct-Access-to-CSS" class="headerlink" title="Direct Access to CSS"></a>Direct Access to CSS</h2><p>When I wrote about how to <a href="//blog.dmbcllc.com/adding-css-and-javascript-to-an-angular-2-cli-project/">add CSS to an Angular project</a>, someone commented asking how to see the raw CSS instead of the JavaScript that it turns into.  Well, as it turns out, there is a build flag to control that. <code>ng serve --extract-css</code> I personally never need this because my files are organized in such a way that I know where stuff is, but I can see where this would be helpful if I wanted to track down CSS in someone else’s code.</p>
+<h2 id="Accessing-the-Component-Host-Element"><a href="#Accessing-the-Component-Host-Element" class="headerlink" title="Accessing the Component Host Element"></a>Accessing the Component Host Element</h2><h3 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h3><p>If you need to access the host element for your component using CSS, the selector you want to use is <code>:host.</code> When you use this, keep in mind that your element has no default style so you will need to provide all of the styling.  Otherwise, it will show up as an empty element with overflow set to show.  This is probably not what you want. By using <code>:host</code>, you can avoid creating an inner <code>DIV</code> in your component just so you can display everything else.  The host element can function as that <code>DIV</code>.</p>
+<h3 id="TypeScript"><a href="#TypeScript" class="headerlink" title="TypeScript"></a>TypeScript</h3><p>You can access the host element directly from your typescript using <code>this.elementRef</code> You will need to inject <code>ElementRef</code> in your constructor for this to work.</p>
+<h3 id="Events"><a href="#Events" class="headerlink" title="Events"></a>Events</h3><p>Finally, if you need to bind to events on the host element, you can use the @HostEvent() attribute prior to the function that is going to handle the event <code>@HostListener(&#39;click&#39;,[&#39;$event&#39;]) foo(event) {</code> }</p>
+<h2 id="Accessing-Child-Components"><a href="#Accessing-Child-Components" class="headerlink" title="Accessing Child Components"></a>Accessing Child Components</h2><h3 id="CSS-1"><a href="#CSS-1" class="headerlink" title="CSS"></a>CSS</h3><p>If you need to style a child component from one of your components in some way that is unique from the rest of the system, you will need to add CSS in your component.  The proper way to access the child component is by using this directive: <code>:host &gt;&gt;&gt; child-component</code> Where, <code>child-component</code> is the tag you are using to load the child component. The trick is the triple &gt; selector.</p>
+<h3 id="TypeScript-1"><a href="#TypeScript-1" class="headerlink" title="TypeScript"></a>TypeScript</h3><p>To access the child component in your TypeScript, all you need to do is give the element you are interested in a variable using the #variable identifier.  Notice, this is standalone.  We are not using the ID of the element, although it could have the same name if you wanted. Then, in your typescript, you’ll declare a public variable that is prefixed with the <code>@ViewChild()</code> decorator.  There are several ways that you can use this.  But using the variable method that I’m describing here, you just specify the variable name, in quotes. <code>@ViewChild(&#39;variable&#39;) variable: ElementRef;</code> Everything is an <code>ElementRef</code>.  If you need to type it more strongly, you can. You can use whatever variable name you want to for the member variable.  But I normally name it the same as what I named the element.</p>
+<h2 id="Animations"><a href="#Animations" class="headerlink" title="Animations"></a>Animations</h2><p>One of the cool things we can do with CSS is animate DOM elements using CSS.  If you haven’t discovered this yet, you want to because it avoids the JavaScript –&gt; DOM overhead making it smoother and more energy efficient on handheld devices. The problem is, because the elements we want to animate in and out often don’t exist in the DOM at the right time, using straight CSS to do the animations is problematic or impossible.  This is where the Animations package comes in. On the project I’m working on now, I define my animations in an animations directory and apply them to my components as needed.  So, for example, I have an animation defined that fades my pages (routes) in and out.  It is defined once and applied to all my top level components.</p>
+<h2 id="Flex-Layout"><a href="#Flex-Layout" class="headerlink" title="Flex Layout"></a>Flex Layout</h2><p>Another rather new CSS development is the flex-box layout system.  This solves all kinds of problems that we’ve had in the past.  The problem is, it is so new that it doesn’t work exactly the same way on all of the browsers. What the flex-box layout system does is that it allow us to layout rows and columns specifying the width of the columns or rows within them.  The Flex Layout package takes that concept and expands on it as well as making sure it works the same way across all browsers. First, instead of using CSS, it does all of the same work using directives.  This puts the layout closer to the code we want to impact without violating the single responsibility principle.  Think about it.  Layout stuff like this is generally component specific.  Not something we want to  generalize beyond that.  In the old days, we did need to generalize layout like this more because we were applying it to multiple pages.  But our common layout is typically handled by our top most component in a SPA. Beyond all of this, it also allows you to specify when a particular directive, or element, should apply based on screen size.  So, it takes the Bootstrap grid layout system and makes it even more powerful.  I’ll probably still use Boostrap for what a component looks like, but I’m planning to move the bulk of my page layout to Flex Layout.</p>
+<h2 id="Optimize-Change-Detection"><a href="#Optimize-Change-Detection" class="headerlink" title="Optimize Change Detection"></a>Optimize Change Detection</h2><p>If you are coming from the AngularJS world, you are use to Angular doing all of your change detection for you.  And by default, this works similarly in Angular.  But, you can improve the performance of your Angular application by using OnPush change detection.  This makes it so that the component will be marked for change detection when the pointers it is looking at change.  This way, it doesn’t have to (for example) evaluate all of the elements in an array just to figure out if it need to redraw the component. However, sometimes this doesn’t work.  In this case, you’ll need to tell the component that it should redraw.  To do this, make sure you’ve injected <code>ChangeDetectorRef</code>and then call the member function <code>markForChange()</code> to let the system know, this component should be updated. I don’t know about you, but I’m loving Angular!</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/jedi-angular-2-tips-and-tricks/" data-id="cjiw7uccr00jddghi9256z2kq" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular-2/">angular 2</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/">css</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tips/">tips</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tricks/">tricks</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/coasting-curiosity-diversification-and-being-awesome/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">Coasting, Curiosity, Diversification and Being Awesome</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/unit-testing-angular-2-with-jsdom/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">Unit Testing Angular(2+) with JSDOM</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/vmware-s-clarity-design-system-for-angular/">VMWare&#39;s Clarity Design System for Angular</a>
+        </li>
+      
+        <li>
+          <a href="/the-full-stack-developer-myth/">The Full Stack Developer Myth</a>
+        </li>
+      
+        <li>
+          <a href="/how-you-do-anything/">How you do Anything ...</a>
+        </li>
+      
+        <li>
+          <a href="/property-based-testing-in-angular-with-jsverify/">Property Based Testing in Angular with jsVerify</a>
+        </li>
+      
+        <li>
+          <a href="/property-based-testing-revealed-a-better-way-to-test/">Property Based Testing Revealed - A Better Way to Test</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2018 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>
