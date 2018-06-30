@@ -14,7 +14,7 @@
 <meta property="og:description" content="As you might have noticed from last week’s post, I’ve shifted my focus from pure Angular to learning Angular Ionic.  And while last week’s post focused more on just getting Ionic setup on a Windows en">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2017/11/2017-11-14.jpg">
-<meta property="og:updated_time" content="2018-06-30T19:18:32.673Z">
+<meta property="og:updated_time" content="2018-06-30T23:31:08.324Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Angular Ionic and Angular CLI">
 <meta name="twitter:description" content="As you might have noticed from last week’s post, I’ve shifted my focus from pure Angular to learning Angular Ionic.  And while last week’s post focused more on just getting Ionic setup on a Windows en">
@@ -112,86 +112,23 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>As you might have noticed from last week’s post, I’ve shifted my focus from pure Angular to learning Angular Ionic.  And while last week’s post focused more on just <a href="/angular-ionic-putty-ssh-authorized_keys-format">getting Ionic setup on a Windows environment</a>, this post will focus more on integrating Ionic and Angular CLI to work together. If you are familiar with Ionic, you should already know that it provides its own CLI that allows you to scaffold out a new application using a basic template.  This CLI is also used to help register the project with the Ionic Dashboard and scaffold out a limited number of file types if you use Ionic 3.  However, there are several problems I have with using the Ionic CLI.  First, and probably most important to me, is there is no test scaffolding!  Second, it neither follows the standard naming convention for files nor does it comply with the Angular Style Guide when it comes to directory structure. My first attempt at correcting the problem was to try to add Ionic to an existing Angular CLI project.  I almost had that working, but I got stuck trying to get the SCSS implementation working.  I finally gave up once I realized that Ionic seems to load files on demand, including SCSS files and templates.  I might come back to this once I’ve gained more experience with Ionic and have a better idea of how it works under the hood. So, my second thought was to just add the Angular CLI to an existing Ionic CLI project.  It turns out this was much easier to get working.  This allows me to use the standard <code>ng</code> commands to scaffold out my components, services, interfaces, etc… and because I’m using the Angular CLI scaffolding, the tests also get scaffold out for me. <figure><img src="/uploads/2017/11/2017-11-14.jpg" alt="" title="Angular Ionic and Angular CLI"><figcaption>Photo credit: <a href="//www.flickr.com/photos/internetarchivebookimages/14762635481/">Internet Archive Book Images</a> via <a href="//visualhunt.com/re/09daa4">VisualHunt.com</a> / <a href="//flickr.com/commons/usage/"> No known copyright restrictions</a></figcaption></figure></p>
-<p><a id="more"></a>  For the purposes of this post, I’m going to assume you’ve already created a project using the Ionic CLI.  What follows are the steps you need to take to add in the Angular CLI.</p>
-<h2 id="Add-Angular-CLI"><a href="#Add-Angular-CLI" class="headerlink" title="Add Angular CLI"></a>Add Angular CLI</h2><p>All of the additions to the package.json file are in devDependencies.  The version numbers I’ve included are for the version at the time of this writing. You’ll want to modify for newer versions as they are released. First, of course, add the angular cli <code>&quot;@angular/cli&quot;: &quot;1.4.9&quot;</code> This will give you the ability to use the <code>ng</code> commands to scaffold out files.  To allow the tests to run, you’ll also want to add the following:</p>
-<p><code>&quot;@types/jasmine&quot;: &quot;~2.5.53&quot;,</code></p>
-<p><code>&quot;@types/jasminewd2&quot;: &quot;~2.0.2&quot;,</code></p>
-<p><code>&quot;@types/node&quot;: &quot;~6.0.60&quot;,</code></p>
-<p><code>&quot;jasmine-core&quot;: &quot;~2.6.2&quot;,</code></p>
-<p><code>&quot;jasmine-spec-reporter&quot;: &quot;~4.1.0&quot;,</code></p>
-<p><code>&quot;karma&quot;: &quot;~1.7.0&quot;,</code></p>
-<p><code>&quot;karma-chrome-launcher&quot;: &quot;~2.1.1&quot;,</code></p>
-<p><code>&quot;karma-cli&quot;: &quot;~1.0.1&quot;,</code></p>
-<p><code>&quot;karma-coverage-istanbul-reporter&quot;: &quot;^1.2.1&quot;,</code></p>
-<p><code>&quot;karma-jasmine&quot;: &quot;~1.1.0&quot;,</code></p>
-<p><code>&quot;karma-jasmine-html-reporter&quot;: &quot;^0.2.2&quot;,</code></p>
-<p><code>&quot;protractor&quot;: &quot;~5.1.2&quot;,</code></p>
-<p><code>&quot;ts-node&quot;: &quot;~3.2.0&quot;,</code></p>
+<a id="more"></a>  
+<p>For the purposes of this post, I’m going to assume you’ve already created a project using the Ionic CLI.  What follows are the steps you need to take to add in the Angular CLI.</p>
+<h2 id="Add-Angular-CLI"><a href="#Add-Angular-CLI" class="headerlink" title="Add Angular CLI"></a>Add Angular CLI</h2><p>All of the additions to the package.json file are in devDependencies.  The version numbers I’ve included are for the version at the time of this writing. You’ll want to modify for newer versions as they are released. First, of course, add the angular cli</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">"@angular/cli": "1.4.9"</span><br></pre></td></tr></table></figure>
+<p>This will give you the ability to use the <code>ng</code> commands to scaffold out files.  To allow the tests to run, you’ll also want to add the following:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">"@types/jasmine": "~2.5.53",</span><br><span class="line">"@types/jasminewd2": "~2.0.2",</span><br><span class="line">"@types/node": "~6.0.60",</span><br><span class="line">"jasmine-core": "~2.6.2",</span><br><span class="line">"jasmine-spec-reporter": "~4.1.0",</span><br><span class="line">"karma": "~1.7.0",</span><br><span class="line">"karma-chrome-launcher": "~2.1.1",</span><br><span class="line">"karma-cli": "~1.0.1",</span><br><span class="line">"karma-coverage-istanbul-reporter": "^1.2.1",</span><br><span class="line">"karma-jasmine": "~1.1.0",</span><br><span class="line">"karma-jasmine-html-reporter": "^0.2.2",</span><br><span class="line">"protractor": "~5.1.2",</span><br><span class="line">"ts-node": "~3.2.0",</span><br></pre></td></tr></table></figure>
 <p>I also use tslint quite extensively in my projects, so I also add in the following:</p>
-<p><code>&quot;codelyzer&quot;: &quot;~3.2.0&quot;,</code></p>
-<p><code>&quot;tslint&quot;: &quot;~5.7.0&quot;,</code></p>
-<p><code>&quot;tslint-immutable&quot;: &quot;^4.4.0&quot;,</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">"codelyzer": "~3.2.0",</span><br><span class="line">"tslint": "~5.7.0",</span><br><span class="line">"tslint-immutable": "^4.4.0",</span><br></pre></td></tr></table></figure>
 <h2 id="angular-cli-json"><a href="#angular-cli-json" class="headerlink" title=".angular-cli.json"></a>.angular-cli.json</h2><p>The main file that makes the Angular CLI recognize the project as an Angular CLI project is the <code>.angular-cli.json</code> file.  The easiest thing to do is to take an existing file from another project and copy it into your Ionic project.  This file belongs in the root of your project. Once you’ve done that, there is one small change you need to make.  The <code>main.ts</code> file that is the entry point of the application lives under the <code>app</code> directory in an Ionic project rather than directly under <code>src</code> like it does with an Angular CLI project.  It would be tempting to change the location of the file, but the Ionic build process is looking for it under the <code>app</code> directory.  An easier fix is to change the location in our <code>.angular-cli.json</code> file so that our tests can find it.  It is the only place that needs to know of the new location. Change .angular-cli.json so main points to the right location:</p>
-<p><code>{</code></p>
-<p><code>&quot;$schema&quot;: &quot;./node_modules/@angular/cli/lib/config/schema.json&quot;,</code></p>
-<p><code>&quot;project&quot;: {</code></p>
-<p><code>&quot;name&quot;: &quot;ionic-with-angular-cli&quot;</code></p>
-<p><code>},</code></p>
-<p><code>&quot;apps&quot;: [</code></p>
-<p><code>{</code></p>
-<p><code>&quot;root&quot;: &quot;src&quot;,</code></p>
-<p><code>&quot;outDir&quot;: &quot;dist&quot;,</code></p>
-<p><code>&quot;assets&quot;: [</code></p>
-<p><code>&quot;assets&quot;,</code></p>
-<p><code>&quot;favicon.ico&quot;</code></p>
-<p><code>],</code></p>
-<p><code>&quot;index&quot;: &quot;index.html&quot;,</code></p>
-<p><code>**&quot;main&quot;: &quot;app/main.ts&quot;,**</code></p>
-<p><code>&quot;polyfills&quot;: &quot;polyfills.ts&quot;,</code></p>
-<p><code>&quot;test&quot;: &quot;test.ts&quot;,</code> <code>...</code></p>
-<p><code>}</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"$schema"</span>: <span class="string">"./node_modules/@angular/cli/lib/config/schema.json"</span>,</span><br><span class="line">  <span class="attr">"project"</span>: &#123;</span><br><span class="line">      <span class="attr">"name"</span>: <span class="string">"ionic-with-angular-cli"</span></span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"apps"</span>: [</span><br><span class="line">  &#123;</span><br><span class="line">      <span class="attr">"root"</span>: <span class="string">"src"</span>,</span><br><span class="line">      <span class="attr">"outDir"</span>: <span class="string">"dist"</span>,</span><br><span class="line">      <span class="attr">"assets"</span>: [</span><br><span class="line">          <span class="string">"assets"</span>,</span><br><span class="line">          <span class="string">"favicon.ico"</span></span><br><span class="line">      ],</span><br><span class="line">      <span class="attr">"index"</span>: <span class="string">"index.html"</span>,</span><br><span class="line">      **"main": "app/main.ts",**</span><br><span class="line">      "polyfills": "polyfills.ts",</span><br><span class="line">      "test": "test.ts",</span><br><span class="line"> ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="karma-conf-js"><a href="#karma-conf-js" class="headerlink" title="karma.conf.js"></a>karma.conf.js</h2><p>To run your tests, you’ll need a <code>karma.conf.js</code> file in your root directory.  Again, the easiest thing to do is to copy this file over from a project you created with the Angular CLI.</p>
 <h2 id="tsconfig-json"><a href="#tsconfig-json" class="headerlink" title="tsconfig.json"></a>tsconfig.json</h2><p>You should already have a <code>tsconfig.json</code> file in your project root directory.  If you open it, you’ll see it has an exclude section that is excluding <code>node_modules</code>.  You’ll need to tell it to exclude <code>test.ts</code> and <code>*.spec.ts</code> files so it doesn’t pick up the test files during a normal compile cycle.</p>
-<p><code>&quot;exclude&quot;: [</code></p>
-<p><code>&quot;node_modules&quot;,</code></p>
-<p><code>&quot;test.ts&quot;,</code></p>
-<p><code>&quot;**/*.spec.ts&quot;</code></p>
-<p><code>],</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">"exclude": [</span><br><span class="line">  "node_modules",</span><br><span class="line">  "test.ts",</span><br><span class="line">  <span class="string">"**/*.spec.ts"</span></span><br><span class="line">],</span><br></pre></td></tr></table></figure>
 <h2 id="polyfills-ts"><a href="#polyfills-ts" class="headerlink" title="polyfills.ts"></a>polyfills.ts</h2><p>The tests use the <code>polyfills.ts</code> file, so you’ll need to add one that was originally created using the Angular CLI.  This belongs in your <code>src</code> directory.</p>
 <h2 id="test-ts"><a href="#test-ts" class="headerlink" title="test.ts"></a>test.ts</h2><p>Copy a <code>test.ts</code> file into your <code>src</code> directory from a project that you created with the <code>Angular CLI</code>.  If you don’t put this file in, you won’t be able to run any tests.</p>
 <h2 id="tsconfig-spec-json"><a href="#tsconfig-spec-json" class="headerlink" title="tsconfig.spec.json"></a>tsconfig.spec.json</h2><p>The tests use <code>tsconfig.spec.json</code> located in the <code>src</code> directory.  The problem is, a standard <code>tsconfig.spec.json</code> file inherits from the <code>tsconfig.json</code> file we just modified above which doesn’t look at all like the <code>tsconfig.json</code> file in an Angular CLI project.  I found the easiest thing to do was to create a new copy of <code>tsconfig.spec.json</code> that is a merge of the two files in an Angular CLI project.  This worked at the time of this writing, if you run into trouble, you may need to merge the two files you started with on your own.  My result looks like this:</p>
-<p><code>{</code></p>
-<p><code>&quot;compileOnSave&quot;: false,</code></p>
-<p><code>&quot;compilerOptions&quot;: {</code></p>
-<p><code>&quot;outDir&quot;: &quot;../out-tsc/spec&quot;,</code></p>
-<p><code>&quot;sourceMap&quot;: true,</code></p>
-<p><code>&quot;declaration&quot;: false,</code></p>
-<p><code>&quot;moduleResolution&quot;: &quot;node&quot;,</code></p>
-<p><code>&quot;emitDecoratorMetadata&quot;: true,</code></p>
-<p><code>&quot;experimentalDecorators&quot;: true,</code></p>
-<p><code>&quot;target&quot;: &quot;es5&quot;,</code></p>
-<p><code>&quot;typeRoots&quot;: [</code></p>
-<p><code>&quot;node_modules/@types&quot;</code></p>
-<p><code>],</code></p>
-<p><code>&quot;lib&quot;: [</code></p>
-<p><code>&quot;es2017&quot;,</code></p>
-<p><code>&quot;dom&quot;</code></p>
-<p><code>],</code></p>
-<p><code>&quot;baseUrl&quot;: &quot;./&quot;,</code></p>
-<p><code>&quot;module&quot;: &quot;commonjs&quot;,</code></p>
-<p><code>&quot;types&quot;: [</code></p>
-<p><code>&quot;jasmine&quot;,</code></p>
-<p><code>&quot;node&quot;</code></p>
-<p><code>]</code></p>
-<p><code>},</code></p>
-<p><code>&quot;files&quot;: [</code></p>
-<p><code>&quot;test.ts&quot;</code></p>
-<p><code>],</code></p>
-<p><code>&quot;include&quot;: [</code></p>
-<p><code>&quot;**/*.spec.ts&quot;,</code></p>
-<p><code>&quot;**/*.d.ts&quot;</code></p>
-<p><code>]</code></p>
-<p><code>}</code></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">"compileOnSave"</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">"compilerOptions"</span>: &#123;</span><br><span class="line">    <span class="attr">"outDir"</span>: <span class="string">"../out-tsc/spec"</span>,</span><br><span class="line">    <span class="attr">"sourceMap"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"declaration"</span>: <span class="literal">false</span>,</span><br><span class="line">    <span class="attr">"moduleResolution"</span>: <span class="string">"node"</span>,</span><br><span class="line">    <span class="attr">"emitDecoratorMetadata"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"experimentalDecorators"</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">"target"</span>: <span class="string">"es5"</span>,</span><br><span class="line">    <span class="attr">"typeRoots"</span>: [</span><br><span class="line">      <span class="string">"node_modules/@types"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"lib"</span>: [</span><br><span class="line">      <span class="string">"es2017"</span>,</span><br><span class="line">      <span class="string">"dom"</span></span><br><span class="line">    ],</span><br><span class="line">    <span class="attr">"baseUrl"</span>: <span class="string">"./"</span>,</span><br><span class="line">    <span class="attr">"module"</span>: <span class="string">"commonjs"</span>,</span><br><span class="line">    <span class="attr">"types"</span>: [</span><br><span class="line">      <span class="string">"jasmine"</span>,</span><br><span class="line">      <span class="string">"node"</span></span><br><span class="line">    ]</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="attr">"files"</span>: [</span><br><span class="line">    <span class="string">"test.ts"</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">"include"</span>: [</span><br><span class="line">    <span class="string">"**/*.spec.ts"</span>,</span><br><span class="line">    <span class="string">"**/*.d.ts"</span></span><br><span class="line">  ]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h2 id="typings-d-ts"><a href="#typings-d-ts" class="headerlink" title="typings.d.ts"></a>typings.d.ts</h2><p>I’m not sure this file was needed, but it was another file I found in an Angular CLI project that wasn’t in my Ionic CLI project, so I added it.  It goes in your <code>src</code> directory and is just a copy of the file that is in your Angular CLI project.</p>
 <h2 id="pages"><a href="#pages" class="headerlink" title="pages"></a>pages</h2><p>You’ll notice that your <code>pages</code> directory is at the same level as your <code>src</code> directory which doesn’t comply with the Angular CLI.  I moved mine so that it is under the <code>src</code> directory just to keep things consistent.  You’ll need to fix up imports once you move it of course.</p>
 <h2 id="Regenerate-Pages"><a href="#Regenerate-Pages" class="headerlink" title="Regenerate Pages"></a>Regenerate Pages</h2><p>Because the pages that got generated don’t conform to the style guide and don’t have any tests, I just regenerated mine and copied the relevant code into the newly generated files.</p>
@@ -206,7 +143,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/angular-ionic-and-angular-cli/" data-id="cjj1xnm0s002jdkhi8rnvln05" class="article-share-link">
+      <a data-url="http://davembush.github.com/angular-ionic-and-angular-cli/" data-id="cjj21jukz002g2ghixsx2cung" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
