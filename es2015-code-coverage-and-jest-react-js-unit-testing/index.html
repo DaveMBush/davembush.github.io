@@ -6,7 +6,7 @@
   <title>ES2015 Code Coverage and Jest (React JS Unit Testing) | Dave&#39;s Notebook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="As I’ve mentioned before, I’m in the middle of putting together a React reference app and I’m doing it using Test Driven Development.  The problem is, the standard tools for implementing ES2015 code c">
-<meta name="keywords" content="unit test,react.js,babel,es2015,es6,jest">
+<meta name="keywords" content="react.js,unit test,babel,es2015,es6,jest">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ES2015 Code Coverage and Jest (React JS Unit Testing)">
 <meta property="og:url" content="http://davembush.github.com/es2015-code-coverage-and-jest-react-js-unit-testing/index.html">
@@ -14,7 +14,7 @@
 <meta property="og:description" content="As I’ve mentioned before, I’m in the middle of putting together a React reference app and I’m doing it using Test Driven Development.  The problem is, the standard tools for implementing ES2015 code c">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2016/04/image-5.png">
-<meta property="og:updated_time" content="2018-06-30T18:23:01.240Z">
+<meta property="og:updated_time" content="2018-06-30T20:06:56.959Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ES2015 Code Coverage and Jest (React JS Unit Testing)">
 <meta name="twitter:description" content="As I’ve mentioned before, I’m in the middle of putting together a React reference app and I’m doing it using Test Driven Development.  The problem is, the standard tools for implementing ES2015 code c">
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>As I’ve <a href="//blog.dmbcllc.com/react-js-and-associated-bits/">mentioned before</a>, I’m in the middle of putting together a React reference app and I’m doing it using <a href="//blog.dmbcllc.com/test-driven-learning-an-experiment/">Test Driven Development</a>.  The problem is, the standard tools for implementing ES2015 code coverage with Jest make it hard to see at a glance if you have 100% code coverage or not because of some issues with the way Jest tells Babel to do the transformations by default, the way Babel transforms the code and implements the auxiliaryCommentBefore option and the way that Istanbul parses the ignore next comments. I’ve been working on solving this problem for the last month and a half off and on.  I’ve even posted a question about this on <a href="//stackoverflow.com/questions/35986316/reactjs-0-9-code-coverage-with-es2015-class-keyword">Stack Overflow</a>, so I’m pretty sure no one else has a solution for this yet.  I’m not going to say my solution is the best way to solve this problem, but it is a solution, which is better than what we have so far. <img src="/uploads/2016/04/image-5.png" alt="ES2015 Code Coverage and Jest" title="ES2015 Code Coverage and Jest"> </p>
+        <p>As I’ve <a href="/react-js-and-associated-bits/">mentioned before</a>, I’m in the middle of putting together a React reference app and I’m doing it using <a href="/test-driven-learning-an-experiment/">Test Driven Development</a>.  The problem is, the standard tools for implementing ES2015 code coverage with Jest make it hard to see at a glance if you have 100% code coverage or not because of some issues with the way Jest tells Babel to do the transformations by default, the way Babel transforms the code and implements the auxiliaryCommentBefore option and the way that Istanbul parses the ignore next comments. I’ve been working on solving this problem for the last month and a half off and on.  I’ve even posted a question about this on <a href="//stackoverflow.com/questions/35986316/reactjs-0-9-code-coverage-with-es2015-class-keyword">Stack Overflow</a>, so I’m pretty sure no one else has a solution for this yet.  I’m not going to say my solution is the best way to solve this problem, but it is a solution, which is better than what we have so far. <img src="/uploads/2016/04/image-5.png" alt="ES2015 Code Coverage and Jest" title="ES2015 Code Coverage and Jest"> </p>
 <h2 id="Diagnostics"><a href="#Diagnostics" class="headerlink" title="Diagnostics"></a>Diagnostics</h2><p>By default, when Babel transforms your code, it inserts additional functions into the code that it can call to replace the code you wrote that does not yet conform to the syntax you’ve used.  This code gets inserted at the top of the file and shows up in your code coverage reports as several conditions that didn’t get fired.  Yes, it inserts code it never uses because the functions have to work under a variety of scenarios. For those who are interested in how I figured this out.  The transform results are located in node_modules/jest-cli/.haste_cache.</p>
 <h2 id="ES2015-Code-Coverage-Fix-One"><a href="#ES2015-Code-Coverage-Fix-One" class="headerlink" title="ES2015 Code Coverage Fix One"></a>ES2015 Code Coverage Fix One</h2><p>OK, so the standard recommended fix for something like this is to place</p>
 <p>/* istanbul ignore next */</p>
@@ -173,7 +173,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/es2015-code-coverage-and-jest-react-js-unit-testing/" data-id="cjj1qjcvn008s1ohixebiiv53" class="article-share-link">
+      <a data-url="http://davembush.github.com/es2015-code-coverage-and-jest-react-js-unit-testing/" data-id="cjj1uju8i008xi4hi8oxa5che" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="Judging from the comments I received yesterday, it looks like we need to review  serialization in .NET. The Easy Way There are two ways of making an object serializable.  The first, and easiest way is">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.747Z">
+<meta property="og:updated_time" content="2018-06-30T20:06:57.099Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Serializable attribute vs Serializable Interface">
 <meta name="twitter:description" content="Judging from the comments I received yesterday, it looks like we need to review  serialization in .NET. The Easy Way There are two ways of making an object serializable.  The first, and easiest way is">
@@ -109,7 +109,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Judging from the comments I received yesterday, it looks like we need to review  serialization in .NET. <strong>The Easy Way</strong> There are two ways of making an object serializable.  The first, and easiest way is by applying the Serializable attribute to the class.  Once you’ve done this all of the member variables in the class will get stored into the stream unless you’ve attributed one of the variables with NonSerialized. This method is useful for objects you want to be able to store temporarily.  For example, you might use this to tranfer objects using Web Services or if you wanted to store the object in a session variable when your sessions are being stored in a session server.  You would never use this to store the object to a file that you want to be able to retrieve some time in the future after restarting your application.  That is, you would never use this method to implement the <a href="//blog.dmbcllc.com/2008/04/08/unauthorizedaccessexception-writing-to-hklm/">Registry solution</a> I mentioned yesterday. <strong>The Reliable Way</strong> What you need instead is the Serializable Interface, or more correctly, you want to implement ISerializable on your class.  Using the ISerializable interface gives you a lot more control.  Used correctly, you can store an object to a file system, shut down your application, install an upgrade to the application with additional information (or less information) in the class, and still successfully load the object from the file system.  So, let’s illustrate with a simple class:</p>
+        <p>Judging from the comments I received yesterday, it looks like we need to review  serialization in .NET. <strong>The Easy Way</strong> There are two ways of making an object serializable.  The first, and easiest way is by applying the Serializable attribute to the class.  Once you’ve done this all of the member variables in the class will get stored into the stream unless you’ve attributed one of the variables with NonSerialized. This method is useful for objects you want to be able to store temporarily.  For example, you might use this to tranfer objects using Web Services or if you wanted to store the object in a session variable when your sessions are being stored in a session server.  You would never use this to store the object to a file that you want to be able to retrieve some time in the future after restarting your application.  That is, you would never use this method to implement the <a href="/2008/04/08/unauthorizedaccessexception-writing-to-hklm/">Registry solution</a> I mentioned yesterday. <strong>The Reliable Way</strong> What you need instead is the Serializable Interface, or more correctly, you want to implement ISerializable on your class.  Using the ISerializable interface gives you a lot more control.  Used correctly, you can store an object to a file system, shut down your application, install an upgrade to the application with additional information (or less information) in the class, and still successfully load the object from the file system.  So, let’s illustrate with a simple class:</p>
 <p>class Demo {<br>    private int m_intVar;<br>    public Demo()<br>    {<br>    }<br>}</p>
 <p>  <strong>The Basics</strong> This is a pretty simple class.  It has one member variable that we will use to save some sort of state information and will need to get stored to the stream when we save the object instance.  To implement the interface, we need to change the class to look like this:</p>
 <p>[Serializable]<br>class Demo : ISerializable {<br>    private int m_intVar;<br>    public Demo()<br>    {<br>    } </p>
@@ -143,7 +143,7 @@ public void GetObjectData(SerializationInfo info,
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/serializable-attribute-vs-serializable-interface/" data-id="cjj1qjd6500kj1ohi0di0tkli" class="article-share-link">
+      <a data-url="http://davembush.github.com/serializable-attribute-vs-serializable-interface/" data-id="cjj1ujuic00kfi4hibgz9wult" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

@@ -14,7 +14,7 @@
 <meta property="og:description" content="I’ve been looking at Angular.js recently.  I’ve already got enough of a project done in MongoDB (with Mongoose), Express, Angular and Node.js (MEAN) to be comfortable with how Angular works.  But I wa">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2015/09/image3.png">
-<meta property="og:updated_time" content="2018-06-30T18:23:01.165Z">
+<meta property="og:updated_time" content="2018-06-30T20:06:56.924Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ASP.NET, Angular.js &amp; html5mode">
 <meta name="twitter:description" content="I’ve been looking at Angular.js recently.  I’ve already got enough of a project done in MongoDB (with Mongoose), Express, Angular and Node.js (MEAN) to be comfortable with how Angular works.  But I wa">
@@ -112,9 +112,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>I’ve been looking at Angular.js recently.  I’ve already got enough of a project done in <a href="//www.mongodb.org/">MongoDB</a> (with <a href="//mongoosejs.com/">Mongoose</a>), <a href="//expressjs.com/">Express</a>, <a href="//angularjs.org/">Angular</a> and <a href="//nodejs.org/">Node.js</a> (MEAN) to be comfortable with how Angular works.  But I wanted to give it a try using ASP.NET as the back end.  I’m always learning.  Always improving. To start out, I just setup an index.html page to hold my basic form as I got the basic look and feel going.  But as I progressed, I wanted to make sure I progressed, I wanted to add in the capability of using Angular’s html5mode for the client side routing. For those of you who are new to Angular, Angular is a client side JavaScript framework that will allow you to create web applications where much of the processing happens on the client side instead of the server side.  That’s cool enough.  But it also adds the ability to handle client side routing, just like ASP.NET’s MVC handles server side routing.  This allows you to have a client side “master page” that can suck in the differences from the server as it needs them based on the url that is in the address bar.  In fact, there is an extension that will let you have sub routes as far down as you need. Out of the box, Angular, and most other frameworks that implement client side routing, using the hash symbol to specify the route.  For example</p>
-<p><a href="http://blog.dmbcllc.com/index.html#/pathToRoute" target="_blank" rel="noopener">http://blog.dmbcllc.com/index.html#/pathToRoute</a></p>
+<p>http:/index.html#/pathToRoute</p>
 <p>This allows the routing to work on older browsers. ASP.NET, Angular.js &amp; html5mode <img src="/uploads/2015/09/image3.png" alt="image" title="image"> ASP.NET, Angular.js &amp; html5modeBut if you are working with newer browsers that support HTML5, you can avoid the hash tag and just create a route that looks like this:</p>
-<p><a href="http://blog.dmbcllc.com/pathToRoute" target="_blank" rel="noopener">http://blog.dmbcllc.com/pathToRoute</a></p>
+<p>http:/pathToRoute</p>
 <p>Which you have to admit, looks a whole lot nicer. But here  is where the problems start. As soon as you implement html5mode on a site that is hosted in IIS or IIS express, you will get a 404 error because your initial request to the server is going to ask the server for a path that doesn’t exist. There are a few ways that you can take care of this.</p>
 <h2 id="Return-a-default-view-for-every-undefined-server-route"><a href="#Return-a-default-view-for-every-undefined-server-route" class="headerlink" title="Return a default view for every undefined server route."></a>Return a default view for every undefined server route.</h2><p>One of the first suggestions you are likely to find suggest creating a default view for all routes that start with “/angular/”. This is a great start.  But here are my issues with it.  If I really want to use Angular the way it was intended to be used, I would prefer to not have to use MVC on the server side at all.  While not a huge hit, writing a razor page just to get my initial angular page up seems to be a bit of overkill.  There must be a way to do this without creating a *.chshtml file.  I also don’t want to have a sub directory for my page.  Why can’t I just go to <a href="//blog.dmbcllc.com">http://blog.dmbcllc.com</a> as my default route?  And why can’t I just return a plain old html file?! Well, it turns out you can.  A slight modification of the “Return a default view” method is to have your controller return your html page.</p>
 <h2 id="Return-an-HTML-page-direct-from-the-controller"><a href="#Return-an-HTML-page-direct-from-the-controller" class="headerlink" title="Return an HTML page direct from the controller."></a>Return an HTML page direct from the controller.</h2><p>If you dig a bit further, you’ll find that someone else has realized that you can just return your HTML directly from the controller.  The magic to this trick is all similar to what the guy in the original article did except for in the controller, instead of returning the view, he returns the html file that contains the main html.</p>
@@ -138,7 +138,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-angular-js-html5mode/" data-id="cjj1qjcrj003c1ohiyvqttzip" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-angular-js-html5mode/" data-id="cjj1uju3u003ai4hihts32tih" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

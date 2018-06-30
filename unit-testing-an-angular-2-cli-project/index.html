@@ -6,7 +6,7 @@
   <title>Unit Testing an Angular 2 CLI Project | Dave&#39;s Notebook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="This week we want to continue our series about Angular 2 by looking at the Unit Testing capabilities that Angular 2 provides for us.  What we want to cover today is:  Tweaking Karma to avoid using the">
-<meta name="keywords" content="unit test,angular 2,javascript,typescript">
+<meta name="keywords" content="angular 2,javascript,unit test,typescript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Unit Testing an Angular 2 CLI Project">
 <meta property="og:url" content="http://davembush.github.com/unit-testing-an-angular-2-cli-project/index.html">
@@ -14,7 +14,7 @@
 <meta property="og:description" content="This week we want to continue our series about Angular 2 by looking at the Unit Testing capabilities that Angular 2 provides for us.  What we want to cover today is:  Tweaking Karma to avoid using the">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2016/11/image-3.png">
-<meta property="og:updated_time" content="2018-06-30T19:18:32.745Z">
+<meta property="og:updated_time" content="2018-06-30T20:06:57.066Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Unit Testing an Angular 2 CLI Project">
 <meta name="twitter:description" content="This week we want to continue our series about Angular 2 by looking at the Unit Testing capabilities that Angular 2 provides for us.  What we want to cover today is:  Tweaking Karma to avoid using the">
@@ -121,8 +121,8 @@
 <a id="more"></a> 
 <h2 id="Tweaking-Karma"><a href="#Tweaking-Karma" class="headerlink" title="Tweaking Karma"></a>Tweaking Karma</h2><p>Open up the project we’ve been working on.</p>
 <ul>
-<li><a href="//blog.dmbcllc.com/getting-started-angular-2/">Getting Started With Angular 2</a></li>
-<li><a href="//blog.dmbcllc.com/adding-css-and-javascript-to-an-angular-2-cli-project/">Adding CSS and JavaScript to an Angular CLI Project</a></li>
+<li><a href="/getting-started-angular-2/">Getting Started With Angular 2</a></li>
+<li><a href="/adding-css-and-javascript-to-an-angular-2-cli-project/">Adding CSS and JavaScript to an Angular CLI Project</a></li>
 </ul>
 <p>Drop into command line mode and run <code>ng test</code> The first thing you will notice is that this brings up the Chrome browser to run your test.  I don’t know about you, but I really dislike having a browser window up.  I have enough windows running on my screen as it is.  This is the first thing we need to fix.  To do this we are going to install PhantomJS. <code>npm install --save-dev phantomjs-prebuilt</code> Then, we need to tell karma to use PhantomJS.  This is a two step process.  First, we install the karma phantomjs runner <code>npm install --save-dev karma-phantomjs-launcher</code> Next, we modify the karma.conf.js file Change <code>require(&#39;karma-chrome-launcher&#39;),</code> and <code>browsers: [&#39;Chrome&#39;],</code> To <code>require(&#39;karma-phantomjs-launcher&#39;),</code> and <code>browsers: [&#39;PhantomJS&#39;],</code> Last, since we are not using the browser, we will need a better reporting mechanism. To do this we will install spec reporter. <code>npm install --save-dev karma-spec-reporter</code> and we replace this line in karma.conf.js</p>
 <p>reporters: config.angularCli &amp;&amp; config.angularCli.codeCoverage<br>          ? [‘progress’, ‘karma-remap-istanbul’]<br>          : [‘progress’],</p>
@@ -142,7 +142,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/unit-testing-an-angular-2-cli-project/" data-id="cjj1qjdad00os1ohi73iyos52" class="article-share-link">
+      <a data-url="http://davembush.github.com/unit-testing-an-angular-2-cli-project/" data-id="cjj1ujun500oyi4hip3ntn4fo" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

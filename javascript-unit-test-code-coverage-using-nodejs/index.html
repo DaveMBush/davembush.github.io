@@ -6,7 +6,7 @@
   <title>JavaScript Unit Test Code Coverage Using NodeJS | Dave&#39;s Notebook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="A couple of weeks ago, I showed how to get Node.JS and Gulp working with Visual Studio 2015.  Last week I showed you how to bundle, minify, and cache-bust using Gulp.  This week, we are going to use N">
-<meta name="keywords" content="code coverage,javascript,istanbul,jasmine">
+<meta name="keywords" content="javascript,code coverage,istanbul,jasmine">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaScript Unit Test Code Coverage Using NodeJS">
 <meta property="og:url" content="http://davembush.github.com/javascript-unit-test-code-coverage-using-nodejs/index.html">
@@ -17,7 +17,7 @@
 <meta property="og:image" content="http://davembush.github.com/uploads/2016/01/image-7.png">
 <meta property="og:image" content="http://davembush.github.com/uploads/2016/01/image-8.png">
 <meta property="og:image" content="http://davembush.github.com/uploads/2016/01/image-9.png">
-<meta property="og:updated_time" content="2018-06-30T18:23:01.345Z">
+<meta property="og:updated_time" content="2018-06-30T20:06:57.004Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript Unit Test Code Coverage Using NodeJS">
 <meta name="twitter:description" content="A couple of weeks ago, I showed how to get Node.JS and Gulp working with Visual Studio 2015.  Last week I showed you how to bundle, minify, and cache-bust using Gulp.  This week, we are going to use N">
@@ -114,7 +114,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>A couple of weeks ago, I showed how to get <a href="//blog.dmbcllc.com/using-node-js-and-gulp-with-an-existing-web-application-in-visual-studio-2015/">Node.JS and Gulp working with Visual Studio 2015</a>.  Last week I showed you <a href="//blog.dmbcllc.com/using-gulp-to-bundle-minify-and-cache-bust/">how to bundle, minify, and cache-bust using Gulp</a>.  This week, we are going to use Node.js to provide JavaScript Unit Test Code Coverage. The main tools we will be using to pull this off are Karma and Istanbul.  The test we write will be using Jasmine. If you don’t use Visual Studio, you should still be able to adapt these instructions to your own environment.  I’ve found getting Istanbul setup kind of tricky at times.  Since everything I’m going to show you here is pure Node.JS, you can ignore the Visual Studio parts. Let’s get started. <img src="/uploads/2016/01/image-6.png" alt="JavaScript Unit Test Code Coverage Using NodeJS" title="JavaScript Unit Test Code Coverage Using NodeJS"> </p>
+        <p>A couple of weeks ago, I showed how to get <a href="/using-node-js-and-gulp-with-an-existing-web-application-in-visual-studio-2015/">Node.JS and Gulp working with Visual Studio 2015</a>.  Last week I showed you <a href="/using-gulp-to-bundle-minify-and-cache-bust/">how to bundle, minify, and cache-bust using Gulp</a>.  This week, we are going to use Node.js to provide JavaScript Unit Test Code Coverage. The main tools we will be using to pull this off are Karma and Istanbul.  The test we write will be using Jasmine. If you don’t use Visual Studio, you should still be able to adapt these instructions to your own environment.  I’ve found getting Istanbul setup kind of tricky at times.  Since everything I’m going to show you here is pure Node.JS, you can ignore the Visual Studio parts. Let’s get started. <img src="/uploads/2016/01/image-6.png" alt="JavaScript Unit Test Code Coverage Using NodeJS" title="JavaScript Unit Test Code Coverage Using NodeJS"> </p>
 <h2 id="Assumptions"><a href="#Assumptions" class="headerlink" title="Assumptions"></a>Assumptions</h2><p>I’m going to assume that you’ve already got a project setup.  For the purposes of this discussion, we are going to assume that the files we want to test are in the /app directory and that our test are in the /jsTest directory. If you are using Visual Studio, one of the first questions you might have is, “if I put my tests in the same project as the app I am testing, won’t those test get deployed with the application?”  And the answer to that question is, “Yes, if you use the defaults.” But we aren’t going to use the defaults.  What we are going to do is that we are going to make sure that any files we create that we don’t want to deploy to the web server have their build action set to “none”.  You can find this in the file’s property window. The other way you could solve this problem is that you could have a deploy script written in Gulp that specifies exactly what files should be deployed.</p>
 <h2 id="A-Simple-Demo-File"><a href="#A-Simple-Demo-File" class="headerlink" title="A Simple Demo File"></a>A Simple Demo File</h2><p>Just so we have something to test, I’ve created a really simple demo JavaScript file that looks like this:</p>
 <p>(function() {<br>    function demo() {<br>        var self = this;<br>        function add(a, b) {<br>            return a + b;<br>        }</p>
@@ -162,7 +162,7 @@ window.demo = demo;
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/javascript-unit-test-code-coverage-using-nodejs/" data-id="cjj1qjd0a00e91ohisel3tbux" class="article-share-link">
+      <a data-url="http://davembush.github.com/javascript-unit-test-code-coverage-using-nodejs/" data-id="cjj1ujucx00efi4higji4a8yb" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

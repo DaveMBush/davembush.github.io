@@ -139,12 +139,12 @@
 <p>Which would give you the behavior you were probably expecting.  The code above will print out ‘final i: 20’ like you were probably expecting above.</p>
 <h2 id="3-“Hoisting”-and-function-assignments"><a href="#3-“Hoisting”-and-function-assignments" class="headerlink" title="3) “Hoisting” and function assignments"></a>3) “Hoisting” and function assignments</h2><p>Going back to our discussion about variable declarations being processed first, and then doing any assignments, it becomes obvious that we can’t call a function that we haven’t assigned to the variable yet.  I don’t think I need to discuss this any further than I already have.  This works like any other variable declaration as I’ve discussed above.</p>
 <h2 id="4-“Hoisting”-and-function-declarations"><a href="#4-“Hoisting”-and-function-declarations" class="headerlink" title="4) “Hoisting” and function declarations"></a>4) “Hoisting” and function declarations</h2><p>Function declarations, on the other hand, behave differently than function assignments.  In the case of function declarations, the variable AND the function that is “assigned” to it get pulled to the top of our code.  So using function declarations over function assignments is preferred simply because it assures us that the function pointer is available whenever we need it.</p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>So, maybe you thought you knew JavaScript.  Maybe you did.  Maybe you discovered you didn’t know it as well as you thought. I would encourage you to really learn the language.  One of the best resources I’ve found for learning programming stuff is <a href="//blog.dmbcllc.com/pluralsight">PluralSight</a>.  Check them out.  They have a deal where you can get the first 10 days free, up to 200 minutes.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>So, maybe you thought you knew JavaScript.  Maybe you did.  Maybe you discovered you didn’t know it as well as you thought. I would encourage you to really learn the language.  One of the best resources I’ve found for learning programming stuff is <a href="/pluralsight">PluralSight</a>.  Check them out.  They have a deal where you can get the first 10 days free, up to 200 minutes.</p>
 <h3 id="Other-places-talking-about-JavaScript-Scoping"><a href="#Other-places-talking-about-JavaScript-Scoping" class="headerlink" title="Other places talking about JavaScript Scoping"></a>Other places talking about JavaScript Scoping</h3><ul>
 <li><a href="//ilikekillnerds.com/2015/03/things-every-javascript-developer-should-know/">Things Every JavaScript Programmer Should Know</a></li>
 <li><a href="//debugmode.net/2015/02/03/hoisting-in-javascript-simplified/">Hoisting In JavaScript</a></li>
 <li><a href="//abdulapopoola.com/2014/03/10/three-important-javascript-concepts/">Three Important JavaScript Concepts</a></li>
-<li><a href="//blog.dmbcllc.com/youDontKnowJsObjectsAndClosures">You Don’t Know JS: Object and Closures</a></li>
+<li><a href="/youDontKnowJsObjectsAndClosures">You Don’t Know JS: Object and Closures</a></li>
 </ul>
 
       
@@ -156,7 +156,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/javascript-scope/" data-id="cjj1qjczx00dr1ohiuqsbikty" class="article-share-link">
+      <a data-url="http://davembush.github.com/javascript-scope/" data-id="cjj1ujucq00e3i4hi763vrqjy" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -202,7 +202,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/uploads/2015/05/CHIL0007.png" alt="CHIL0007" title="CHIL0007">There is a guy I’m working with who is trying to wrap his head around design principles.  He’s been watching a lot of <a href="//blog.dmbcllc.com/pluralsight">PluralSight videos</a>.  As he was processing information about <a href="//blog.dmbcllc.com/pluralsightIoC">Inversion of Control</a>, he asked the natural question I’ve never actually considered before.  “Why is it called Inversion of Control?  Normally, when you talk about ‘Inversion’ you are talking about reversing something or negating something.  That isn’t what we are doing here.” </p>
+        <p><img src="/uploads/2015/05/CHIL0007.png" alt="CHIL0007" title="CHIL0007">There is a guy I’m working with who is trying to wrap his head around design principles.  He’s been watching a lot of <a href="/pluralsight">PluralSight videos</a>.  As he was processing information about <a href="/pluralsightIoC">Inversion of Control</a>, he asked the natural question I’ve never actually considered before.  “Why is it called Inversion of Control?  Normally, when you talk about ‘Inversion’ you are talking about reversing something or negating something.  That isn’t what we are doing here.” </p>
 <h2 id="What-Is-Inversion-of-Control"><a href="#What-Is-Inversion-of-Control" class="headerlink" title="What Is Inversion of Control?"></a>What Is Inversion of Control?</h2><p>So, let’s start with a definition of what Inversion of Control is.  And let’s start the definition by explaining what it isn’t. In the old days, back when I started programming.  We had this thing called “Procedural Programming.” Control of your application flowed from beginning to end with looping to take care of any kind of waiting that needed to take place.  <a href="//martinfowler.com/bliki/InversionOfControl.html">Martin Fowler describes this</a> using an illustration that is version similar to a basic “How to program in C#” console application that is in the beginning of most beginner programming books.</p>
 <blockquote>
 <p>Let’s consider a simple example. Imagine I’m writing a program to get some information from a user and I’m using a command line enquiry. I might do it something like this</p>
@@ -215,11 +215,11 @@
 <h3 id="Event-Handlers"><a href="#Event-Handlers" class="headerlink" title="Event Handlers"></a>Event Handlers</h3><p>While you might think of OnPageLoad and OnFormLoad as event handlers, the way they are implemented are more like virtual functions.  Event handlers, on the other hand, are a specific type of delegate that say, “When this thing happens, let me know about it.”  The code that fires the event doesn’t even really care what you do during the event.  Again, the control has been “Inverted” because there is a lot of code that is running that you have no control over and probably have no knowledge of.</p>
 <h3 id="Virtual-Functions"><a href="#Virtual-Functions" class="headerlink" title="Virtual Functions"></a>Virtual Functions</h3><p>One of my favorite methods of inverting control is to use virtual functions.  I can have a parent class that controls the flow of the program that calls various virtual functions in order.  But my child class can provide the implementation of the functions to make them do various things.  I used this, at one time in the past, to create a framework for submitting links to various bookmarking sites.  They all worked essentially the same way, all I had to do was implement the specific details for each site while 80% of my code stayed the same in the base class.</p>
 <h3 id="Delegates-or-Callback-Functions"><a href="#Delegates-or-Callback-Functions" class="headerlink" title="Delegates or Callback Functions"></a>Delegates or Callback Functions</h3><p>Another common way of implementing inversion is by using delegates or callbacks.  This work in a similar way to virtual functions expect that the functions are typically passed in to a method.  Much of the current implementation of JavaScript uses this method of inverting control as a primary pattern (but not limited to it as the only way.)</p>
-<h3 id="Dependency-Injection"><a href="#Dependency-Injection" class="headerlink" title="Dependency Injection"></a>Dependency Injection</h3><p>I’ve <a href="//blog.dmbcllc.com/dependency-injection-not-di/">talked about Dependency Injection before</a>.  Again, it is another way of delegating control to something other than the code that has main control.  What I want to make special note of here, though, is that Inversion of Control is not Dependency Injection but Dependency Injection is a form of Inversion of Control.  I think this is where most of the confusion about Inversion of Control comes from.  Most of the literature that talks about Inversion of Control talks about it at the same time they are talking about Dependency Injection.  As though the two concepts were the same.</p>
+<h3 id="Dependency-Injection"><a href="#Dependency-Injection" class="headerlink" title="Dependency Injection"></a>Dependency Injection</h3><p>I’ve <a href="/dependency-injection-not-di/">talked about Dependency Injection before</a>.  Again, it is another way of delegating control to something other than the code that has main control.  What I want to make special note of here, though, is that Inversion of Control is not Dependency Injection but Dependency Injection is a form of Inversion of Control.  I think this is where most of the confusion about Inversion of Control comes from.  Most of the literature that talks about Inversion of Control talks about it at the same time they are talking about Dependency Injection.  As though the two concepts were the same.</p>
 <h2 id="Why-Inversion-of-Control-Matters"><a href="#Why-Inversion-of-Control-Matters" class="headerlink" title="Why Inversion of Control Matters"></a>Why Inversion of Control Matters</h2><p>Finally, I want to talk for a bit about why Inversion of Control matters.  Because, for me, it is a lot more important that we understand what we are trying to achieve than it is that we’ve given it the right name or that we even know what name to call it.  All of the examples I’ve provided are things you’ve probably done in your code.  Some of them you’ve done without even knowing you were doing them.  But think about the alternative of not doing them. First, your code would be a lot harder to maintain.  Just think of how hard it would be to write a web site and maintain it if you had to write code that handled all of the work that happens for you behind the scenes. Second, it makes the code more loosely coupled.  And by doing that, it makes the code testable AND it makes the code more flexible and easy to change in the future. Maybe instead of calling it Inversion of Control it should have been called Delegation of Control.  Either way, the concept is to remove as much code as possible from our main controlling code and give the implementation responsibility to something else that can be swapped in without having to change the main loop.</p>
 <h4 id="Other-Places-Talking-About-Inversion-of-Control"><a href="#Other-Places-Talking-About-Inversion-of-Control" class="headerlink" title="Other Places Talking About Inversion of Control:"></a>Other Places Talking About Inversion of Control:</h4><ul>
-<li><a href="//blog.dmbcllc.com/pluralsightIoC">Inversion of Control</a></li>
-<li><a href="//blog.dmbcllc.com/pluralsightDesignPatterns">Design Patterns</a></li>
+<li><a href="/pluralsightIoC">Inversion of Control</a></li>
+<li><a href="/pluralsightDesignPatterns">Design Patterns</a></li>
 <li><a href="//martinfowler.com/bliki/InversionOfControl.html">Martin Fowler on IoC</a></li>
 <li><a href="//jonlennartaasenden.wordpress.com/2015/01/13/inversion-of-control-dependency-injection-service-oriented-programming/">Inversion of control, dependency Injection, service oriented programming?</a></li>
 <li><a href="//csharphardcoreprogramming.wordpress.com/2014/03/26/inversion-of-control-and-dependency-injection-advanced-part-1-programming-patterns/">Inversion of Control and Dependency Injection</a></li>
@@ -235,7 +235,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/why-is-it-called-“inversion-of-control”/" data-id="cjj1qjde800sg1ohijxzabxzq" class="article-share-link">
+      <a data-url="http://davembush.github.com/why-is-it-called-“inversion-of-control”/" data-id="cjj1ujuqj00s9i4hidt3rgi09" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -281,7 +281,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/uploads/2015/05/18Tr.png" alt="SpecFlow Tutorial Session" title="18Tr">A couple of weeks ago, I wrote a post describing <a href="//blog.dmbcllc.com/setting-up-specflow/">how to setup SpecFlow</a> in which I promised to continue with how to actually use it once you have it installed.  What follows is a SpecFlow Tutorial of the tips and tricks I wish I’d known when I was starting out. </p>
+        <p><img src="/uploads/2015/05/18Tr.png" alt="SpecFlow Tutorial Session" title="18Tr">A couple of weeks ago, I wrote a post describing <a href="/setting-up-specflow/">how to setup SpecFlow</a> in which I promised to continue with how to actually use it once you have it installed.  What follows is a SpecFlow Tutorial of the tips and tricks I wish I’d known when I was starting out. </p>
 <h2 id="Controlling-Associations-between-Features-and-Steps"><a href="#Controlling-Associations-between-Features-and-Steps" class="headerlink" title="Controlling Associations between Features and Steps"></a>Controlling Associations between Features and Steps</h2><p>With what you’ve learned so far, you might be able to successfully put together a set of tests for a particular page that you want to test. But as soon as you start working on the second page, you will probably discover that you have steps that seem to conflict with each other. It is at this point you will find that the ability to associate features with step files becomes critical. Fortunately, this is relatively easy. In your feature file, you will specify a category using the @category syntax and within your step file, you will use the category attribute within the step file at the class level to tie the two together. In your feature file:</p>
 <p>@stepFileOne<br>Feature: SpecFlowFeature1<br>    In order to avoid silly mistakes<br>    As a math idiot<br>    I want to be told the sum of two numbers</p>
 <p>And in your step file:</p>
@@ -329,7 +329,7 @@
 <p>private ISpmInitial Page<br>{<br>    get { return (ISpmInitial)(ScenarioContext.Current[“page”]); }<br>    set { ScenarioContext.Current[“page”] = value; }<br>}</p>
 <p>[Before]<br>public void Before()<br>{<br>    const string id = “10039219”;<br>    var pages = new ConcurrentStack<ispminitial>();<br>    Parallel.Invoke(<br>        () => pages.Push(SpmPageFactory.GetPageModel(“FireFoxGrid”, id))<br>        ,<br>        () => pages.Push(SpmPageFactory.GetPageModel(“IE11Grid”, id))<br>    );<br>    var pagesArray = pages.ToArray();<br>    Page = new ParallelPage<ispminitial>(pagesArray).Cast();<br>}</ispminitial></ispminitial></p>
 <p>[After]<br>public void After()<br>{<br>    if (Page == null) return;<br>    Page.Dispose();<br>    Page = null;<br>}</p>
-<p>This code is using the Selenium parallelization code I’ve already talked about in my article, <a href="//blog.dmbcllc.com/running-selenium-in-parallel-with-any-net-unit-testing-tool/">Running Selenium In Parallel With Any .NET Unit Testing Tool</a>. The <code>Before</code> method creates my page object for the browsers I’m using. Once I have the page object, I store it into my private <code>Page</code> property which uses the <code>ScenarioContext</code> as the backing store. Then, in the step files that need access to this same page object, I create a similar <code>Page</code> property so that they can access the page object from the steps.</p>
+<p>This code is using the Selenium parallelization code I’ve already talked about in my article, <a href="/running-selenium-in-parallel-with-any-net-unit-testing-tool/">Running Selenium In Parallel With Any .NET Unit Testing Tool</a>. The <code>Before</code> method creates my page object for the browsers I’m using. Once I have the page object, I store it into my private <code>Page</code> property which uses the <code>ScenarioContext</code> as the backing store. Then, in the step files that need access to this same page object, I create a similar <code>Page</code> property so that they can access the page object from the steps.</p>
 <h2 id="Parameterized-Tests"><a href="#Parameterized-Tests" class="headerlink" title="Parameterized Tests"></a>Parameterized Tests</h2><p>It is quite common to have tests for multiple scenarios that essentially look the same except for the parameters change. Instead of using copy/paste/modify, you can create parameterized test by using the Scenario Outline directive.</p>
 <p>Scenario Outline: Uses parameters<br>    Given I have entered <n1> into the calculator<br>    And I have entered <n2> into the calculator<br>    When I press <operation><br>    Then the result should be <result> on the screen</result></operation></n2></n1></p>
 <pre><code>Examples: 
@@ -359,7 +359,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/specflow-tutorial/" data-id="cjj1qjd6t00l61ohijenpkblf" class="article-share-link">
+      <a data-url="http://davembush.github.com/specflow-tutorial/" data-id="cjj1ujujq00lqi4hi1in569m7" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -435,7 +435,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/the-parable-of-the-road-line-painter/" data-id="cjj1qjd8z00ne1ohidd0r5sgv" class="article-share-link">
+      <a data-url="http://davembush.github.com/the-parable-of-the-road-line-painter/" data-id="cjj1ujult00nhi4hikzkqrpi2" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -497,7 +497,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/setting-up-specflow/" data-id="cjj1qjd6200kg1ohis2pwm014" class="article-share-link">
+      <a data-url="http://davembush.github.com/setting-up-specflow/" data-id="cjj1ujuim00kpi4hiqw7lvl69" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -572,11 +572,11 @@
 <p>I’ve talked about a lot of these issues before so I’m not going to go into a lot of detail here other than to say that you should notice that I’ve placed the issue of code comments LAST on the list of things to consider.  This is because if you take care of the code quality, you will find that most of the time when you get to the issue of comments, no one will have anything to add.</p>
 <h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>If you are working at an organization where you have no tests, you routinely deal with 1000 line methods, names of things seem arbitrary, you have no real backlog, and your code is not loosely coupled, I can see why you might think you need comments in your code.  But the problem isn’t the lack of comments.  The problem is, you are dealing with bad code.</p>
 <h2 id="Other-Resources"><a href="#Other-Resources" class="headerlink" title="Other Resources"></a>Other Resources</h2><ul>
-<li><a href="//blog.dmbcllc.com/codecomplete">Code Complete</a></li>
-<li><a href="//blog.dmbcllc.com/professionalTestDrivenDevelopmentWithCSharp">Test Driven Development w/ C#</a></li>
-<li><a href="//blog.dmbcllc.com/pluralsightTDD1">Test First Development</a></li>
-<li><a href="//blog.dmbcllc.com/cleanCodeForHumans">Clean Code For Humans</a></li>
-<li><a href="//blog.dmbcllc.com/7reasonsCleanCodeMatters">7 Reasons Clean Code Matters</a></li>
+<li><a href="/codecomplete">Code Complete</a></li>
+<li><a href="/professionalTestDrivenDevelopmentWithCSharp">Test Driven Development w/ C#</a></li>
+<li><a href="/pluralsightTDD1">Test First Development</a></li>
+<li><a href="/cleanCodeForHumans">Clean Code For Humans</a></li>
+<li><a href="/7reasonsCleanCodeMatters">7 Reasons Clean Code Matters</a></li>
 </ul>
 
       
@@ -588,7 +588,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/code-comments-agile-programming/" data-id="cjj1qjctd005s1ohijt3krccl" class="article-share-link">
+      <a data-url="http://davembush.github.com/code-comments-agile-programming/" data-id="cjj1uju67005yi4hit6wwnuz8" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -645,11 +645,11 @@
 </blockquote>
 <h2 id="Recruiter-Says"><a href="#Recruiter-Says" class="headerlink" title="Recruiter Says"></a>Recruiter Says</h2><p>And then there was this offhand comment by a recruiter this week who told me, “You know what reason most hiring managers give for refusing candidates we send them is?  ‘They aren’t dynamic enough.’  What does that even mean?” And so rather than write a whole blog post as a blog comment, I respond here.</p>
 <h2 id="Why-Not-Both"><a href="#Why-Not-Both" class="headerlink" title="Why Not Both?"></a>Why Not Both?</h2><p>First, let’s get at the first question the responder asked.  Why wouldn’t I want to have all of the qualities of the later and the ability to write code in notepad? Well, it really isn’t a matter of either/or.  I think my method actually gets deeper faster.  The place I currently work interviews 10 people for every 1 we hire because most people (9 out of 10) can’t talk knowledgably about anything they have on their resumes. Once we’ve established that they aren’t lying on their resume about their experience, we can be pretty sure they’ve actually written code.  A white board coding interview might be a way of getting at this information.  I just happen to think it is inefficient at best and puts undo stress on a candidate who may otherwise be exactly what you are looking for.  In fact, you’ll notice that the comment says that the whole point of the interview is to have an interaction.  I assure you this can be done by just having a conversation about code. Second, unless you state up front that you are only looking for pseudo code and how the candidate thinks, the candidate is going to stress over syntax.  Assuming that he gets it right, it doesn’t necessarily mean that he is an efficient coder.  It only means he’s memorized a lot of syntax and can use it. The final statement is where I want to spend most of my time though.  Sorry for so much “ink” to get to the main point, but I wanted to setup the context for you.</p>
-<h2 id="Decisions-Based-On-10-Minute-Conversation"><a href="#Decisions-Based-On-10-Minute-Conversation" class="headerlink" title="Decisions Based On 10 Minute Conversation"></a>Decisions Based On 10 Minute Conversation</h2><p>He states, “I’ve never made a life decision based on a 10 minute conversation …” First, I never said that an interview should only be 10 minutes long.  If the Interview only lasted 10 minutes, that would be a bad sign too.  Although, I don’t think you’d find out anything more useful by taking more than 10 minutes. Current research suggest that, no matter which method we use, most of us are hired (or hire) or not within the first 30 seconds. The rest of the time we come up with supporting reasons. (<a href="//blog.dmbcllc.com/blink">Blink: The Power of Thinking without Thinking</a>).  The fact of the matter is, by the time you’ve reached the coding interview, the decision has already been made.  This is just a way to justify the decision. If you were to study the psychology of sales, you would find that all of us buy based on our emotions and come up with logical reasons why after we’ve already made the decision.  This is why sales literature is aimed at the emotions.  In some way saying, “If you buy this product, you will not have to worry anymore about X”.  Sales pages are constructed the way they are based on this.  I once created a fake sales page using the formula. As much as we’d like to think otherwise, we ALL do this.  (And watch the comments come in on that statement!  Bring ‘em on.) And so we come to the final question, what do we mean by “dynamic” and how did this impact the interview.</p>
+<h2 id="Decisions-Based-On-10-Minute-Conversation"><a href="#Decisions-Based-On-10-Minute-Conversation" class="headerlink" title="Decisions Based On 10 Minute Conversation"></a>Decisions Based On 10 Minute Conversation</h2><p>He states, “I’ve never made a life decision based on a 10 minute conversation …” First, I never said that an interview should only be 10 minutes long.  If the Interview only lasted 10 minutes, that would be a bad sign too.  Although, I don’t think you’d find out anything more useful by taking more than 10 minutes. Current research suggest that, no matter which method we use, most of us are hired (or hire) or not within the first 30 seconds. The rest of the time we come up with supporting reasons. (<a href="/blink">Blink: The Power of Thinking without Thinking</a>).  The fact of the matter is, by the time you’ve reached the coding interview, the decision has already been made.  This is just a way to justify the decision. If you were to study the psychology of sales, you would find that all of us buy based on our emotions and come up with logical reasons why after we’ve already made the decision.  This is why sales literature is aimed at the emotions.  In some way saying, “If you buy this product, you will not have to worry anymore about X”.  Sales pages are constructed the way they are based on this.  I once created a fake sales page using the formula. As much as we’d like to think otherwise, we ALL do this.  (And watch the comments come in on that statement!  Bring ‘em on.) And so we come to the final question, what do we mean by “dynamic” and how did this impact the interview.</p>
 <h2 id="What-Does-“Dynamic”-Mean"><a href="#What-Does-“Dynamic”-Mean" class="headerlink" title="What Does “Dynamic” Mean?"></a>What Does “Dynamic” Mean?</h2><p>Well, I’ll tell you.  It’s like this. This week I went to a meet-up for ASP.NET and JavaScript developers.  Every person there I talked to was passionate about programming.  It was the easiest group of people I’ve ever mingled with.  Why?  Because they all wanted to talk about code.  They all had opinions.  Some I even disagree with.  But assuming they could agree to the standards at my organization, I would have hired any one of them.  Why?  Because they were “dynamic.” One guy in particular I talked to for several hours.  I knew in the first 10 minutes that he knew what he was doing.  Several hours later, I found some areas we disagreed on.  I never had to look at any code.  The way he talked about coding told me that he could code.  The projects he talked about told me that he could solve problems.  And the fact that he could explain those problems he was solving to me showed me that he could communicate.</p>
 <h2 id="Cracking-The-Programmer’s-Interview-Code"><a href="#Cracking-The-Programmer’s-Interview-Code" class="headerlink" title="Cracking The Programmer’s Interview Code"></a>Cracking The Programmer’s Interview Code</h2><p>And so, to the point of the title.  The way you “Crack the Programmer’s Interview Code” is to be passionate about what you do.  Unfortunately, you can’t fake that if you don’t have a clue about programming in the first place.  Yes, you can grease the skids a bit.  Dress up for the interview.  Don’t smell.  Don’t be a jerk.  Be confident but not arrogant.  Beyond that, winning at the interview may simply be a matter of fit.  You may have to do some sort of code interview.  Or you might decide to skip it because that’s an indication to you that this place won’t be a good fit for you.  And that’s OK.  There are plenty of places to work.  You don’t have to take the first job that pays. You’ll get bonus points if you can walk into the interview already knowing what the pain points are so you can address them.  If you know what they fear, what keeps them up at night, and can show how you are the one who can solve that pain point, you are half way to getting the job. None of these are guarantees.  You may not get the job and it may have nothing to do with you.  One of the things I’m realizing is that the way people react to me has at least as much to do with them as it does with me.  If the guy is having a bad day and/or you say or do something that reminds him of something he’s associated with a bad memory, there is no way for you to know that and probably nothing you could do about it if you did.</p>
 <h4 id="Other-Places-Talking-About-Coding-Interviews"><a href="#Other-Places-Talking-About-Coding-Interviews" class="headerlink" title="Other Places Talking About Coding Interviews"></a>Other Places Talking About Coding Interviews</h4><ul>
-<li><a href="//blog.dmbcllc.com/elementsOfProgrammingInterview">Elements of Programming Interviews</a></li>
+<li><a href="/elementsOfProgrammingInterview">Elements of Programming Interviews</a></li>
 <li><a href="//programmingisterrible.com/post/116698171738/nothing-is-more-indicative-of-a-bullshit-job-than">Nothing Is More Indicative of a Bullshit Job Than The Interview</a></li>
 <li><a href="//www.leaseweblabs.com/2015/04/how-to-win-a-senior-programmer-job-interview/">How To Win A Senior Level Programming Interview</a></li>
 </ul>
@@ -663,7 +663,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/cracking-the-programmer-s-interview-code/" data-id="cjj1qjcty006i1ohi2sxr36dx" class="article-share-link">
+      <a data-url="http://davembush.github.com/cracking-the-programmer-s-interview-code/" data-id="cjj1uju6l006fi4hiqnahijtp" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -714,7 +714,7 @@
 
 <p>If you miss this step, you won’t be able to debug your 4.0 code. Alternatively, you can just set your project to use .NET 3.5. So, let’s give it a try. First, put some code in the test method you just created. For our purposes, we’ll just put in a console writeline so we have somplace to put a breakpoint.</p>
 <p>public void MyFirstTestMethod()<br>{<br>    Console.WriteLine(“Inside MyFirstTestMethod”);<br>}</p>
-<p>Next set a breakpoint on the <code>Console.WriteLine</code> method and then run your project with the debugger. Once NUnit loads the DLL, click the “Run” button in NUnit. If everything is setup correctly, you should stop on the breakpoint you set. You may have noticed that we put several <code>Console.WriteLines()</code> in our code but they aren’t displaying anywhere.  So, where did they go?  How can we see them? By default the “Text Output” tab displays all of the <code>Console.WriteLine()</code> messages as well as all of the test results.  If all you care to see is the test results, you should select the “Errors and Failures” tab.  Personally, I prefer to work in the “Text Output” tab and I suggest that you do the same. As an alternative to this, you can just pick up a copy of <a href="//blog.dmbcllc.com/resharper">ReSharper</a>, which has an NUnit Test Runner built into it.  All you need to do to debug a test is selection the test and choose debug from the context menu.  It will save you a ton of time. Another option would be to pick up the MS Test Adapter from nunit.org.  But, I’ve never liked the way MS Test renders the tests results.  So, I don’t recommend it.  Obviously, your mileage may vary.</p>
+<p>Next set a breakpoint on the <code>Console.WriteLine</code> method and then run your project with the debugger. Once NUnit loads the DLL, click the “Run” button in NUnit. If everything is setup correctly, you should stop on the breakpoint you set. You may have noticed that we put several <code>Console.WriteLines()</code> in our code but they aren’t displaying anywhere.  So, where did they go?  How can we see them? By default the “Text Output” tab displays all of the <code>Console.WriteLine()</code> messages as well as all of the test results.  If all you care to see is the test results, you should select the “Errors and Failures” tab.  Personally, I prefer to work in the “Text Output” tab and I suggest that you do the same. As an alternative to this, you can just pick up a copy of <a href="/resharper">ReSharper</a>, which has an NUnit Test Runner built into it.  All you need to do to debug a test is selection the test and choose debug from the context menu.  It will save you a ton of time. Another option would be to pick up the MS Test Adapter from nunit.org.  But, I’ve never liked the way MS Test renders the tests results.  So, I don’t recommend it.  Obviously, your mileage may vary.</p>
 </supportedruntime>
       
     </div>
@@ -725,7 +725,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/run-nunit-from-visual-studio/" data-id="cjj1qjd5800ji1ohiwbfh3k8f" class="article-share-link">
+      <a data-url="http://davembush.github.com/run-nunit-from-visual-studio/" data-id="cjj1ujuhl00jpi4hio340veba" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -803,7 +803,7 @@
 <h4 id="Embellishment"><a href="#Embellishment" class="headerlink" title="Embellishment:"></a>Embellishment:</h4><p>If code is found to have a bug in production, both programmers responsible for the code loose a point, regardless of how many lines of code are impacted.  One point per recorded bug. I’m assuming that most shops have more than 2 programmers.  On any given day, programmers would be paired up for the day of programming.  They are responsible for turning out bug free code.  Because we are tracking the code over the long term, we will be able to see just how effective each programmer is at eliminating bugs. In fact, if you are in an environment that can’t quite stomach having your programmers paired up, I would suggest keeping track of the code that wasn’t done under the game.  This would be the “house score” compared to an individual programmer’s score. The only thing we have left is some way of being able to account for productivity.  I mean, if I write no code, I’ll have no bugs, right?  And all things being equal, the more productive I am, the more bugs I’ll have.  So how do we measure this? Here is what we can’t do:</p>
 <ul>
 <li>Lines of code – you can’t measure based on lines of code because that has been shown to be an inaccurate measure of productivity.  More lines may just mean you are not very efficient.</li>
-<li>Hours worked – <a href="//blog.dmbcllc.com/rapidDevelopment">Rapid Development</a> has statistics in it that show there is a factor of 10 difference between good programmers and bad programmers.</li>
+<li>Hours worked – <a href="/rapidDevelopment">Rapid Development</a> has statistics in it that show there is a factor of 10 difference between good programmers and bad programmers.</li>
 </ul>
 <h4 id="Just-a-suggestion"><a href="#Just-a-suggestion" class="headerlink" title="Just a suggestion:"></a>Just a suggestion:</h4><p>Since short methods are desirable, what if we measure number of test relative to number of methods relative to number of classes.  This would enforce the single responsibility principle. T = Tests M = Methods C = Classes 1/((T/M)/C) = Productivity Score Therefore,</p>
 <ul>
@@ -814,8 +814,8 @@
 </ul>
 <p>That’s just a simple way to calculate.  You may choose to use cyclomatic complexity in some way if you have that number easily available to you. Well, that’s my rough sketch of how we might be able to turn TDD into something of a game along with being able to prove to ourselves and management that it really does produce better code. How else might you embellish this or change it so it works better?  Let me know in the comments below.</p>
 <h4 id="Other-Test-Driven-Development-Resources"><a href="#Other-Test-Driven-Development-Resources" class="headerlink" title="Other Test Driven Development Resources"></a>Other Test Driven Development Resources</h4><ul>
-<li><a href="//blog.dmbcllc.com/testDrivenDevelopmentByExample">Test Driven Development: by Example</a></li>
-<li><a href="//blog.dmbcllc.com/professionalTestDrivenDevelopmentWithCSharp">Professional Test Driven Development w/ C#</a></li>
+<li><a href="/testDrivenDevelopmentByExample">Test Driven Development: by Example</a></li>
+<li><a href="/professionalTestDrivenDevelopmentWithCSharp">Professional Test Driven Development w/ C#</a></li>
 </ul>
 
       
@@ -827,7 +827,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/tdd-gamification-turning-test-driven-development-into-a-game/" data-id="cjj1qjd7u00m61ohis91tvmnv" class="article-share-link">
+      <a data-url="http://davembush.github.com/tdd-gamification-turning-test-driven-development-into-a-game/" data-id="cjj1ujuk400m2i4hixo2f7w5t" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -873,7 +873,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/uploads/2015/04/ppl-men-058.jpg" alt="ppl-men-058" title="Be a better programmer"> As you advance in your career, you will inevitably want to improve as a programmer.  And as you search the Internet and read various web post on the subject you will also inevitably end up with a bunch of task you should perform that will make you better. For example, if you’ve been following this blog lately, you’ll notice that I’m a big proponent of <a href="//blog.dmbcllc.com/?s=tdd">Test Driven Development</a>.  You would naturally expect me to state that to be a better programmer, you should practice Test Driven Development. There has also been a lot of emphasis recently on good basic programming principles like <a href="//blog.dmbcllc.com/dry-programming/">DRY</a> and <a href="//en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29">SOLID</a>. The list could go on.  Here are a few you may be interested in experimenting with:</p>
+        <p><img src="/uploads/2015/04/ppl-men-058.jpg" alt="ppl-men-058" title="Be a better programmer"> As you advance in your career, you will inevitably want to improve as a programmer.  And as you search the Internet and read various web post on the subject you will also inevitably end up with a bunch of task you should perform that will make you better. For example, if you’ve been following this blog lately, you’ll notice that I’m a big proponent of <a href="/?s=tdd">Test Driven Development</a>.  You would naturally expect me to state that to be a better programmer, you should practice Test Driven Development. There has also been a lot of emphasis recently on good basic programming principles like <a href="/dry-programming/">DRY</a> and <a href="//en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29">SOLID</a>. The list could go on.  Here are a few you may be interested in experimenting with:</p>
 <ul>
 <li>Code Reviews</li>
 <li>Paired Programming</li>
@@ -909,7 +909,7 @@
 </ul>
 <p>I’ll leave exactly what that looks like to you.  But, for the curious, here is what this looks like for me.</p>
 <h3 id="High-fat-low-carb-diet-HFLC"><a href="#High-fat-low-carb-diet-HFLC" class="headerlink" title="High fat, low carb diet (HFLC)."></a>High fat, low carb diet (HFLC).</h3><p>I started HFLC because I wanted to loose weight.  I was able to loose 30 pounds in a year.  But, what I found is that many of the health issues I had been experiencing were ultimately caused by the carbs I was eating.  I used to get headaches periodically that would last all day.  I guess they were migraines?  They were never diagnosed.  All I know is that I didn’t have one the whole year I was on a strict HFLC diet.  I also found out that my lactose intolerance was cured by this diet.</p>
-<h3 id="Strength-Training"><a href="#Strength-Training" class="headerlink" title="Strength Training"></a>Strength Training</h3><p>One of the things I found out when I was dieting was that strength training helps burn calories even when you aren’t exercising.  So I added modest strength exercises into my routine in the morning.  John Sonmez has convinced me to add a cardio element to my routine in his book, <a href="//blog.dmbcllc.com/softSkills">Soft Skills</a>.  Since I know that my resistance to discomfort will keep me from running when it is raining, hot, or cold, I’m looking for a treadmill or an elliptical machine so I can start <a href="//www.c25k.com/">C25K</a>.</p>
+<h3 id="Strength-Training"><a href="#Strength-Training" class="headerlink" title="Strength Training"></a>Strength Training</h3><p>One of the things I found out when I was dieting was that strength training helps burn calories even when you aren’t exercising.  So I added modest strength exercises into my routine in the morning.  John Sonmez has convinced me to add a cardio element to my routine in his book, <a href="/softSkills">Soft Skills</a>.  Since I know that my resistance to discomfort will keep me from running when it is raining, hot, or cold, I’m looking for a treadmill or an elliptical machine so I can start <a href="//www.c25k.com/">C25K</a>.</p>
 <h3 id="Sleep"><a href="#Sleep" class="headerlink" title="Sleep"></a>Sleep</h3><p>Sleep has never really been an issue for me.  I was once asked, “what keeps you up at night?”  My response, “Nothing!”  Seriously, I can sleep in the middle of the living room with all kinds of stuff going on.  And while I do have particular things I “worry” about, I don’t worry about them when I’m supposed to be sleeping. But, I was finding that I was kind of sleepy during the day a lot of times.  That’s odd because I tend to get a good seven and a half hours of sleep and I’m pretty much done sleeping by the end of the time period. Then I found this app called “<a href="//www.sleepcycle.com/">Sleep Cycle</a>” that wakes you up before you fall back to sleep.  After a couple of weeks using this, along  with getting up at the same time every morning even on weekends, I’m much less likely to be dragging by the end of the day.  I find that people either love this app or hate it.  It has some other features that I don’t find very useful.  Like it tells me I had a N% good sleep.  I’ve never achieved better than 85%.  Last night it gave me a 50% score.  But in both cases, I don’t get tired until an hour before I plan to go to bed.  I’m not sure it is very accurate.  It also checks your heart rate in the morning.  But, that using the flash on the phone which bothered my wife so I’ve stopped using that.</p>
 <h2 id="Don’t-Be-So-Critical"><a href="#Don’t-Be-So-Critical" class="headerlink" title="Don’t Be So Critical"></a>Don’t Be So Critical</h2><p>I think because we spend most of our day programming and naturally like to solve problems, we tend to come off as critical.  We probably are. Ever thought or heard things like, “The boss has no clue what he’s doing.”?  “This place would be better if…”  “If only they’d …” Here’s something to think about.  If you know so much, why don’t you start your own company? Here are a few things I’ve learned over the years.  They’ll seem obvious once I state them, but I think we forget.</p>
 <h3 id="My-Boss-Has-a-Boss"><a href="#My-Boss-Has-a-Boss" class="headerlink" title="My Boss Has a  Boss"></a>My Boss Has a  Boss</h3><p>I can’t tell you how many times when I’ve actually asked my boss to explain something, the answer has been, “that’s what my boss wants”</p>
@@ -949,7 +949,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/how-to-become-a-better-programmer/" data-id="cjj1qjcxe00aw1ohipbbizi6d" class="article-share-link">
+      <a data-url="http://davembush.github.com/how-to-become-a-better-programmer/" data-id="cjj1ujua000azi4hikzns92gg" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

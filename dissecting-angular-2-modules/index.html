@@ -14,7 +14,7 @@
 <meta property="og:description" content="In the new world of Angular 2, and even in the world of Angular.js, you might feel like the concept of a module is the most difficult to wrap your head around. This is especially if you’ve only ever w">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2016/12/image-1.png">
-<meta property="og:updated_time" content="2018-06-30T19:18:32.685Z">
+<meta property="og:updated_time" content="2018-06-30T20:06:56.957Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Dissecting Angular 2 Modules">
 <meta name="twitter:description" content="In the new world of Angular 2, and even in the world of Angular.js, you might feel like the concept of a module is the most difficult to wrap your head around. This is especially if you’ve only ever w">
@@ -121,7 +121,7 @@
 <p>You might wonder why this code is not included in the application module.  This is because you might not always want to use platformBrowserDynamic().  If you are using Web Workers to run your code or using Ahead of Time compile, you would use two other methods of bootstrapping the module.  I’ve only mentioned three here, but there are others. The next property you are likely to see in a module declaration is the exports section:</p>
 <p>exports:  [Edit]</p>
 <p>This tells the module that has imported this module that it can use the Edit component.  We didn’t need this in the app module because the app module isn’t being used by another module.  It is the top most module and really can’t be used by any other module by definition.</p>
-<h2 id="Routing-and-Modules"><a href="#Routing-and-Modules" class="headerlink" title="Routing and Modules"></a>Routing and Modules</h2><p>Several weeks ago we took a look at <a href="//blog.dmbcllc.com/angular-2-lazy-loading/">implementing Lazy Loading by modifying our routing module</a>.  What is unique about this situation is that every time you lazy load a module, it becomes the top most module, so once again, there is no real need to export it.</p>
+<h2 id="Routing-and-Modules"><a href="#Routing-and-Modules" class="headerlink" title="Routing and Modules"></a>Routing and Modules</h2><p>Several weeks ago we took a look at <a href="/angular-2-lazy-loading/">implementing Lazy Loading by modifying our routing module</a>.  What is unique about this situation is that every time you lazy load a module, it becomes the top most module, so once again, there is no real need to export it.</p>
 <h2 id="When-Should-Modules-Be-Used"><a href="#When-Should-Modules-Be-Used" class="headerlink" title="When Should Modules Be Used?"></a>When Should Modules Be Used?</h2><p>As I said when I started, the temptation is to just put all our import statements that our application is going to need in our app module.  But that seems like an extremely lazy way of writing code.  And when you go to write lazy loaded modules, that’s not going to work so well for you.  So, there are two ways you can approach this. First, you can just create a module for every component you write.  It is probably over kill, but it would be hard to go too far wrong here.  Given the choice between too many modules and not enough, I’d error on the side of too many.  At least it gives you the flexibility do make necessary changes in the future. But the more reasonable approach would be one module per feature and a module for common stuff.  For example, if you are writing a component library, you would probably be safe writing a module for all the components in your library so you only have to import the library module and all your component would automatically become available to you.  You’ll want to at least want to have one module per route so that you can lazy load the routes if you decide that is necessary.</p>
 
       
@@ -133,7 +133,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/dissecting-angular-2-modules/" data-id="cjj1qjcv3007z1ohiti16xc53" class="article-share-link">
+      <a data-url="http://davembush.github.com/dissecting-angular-2-modules/" data-id="cjj1uju7t0082i4hibdc65nhs" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

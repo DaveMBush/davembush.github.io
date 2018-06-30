@@ -14,7 +14,7 @@
 <meta property="og:description" content="A couple of weeks ago, I wrote a post describing how to setup SpecFlow in which I promised to continue with how to actually use it once you have it installed.  What follows is a SpecFlow Tutorial of t">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2015/05/18Tr.png">
-<meta property="og:updated_time" content="2018-06-30T18:23:01.437Z">
+<meta property="og:updated_time" content="2018-06-30T20:06:57.048Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpecFlow Tutorial">
 <meta name="twitter:description" content="A couple of weeks ago, I wrote a post describing how to setup SpecFlow in which I promised to continue with how to actually use it once you have it installed.  What follows is a SpecFlow Tutorial of t">
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/uploads/2015/05/18Tr.png" alt="SpecFlow Tutorial Session" title="18Tr">A couple of weeks ago, I wrote a post describing <a href="//blog.dmbcllc.com/setting-up-specflow/">how to setup SpecFlow</a> in which I promised to continue with how to actually use it once you have it installed.  What follows is a SpecFlow Tutorial of the tips and tricks I wish I’d known when I was starting out. </p>
+        <p><img src="/uploads/2015/05/18Tr.png" alt="SpecFlow Tutorial Session" title="18Tr">A couple of weeks ago, I wrote a post describing <a href="/setting-up-specflow/">how to setup SpecFlow</a> in which I promised to continue with how to actually use it once you have it installed.  What follows is a SpecFlow Tutorial of the tips and tricks I wish I’d known when I was starting out. </p>
 <h2 id="Controlling-Associations-between-Features-and-Steps"><a href="#Controlling-Associations-between-Features-and-Steps" class="headerlink" title="Controlling Associations between Features and Steps"></a>Controlling Associations between Features and Steps</h2><p>With what you’ve learned so far, you might be able to successfully put together a set of tests for a particular page that you want to test. But as soon as you start working on the second page, you will probably discover that you have steps that seem to conflict with each other. It is at this point you will find that the ability to associate features with step files becomes critical. Fortunately, this is relatively easy. In your feature file, you will specify a category using the @category syntax and within your step file, you will use the category attribute within the step file at the class level to tie the two together. In your feature file:</p>
 <p>@stepFileOne<br>Feature: SpecFlowFeature1<br>    In order to avoid silly mistakes<br>    As a math idiot<br>    I want to be told the sum of two numbers</p>
 <p>And in your step file:</p>
@@ -159,7 +159,7 @@
 <p>private ISpmInitial Page<br>{<br>    get { return (ISpmInitial)(ScenarioContext.Current[“page”]); }<br>    set { ScenarioContext.Current[“page”] = value; }<br>}</p>
 <p>[Before]<br>public void Before()<br>{<br>    const string id = “10039219”;<br>    var pages = new ConcurrentStack<ispminitial>();<br>    Parallel.Invoke(<br>        () => pages.Push(SpmPageFactory.GetPageModel(“FireFoxGrid”, id))<br>        ,<br>        () => pages.Push(SpmPageFactory.GetPageModel(“IE11Grid”, id))<br>    );<br>    var pagesArray = pages.ToArray();<br>    Page = new ParallelPage<ispminitial>(pagesArray).Cast();<br>}</ispminitial></ispminitial></p>
 <p>[After]<br>public void After()<br>{<br>    if (Page == null) return;<br>    Page.Dispose();<br>    Page = null;<br>}</p>
-<p>This code is using the Selenium parallelization code I’ve already talked about in my article, <a href="//blog.dmbcllc.com/running-selenium-in-parallel-with-any-net-unit-testing-tool/">Running Selenium In Parallel With Any .NET Unit Testing Tool</a>. The <code>Before</code> method creates my page object for the browsers I’m using. Once I have the page object, I store it into my private <code>Page</code> property which uses the <code>ScenarioContext</code> as the backing store. Then, in the step files that need access to this same page object, I create a similar <code>Page</code> property so that they can access the page object from the steps.</p>
+<p>This code is using the Selenium parallelization code I’ve already talked about in my article, <a href="/running-selenium-in-parallel-with-any-net-unit-testing-tool/">Running Selenium In Parallel With Any .NET Unit Testing Tool</a>. The <code>Before</code> method creates my page object for the browsers I’m using. Once I have the page object, I store it into my private <code>Page</code> property which uses the <code>ScenarioContext</code> as the backing store. Then, in the step files that need access to this same page object, I create a similar <code>Page</code> property so that they can access the page object from the steps.</p>
 <h2 id="Parameterized-Tests"><a href="#Parameterized-Tests" class="headerlink" title="Parameterized Tests"></a>Parameterized Tests</h2><p>It is quite common to have tests for multiple scenarios that essentially look the same except for the parameters change. Instead of using copy/paste/modify, you can create parameterized test by using the Scenario Outline directive.</p>
 <p>Scenario Outline: Uses parameters<br>    Given I have entered <n1> into the calculator<br>    And I have entered <n2> into the calculator<br>    When I press <operation><br>    Then the result should be <result> on the screen</result></operation></n2></n1></p>
 <pre><code>Examples: 
@@ -189,7 +189,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/specflow-tutorial/" data-id="cjj1qjd6t00l61ohijenpkblf" class="article-share-link">
+      <a data-url="http://davembush.github.com/specflow-tutorial/" data-id="cjj1ujujq00lqi4hi1in569m7" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

@@ -14,7 +14,7 @@
 <meta property="og:description" content="Many people believe that implementing Test Driven Development means that you need to have a test for every line of code in your system.  When  they start thinking about TDD in this way, they start to">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2014/04/WhatNotToTest.png">
-<meta property="og:updated_time" content="2018-06-30T18:23:01.521Z">
+<meta property="og:updated_time" content="2018-06-30T20:06:57.075Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="What Not To Test">
 <meta name="twitter:description" content="Many people believe that implementing Test Driven Development means that you need to have a test for every line of code in your system.  When  they start thinking about TDD in this way, they start to">
@@ -119,7 +119,7 @@
 <h2 id="Generated-Code"><a href="#Generated-Code" class="headerlink" title="Generated Code"></a>Generated Code</h2><p>Generated code includes any code that uses some automated process to create code your system is using.  This would include code that was written by Entity Framework, NHibernate, or code generators that you may have written.  Of course, I’m assuming that you’ve written test for the code generators that test both that they generate the expected code and the code that was generated works as expected.  But to write a test for every instance of the code the generator writes is quite a bit of overkill.</p>
 <h2 id="Simple-Getters-and-Setters"><a href="#Simple-Getters-and-Setters" class="headerlink" title="Simple Getters and Setters"></a>Simple Getters and Setters</h2><p>If all your getters and setters are doing (properties) are retrieving and setting some backing store, there isn’t much point in writing a test for them.  One would assume that the code will get tested in the course of testing the code that is ultimately using the getters and setters.</p>
 <h2 id="Third-Party-Libraries"><a href="#Third-Party-Libraries" class="headerlink" title="Third Party  Libraries"></a>Third Party  Libraries</h2><p>While I know it isn’t true, you have to assume that the third party library you are using actually works.  If you can’t assume that much, you should probably write it yourself.</p>
-<h2 id="Your-Thinking-About-It-Wrong"><a href="#Your-Thinking-About-It-Wrong" class="headerlink" title="Your Thinking About It Wrong"></a>Your Thinking About It Wrong</h2><p>I would argue that if you are thinking about what you should write a test for, you are probably still thinking of Test Driven Development as something you do for the sake of testing rather than for the sake of <a href="//blog.dmbcllc.com/tdd-isnt-all-about-testing/">design, maintenance, and problem solving</a>.</p>
+<h2 id="Your-Thinking-About-It-Wrong"><a href="#Your-Thinking-About-It-Wrong" class="headerlink" title="Your Thinking About It Wrong"></a>Your Thinking About It Wrong</h2><p>I would argue that if you are thinking about what you should write a test for, you are probably still thinking of Test Driven Development as something you do for the sake of testing rather than for the sake of <a href="/tdd-isnt-all-about-testing/">design, maintenance, and problem solving</a>.</p>
 <p>When you write code, you should be thinking, “What problem am I trying to solve?”  Or better yet, “How can I state the problem in terms of a ‘When/Then’ statement?”</p>
 <p>When you think about the problem this way, what you test becomes that When/Then statement.  The class name for the test becomes When and the test becomes Then</p>
 <p>public class WhenTheCodeIsInStateXAndIPerformActionYOnIt<br>{<br>    [SetUp]<br>    public void Setup()<br>    {<br>        // Setup When<br>        // Perform Action<br>    }</p>
@@ -140,7 +140,7 @@ public void ThenItShouldEndUpWithZState()
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/what-not-to-test/" data-id="cjj1qjdde00rl1ohioe2597ct" class="article-share-link">
+      <a data-url="http://davembush.github.com/what-not-to-test/" data-id="cjj1ujuq100rvi4hi52m9cuey" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

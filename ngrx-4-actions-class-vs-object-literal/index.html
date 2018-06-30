@@ -14,7 +14,7 @@
 <meta property="og:description" content="When NgRX 4 came out and I discovered that the “right” way of creating Actions is to use TypeScript classes and not Object Literals, I was a bit surprised.  Why would you use a Class that requires you">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2017/10/2017-10-10.png">
-<meta property="og:updated_time" content="2018-06-30T19:18:32.716Z">
+<meta property="og:updated_time" content="2018-06-30T20:06:57.020Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NgRX 4 Actions - Class vs Object Literal">
 <meta name="twitter:description" content="When NgRX 4 came out and I discovered that the “right” way of creating Actions is to use TypeScript classes and not Object Literals, I was a bit surprised.  Why would you use a Class that requires you">
@@ -117,8 +117,8 @@
 <p><code>import * as Wait from &#39;./wait.actions&#39;;</code></p>
 <p>And then we would dispatch the action using the store we’ve injected into our code. We’ll cover that later. But for now, the dispatch basically looks like this: <code>this.store.dispatch(new Wait.Start());</code> If you need to pass other information to an Action, your constructor can accept them: <code>export const ACTION_WITH_MESSAGE = &#39;Wait.ActionWithMessage&#39;;</code> <code>export class ActionWithMessage implements Action {</code> <code>readonly type = ACTION_WITH_MESSAGE;</code> <code>constructor(public message: string) {}</code> <code>}</code> This allows us to access the action payload as <code>Wait.message</code> instead of <code>Wait.payload</code>. Contrast this to putting the same code in a class with static methods as I’ve explained in previous articles:</p>
 <ul>
-<li><a href="//blog.dmbcllc.com/upgrade-ngrx-4-x/">How to Upgrade to NgRX 4</a></li>
-<li><a href="//blog.dmbcllc.com/how-to-really-use-ngrx/">How to use NgRX</a></li>
+<li><a href="/upgrade-ngrx-4-x/">How to Upgrade to NgRX 4</a></li>
+<li><a href="/how-to-really-use-ngrx/">How to use NgRX</a></li>
 </ul>
 <p><code>export class Wait {</code> <code>const START = &#39;Wait.Start&#39;;</code> <code>const END = &#39;Wait.Start&#39;;</code> <code>const ACTION_WITH_MESSAGE = &#39;Wait.ActionWithMessage&#39;;</code> <code>start() {</code> <code>return {type: Wait.START};</code> <code>}</code> <code>end() {</code> <code>return {type: Wait.END};</code> <code>}</code> <code>actionWithMessage(message: string) {</code> <code>return {</code> <code>type: Wait.ACTION_WITH_MESSAGE,</code> <code>payload: message};</code> <code>}</code> <code>}</code> In summary, we can have multiple classes and new them up.  Or we can have one class with multiple static methods that return object literals.</p>
 <h2 id="Advantage-Object-Literal"><a href="#Advantage-Object-Literal" class="headerlink" title="Advantage Object Literal"></a>Advantage Object Literal</h2><p>The main advantage to using the object literal way is that you don’t need to create an object.  You also stay with the “One class, one file” model that is so common in Angular. On the surface, this seems to be a clear winner.</p>
@@ -137,7 +137,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/ngrx-4-actions-class-vs-object-literal/" data-id="cjj1qjd2z00h31ohiykqreyjr" class="article-share-link">
+      <a data-url="http://davembush.github.com/ngrx-4-actions-class-vs-object-literal/" data-id="cjj1ujuf700h7i4higs1hb1qo" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

@@ -14,7 +14,7 @@
 <meta property="og:description" content="Last week when we took a look at Client side Routing, I mentioned that one of the reasons you’d want to implement a component in its own module is so that we could lazy load the component and its depe">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2016/11/image-5.png">
-<meta property="og:updated_time" content="2018-06-30T19:06:18.484Z">
+<meta property="og:updated_time" content="2018-06-30T20:06:56.912Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Angular 2 Lazy Loading">
 <meta name="twitter:description" content="Last week when we took a look at Client side Routing, I mentioned that one of the reasons you’d want to implement a component in its own module is so that we could lazy load the component and its depe">
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Last week when we took a look at <a href="//blog.dmbcllc.com/adding-client-side-routing-to-angular-2/">Client side Routing</a>, I mentioned that one of the reasons you’d want to implement a component in its own module is so that we could lazy load the component and its dependencies. This week, we want to dig into how to implement lazy loading in your Angular 2 application. <figure><img src="/uploads/2016/11/image-5.png" alt="" title="Angular 2 Lazy Loading"> Photo via <a href="//pixabay.com/en/users/jordan3600-400129/">jordan</a> via <a href="//visualhunt.com/">Visualhunt</a></figure></p>
+        <p>Last week when we took a look at <a href="/adding-client-side-routing-to-angular-2/">Client side Routing</a>, I mentioned that one of the reasons you’d want to implement a component in its own module is so that we could lazy load the component and its dependencies. This week, we want to dig into how to implement lazy loading in your Angular 2 application. <figure><img src="/uploads/2016/11/image-5.png" alt="" title="Angular 2 Lazy Loading"> Photo via <a href="//pixabay.com/en/users/jordan3600-400129/">jordan</a> via <a href="//visualhunt.com/">Visualhunt</a></figure></p>
 <a id="more"></a> 
 <h2 id="What-Is-Lazy-Loading"><a href="#What-Is-Lazy-Loading" class="headerlink" title="What Is Lazy Loading?"></a>What Is Lazy Loading?</h2><p>Imagine that you’ve written an application that is divided into four main sections.  The people using the site may only use one or two sections of the site at a time, or at all.  Is it fair to make them download the entire site? Or maybe you’ve written a monster site.  Wouldn’t it make more sense to download only what you need as you need it?  The perceived performance of a site written like this far exceeds the performance of a site that requires you to download everything at once. And so, Lazy Loading was developed as a way of solving these issues and others.  The idea is, rather than downloading everything, download only what is needed when it is needed.</p>
 <h2 id="The-Code"><a href="#The-Code" class="headerlink" title="The Code"></a>The Code</h2><p>Remember that last week we implemented a View module and an Edit module.  We called them from our router by importing the modules and telling the router to load the components when a route was specified. Because we are no longer loading the modules as part of our main application, we are going to go into the <code>app-routing.module.ts</code> file and remove all of the references to the components and the module.  Instead, we are going to load the module using the <code>loadChildren</code> property in our route array.</p>
@@ -139,7 +139,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/angular-2-lazy-loading/" data-id="cjj1qjcqe00231ohijgw7jfs0" class="article-share-link">
+      <a data-url="http://davembush.github.com/angular-2-lazy-loading/" data-id="cjj1uju34002di4hidnzave5t" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
