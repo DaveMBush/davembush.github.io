@@ -14,7 +14,7 @@
 <meta property="og:description" content="This past week I took Angular Material for a spin.  In the process, I learned a few things you might find helpful.  Some may be helpful even if you aren’t interested in using Angular Material for your">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2017/10/2017-10-31.png">
-<meta property="og:updated_time" content="2018-06-30T20:06:57.009Z">
+<meta property="og:updated_time" content="2018-06-30T23:49:56.236Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="What I Learned Using Angular Material">
 <meta name="twitter:description" content="This past week I took Angular Material for a spin.  In the process, I learned a few things you might find helpful.  Some may be helpful even if you aren’t interested in using Angular Material for your">
@@ -119,27 +119,10 @@
 <h2 id="Layout"><a href="#Layout" class="headerlink" title="Layout"></a>Layout</h2><p>As I suspected, a lot of layout expects you to use Flex CSS.  Since I already had decided to use Flex-Layout to manage my layout with Bootstrap, this was not a big surprise.  The Flex-Layout project started its life as part of the Angular JS Material project and split out as a separate project when both moved to support Angular.  At times, figuring out where to use what directive may require you to use Developer Tools.  But I didn’t find this to be any more of a deterrent than using CSS in any other platform.  Just keep in mind that some of the Flex CSS is already defined in the Material components.</p>
 <h2 id="Creating-Components-from-Injectables"><a href="#Creating-Components-from-Injectables" class="headerlink" title="Creating Components from @Injectables"></a>Creating Components from @Injectables</h2><p>While creating my demo project, there were two places where I needed to create “snack bars” or dialogs.  In Angular Material, the way you accomplish this is by calling a method on an @Injectable.  aka, a Service.  This is interesting to me and I’m going to have to dig deeper to find out exactly how this works.</p>
 <h2 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h2><p>The first time you write unit tests, you’ll get a warning that says, “Could not find Angular Material core theme…”.  To remove this error, you’ll need to open karma.conf.js and add a “files:” section right under the “plugins:” section.</p>
-<p><code>files: [</code></p>
-<p><code>{ pattern: &#39;./node_modules/@angular/material/prebuilt-themes/indigo-pink.css&#39;, included: true, watched: true }</code></p>
-<p><code>],</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">files: [</span><br><span class="line">    &#123; <span class="attr">pattern</span>: <span class="string">'./node_modules/@angular/material/prebuilt-themes/indigo-pink.css'</span>, <span class="attr">included</span>: <span class="literal">true</span>, <span class="attr">watched</span>: <span class="literal">true</span> &#125;</span><br><span class="line">],</span><br></pre></td></tr></table></figure>
 <p>You can add whatever pre-built theme you’d like.  I’ve added indigo-pink here.</p>
 <h2 id="Common-declare-import-export"><a href="#Common-declare-import-export" class="headerlink" title="Common declare/import/export"></a>Common declare/import/export</h2><p>Strictly speaking, this isn’t Angular Material specific.  But it was because of Angular Material that I discovered this trick.  Again, because it isn’t Angular Material specific, you can use this in any of your Angular code that it makes sense. Angular Material requires you to import each of the component modules individually.  This allows tree shaking to be more effective.  Rather than put this code in <code>app.module.ts</code>, I created a <code>material-design.module.ts</code> file and imported it into my <code>app.module.ts</code>. Now, if you are familiar with how imports work, you’ll already know that the components that are part of a module you import are only available to the parent module’s components or below.  But we want the component to be available to any module that imports <code>material-design.module.ts</code>.  To do that, we need to export the same list of modules we imported. That sounded like too much repeating myself.  In an effort to make my code DRYer, I created a read only array with all my Material modules in it and then used the spread operator to include those in my imports and exports statement.</p>
-<p><code>const materialDesignComponents: ReadonlyArray&lt;Type&lt;any&gt;&gt; = [</code></p>
-<p><code>MatSidenavModule,</code></p>
-<p><code>MatToolbarModule,</code></p>
-<p><code>MatListModule,</code></p>
-<p><code>...</code> ];</p>
-<p><code>@NgModule({</code></p>
-<p><code>imports: [</code></p>
-<p><code>CommonModule,</code></p>
-<p><code>...materialDesignComponents</code></p>
-<p><code>],</code></p>
-<p><code>exports: [</code></p>
-<p><code>...materialDesignComponents</code></p>
-<p><code>],</code></p>
-<p><code>declarations: []</code></p>
-<p><code>})</code></p>
-<p><code>export class MaterialDesignModule { }</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> materialDesignComponents: ReadonlyArray&lt;Type&lt;<span class="built_in">any</span>&gt;&gt; = [</span><br><span class="line">  MatSidenavModule,</span><br><span class="line">  MatToolbarModule,</span><br><span class="line">  MatListModule,</span><br><span class="line">...</span><br><span class="line">];</span><br><span class="line"></span><br><span class="line"><span class="meta">@NgModule</span>(&#123;</span><br><span class="line">  imports: [</span><br><span class="line">    CommonModule,</span><br><span class="line">    ...materialDesignComponents</span><br><span class="line">  ],</span><br><span class="line">  exports: [</span><br><span class="line">    ...materialDesignComponents</span><br><span class="line">  ],</span><br><span class="line">  declarations: []</span><br><span class="line">&#125;)</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> MaterialDesignModule &#123; &#125;</span><br></pre></td></tr></table></figure>
 <p>This saved me a lot of time, not just in typing, but in tracking down bugs because I simply forgot to include the modules in both places.</p>
 <h2 id="Sample-Project"><a href="#Sample-Project" class="headerlink" title="Sample Project"></a>Sample Project</h2><p>If you are interested, you can find <a href="//github.com/DaveMBush/angular-material-demo">my sample project on GitHub</a>.</p>
 
@@ -152,7 +135,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/what-i-learned-using-angular-material/" data-id="cjj21um6200fwwohid58onzpt" class="article-share-link">
+      <a data-url="http://davembush.github.com/what-i-learned-using-angular-material/" data-id="cjj227dik00fto4hibj7ee9qq" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
