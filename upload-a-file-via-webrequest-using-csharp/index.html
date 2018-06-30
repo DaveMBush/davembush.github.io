@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="I got this question a couple of weeks ago but just never had the time to put into answering fully.  But today I have some extra time due to the fact that I’m under-booked with projects. The question">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2009/11/G03A0085.jpg">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.824Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2009/11/G03A0085.jpg">
+<meta property="og:updated_time" content="2018-06-30T18:47:20.495Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Upload a File via WebRequest Using CSharp">
 <meta name="twitter:description" content="I got this question a couple of weeks ago but just never had the time to put into answering fully.  But today I have some extra time due to the fact that I’m under-booked with projects. The question">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2009/11/G03A0085.jpg">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2009/11/G03A0085.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/11/G03A0085.jpg" alt="G03A0085" title="G03A0085"></p>
+        <p><img src="/uploads/2009/11/G03A0085.jpg" alt="G03A0085" title="G03A0085"></p>
 <p>I got this question a couple of weeks ago but just never had the time to put into answering fully.  But today I have some extra time due to the fact that I’m under-booked with projects.</p>
 <p>The question went something like this:</p>
 <p>“I want to be able to upload a file from a desktop application to a web site that has a form that accepts the file as a post.  How do I do that?”</p>
@@ -124,9 +124,9 @@
 <p>FileStream fs= new FileStream(“your file here”,<br>    System.IO.FileMode.Open, System.IO.FileAccess.Read);<br>byteArray= new byte[loFile.Length];<br>fs.Read(byteArray,0,(int) byteArray.Length);<br>fs.Close();</p>
 <p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
 <p>Then we setup the multipart boundary header.</p>
-<p>string var = “–” + boundaryID + “\r\n”  +<br>     “Content-Disposition: form-data; name=\“” + Key + “\“ filename=\“” +<br>      new FileInfo(“your file here”).Name + “\“\r\n\r\n”;</p>
+<p>string var = “–” + boundaryID + “\<br>\n”  +<br>     “Content-Disposition: form-data; name=\“” + Key + “\“ filename=\“” +<br>      new FileInfo(“your file here”).Name + “\“\<br>\n\<br>\n”;</p>
 <p>Then we write the boundary header and the content to the output stream .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
-<p>System.IO.MemoryStream ms = new System.IO.MemoryStream();<br>System.IO.BinaryWriter bw = new System.IO.BinaryWriter(ms);<br>bw.Write(Encoding.GetEncoding(1252).GetBytes(var));<br>bw.Write(byteArray);<br>bw.Write(Encoding.GetEncoding(1252).GetBytes(“\r\n”));</p>
+<p>System.IO.MemoryStream ms = new System.IO.MemoryStream();<br>System.IO.BinaryWriter bw = new System.IO.BinaryWriter(ms);<br>bw.Write(Encoding.GetEncoding(1252).GetBytes(var));<br>bw.Write(byteArray);<br>bw.Write(Encoding.GetEncoding(1252).GetBytes(“\<br>\n”));</p>
 <p>System.IO.Stream postStream = wr.GetRequestStream();<br>ms.WriteTo(postStream);<br>postStream.Close();</p>
 <p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
 <p>Note the last bw.Write() line is telling the server this is the  end of the boundary.</p>
@@ -147,7 +147,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/upload-a-file-via-webrequest-using-csharp/" data-id="cjj1pqynq00vjtkhiokfgpwww" class="article-share-link">
+      <a data-url="http://davembush.github.com/upload-a-file-via-webrequest-using-csharp/" data-id="cjj1qjdax00p91ohixfbisqt4" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

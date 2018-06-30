@@ -13,14 +13,14 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="Last week I proposed a structure for unit test that follows the pre-condition, action, post-condition workflow.  Basically what you would see in a Use Case document. The result of this structure when">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2014/03/arct-034.jpg">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2014/03/GivenWhenThenTest.png">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2014/03/GivenWhenThen2.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.871Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2014/03/arct-034.jpg">
+<meta property="og:image" content="http://davembush.github.com/uploads/2014/03/GivenWhenThenTest.png">
+<meta property="og:image" content="http://davembush.github.com/uploads/2014/03/GivenWhenThen2.png">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.523Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="When You Really Need All Of Your NUnit Test In One Class">
 <meta name="twitter:description" content="Last week I proposed a structure for unit test that follows the pre-condition, action, post-condition workflow.  Basically what you would see in a Use Case document. The result of this structure when">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2014/03/arct-034.jpg">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2014/03/arct-034.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -113,7 +113,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/03/arct-034.jpg" alt=""></p>
+        <p><img src="/uploads/2014/03/arct-034.jpg" alt=""></p>
 <p>Last week <a href="//blog.dmbcllc.com/unit-test-structure/">I proposed a structure for unit test that follows the pre-condition, action, post-condition workflow</a>.  Basically what you would see in a Use Case document.</p>
 <p>The result of this structure when applied to a general NUnit class is that we will end up with our pre-condition and action in our setup method and our post-condition asserts in our test methods.</p>
 <p>The problem with this is that sometimes this doesn’t always fit what we are trying to do.</p>
@@ -134,12 +134,12 @@
 <p>public IEnumerable DataSource<br>{<br>    get<br>    {<br>        yield return new TestCaseData(<br>            (Action)(() =&gt; Console.WriteLine(“given”)),<br>            new List<action><br>            {<br>                () => Console.WriteLine(“when one”),<br>                () => Console.WriteLine(“when two”)<br>            },<br>            (Action)(() =&gt; Assert.That(1, Is.EqualTo(1)))<br>        );<br>    }<br>}</action></p>
 <p>You will need the (Action) cast to make the compiler understand what you are trying to do.  It isn’t smart enough to know that a lambda express is an Action which is a delegate that take no parameters and returns void.</p>
 <p>When you run the code, above, we get this output:</p>
-<p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/03/GivenWhenThenTest.png" alt="GivenWhenThenTest" title="GivenWhenThenTest"></p>
+<p><img src="/uploads/2014/03/GivenWhenThenTest.png" alt="GivenWhenThenTest" title="GivenWhenThenTest"></p>
 <p>By chaining on the SetName() call, you can make each iteration show up as it’s own unique test so you can see what is occuring in your test runner.</p>
 <p>public IEnumerable DataSource<br>{<br>    get<br>    {<br>        yield return new TestCaseData(<br>            (Action)(() =&gt; Console.WriteLine(“given”)),<br>            new List<action><br>            {<br>                () => Console.WriteLine(“when one”),<br>                () => Console.WriteLine(“when two”)<br>            },<br>            (Action)(() =&gt; Assert.That(1, Is.EqualTo(1)))<br>        ).SetName(“First Test”);<br>    }<br>}</action></p>
 <p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
 <p>And this looks like this in the test runner:</p>
-<p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/03/GivenWhenThen2.png" alt="GivenWhenThen2" title="GivenWhenThen2"></p>
+<p><img src="/uploads/2014/03/GivenWhenThen2.png" alt="GivenWhenThen2" title="GivenWhenThen2"></p>
 <p>Once again, I have to reiterate, this is not something I would do a lot of, but it is a pretty neat trick when you need it. .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
 
       
@@ -151,7 +151,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/when-you-really-need-all-of-your-nunit-test-in-one-class/" data-id="cjj1pqyqv00y8tkhi2l5gt8ev" class="article-share-link">
+      <a data-url="http://davembush.github.com/when-you-really-need-all-of-your-nunit-test-in-one-class/" data-id="cjj1qjddr00ry1ohi4uf8zx9e" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

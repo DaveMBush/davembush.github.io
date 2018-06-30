@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="When NgRX 4 came out and I discovered that the “right” way of creating Actions is to use TypeScript classes and not Object Literals, I was a bit surprised.  Why would you use a Class that requires you">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/10/2017-10-10.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:38.156Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2017/10/2017-10-10.png">
+<meta property="og:updated_time" content="2018-06-30T19:18:32.716Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NgRX 4 Actions - Class vs Object Literal">
 <meta name="twitter:description" content="When NgRX 4 came out and I discovered that the “right” way of creating Actions is to use TypeScript classes and not Object Literals, I was a bit surprised.  Why would you use a Class that requires you">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/10/2017-10-10.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2017/10/2017-10-10.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,8 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>When NgRX 4 came out and I discovered that the “right” way of creating Actions is to use TypeScript classes and not Object Literals, I was a bit surprised.  Why would you use a Class that requires you to use the “new” keyword?  Why would you put multiple classes in one file?  This is insane! [caption id=”attachment_4463” align=”aligncenter” width=”800”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/10/2017-10-10.png" alt="NgRX 4 Actions - Class vs Object Literal" title="NgRX 4 Actions - Class vs Object Literal"> Photo credit: <a href="//www.flickr.com/photos/dkobras/8342620023/">dkobras</a> via <a href="//visualhunt.com/re/7df37f">Visual hunt</a> / <a href="//creativecommons.org/licenses/by-sa/2.0/"> CC BY-SA</a>[/caption] </p>
+        <p>When NgRX 4 came out and I discovered that the “right” way of creating Actions is to use TypeScript classes and not Object Literals, I was a bit surprised.  Why would you use a Class that requires you to use the “new” keyword?  Why would you put multiple classes in one file?  This is insane! <figure><img src="/uploads/2017/10/2017-10-10.png" alt="" title="NgRX 4 Actions - Class vs Object Literal"><figcaption>Photo credit: <a href="//www.flickr.com/photos/dkobras/8342620023/">dkobras</a> via <a href="//visualhunt.com/re/7df37f">Visual hunt</a> / <a href="//creativecommons.org/licenses/by-sa/2.0/"> CC BY-SA</a></figcaption></figure></p>
+<a id="more"></a> 
 <h2 id="Options"><a href="#Options" class="headerlink" title="Options"></a>Options</h2><p>An Action is an object that contains a type variable and optionally, a payload. Depending on how you code your action, the payload may or may not have “payload” as the variable name. In NgRX version 2, payload was an optional variable. To improve type checking, payload was removed from the Action interface. The official documentation for NgRX version 4 encourages us to create a class for each action we want to dispatch. Suppose you have a Wait reducer that needs a Start action and an End action.  The code might look something like: <code>import {Action} from &#39;@ngrx/store&#39;;</code> <code>export const START = &#39;Wait.Start&#39;;</code> <code>export class Start implements Action</code> <code>{</code> <code>readonly type = START;</code> <code>}</code> <code>export const END = &#39;Wait.End&#39;;</code> <code>export class End implements Action {</code> <code>readonly type = END;</code> <code>}</code> To use this code in our reducer or effects you would import like this:</p>
 <p><code>import * as Wait from &#39;./wait.actions&#39;;</code></p>
 <p>And then we would dispatch the action using the store we’ve injected into our code. We’ll cover that later. But for now, the dispatch basically looks like this: <code>this.store.dispatch(new Wait.Start());</code> If you need to pass other information to an Action, your constructor can accept them: <code>export const ACTION_WITH_MESSAGE = &#39;Wait.ActionWithMessage&#39;;</code> <code>export class ActionWithMessage implements Action {</code> <code>readonly type = ACTION_WITH_MESSAGE;</code> <code>constructor(public message: string) {}</code> <code>}</code> This allows us to access the action payload as <code>Wait.message</code> instead of <code>Wait.payload</code>. Contrast this to putting the same code in a class with static methods as I’ve explained in previous articles:</p>
@@ -136,7 +137,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/ngrx-4-actions-class-vs-object-literal/" data-id="cjj1pqyeh00mutkhi6alsw85p" class="article-share-link">
+      <a data-url="http://davembush.github.com/ngrx-4-actions-class-vs-object-literal/" data-id="cjj1qjd2z00h31ohiykqreyjr" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

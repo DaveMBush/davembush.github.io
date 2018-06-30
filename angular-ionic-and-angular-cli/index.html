@@ -6,19 +6,19 @@
   <title>Angular Ionic and Angular CLI | Dave&#39;s Notebook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="As you might have noticed from last week’s post, I’ve shifted my focus from pure Angular to learning Angular Ionic.  And while last week’s post focused more on just getting Ionic setup on a Windows en">
-<meta name="keywords" content="angular,ionic,angular-cli">
+<meta name="keywords" content="angular,angular-cli,ionic">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Angular Ionic and Angular CLI">
 <meta property="og:url" content="http://davembush.github.com/angular-ionic-and-angular-cli/index.html">
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="As you might have noticed from last week’s post, I’ve shifted my focus from pure Angular to learning Angular Ionic.  And while last week’s post focused more on just getting Ionic setup on a Windows en">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/11/2017-11-14.jpg">
-<meta property="og:updated_time" content="2018-06-23T18:40:38.176Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2017/11/2017-11-14.jpg">
+<meta property="og:updated_time" content="2018-06-30T19:18:32.673Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Angular Ionic and Angular CLI">
 <meta name="twitter:description" content="As you might have noticed from last week’s post, I’ve shifted my focus from pure Angular to learning Angular Ionic.  And while last week’s post focused more on just getting Ionic setup on a Windows en">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/11/2017-11-14.jpg">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2017/11/2017-11-14.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,8 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>As you might have noticed from last week’s post, I’ve shifted my focus from pure Angular to learning Angular Ionic.  And while last week’s post focused more on just <a href="/angular-ionic-putty-ssh-authorized_keys-format">getting Ionic setup on a Windows environment</a>, this post will focus more on integrating Ionic and Angular CLI to work together. If you are familiar with Ionic, you should already know that it provides its own CLI that allows you to scaffold out a new application using a basic template.  This CLI is also used to help register the project with the Ionic Dashboard and scaffold out a limited number of file types if you use Ionic 3.  However, there are several problems I have with using the Ionic CLI.  First, and probably most important to me, is there is no test scaffolding!  Second, it neither follows the standard naming convention for files nor does it comply with the Angular Style Guide when it comes to directory structure. My first attempt at correcting the problem was to try to add Ionic to an existing Angular CLI project.  I almost had that working, but I got stuck trying to get the SCSS implementation working.  I finally gave up once I realized that Ionic seems to load files on demand, including SCSS files and templates.  I might come back to this once I’ve gained more experience with Ionic and have a better idea of how it works under the hood. So, my second thought was to just add the Angular CLI to an existing Ionic CLI project.  It turns out this was much easier to get working.  This allows me to use the standard <code>ng</code> commands to scaffold out my components, services, interfaces, etc… and because I’m using the Angular CLI scaffolding, the tests also get scaffold out for me. [caption id=”attachment_4505” align=”aligncenter” width=”800”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/11/2017-11-14.jpg" alt="Angular Ionic and Angular CLI" title="Angular Ionic and Angular CLI"> Photo credit: <a href="//www.flickr.com/photos/internetarchivebookimages/14762635481/">Internet Archive Book Images</a> via <a href="//visualhunt.com/re/09daa4">VisualHunt.com</a> / <a href="//flickr.com/commons/usage/"> No known copyright restrictions</a>[/caption]  For the purposes of this post, I’m going to assume you’ve already created a project using the Ionic CLI.  What follows are the steps you need to take to add in the Angular CLI.</p>
+        <p>As you might have noticed from last week’s post, I’ve shifted my focus from pure Angular to learning Angular Ionic.  And while last week’s post focused more on just <a href="/angular-ionic-putty-ssh-authorized_keys-format">getting Ionic setup on a Windows environment</a>, this post will focus more on integrating Ionic and Angular CLI to work together. If you are familiar with Ionic, you should already know that it provides its own CLI that allows you to scaffold out a new application using a basic template.  This CLI is also used to help register the project with the Ionic Dashboard and scaffold out a limited number of file types if you use Ionic 3.  However, there are several problems I have with using the Ionic CLI.  First, and probably most important to me, is there is no test scaffolding!  Second, it neither follows the standard naming convention for files nor does it comply with the Angular Style Guide when it comes to directory structure. My first attempt at correcting the problem was to try to add Ionic to an existing Angular CLI project.  I almost had that working, but I got stuck trying to get the SCSS implementation working.  I finally gave up once I realized that Ionic seems to load files on demand, including SCSS files and templates.  I might come back to this once I’ve gained more experience with Ionic and have a better idea of how it works under the hood. So, my second thought was to just add the Angular CLI to an existing Ionic CLI project.  It turns out this was much easier to get working.  This allows me to use the standard <code>ng</code> commands to scaffold out my components, services, interfaces, etc… and because I’m using the Angular CLI scaffolding, the tests also get scaffold out for me. <figure><img src="/uploads/2017/11/2017-11-14.jpg" alt="" title="Angular Ionic and Angular CLI"><figcaption>Photo credit: <a href="//www.flickr.com/photos/internetarchivebookimages/14762635481/">Internet Archive Book Images</a> via <a href="//visualhunt.com/re/09daa4">VisualHunt.com</a> / <a href="//flickr.com/commons/usage/"> No known copyright restrictions</a></figcaption></figure></p>
+<p><a id="more"></a>  For the purposes of this post, I’m going to assume you’ve already created a project using the Ionic CLI.  What follows are the steps you need to take to add in the Angular CLI.</p>
 <h2 id="Add-Angular-CLI"><a href="#Add-Angular-CLI" class="headerlink" title="Add Angular CLI"></a>Add Angular CLI</h2><p>All of the additions to the package.json file are in devDependencies.  The version numbers I’ve included are for the version at the time of this writing. You’ll want to modify for newer versions as they are released. First, of course, add the angular cli <code>&quot;@angular/cli&quot;: &quot;1.4.9&quot;</code> This will give you the ability to use the <code>ng</code> commands to scaffold out files.  To allow the tests to run, you’ll also want to add the following:</p>
 <p><code>&quot;@types/jasmine&quot;: &quot;~2.5.53&quot;,</code></p>
 <p><code>&quot;@types/jasminewd2&quot;: &quot;~2.0.2&quot;,</code></p>
@@ -205,7 +206,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/angular-ionic-and-angular-cli/" data-id="cjj1pqxvk002jtkhim1jtj2uw" class="article-share-link">
+      <a data-url="http://davembush.github.com/angular-ionic-and-angular-cli/" data-id="cjj1qjcqo002i1ohi5p81rsmt" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

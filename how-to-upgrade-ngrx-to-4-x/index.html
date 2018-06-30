@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="This week, I discovered that NgRX 4 had released. Yeah, we skipped over version 3 here too to get in sync with the Angular version numbering. There is a pretty complete upgrade guide that you can find">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/08/2017-08-15.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:38.155Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2017/08/2017-08-15.png">
+<meta property="og:updated_time" content="2018-06-30T19:18:32.743Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="How to Upgrade NgRX to 4.x">
 <meta name="twitter:description" content="This week, I discovered that NgRX 4 had released. Yeah, we skipped over version 3 here too to get in sync with the Angular version numbering. There is a pretty complete upgrade guide that you can find">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/08/2017-08-15.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2017/08/2017-08-15.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,8 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>This week, I discovered that NgRX 4 had released. Yeah, we skipped over version 3 here too to get in sync with the Angular version numbering. There is a pretty complete upgrade guide that you can find <a href="//github.com/ngrx/platform/blob/master/MIGRATION.md">here</a>.  But, the upgrade guide assumes that you are creating Actions by instantiating a new Action object rather than returning a literal as I’ve been instructing. So, in this week’s post, I plan to cover the exact steps I recommend going through to upgrade to NgRX 4, why I don’t think instantiating an Action if the right way to create new actions, and some possible enhancements you can make once you’ve upgraded to the new version. [caption id=”attachment_4418” align=”aligncenter” width=”750”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/08/2017-08-15.png" alt="How to Upgrade NgRX to 4.x" title="How to Upgrade NgRX to 4.x"> Photo credit: <a href="//www.flickr.com/photos/smemon/6379436711/">Sean MacEntee</a> via <a href="//visualhunt.com/re/6e8a99">VisualHunt.com</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a>[/caption] </p>
+        <p>This week, I discovered that NgRX 4 had released. Yeah, we skipped over version 3 here too to get in sync with the Angular version numbering. There is a pretty complete upgrade guide that you can find <a href="//github.com/ngrx/platform/blob/master/MIGRATION.md">here</a>.  But, the upgrade guide assumes that you are creating Actions by instantiating a new Action object rather than returning a literal as I’ve been instructing. So, in this week’s post, I plan to cover the exact steps I recommend going through to upgrade to NgRX 4, why I don’t think instantiating an Action if the right way to create new actions, and some possible enhancements you can make once you’ve upgraded to the new version. <figure><img src="/uploads/2017/08/2017-08-15.png" alt="" title="How to Upgrade NgRX to 4.x"><figcaption>Photo credit: <a href="//www.flickr.com/photos/smemon/6379436711/">Sean MacEntee</a> via <a href="//visualhunt.com/re/6e8a99">VisualHunt.com</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a></figcaption></figure></p>
+<a id="more"></a> 
 <h2 id="Upgrade-NgRX-to-4-x"><a href="#Upgrade-NgRX-to-4-x" class="headerlink" title="Upgrade NgRX to 4.x"></a>Upgrade NgRX to 4.x</h2><h3 id="TypeScript-2-4-x"><a href="#TypeScript-2-4-x" class="headerlink" title="TypeScript 2.4.x"></a>TypeScript 2.4.x</h3><p>As the upgrade mentions, you’ll need to upgrade TypeScript to version 2.4.x and RxJS to 5.4.x before you can upgrade to NgRX 4.  So, the first thing we want to do is that we will want to upgrade to TypeScript 2.4.x.  In your package.json file, find the line that you are currently using to install TypeScript and make sure the version says</p>
 <p><code>&quot;typescript&quot;: &quot;^2.4.2&quot;,</code></p>
 <p>Then, delete the node_modules/typescript directory and run</p>
@@ -152,7 +153,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/how-to-upgrade-ngrx-to-4-x/" data-id="cjj1pqynm00vgtkhiar6k5iqw" class="article-share-link">
+      <a data-url="http://davembush.github.com/how-to-upgrade-ngrx-to-4-x/" data-id="cjj1qjdb400pg1ohidhatpu5a" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

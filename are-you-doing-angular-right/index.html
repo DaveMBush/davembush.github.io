@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="I’ve written that I’m using Angular to write a couple applications before.  One at my main contract and a couple side projects.  I know I’m kind of late to the game, but one of my frustrations with th">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2015/10/image4.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.998Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2015/10/image4.png">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.158Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Are You Doing Angular Right?">
 <meta name="twitter:description" content="I’ve written that I’m using Angular to write a couple applications before.  One at my main contract and a couple side projects.  I know I’m kind of late to the game, but one of my frustrations with th">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2015/10/image4.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2015/10/image4.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -112,7 +112,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>I’ve written that <a href="//blog.dmbcllc.com/tag/angular-js/">I’m using Angular</a> to write a couple applications before.  One at my main contract and a couple side projects.  I know I’m kind of late to the game, but one of my frustrations with the documentation around Angular is that very little of the sample code that you can find on the Internet shows the sample using anything close to a best practice.  That’s the danger of writing about something you are too familiar with. So, in this post, I’d like to cover a few best practices that I’ve discovered, or implemented in my own code, and explain in a bit more detail what is going on inside the controller.  I concentrate on the controller because this is a place that will be used the most.  Once you understand it, the rest of what you need to know will trickle down to services, factories, and directives.</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><img src="//blog.dmbcllc.com/wp-content/uploads/2015/10/image4.png" alt="image" title="image"></h2><h2 id="IIFEs"><a href="#IIFEs" class="headerlink" title="IIFEs"></a>IIFEs</h2><p>The first thing you’ll almost never see in the demos, but you might pick up on eventually, is that you should always write your angular code inside of and IIFE.  What’s an IIFE you ask?  IIFE stands for Immediately Invoked Function Expression.  The most common looks like this:</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><img src="/uploads/2015/10/image4.png" alt="image" title="image"></h2><h2 id="IIFEs"><a href="#IIFEs" class="headerlink" title="IIFEs"></a>IIFEs</h2><p>The first thing you’ll almost never see in the demos, but you might pick up on eventually, is that you should always write your angular code inside of and IIFE.  What’s an IIFE you ask?  IIFE stands for Immediately Invoked Function Expression.  The most common looks like this:</p>
 <p>(function(){<br>    // your code goes here<br>})();</p>
 <p>Why do we do this?  So that we can declare variables that are “global” to everything inside of the IIFE without polluting the global namespace.  If you follow the rest of the tips in this article, you shouldn’t end up writing any kind of global variables.  But, there is another good reason for using an IIFE.  You can pass parameters into it.  The most common implementation I use is that I pass any global variables I need for the code inside as parameters.  This keeps JSHint happy without having to specify global variables as comments or putting them in a configuration file.  Since “angular”:</p>
 <p>(function(angular){<br> // your code goes here<br>})(window.angular);</p>
@@ -166,7 +166,7 @@ angular.module(&apos;Controllers&apos;).controller(&apos;edit.contacts&apos;, ed
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/are-you-doing-angular-right/" data-id="cjj1pqy12008mtkhicqsdg61f" class="article-share-link">
+      <a data-url="http://davembush.github.com/are-you-doing-angular-right/" data-id="cjj1qjcrn003f1ohibvgbbfro" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

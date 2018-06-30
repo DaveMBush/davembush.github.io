@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="While testing Components is possible, it is not easy and is often pointless.  Using the Model View Presenter pattern, or a variation of it, solves the problem. Here’s the deal. Long time readers of my">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/08/2017-08-27.jpg">
-<meta property="og:updated_time" content="2018-06-23T18:40:38.152Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2017/08/2017-08-27.jpg">
+<meta property="og:updated_time" content="2018-06-30T19:18:32.709Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Model View Presenter, Angular, and Testing">
 <meta name="twitter:description" content="While testing Components is possible, it is not easy and is often pointless.  Using the Model View Presenter pattern, or a variation of it, solves the problem. Here’s the deal. Long time readers of my">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/08/2017-08-27.jpg">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2017/08/2017-08-27.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,8 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>While testing Components is possible, it is not easy and is often pointless.  Using the Model View Presenter pattern, or a variation of it, solves the problem. Here’s the deal. Long time readers of my blog know I’ve been a proponent of Unit Testing for a very long time. While I was learning React, I went through the exercise of trying to write test as I was learning.  Now, the great thing about Angular and React is that it is possible to test your components.  The problem with testing components is that you are either testing that your HTML ended up in the right spot, that Angular directives did what they should, or you are evaluating the DOM to verify that component logic worked.  In most cases, putting tests that do any of these at the component level is the wrong way to test. [caption id=”attachment_4427” align=”aligncenter” width=”800”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/08/2017-08-27.jpg" alt="Model View Presenter, Angular, and Testing" title="Model View Presenter, Angular, and Testing"> Photo credit: <a href="//www.flickr.com/photos/tamworthboroughcouncil/15657023428/">Tamworth Borough Council</a> via <a href="//visualhunt.com/re/e21893">Visualhunt.com</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a>[/caption] </p>
+        <p>While testing Components is possible, it is not easy and is often pointless.  Using the Model View Presenter pattern, or a variation of it, solves the problem. Here’s the deal. Long time readers of my blog know I’ve been a proponent of Unit Testing for a very long time. While I was learning React, I went through the exercise of trying to write test as I was learning.  Now, the great thing about Angular and React is that it is possible to test your components.  The problem with testing components is that you are either testing that your HTML ended up in the right spot, that Angular directives did what they should, or you are evaluating the DOM to verify that component logic worked.  In most cases, putting tests that do any of these at the component level is the wrong way to test. <figure><img src="/uploads/2017/08/2017-08-27.jpg" alt="" title="Model View Presenter, Angular, and Testing"><figcaption>Photo credit: <a href="//www.flickr.com/photos/tamworthboroughcouncil/15657023428/">Tamworth Borough Council</a> via <a href="//visualhunt.com/re/e21893">Visualhunt.com</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a></figcaption></figure></p>
+<a id="more"></a> 
 <h2 id="Evaluating-HTML"><a href="#Evaluating-HTML" class="headerlink" title="Evaluating HTML"></a>Evaluating HTML</h2><p>Ignoring for a second that setting up a component test is awkward, the question I want to address here is, “is that really an appropriate test?” If all your smart component does is pass data down to dumb component, all you really need to verify is that given a dumb component with an html fragment, and another one with another fragment, they will all end up sequentially after each other.  It is a pretty easy test to setup. But all you’ve ended up testing is that Angular does what it says it will. It won’t tell you what you can’t already see by running the code. Dumb components are even more obvious.  Let’s go for something obvious.  You have a ngFor that allows you to display a list of HTML.  You setup your component so that it has an array of three known items, you pass that into the component, do a change detection cycle, and verify that your HTML displays as expected. Great, you’ve verified that Angular works again.  You will have a hard time convincing me that you’ve really tested anything.</p>
 <h2 id="Angular-Directives"><a href="#Angular-Directives" class="headerlink" title="Angular Directives"></a>Angular Directives</h2><p>In this case, you are going to try to verify that when you click on a component, or pass it some data, or… whatever, that Angular does what it should.  Maybe you do need to verify that when you click an element, something else happens.  But this is not the place. You might create an integration test, which would, by definition, take longer to run.  It would be better if you tested this using an end to end test.  But testing this as a unit test, doesn’t tell you much more than that Angular has said that it would. “But, I need to verify that the code in my event handler does what it should!”  You might complain.  Yes, you do, but you don’t need to fire a click event to do that, just call the event handler.</p>
 <h2 id="Big-Fat-Hair-Logic"><a href="#Big-Fat-Hair-Logic" class="headerlink" title="Big Fat Hair Logic"></a>Big Fat Hair Logic</h2><p>And then there is that “big fat hairy logic” issue.  You’ve created some sort of component that has some rather complex logic.  OK, that happens.  A grid control is a perfect example.  But, maybe your logic is in the wrong place?</p>
@@ -143,7 +144,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/model-view-presenter-angular-and-testing/" data-id="cjj1pqye400metkhi0xu69sax" class="article-share-link">
+      <a data-url="http://davembush.github.com/model-view-presenter-angular-and-testing/" data-id="cjj1qjd2i00gm1ohi0x5pe7fz" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

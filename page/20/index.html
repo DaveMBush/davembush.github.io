@@ -106,7 +106,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/03/WebTestingCloud.png" alt="WebTestingCloud" title="WebTestingCloud"></p>
+        <p><img src="/uploads/2014/03/WebTestingCloud.png" alt="WebTestingCloud" title="WebTestingCloud"></p>
 <p>One problem we often have when performing application test is that if we are testing  applications that modify the database in some way, we can’t test without modifying the database.</p>
 <p>In an ideal world, one way you could deal with this issue is to create a test database that has known data.  But even then, you have to go through the effort of setting up the data prior to each test.</p>
 <p>To be clear, I’m not talking about unit test.  You should have unit test for most of your code.  I’ll handle what not to test in some other post.  But, at some point you will want to put together a suite of test that ensures that the application, as a whole, does what you expect it to do.</p>
@@ -128,7 +128,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/automated-web-application-functional-testing/" data-id="cjj1pqy23009ptkhirrjldivn" class="article-share-link">
+      <a data-url="http://davembush.github.com/automated-web-application-functional-testing/" data-id="cjj1qjcsg004g1ohihq7qfpue" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -174,7 +174,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/03/tran-land-045.jpg" alt="tran-land-045" title="tran-land-045">While the artifact of Test Driven Development is test code, what you get out of test driven development far exceeds the test themselves. </p>
+        <p><img src="/uploads/2014/03/tran-land-045.jpg" alt="tran-land-045" title="tran-land-045">While the artifact of Test Driven Development is test code, what you get out of test driven development far exceeds the test themselves. </p>
 <h2 id="Maintainable-Code"><a href="#Maintainable-Code" class="headerlink" title="Maintainable Code"></a>Maintainable Code</h2><p>By writing test first, you tend to write code that is more highly maintainable than if you just wrote the code to solve the problem.  By writing a class so that it can be used in both the system you are writing it for and so that it can be tested, you’ve been forced to think about the code in at least one other way from what you would have initially.  The result is your code tends to be more structured than it would have been otherwise.</p>
 <h2 id="Clear-Specifications"><a href="#Clear-Specifications" class="headerlink" title="Clear Specifications"></a>Clear Specifications</h2><p>By writing test first, you are forced to develop clearer specifications.  I’ve run into this recently on a project that I’m currently working on.  I can’t write a test for the code I’m about to implement because I don’t clearly understand how this is supposed to interact with the rest of the application.  Until I do, I really can’t move forward.  If I were not writing a test, this would not be as clear now as it is.  Although, one could argue that eventually it would become clear.  But it is more likely I would leave the feature out completely because I forgot about it entirely.  Something I’ve been known to do in the past.</p>
 <h2 id="Up-To-Date-Specifications"><a href="#Up-To-Date-Specifications" class="headerlink" title="Up To Date Specifications"></a>Up To Date Specifications</h2><p>This leads to another advantage to test driven development that <a href="//blog.dmbcllc.com/test-driven-specifications/">I’ve mentioned before</a>.  By writing test in advance, you have the specification coded.  This forces you to keep the specification up to date if it changes because your test won’t run unless you do.  How many other programming methods are there that force the specifications to be kept up to date?  I can’t think of any.</p>
@@ -191,7 +191,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/tdd-isn’t-all-about-testing/" data-id="cjj1pqyjz00setkhi36wuj0vs" class="article-share-link">
+      <a data-url="http://davembush.github.com/tdd-isn’t-all-about-testing/" data-id="cjj1qjd7n00m01ohign0ygpsb" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -237,7 +237,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/03/arct-034.jpg" alt=""></p>
+        <p><img src="/uploads/2014/03/arct-034.jpg" alt=""></p>
 <p>Last week <a href="//blog.dmbcllc.com/unit-test-structure/">I proposed a structure for unit test that follows the pre-condition, action, post-condition workflow</a>.  Basically what you would see in a Use Case document.</p>
 <p>The result of this structure when applied to a general NUnit class is that we will end up with our pre-condition and action in our setup method and our post-condition asserts in our test methods.</p>
 <p>The problem with this is that sometimes this doesn’t always fit what we are trying to do.</p>
@@ -258,12 +258,12 @@
 <p>public IEnumerable DataSource<br>{<br>    get<br>    {<br>        yield return new TestCaseData(<br>            (Action)(() =&gt; Console.WriteLine(“given”)),<br>            new List<action><br>            {<br>                () => Console.WriteLine(“when one”),<br>                () => Console.WriteLine(“when two”)<br>            },<br>            (Action)(() =&gt; Assert.That(1, Is.EqualTo(1)))<br>        );<br>    }<br>}</action></p>
 <p>You will need the (Action) cast to make the compiler understand what you are trying to do.  It isn’t smart enough to know that a lambda express is an Action which is a delegate that take no parameters and returns void.</p>
 <p>When you run the code, above, we get this output:</p>
-<p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/03/GivenWhenThenTest.png" alt="GivenWhenThenTest" title="GivenWhenThenTest"></p>
+<p><img src="/uploads/2014/03/GivenWhenThenTest.png" alt="GivenWhenThenTest" title="GivenWhenThenTest"></p>
 <p>By chaining on the SetName() call, you can make each iteration show up as it’s own unique test so you can see what is occuring in your test runner.</p>
 <p>public IEnumerable DataSource<br>{<br>    get<br>    {<br>        yield return new TestCaseData(<br>            (Action)(() =&gt; Console.WriteLine(“given”)),<br>            new List<action><br>            {<br>                () => Console.WriteLine(“when one”),<br>                () => Console.WriteLine(“when two”)<br>            },<br>            (Action)(() =&gt; Assert.That(1, Is.EqualTo(1)))<br>        ).SetName(“First Test”);<br>    }<br>}</action></p>
 <p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
 <p>And this looks like this in the test runner:</p>
-<p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/03/GivenWhenThen2.png" alt="GivenWhenThen2" title="GivenWhenThen2"></p>
+<p><img src="/uploads/2014/03/GivenWhenThen2.png" alt="GivenWhenThen2" title="GivenWhenThen2"></p>
 <p>Once again, I have to reiterate, this is not something I would do a lot of, but it is a pretty neat trick when you need it. .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
 
       
@@ -275,7 +275,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/when-you-really-need-all-of-your-nunit-test-in-one-class/" data-id="cjj1pqyqv00y8tkhi2l5gt8ev" class="article-share-link">
+      <a data-url="http://davembush.github.com/when-you-really-need-all-of-your-nunit-test-in-one-class/" data-id="cjj1qjddr00ry1ohi4uf8zx9e" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -321,7 +321,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/03/UnitTestingScreen.png" alt="UnitTestingScreen" title="UnitTestingScreen">One of the recurring reasons I hear from people for why they are not implementing unit test in their code is because it takes too long.  On one level I get that.  But, my experience tells me that the real problem is more likely that they just don’t understand enough about how to implement unit testing to be able to do it well.</p>
+        <p><img src="/uploads/2014/03/UnitTestingScreen.png" alt="UnitTestingScreen" title="UnitTestingScreen">One of the recurring reasons I hear from people for why they are not implementing unit test in their code is because it takes too long.  On one level I get that.  But, my experience tells me that the real problem is more likely that they just don’t understand enough about how to implement unit testing to be able to do it well.</p>
 <p>This is like knowing you are supposed to “eat right” and “exercise” but not having anyone tell you how to do either in such a way that you can maintain the habit.</p>
 <h2 id="Start-Small"><a href="#Start-Small" class="headerlink" title="Start Small"></a>Start Small</h2><p>So the first rule of unit testing structure, just like the first rule of diet and exercise, is to start small.</p>
 <p>When I first started to take a look at unit testing, the general advice was to create a unit test class for each class.  Then you were suppose to create a test method for each class.  I still see a lot of code as I travel that looks like this as I watch people try to implement the practice.</p>
@@ -403,7 +403,7 @@ public string FullName
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/unit-test-structure/" data-id="cjj1pqymx00uvtkhidcc36t2v" class="article-share-link">
+      <a data-url="http://davembush.github.com/unit-test-structure/" data-id="cjj1qjda900op1ohi59vqn99a" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -449,7 +449,7 @@ public string FullName
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/02/88Tr.png" alt="88Tr" title="88Tr"></p>
+        <p><img src="/uploads/2014/02/88Tr.png" alt="88Tr" title="88Tr"></p>
 <p>A long long time ago, in what seems now like another world, I worked for a company as a <a href="//en.wikipedia.org/wiki/Clipper_(programming_language">Clipper programmer</a>).  While I was there I heard this story about a lady named Debbie.</p>
 <p>I was told that Debbie was a programmer who used to work for this company.  Debbie was a lazy programmer.  She worked harder at avoiding work than if she just did the job she was supposed to do.</p>
 <h2 id="The-ultimate-lazy-programmer"><a href="#The-ultimate-lazy-programmer" class="headerlink" title="The ultimate lazy programmer"></a>The ultimate lazy programmer</h2><p>For example.  Once my boss had stopped by her desk to see how she was progressing on a report she was supposed to be writing:</p>
@@ -493,7 +493,7 @@ public string FullName
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/“debbie-done”/" data-id="cjj1pqy4p00cmtkhi82jy5jw2" class="article-share-link">
+      <a data-url="http://davembush.github.com/“debbie-done”/" data-id="cjj1qjcul007c1ohiksxxbybm" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -539,7 +539,7 @@ public string FullName
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/02/spider.jpg" alt="spider" title="spider">Several years ago, long before the community was actively talking about Test Driven Development, I worked for a short time at a company as a “bug fixer.”  That was my role.  They had hired me because they had some software that was “basically done” but “had some issues.”  It should only take a few weeks.</p>
+        <p><img src="/uploads/2014/02/spider.jpg" alt="spider" title="spider">Several years ago, long before the community was actively talking about Test Driven Development, I worked for a short time at a company as a “bug fixer.”  That was my role.  They had hired me because they had some software that was “basically done” but “had some issues.”  It should only take a few weeks.</p>
 <p>The first thing they needed me to fix was that the web site was supposed to send out email.  It turns out it was a configuration problem.  But they were so impressed (“the last guy we had in here spent two weeks on that problem and still hadn’t solved the problem.”) that they gave me more and more bugs.</p>
 <h2 id="This-Is-The-Job-That-Never-Ends"><a href="#This-Is-The-Job-That-Never-Ends" class="headerlink" title="This Is The Job That Never Ends"></a>This Is The Job That Never Ends</h2><p>The gig that was suppose to be a couple of weeks long was quickly turning into a perpetual job.  Soon I learned that what I was working with was a system that had a lot of bugs, but no one was willing to admit that.  Eventually, frustrated by the fact that this system seemed to have a new bug every day, I asked for the specs so that I could create a test plan.  That’s when I found out the worse news of all about this system.</p>
 <h2 id="Lost-Specifications"><a href="#Lost-Specifications" class="headerlink" title="Lost Specifications"></a>Lost Specifications</h2><p>They had lost the specs.  Not only had they lost the specs, but they were unwilling to admit this to the client and instead they were relying on the process of fixing the bugs to eventually squash all of the bugs so they could end up with a stable system.</p>
@@ -564,7 +564,7 @@ public string FullName
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/test-driven-specifications/" data-id="cjj1pqykg00sptkhigqhatjqp" class="article-share-link">
+      <a data-url="http://davembush.github.com/test-driven-specifications/" data-id="cjj1qjd8400mh1ohiks6kzzfm" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -621,7 +621,7 @@ public string FullName
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/why-don-t-you-practice-test-first-development/" data-id="cjj1pqyqn00y2tkhiym5oxdgn" class="article-share-link">
+      <a data-url="http://davembush.github.com/why-don-t-you-practice-test-first-development/" data-id="cjj1qjddu00s11ohiyrpcmijj" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -665,10 +665,10 @@ public string FullName
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/01/Selenium.png" alt=""></p>
+        <p><img src="/uploads/2014/01/Selenium.png" alt=""></p>
 <p>On Monday 2/17/14 I gave a presentation at the CT .NET User’s Group on using Selenium and NUnit to test your web application.  The following is a list of resources from that presentation:</p>
 <ul>
-<li><a href="//blog.dmbcllc.com/wp-content/uploads/2014/02/SeleniumDemoTest.zip">The demo code</a>.</li>
+<li><a href="/uploads/2014/02/SeleniumDemoTest.zip">The demo code</a>.</li>
 <li><a href="//docs.seleniumhq.org/download/">The Selenium IDE Plugin for FireFox and the IE Driver Server</a></li>
 <li><a href="//www.nunit.org/">NUnit</a> </li>
 <li><a href="//selenium.googlecode.com/git/docs/api/dotnet/index.html">Selenium CSharp API Documentation</a></li>
@@ -684,7 +684,7 @@ public string FullName
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/selenium-with-nunit-presentation/" data-id="cjj1pqyhm00q3tkhim5uwt9tq" class="article-share-link">
+      <a data-url="http://davembush.github.com/selenium-with-nunit-presentation/" data-id="cjj1qjd5v00k81ohi7u9prkre" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -747,7 +747,7 @@ public string FullName
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/sql-while-sql-for-programmers/" data-id="cjj1pqyj100ritkhio3ufnnvs" class="article-share-link">
+      <a data-url="http://davembush.github.com/sql-while-sql-for-programmers/" data-id="cjj1qjd7900lm1ohi3t4dcpby" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -793,7 +793,7 @@ public string FullName
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/07/tp_vol4_001.jpg" alt="tp_vol4_001" title="tp_vol4_001"> SQL has long had the ability to specify that a value is NULL even if it is a primitive type, but the only way you could have a NULL value in VB.NET is if you were dealing with an object. That is, until .NET 2.0 Even though .NET 2.0 has been out for a while, I would bet that few VB.NET programmers know about this new feature because it is one of those things most of us have grown to assume is not possible. Values must have content–objects don’t.  That’s just the way it is.  If we were to create an integer for example and then tried to assign a nothing to it, we would most certainly get a compiler error.</p>
+        <p><img src="/uploads/2009/07/tp_vol4_001.jpg" alt="tp_vol4_001" title="tp_vol4_001"> SQL has long had the ability to specify that a value is NULL even if it is a primitive type, but the only way you could have a NULL value in VB.NET is if you were dealing with an object. That is, until .NET 2.0 Even though .NET 2.0 has been out for a while, I would bet that few VB.NET programmers know about this new feature because it is one of those things most of us have grown to assume is not possible. Values must have content–objects don’t.  That’s just the way it is.  If we were to create an integer for example and then tried to assign a nothing to it, we would most certainly get a compiler error.</p>
 <pre><code>Dim i As Integer i = Nothing 
 </code></pre><p>However, the Nullable generic was added so that we can create a VB.NET Nullable Integer</p>
 <pre><code>Dim i As Nullable(Of Integer)
@@ -810,7 +810,7 @@ i = Nothing
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/vb-net-nullable-types/" data-id="cjj1pqyor00wgtkhiya9t85z9" class="article-share-link">
+      <a data-url="http://davembush.github.com/vb-net-nullable-types/" data-id="cjj1qjdbw00q61ohibn5qvkho" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

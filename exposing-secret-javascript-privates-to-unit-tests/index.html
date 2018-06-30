@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="The question comes up all the time, “How do I access JavaScript privates from my Unit Tests?”  And invariably, the purist chimes in with the answer, “you don’t”. But, isn’t the point of unit testing t">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2016/06/image-2.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:38.059Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2016/06/image-2.png">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.248Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Exposing Secret JavaScript privates to Unit Tests">
 <meta name="twitter:description" content="The question comes up all the time, “How do I access JavaScript privates from my Unit Tests?”  And invariably, the purist chimes in with the answer, “you don’t”. But, isn’t the point of unit testing t">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2016/06/image-2.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2016/06/image-2.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>The question comes up all the time, “How do I access JavaScript privates from my Unit Tests?”  And invariably, the purist chimes in with the answer, “you don’t”. But, isn’t the point of unit testing to allow us to test UNITs?  Why artificially limit our ability to test units if we don’t need to?  If we had the ability to create protected members, wouldn’t we tests those separately? So, what follows is how I surface my private JavaScript members so I can access them during tests without having to make them public during the run of my protection code. <img src="//blog.dmbcllc.com/wp-content/uploads/2016/06/image-2.png" alt="Exposing Secret JavaScript privates to Unit Tests" title="Exposing Secret JavaScript privates to Unit Tests"> </p>
+        <p>The question comes up all the time, “How do I access JavaScript privates from my Unit Tests?”  And invariably, the purist chimes in with the answer, “you don’t”. But, isn’t the point of unit testing to allow us to test UNITs?  Why artificially limit our ability to test units if we don’t need to?  If we had the ability to create protected members, wouldn’t we tests those separately? So, what follows is how I surface my private JavaScript members so I can access them during tests without having to make them public during the run of my protection code. <img src="/uploads/2016/06/image-2.png" alt="Exposing Secret JavaScript privates to Unit Tests" title="Exposing Secret JavaScript privates to Unit Tests"> </p>
 <h2 id="Lean-on-JavaScript"><a href="#Lean-on-JavaScript" class="headerlink" title="Lean on JavaScript"></a>Lean on JavaScript</h2><p>My JavaScript unit testing framework of choice is Jasmine.  Not so much because it does all I would like it to do or because there isn’t something ‘better’ available but because it has become the defacto standard for unit testing JavaScript and nothing else I’ve seen is significantly better.  There is one part of this technique that is going to lean on the fact that I am using Jasmine, but I’m sure you can adapt it to your testing framework. But first, let’s review how you would create private JavaScript members in the first place.</p>
 <h2 id="Creating-Private-Members"><a href="#Creating-Private-Members" class="headerlink" title="Creating Private Members"></a>Creating Private Members</h2><p>In standard ES5 code, a simple object might be defined using syntax that looks something like this.  Recognize there are multiple ways to create objects and things that look like classes in JavaScript.  What follows is just enough code to get the point across. <a href="https://gist.github.com/DaveMBush/86f271faa70152675f0719d87a0268c4#file-basicobjectwithprivates-js" target="_blank" rel="noopener">https://gist.github.com/DaveMBush/86f271faa70152675f0719d87a0268c4#file-basicobjectwithprivates-js</a> Note that our privateMember is used by publicMember but is not accessible from the outside.  I’m also using apply(this) to pass the context to the privateMember function.  This may not be necessary if you aren’t using this in the privateMember function and you could use privateMember.bind(this) to make this automatic.  That’s one of the interesting things about JavaScript.  There are always multiple ways to achieve the same goal.  None of them particularly better than the other but some more standard than the other. Notice that the only thing that actually makes our publicMember public is that I’ve attached the function pointer to this.</p>
 <h2 id="Exposing-Private-for-Jasmine"><a href="#Exposing-Private-for-Jasmine" class="headerlink" title="Exposing Private for Jasmine"></a>Exposing Private for Jasmine</h2><p>The easiest way I know of to expose the private member variables for Jasmine is to conditionally assign the private members to this if jasmine is defined. <a href="https://gist.github.com/DaveMBush/86f271faa70152675f0719d87a0268c4#file-exposeprivates-js" target="_blank" rel="noopener">https://gist.github.com/DaveMBush/86f271faa70152675f0719d87a0268c4#file-exposeprivates-js</a> As long as you don’t use the jasmine global variable for something other than jasmine, this should work. And now you can test your private functions.</p>
@@ -126,7 +126,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/exposing-secret-javascript-privates-to-unit-tests/" data-id="cjj1pqy6100e2tkhins0ur74d" class="article-share-link">
+      <a data-url="http://davembush.github.com/exposing-secret-javascript-privates-to-unit-tests/" data-id="cjj1qjcvu008z1ohiad08l6ty" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

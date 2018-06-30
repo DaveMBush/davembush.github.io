@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="Databound controls are at once very easy and very frustrating.  If you just need to do some simple databinding that gets a list of items on the screen and you need the ability to edit those items, yo">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2009/11/back041.jpg">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.823Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2009/11/back041.jpg">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.112Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Access a control by ID From Within a Databound Control">
 <meta name="twitter:description" content="Databound controls are at once very easy and very frustrating.  If you just need to do some simple databinding that gets a list of items on the screen and you need the ability to edit those items, yo">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2009/11/back041.jpg">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2009/11/back041.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/11/back041.jpg" alt="back-041" title="back-041"> Databound controls are at once very easy and very frustrating.  If you just need to do some simple databinding that gets a list of items on the screen and you need the ability to edit those items, you are all set. But once you need to do anything that deviates from that simple pattern, you are kind of stuck.  One of the problems involves accessing a control in a templated item.  Probably the most common place this shows up is in the FormView control.  But you’ll also experience the problem using the GridView control with a templated column. There is a pretty simple solution to the problem.  If you are in a form view, all you need to do is use the FindControl() method of any control.  The problem is finding which parent control houses the control we are looking for.  So what we really need is a recursive control that looks for the control with a particular ID in any of the controls that are a child of the control or any of its child controls or any of its child controls, etc., until it finds the control. I’ve written such a function for my utility box.</p>
+        <p><img src="/uploads/2009/11/back041.jpg" alt="back-041" title="back-041"> Databound controls are at once very easy and very frustrating.  If you just need to do some simple databinding that gets a list of items on the screen and you need the ability to edit those items, you are all set. But once you need to do anything that deviates from that simple pattern, you are kind of stuck.  One of the problems involves accessing a control in a templated item.  Probably the most common place this shows up is in the FormView control.  But you’ll also experience the problem using the GridView control with a templated column. There is a pretty simple solution to the problem.  If you are in a form view, all you need to do is use the FindControl() method of any control.  The problem is finding which parent control houses the control we are looking for.  So what we really need is a recursive control that looks for the control with a particular ID in any of the controls that are a child of the control or any of its child controls or any of its child controls, etc., until it finds the control. I’ve written such a function for my utility box.</p>
 <p>public static Control FindControlByID</p>
 <p>(string id, ControlCollection controls) { Control returnControl = null; foreach (Control c in controls) { if (c.ID == id) return c; returnControl = FindControlByID(id, c.Controls); if (returnControl != null) return returnControl; } return returnControl; } Notice, it is a static method so we can call it from anywhere without having to instantiate the class it is in. So now, if I’m in a row and I need to find another control in that row, I can write code like this</p>
 <p>Protected Sub m_grid_RowUpdating</p>
@@ -126,7 +126,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/access-a-control-by-id-from-within-a-databound-control/" data-id="cjj1pqxuq001dtkhi76yjq6s1" class="article-share-link">
+      <a data-url="http://davembush.github.com/access-a-control-by-id-from-within-a-databound-control/" data-id="cjj1qjcpj001a1ohiirdp7cim" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

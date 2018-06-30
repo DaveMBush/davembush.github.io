@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="This week, I thought I’d collect a list of unrelated tricks and tips I’ve learned over the last couple of weeks into one post.  Unless you love to read documentation, or you’ve run into problems that">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/03/image-4.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:38.121Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2017/03/image-4.png">
+<meta property="og:updated_time" content="2018-06-30T19:18:32.704Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jedi Angular 2 Tips and Tricks">
 <meta name="twitter:description" content="This week, I thought I’d collect a list of unrelated tricks and tips I’ve learned over the last couple of weeks into one post.  Unless you love to read documentation, or you’ve run into problems that">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/03/image-4.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2017/03/image-4.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,8 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>This week, I thought I’d collect a list of unrelated tricks and tips I’ve learned over the last couple of weeks into one post.  Unless you love to read documentation, or you’ve run into problems that these tips solve, I’m guessing you don’t know most of these. But first, the big new this week… [caption id=”” align=”aligncenter” width=”640”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/03/image-4.png" alt="Jedi Angular 2 Tips and Tricks" title="Jedi Angular 2 Tips and Tricks"> Photo credit: <a href="//www.flickr.com/photos/korymatthew/14211839966/">iamkory</a> via <a href="//visualhunt.com/re/4d4175">Visual Hunt</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a>[/caption] </p>
+        <p>This week, I thought I’d collect a list of unrelated tricks and tips I’ve learned over the last couple of weeks into one post.  Unless you love to read documentation, or you’ve run into problems that these tips solve, I’m guessing you don’t know most of these. But first, the big new this week… <figure><img src="/uploads/2017/03/image-4.png" alt="" title="Jedi Angular 2 Tips and Tricks"><figcaption>Photo credit: <a href="//www.flickr.com/photos/korymatthew/14211839966/">iamkory</a> via <a href="//visualhunt.com/re/4d4175">Visual Hunt</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a></figcaption></figure></p>
+<a id="more"></a> 
 <h2 id="Angular-Version-4-Released"><a href="#Angular-Version-4-Released" class="headerlink" title="Angular Version 4 Released"></a>Angular Version 4 Released</h2><p>You may have already seen this.  You can read all about it <a href="//angularjs.blogspot.com/2017/03/angular-400-now-available.html">on their blog</a>.  Yes, it makes the code smaller and faster.  Yes, it implements an “else” for *ngIf.  Yes, it works with the latest version of TypeScript.  But the one change I’m most looking forward to is the “source maps for templates.” If you’ve ever seen the error in your console window indicating an issue with your template with some obscure line number that has nothing to do with your template code, this should be great news for you as well.  Imagine being able to actually track down those errors in some more intelligent way than trying to guess exactly what line is causing the problem. There is one small breaking change in this release and that is that they’ve moved the Animations package out of Core and into its own location.  Since we’ve decided to wait to hear from our control vendor to see if that is going to have any impact, I can’t report on how much heart burn that’s going to cause you.</p>
 <h2 id="The-Official-Name-of-Angular"><a href="#The-Official-Name-of-Angular" class="headerlink" title="The Official Name of Angular"></a>The Official Name of Angular</h2><p>So, finally the Angular team has come up with an official way of distinguishing between Angular 1 and everything after it.  The official name of Angular 1 is “AngularJS.”  Everything else is just “Angular.”  For now, I’ll keep referring to it as Angular 2 until it actually catches on.</p>
 <h2 id="Periodic-Production-Compiles"><a href="#Periodic-Production-Compiles" class="headerlink" title="Periodic Production Compiles"></a>Periodic Production Compiles</h2><p>For the purposes of this article, I’m going to assume you are using the CLI, but if you are doing all of that work by hand, most of what I have to say will translate to what you are doing. A couple of weeks ago, we ran into a memory leak in our code that evidently is a known Angular 2 issue and only appears when you compile for DEV mode.  This caused us to go down the path of actually trying to compile our code in Production mode where I found that some of my code wouldn’t compile. As it turns out, when you compile in production mode it verifies that code more strictly so that it can use Ahead of Time compile if you choose to do that. Moral of the story is that you probably want to always work in production mode until you have an issue that you want to track down, where you can switch to DEV mode for the debug session.  Or, at the very least, compile for production prior to running the code in debug mode just so you are sure you can compile.  I prefer always running in production mode so that I’m sure the code is working correctly. Before you get all, “it should work the same way in both environments” on me.  Stop and think about this for a few seconds.  This is JavaScript we are talking about here.  A dynamic language.  You can’t have things like tree shaking and ahead of time compile AND get all of the benefits of a dynamic language at the same time.  I’m sure if it were possible, it would have been built to work closer to the same way to start with.  Not that I don’t agree with you, but unless you know how to fix it and have issued a pull request to address this issue, you have very little room to complain.</p>
@@ -134,7 +135,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jedi-angular-2-tips-and-tricks/" data-id="cjj1pqybt00jytkhiyx1yien5" class="article-share-link">
+      <a data-url="http://davembush.github.com/jedi-angular-2-tips-and-tricks/" data-id="cjj1qjd0l00en1ohinb5c2ds4" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

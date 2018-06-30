@@ -12,12 +12,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="Since I don’t seem to have a blogs worth of any one topic to write about, I thought maybe something more along the lines of a cluster of small tips and tricks might work.  Since I’ve been writing my A">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/10/2017.10.17.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:38.164Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2017/10/2017.10.17.png">
+<meta property="og:updated_time" content="2018-06-30T19:06:18.516Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NgRX Effects Design Patterns">
 <meta name="twitter:description" content="Since I don’t seem to have a blogs worth of any one topic to write about, I thought maybe something more along the lines of a cluster of small tips and tricks might work.  Since I’ve been writing my A">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/10/2017.10.17.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2017/10/2017.10.17.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -110,7 +110,8 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Since I don’t seem to have a blogs worth of any one topic to write about, I thought maybe something more along the lines of a cluster of small tips and tricks might work.  Since I’ve been writing my Angular book over the last couple of weeks, there hasn’t been much new that I’ve discovered worth sharing.  But there are a few small discoveries I’ve made.  This week, they center around NgRX Effects. [caption id=”attachment_4471” align=”aligncenter” width=”800”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/10/2017.10.17.png" alt="NgRX Effects Design Patterns" title="NgRX Effects Design Patterns"> Photo via <a href="//visualhunt.com/re/79a90d">Visual hunt</a>[/caption] </p>
+        <p>Since I don’t seem to have a blogs worth of any one topic to write about, I thought maybe something more along the lines of a cluster of small tips and tricks might work.  Since I’ve been writing my Angular book over the last couple of weeks, there hasn’t been much new that I’ve discovered worth sharing.  But there are a few small discoveries I’ve made.  This week, they center around NgRX Effects. <figure><img src="/uploads/2017/10/2017.10.17.png" alt="" title="NgRX Effects Design Patterns"> Photo via <a href="//visualhunt.com/re/79a90d">Visual hunt</a></figure></p>
+<a id="more"></a> 
 <h2 id="Returning-No-Actions"><a href="#Returning-No-Actions" class="headerlink" title="Returning No Actions"></a>Returning No Actions</h2><p>There have been times in the past where I didn’t want to return an Action from my Effect.  Not knowing any better, I just returned the Object Literal, <code>{type: &#39;noop&#39;}</code>.  But there is a much better way. BTW, did you know that unless you tell NgRX otherwise, all @Effects must return an Action? So, what is the better way?  It turns out that the guys who wrote NgRX already thought of the possibility that you wouldn’t want to return an action from an @Effect.  All you need to do is to pass the object literal <code>{dispatch: false}</code> to the @Effect() decoractor. <code>@Effect({dispatch: false})</code> <code>member$: Observable&lt;{}&gt; =</code> <code>thie.actions$ ...</code> Like I said, I needed this because I didn’t yet know about some of the other things I’m going to mention below.  My experience says, if you need this, you are probably doing something wrong.</p>
 <h2 id="Strong-Typing"><a href="#Strong-Typing" class="headerlink" title="Strong Typing"></a>Strong Typing</h2><p>If you’ve read any of my other post about Angular, you’ll know I’m a very strong proponent of strongly typing everything.  Nowhere is this more useful than when creating the Effect chain.  By typing everything, I can easily tell that my code is written correctly.  Even while writing my book on how to get started with Angular, it has helped me figure out that I’m missing a closing bracket or parenthesis.  Not to mention it has told me exactly what block of code I had wrong.  I’ve probably saved hours of debugging time with this one simple enhancement to my coding practice.</p>
 <h2 id="Chaining-Observables"><a href="#Chaining-Observables" class="headerlink" title="Chaining Observables"></a>Chaining Observables</h2><p>I’m almost ashamed to mention this next one.  But, I never really caught on that <code>switchMap()</code> was a silent subscriber.  Oh! So many places you can use this. If you’ve been using Effects, you’ve probably seen code that looks like this:</p>
@@ -141,7 +142,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/ngrx-effects-design-patterns/" data-id="cjj1pqy6q00eqtkhirfo1yf9i" class="article-share-link">
+      <a data-url="http://davembush.github.com/ngrx-effects-design-patterns/" data-id="cjj1qjcwd009f1ohiz0ta2cna" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

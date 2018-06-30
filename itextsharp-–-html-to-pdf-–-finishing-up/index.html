@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="In the last post I mentioned there were a few topics we need to close up today.  The two topics we’ve left undone are popping the attribute information off the stack when we hit a closing element and">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2009/08/tiger.jpg">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.803Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2009/08/tiger.jpg">
+<meta property="og:updated_time" content="2018-06-30T18:47:20.434Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iTextSharp – HTML to PDF – Finishing Up">
 <meta name="twitter:description" content="In the last post I mentioned there were a few topics we need to close up today.  The two topics we’ve left undone are popping the attribute information off the stack when we hit a closing element and">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2009/08/tiger.jpg">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2009/08/tiger.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/08/tiger.jpg" alt="tiger" title="tiger"> In the last post I mentioned there were a few topics we need to close up today.  The two topics we’ve left undone are popping the attribute information off the stack when we hit a closing element and dealing with the paragraph gap that normally appears between paragraph elements.</p>
+        <p><img src="/uploads/2009/08/tiger.jpg" alt="tiger" title="tiger"> In the last post I mentioned there were a few topics we need to close up today.  The two topics we’ve left undone are popping the attribute information off the stack when we hit a closing element and dealing with the paragraph gap that normally appears between paragraph elements.</p>
 <p>The first thing you’ll want to do when you hit a closing element is to retrieve its name again.  Just like we did at the beginning element.  Once you have that you can pop the attribute information off the stack(s).</p>
 <p>You’ll also want to undo any indentation that you applied during the opening element.</p>
 <p>To handle the paragraph break, I defined a _crlfAtEnd attribute in my resource file.  If it was defined as true, I added an extra line feed at the end to account for the gap.</p>
@@ -132,7 +132,7 @@
 <p> 15:        if (et is Phrase)</p>
 <p> 16:        {</p>
 <p> 17:            ((Phrase)(et)).Add(</p>
-<p> 18:                new Chunk(“\n\r”, f)); </p>
+<p> 18:                new Chunk(“\n\<br>“, f)); </p>
 <p> 19:            stack.Pop();</p>
 <p> 20:        }</p>
 <p> 21:    }</p>
@@ -154,7 +154,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-finishing-up/" data-id="cjj1pqy9o00hstkhifc42ak9t" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-finishing-up/" data-id="cjj1qjcyh00c61ohilymlblmd" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

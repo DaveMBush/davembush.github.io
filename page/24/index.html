@@ -106,7 +106,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2012/04/misc_vol4_019.jpg" alt="misc_vol4_019" title="misc_vol4_019"> If you’ve done any work with Azure Blob storage, you already know that Blob storage is case sensitive.  If you’ve hooked the Azure CDN to blob storage, it is also case sensitive. You are probably reading this article because you’ve already run into this problem.  We ran into this problem when we were moving a site from an existing CDN to Azure.  The current site was on domain A and the resources hosted by the CDN were on domain B.  But the URLs to those resources were in various cases.  To make matters worse, there were multiple sites.  So it wasn’t a simple matter of just fixing up the case of one site. So we were looking for some way to make the CDN case insensitive, which you can’t do, when I finally thought, “Why don’t we make it so that it doesn’t matter with a response filter?”  I’ve done this before when I needed to make global changes and it worked well. Then I remembered, the URL Rewriting module for IIS7 does this for us.  And since this module is installed by default on Azure, all we needed to do was:</p>
+        <p><img src="/uploads/2012/04/misc_vol4_019.jpg" alt="misc_vol4_019" title="misc_vol4_019"> If you’ve done any work with Azure Blob storage, you already know that Blob storage is case sensitive.  If you’ve hooked the Azure CDN to blob storage, it is also case sensitive. You are probably reading this article because you’ve already run into this problem.  We ran into this problem when we were moving a site from an existing CDN to Azure.  The current site was on domain A and the resources hosted by the CDN were on domain B.  But the URLs to those resources were in various cases.  To make matters worse, there were multiple sites.  So it wasn’t a simple matter of just fixing up the case of one site. So we were looking for some way to make the CDN case insensitive, which you can’t do, when I finally thought, “Why don’t we make it so that it doesn’t matter with a response filter?”  I’ve done this before when I needed to make global changes and it worked well. Then I remembered, the URL Rewriting module for IIS7 does this for us.  And since this module is installed by default on Azure, all we needed to do was:</p>
 <ul>
 <li>Make everything in blob storage lowercase</li>
 <li>Install the redirect rules in web.config</li>
@@ -125,7 +125,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/azure-cdn-blob-storage-case-sensitive-issue/" data-id="cjj1pqy29009vtkhipgb3i0ld" class="article-share-link">
+      <a data-url="http://davembush.github.com/azure-cdn-blob-storage-case-sensitive-issue/" data-id="cjj1qjcsu00511ohi2z6r8lff" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -171,7 +171,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2010/10/IMG_1380.jpg" alt="IMG_1380" title="IMG_1380"> Over the weekend I got a question about how to prevent postbacks on buttons from within jQuery tabs.  But the question really isn’t specific to jQuery.  There are other times when you might not want a button to post back.  So how do you do this? There are several ways you might accomplish this depending on what your goal is.  The first, and most obvious choice, is to not use an ASP:Button control and use an HTML input type=”button” tag instead.  This will allow you to have full control over what is happening on the client side.  If at all possible, this should be your first choice.</p>
+        <p><img src="/uploads/2010/10/IMG_1380.jpg" alt="IMG_1380" title="IMG_1380"> Over the weekend I got a question about how to prevent postbacks on buttons from within jQuery tabs.  But the question really isn’t specific to jQuery.  There are other times when you might not want a button to post back.  So how do you do this? There are several ways you might accomplish this depending on what your goal is.  The first, and most obvious choice, is to not use an ASP:Button control and use an HTML input type=”button” tag instead.  This will allow you to have full control over what is happening on the client side.  If at all possible, this should be your first choice.</p>
 <input type="button" value="button name">
 
 <p>You will need to attach your own JavaScript to this so that it does what you want. If that doesn’t work for you, then you can make use of the OnClientClick property of the ASP:Button control (this also works for other controls that post back)</p>
@@ -187,7 +187,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/prevent-postback-on-buttons/" data-id="cjj1pqyfz00octkhitbvkjsi7" class="article-share-link">
+      <a data-url="http://davembush.github.com/prevent-postback-on-buttons/" data-id="cjj1qjd3y00i61ohi2xwpb0kl" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -233,7 +233,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2010/08/iStock_000003551835Medium.jpg" alt="iStock_000003551835Medium" title="iStock_000003551835Medium"> I’ve been working with a client to implement the Google Appliance on one of their sites that has forms authentication enabled. For those of you who aren’t aware, Google provides a box that you can install to index your own site using essentially the same logic that Google uses to index the Internet.  The advantage is that you have a lot more control over what gets indexed and when it gets indexed than if you just use what Google provides from its public index of the Internet.  The problem we had was that Google is not particularly fond of ASP.NET Forms Based authentication.  We had a contact at Google who was supposed to help us get this working, but it just doesn’t. What made our implementation even trickier, and worth pursuing the Google way, was that depending on who you are you shouldn’t be able to see some of the content.  So it wasn’t just a matter of getting the site indexed, the results had to be different depending on who was logged in.  We got past this by just indexing the site into a different database for each type of user.  We switch which database we look at based on the role of the user. But there was still the matter of getting the index built in the first place.  We had tried providing an alternate form that Google could use, but for whatever reason, that didn’t seem to work. What we ended up doing was setting a cookie at the Google Appliance that the the site would look at during the request process, specifically during the Application_AuthenticateRequest event.  I put the code in Global.asax file, but you can create a handler for it if you want. Here’s the code:</p>
+        <p><img src="/uploads/2010/08/iStock_000003551835Medium.jpg" alt="iStock_000003551835Medium" title="iStock_000003551835Medium"> I’ve been working with a client to implement the Google Appliance on one of their sites that has forms authentication enabled. For those of you who aren’t aware, Google provides a box that you can install to index your own site using essentially the same logic that Google uses to index the Internet.  The advantage is that you have a lot more control over what gets indexed and when it gets indexed than if you just use what Google provides from its public index of the Internet.  The problem we had was that Google is not particularly fond of ASP.NET Forms Based authentication.  We had a contact at Google who was supposed to help us get this working, but it just doesn’t. What made our implementation even trickier, and worth pursuing the Google way, was that depending on who you are you shouldn’t be able to see some of the content.  So it wasn’t just a matter of getting the site indexed, the results had to be different depending on who was logged in.  We got past this by just indexing the site into a different database for each type of user.  We switch which database we look at based on the role of the user. But there was still the matter of getting the index built in the first place.  We had tried providing an alternate form that Google could use, but for whatever reason, that didn’t seem to work. What we ended up doing was setting a cookie at the Google Appliance that the the site would look at during the request process, specifically during the Application_AuthenticateRequest event.  I put the code in Global.asax file, but you can create a handler for it if you want. Here’s the code:</p>
 <p>void Application_AuthenticateRequest(object sender, EventArgs e)<br>{<br>    HttpCookie  o =<br>       HttpContext.Current.Request.Cookies[“secretName”];<br>    if (o != null)<br>    {<br>        System.Security.Principal.GenericIdentity id =<br>            new System.Security.Principal<br>               .GenericIdentity(o.Value);<br>        Context.User =<br>            new System.Security.Principal<br>                .GenericPrincipal(id, null);<br>    }<br>}</p>
 <p>All this does is look for the cookie and set the current user name to the value that is in the cookie.  This is enough for .NET forms authentication to think the user is logged in. Our role information is retrieved using a property in a class so in the code that looks to see what role the user is a part of, we look at the username and hard wire the role based on that user. Hope this helps someone else save some time implementing this. <strong>Other places talking about Forms Authentication and the Google Appliance</strong> <a href="//blogs.perficient.com/ecm/blog/2009/12/21/google-search-appliance-benefits-for-enterprise-content/">Google Search Appliance: Benefits for enterprise content …</a> - Integrate with LDAP, NTLM, Windows Integrated Authentication, forms-based single sign-on security systems, including Oracle Access Manager and CA SiteMinder, to enable seamless secure searching. Perficient has been a Google Enterprise …</p>
 
@@ -246,7 +246,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/the-google-appliance-and-forms-authentication/" data-id="cjj1pqykw00t4tkhihg34ednf" class="article-share-link">
+      <a data-url="http://davembush.github.com/the-google-appliance-and-forms-authentication/" data-id="cjj1qjd8h00mx1ohifdh0q4zo" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -292,19 +292,19 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2010/04/image8.png" alt="image" title="image">Last week I showed you how to <a href="//blog.dmbcllc.com/2010/04/22/git-gitosis-putty-and-windows/">install GitExtensions to access Gitosis</a> and promised that I’d show you how to get this all working when Gitosis is running SSH on an alternate port.</p>
+        <p><img src="/uploads/2010/04/image8.png" alt="image" title="image">Last week I showed you how to <a href="//blog.dmbcllc.com/2010/04/22/git-gitosis-putty-and-windows/">install GitExtensions to access Gitosis</a> and promised that I’d show you how to get this all working when Gitosis is running SSH on an alternate port.</p>
 <p>There are several reasons why you might want to run SSH on an alternate port.  In my case it is because my ISP blocks incoming traffic on the lower ports and I want to be able to access my computers using SSH’s tunneling feature when I’m on the road.</p>
 <p>The trick lies in a feature of Putty.  If you want to do this, you’ll need to <a href="//www.chiark.greenend.org.uk/~sgtatham/putty/download.html">install the Putty.exe</a> </p>
 <p>Actually, “install” is probably not the right word.  All you really need to do is download the putty.exe and put it in the GitExtension directory in your program files directory.</p>
 <p>What we are going to do now is create a session to connect to our Gitosis server.  So fire up the putty.exe.</p>
-<p><img src="//blog.dmbcllc.com/wp-content/uploads/2010/04/image9.png" alt="image" title="image"></p>
+<p><img src="/uploads/2010/04/image9.png" alt="image" title="image"></p>
 <p>Type in the host name or the IP address to the SSH/Gitosis server as well as the alternate port number you need to connect to.  Also, now would be a good time to give the configuration a “session name”</p>
-<p><img src="//blog.dmbcllc.com/wp-content/uploads/2010/04/image10.png" alt="image" title="image"></p>
+<p><img src="/uploads/2010/04/image10.png" alt="image" title="image"></p>
 <p>The advantage of using a session like this is that we can also specify the login name and the private key file here, rather than in GitExtensions.  You can do both if you want, as long as they match.</p>
-<p><img src="//blog.dmbcllc.com/wp-content/uploads/2010/04/image11.png" alt="image" title="image"></p>
-<h6 id="Note-The-Auto-login-username-you-put-in-here-will-be-the-username-of-the-account-that-is-running-Gitosis-NOT-the-account-associated-with-your-public-private-keys"><a href="#Note-The-Auto-login-username-you-put-in-here-will-be-the-username-of-the-account-that-is-running-Gitosis-NOT-the-account-associated-with-your-public-private-keys" class="headerlink" title="Note:  The Auto-login username you put in here will be the username of the account that is running Gitosis, NOT the account associated with your public/private keys."></a>Note:  The Auto-login username you put in here will be the username of the account that is running Gitosis, NOT the account associated with your public/private keys.</h6><p><img src="//blog.dmbcllc.com/wp-content/uploads/2010/04/image12.png" alt="image" title="image"></p>
+<p><img src="/uploads/2010/04/image11.png" alt="image" title="image"></p>
+<h6 id="Note-The-Auto-login-username-you-put-in-here-will-be-the-username-of-the-account-that-is-running-Gitosis-NOT-the-account-associated-with-your-public-private-keys"><a href="#Note-The-Auto-login-username-you-put-in-here-will-be-the-username-of-the-account-that-is-running-Gitosis-NOT-the-account-associated-with-your-public-private-keys" class="headerlink" title="Note:  The Auto-login username you put in here will be the username of the account that is running Gitosis, NOT the account associated with your public/private keys."></a>Note:  The Auto-login username you put in here will be the username of the account that is running Gitosis, NOT the account associated with your public/private keys.</h6><p><img src="/uploads/2010/04/image12.png" alt="image" title="image"></p>
 <p>Navigate back to the main screen and save the session.</p>
-<p><img src="//blog.dmbcllc.com/wp-content/uploads/2010/04/image13.png" alt="image" title="image"></p>
+<p><img src="/uploads/2010/04/image13.png" alt="image" title="image"></p>
 <p>You’ll see we saved the session as “Gitosis.”</p>
 <p>You should test this to make sure you can connect.  What will happen is that it will briefly “connect” but then you’ll get kicked out because the server is not allowing this type of connection.  This isn’t an issue because we won’t be using putty to connect.</p>
 <p>Now in GitExtensions when you specify the Git URL, instead of specifying the server name between the “@” and the “:”, you’ll specify the name of the session you just created:</p>
@@ -320,7 +320,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/gitextension-putty-alternate-port/" data-id="cjj1pqy7d00fdtkhii67v418f" class="article-share-link">
+      <a data-url="http://davembush.github.com/gitextension-putty-alternate-port/" data-id="cjj1qjcws00a11ohi9iltx9rw" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -366,12 +366,12 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2010/04/image.png" alt="GIT" title="GIT">I was recently sold on the idea of replacing SubVersion as my version control of choice and moving to GIT, or at least installing GIT and seeing for myself if it is that much better than SubVersion.  The first step was to install GIT on my computers so that I could play with it. Installing GIT on my 2008 server was relatively painless since everything on the server runs under Cygwin.  I followed the well written instructions here:</p>
+        <p><img src="/uploads/2010/04/image.png" alt="GIT" title="GIT">I was recently sold on the idea of replacing SubVersion as my version control of choice and moving to GIT, or at least installing GIT and seeing for myself if it is that much better than SubVersion.  The first step was to install GIT on my computers so that I could play with it. Installing GIT on my 2008 server was relatively painless since everything on the server runs under Cygwin.  I followed the well written instructions here:</p>
 <ul>
 <li><a href="#">Installing Git on Windows 2008</a> (broken link)</li>
 <li><a href="#">Installing Gitosis on Windows 2008</a> (broken link)</li>
 </ul>
-<p>Where I got stuck was on the client side. First, I tried installing msysgit, which I think I must have installed from the wrong exe because I eventually had trouble using it outside of a bash script.  But don’t worry about that because I’m going to show you a much easier way. Then I tried installing <a href="//code.google.com/p/tortoisegit/">TortoiseGit</a>.  Had I installed msysgit correctly, I probably would have stuck with making that work.  But I’m glad I couldn’t get it working because it caused me to dig deeper into TortoiseGit and discover that it really isn’t at a point where I can recommend it to anyone. I might have quit there, but I had also seen that there was another project for Windows Git called <a href="//code.google.com/p/gitextensions/">Git Extensions</a>, which is really easy to set up and includes the installation for Git, so you don’t have to go and figure out which is the correct installation for msysgit. When you install Git Extensions, you will come to a screen where you’ll be given the option to install Git and KDiff.  Do so. <img src="//blog.dmbcllc.com/wp-content/uploads/2010/04/image1.png" alt="image" title="image"> <img src="//blog.dmbcllc.com/wp-content/uploads/2010/04/image2.png" alt="image" title="image"> When you install MsysGit, select the options to add “Git Bash Here” and  “Git GUI Here”     You’ll also want to select the option to run Git from the Windows command prompt. <img src="//blog.dmbcllc.com/wp-content/uploads/2010/04/image3.png" alt="image" title="image"> The KDiff install is pretty straight forward.  I’ve been using KDiff for a while with SubVersion and it does a great job handling merges that SubVersion doesn’t do well on its own. Finally, install the extensions.  When you get to the screen that asks if you want to use OpenSSH or Putty, select Putty. <img src="//blog.dmbcllc.com/wp-content/uploads/2010/04/image4.png" alt="image" title="image"> Next, run the GitExtensions to set some of the configurations, like your email address. Next, you’ll want to generate an SSH key <img src="//blog.dmbcllc.com/wp-content/uploads/2010/04/image5.png" alt="image" title="image"> Select “Generate or import key” from the menu. <img src="//blog.dmbcllc.com/wp-content/uploads/2010/04/image6.png" alt="image" title="image"> Click the “Generate” button and move your mouse over the designated area. Since the server is using OpenSSHd for the SSH server, you’ll need to copy the text out of the top area and paste it into a text file so that you can put the public key on the server as described in the server articles I linked to above. <img src="//blog.dmbcllc.com/wp-content/uploads/2010/04/image7.png" alt="image" title="image"> You can make the key comment whatever you want.  Do NOT use the “Save public key” button to save the public key.  That will not save in the correct format. Once you’ve set a password, save the private key some place on your system that you can load later. If you’re using a standard port for the SSH server, you should be all set.  My problem is that I’m not, and that’s where the trouble began for me.  My next post will discuss how this configuration gets us around that issue.                   <strong>Other places talking about Git, Gitosis and Putty</strong> <a href="//www.geekgumbo.com/2010/04/15/git-in-windows-getting-started-with-the-git-gui/">Geek Gumbo » Git in Windows – Getting Started with the Git GUI</a> - You should have Git Bash icon on your desktop. Click it and up pops a linux command window. Don’t panic. This is like the Windows command window, only it runs Linux. There is a neat little GUI that will make the command window go away. … <a href="//sweux.com/blogs/laranjeira/index.php/git/how-to-configure-git-on-windows/">Eduardo Laranjeira » How to configure Git on Windows</a> - In the previous article, I’ve shown how to install Git on Windows 7, but before you can start using it, there’s some basic configuration that needs to be done. In this article I’ll show how to setup your user name and email address, … <a href="//www.jeremyskinner.co.uk/2010/03/07/using-git-with-windows-powershell/">Technical Jargon » Using Git with Windows Powershell</a> - Whenever I’m working with a Git repository I tend to do so from a Windows Powershell command line running inside Console. I prefer this to the UNIX-like “git bash” that comes with msysgit and it’s fairly straightforward to extend …</p>
+<p>Where I got stuck was on the client side. First, I tried installing msysgit, which I think I must have installed from the wrong exe because I eventually had trouble using it outside of a bash script.  But don’t worry about that because I’m going to show you a much easier way. Then I tried installing <a href="//code.google.com/p/tortoisegit/">TortoiseGit</a>.  Had I installed msysgit correctly, I probably would have stuck with making that work.  But I’m glad I couldn’t get it working because it caused me to dig deeper into TortoiseGit and discover that it really isn’t at a point where I can recommend it to anyone. I might have quit there, but I had also seen that there was another project for Windows Git called <a href="//code.google.com/p/gitextensions/">Git Extensions</a>, which is really easy to set up and includes the installation for Git, so you don’t have to go and figure out which is the correct installation for msysgit. When you install Git Extensions, you will come to a screen where you’ll be given the option to install Git and KDiff.  Do so. <img src="/uploads/2010/04/image1.png" alt="image" title="image"> <img src="/uploads/2010/04/image2.png" alt="image" title="image"> When you install MsysGit, select the options to add “Git Bash Here” and  “Git GUI Here”     You’ll also want to select the option to run Git from the Windows command prompt. <img src="/uploads/2010/04/image3.png" alt="image" title="image"> The KDiff install is pretty straight forward.  I’ve been using KDiff for a while with SubVersion and it does a great job handling merges that SubVersion doesn’t do well on its own. Finally, install the extensions.  When you get to the screen that asks if you want to use OpenSSH or Putty, select Putty. <img src="/uploads/2010/04/image4.png" alt="image" title="image"> Next, run the GitExtensions to set some of the configurations, like your email address. Next, you’ll want to generate an SSH key <img src="/uploads/2010/04/image5.png" alt="image" title="image"> Select “Generate or import key” from the menu. <img src="/uploads/2010/04/image6.png" alt="image" title="image"> Click the “Generate” button and move your mouse over the designated area. Since the server is using OpenSSHd for the SSH server, you’ll need to copy the text out of the top area and paste it into a text file so that you can put the public key on the server as described in the server articles I linked to above. <img src="/uploads/2010/04/image7.png" alt="image" title="image"> You can make the key comment whatever you want.  Do NOT use the “Save public key” button to save the public key.  That will not save in the correct format. Once you’ve set a password, save the private key some place on your system that you can load later. If you’re using a standard port for the SSH server, you should be all set.  My problem is that I’m not, and that’s where the trouble began for me.  My next post will discuss how this configuration gets us around that issue.                   <strong>Other places talking about Git, Gitosis and Putty</strong> <a href="//www.geekgumbo.com/2010/04/15/git-in-windows-getting-started-with-the-git-gui/">Geek Gumbo » Git in Windows – Getting Started with the Git GUI</a> - You should have Git Bash icon on your desktop. Click it and up pops a linux command window. Don’t panic. This is like the Windows command window, only it runs Linux. There is a neat little GUI that will make the command window go away. … <a href="//sweux.com/blogs/laranjeira/index.php/git/how-to-configure-git-on-windows/">Eduardo Laranjeira » How to configure Git on Windows</a> - In the previous article, I’ve shown how to install Git on Windows 7, but before you can start using it, there’s some basic configuration that needs to be done. In this article I’ll show how to setup your user name and email address, … <a href="//www.jeremyskinner.co.uk/2010/03/07/using-git-with-windows-powershell/">Technical Jargon » Using Git with Windows Powershell</a> - Whenever I’m working with a Git repository I tend to do so from a Windows Powershell command line running inside Console. I prefer this to the UNIX-like “git bash” that comes with msysgit and it’s fairly straightforward to extend …</p>
 
       
     </div>
@@ -382,7 +382,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/git-gitosis-putty-and-windows/" data-id="cjj1pqy7400f5tkhizdjt4e09" class="article-share-link">
+      <a data-url="http://davembush.github.com/git-gitosis-putty-and-windows/" data-id="cjj1qjcwp009x1ohiz6xii5yy" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -428,7 +428,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2010/03/WEST0241.png" alt="WEST0241" title="WEST0241"> Jeff Atwood of <a href="//www.codinghorror.com/blog/2010/02/the-nonprogramming-programmer.html">Coding Horror</a> writes:</p>
+        <p><img src="/uploads/2010/03/WEST0241.png" alt="WEST0241" title="WEST0241"> Jeff Atwood of <a href="//www.codinghorror.com/blog/2010/02/the-nonprogramming-programmer.html">Coding Horror</a> writes:</p>
 <p>“I find it difficult to believe, but the reports keep pouring in via Twitter and email: <strong>many candidates who show up for programming job interviews can’t program. At all.</strong>”</p>
 <p>Jeff, you must not have visited a college campus recently.  The reason most that most “programmers” can’t program is because their instructors led them to believe they could program.</p>
 <p>I have two stories that illustrate the point.</p>
@@ -449,7 +449,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/why-programmers-can’t-program/" data-id="cjj1pqyra00ymtkhi04ipnc97" class="article-share-link">
+      <a data-url="http://davembush.github.com/why-programmers-can’t-program/" data-id="cjj1qjddy00s51ohi5dael5fp" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -495,7 +495,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/12/H04K0067.jpg" alt="H04K0067" title="H04K0067"></p>
+        <p><img src="/uploads/2009/12/H04K0067.jpg" alt="H04K0067" title="H04K0067"></p>
 <p>One of the things to keep in mind when using jQuery is that nothing is a blocking call.  Sure, there is a certain sequence to when things operate.  But, to be safe, you should always assume that step two will happen during step one.</p>
 <p>Nowhere is this more evident than when retrieving content from a URL and inserting that content in your page.</p>
 <p>The temptation is to write code that looks something like this</p>
@@ -515,7 +515,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-each-and-async-gets/" data-id="cjj1pqycn00kttkhiqfddw1jy" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-each-and-async-gets/" data-id="cjj1qjd1400f81ohi4gf29dtg" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -561,7 +561,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/11/misc_vol3_100.jpg" alt="misc_vol3_100" title="misc_vol3_100"> One of the controls that was added to ASP.NET 3.5 in the SP1 release was the Dynamic Validator control. I completely missed it. What it does is pretty cool.  But it doesn’t really do what you’d think it might.  Or at least not what I thought it would.  “Dynamic” implies to me some kind of hook up to the database.  But the Dynamic Validator control doesn’t hook to the database.  At least not directly.  What it does, however, is a lot more flexible.  You would use the Dynamic Validator control in a lot of the same instances that you’d use the Custom Validator.  While the Custom Validator has a lot more flexibility, the Dynamic Validator is a bit easier to implement. The Dynamic Validator displays any exceptions that the OnChanging event of a field in your datasource.  This allows you to put all of your validations in the OnChanging event of the control rather than an event handler of the Custom Validator. To demonstrate, place a TextBox control and a Dynamic Validator control on your page and set the ControlToValidate property to point to the TextBox control.</p>
+        <p><img src="/uploads/2009/11/misc_vol3_100.jpg" alt="misc_vol3_100" title="misc_vol3_100"> One of the controls that was added to ASP.NET 3.5 in the SP1 release was the Dynamic Validator control. I completely missed it. What it does is pretty cool.  But it doesn’t really do what you’d think it might.  Or at least not what I thought it would.  “Dynamic” implies to me some kind of hook up to the database.  But the Dynamic Validator control doesn’t hook to the database.  At least not directly.  What it does, however, is a lot more flexible.  You would use the Dynamic Validator control in a lot of the same instances that you’d use the Custom Validator.  While the Custom Validator has a lot more flexibility, the Dynamic Validator is a bit easier to implement. The Dynamic Validator displays any exceptions that the OnChanging event of a field in your datasource.  This allows you to put all of your validations in the OnChanging event of the control rather than an event handler of the Custom Validator. To demonstrate, place a TextBox control and a Dynamic Validator control on your page and set the ControlToValidate property to point to the TextBox control.</p>
 <p>&lt;asp:TextBox ID=”TextBox1” runat=”server”&gt;&lt;/asp:TextBox&gt;<br>&lt;cc1:dynamicvalidator runat=”server” ID=”dynamicValidator”<br>   ControlToValidate=”TextBox1”&gt;&lt;/cc1:dynamicvalidator&gt;</p>
 <p>You’ll need to set up some sort of databinding between the text box and a datasource because the validation happens at the field level, not at the display level. To implement the validations, create an On_Field_Changing event handler of a partial class that represents the row you’ve bound for the field the TextBox is bound to and create some sort of check.  Throw an exception if the check fails. The validation control will then pick up the exception and display it for you. <strong>Other places talking about the DynamicValidator control</strong> <a href="//weblogs.asp.net/craigshoemaker/archive/2008/05/08/passing-arguments-to-a-dynamic-data-field-template-from-a-uihint-attribute.aspx">Passing Arguments to a Dynamic Data Field Template from a UIHint …</a> -  The ASCX is pretty basic. All that is here is my UI control and the needed validation controls. … Generic Access to ASP.NET Dynamic Data UIHint Attribute Values. Friday, May 09, 2008 1:01 PM by Craig Shoemaker. Yesterday I published a post titled, Passing Arguments to a Dynamic Data Field Template from a UIHint …</p>
 
@@ -574,7 +574,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-dynamic-validator/" data-id="cjj1pqy15008ntkhitimx7mte" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-dynamic-validator/" data-id="cjj1qjcrt003m1ohi95yqtecm" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -620,7 +620,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/11/animal018.jpg" alt="animal-018" title="animal-018"></p>
+        <p><img src="/uploads/2009/11/animal018.jpg" alt="animal-018" title="animal-018"></p>
 <p>I’m not the first to write on this topic and probably won’t be the last.  But I do have something to say on the matter that I think is helpful.</p>
 <p>In fact, there has been quite a bit written about interviewing for ASP.NET, but relatively little written about how to interview, and what to look for, in a student who just recently graduated from college.</p>
 <p>So here is my list.</p>
@@ -660,7 +660,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-interview-questions-for-new-college-graduates/" data-id="cjj1pqy1h008ztkhi4ac695rv" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-interview-questions-for-new-college-graduates/" data-id="cjj1qjcrw003q1ohim4ih0pjs" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -706,7 +706,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/11/G03A0021.jpg" alt="G03A0021" title="G03A0021"></p>
+        <p><img src="/uploads/2009/11/G03A0021.jpg" alt="G03A0021" title="G03A0021"></p>
 <p>Not to be confused with cross page posting, cross domain submission allows us to post the contents of an ASP.NET form to a completely different domain.</p>
 <p>To achieve this we will need to use a bit of javascript and you’ll need to resort to using regular HTML controls.</p>
 <p>We will cover two cases.  The first is pretty easy.  You just need a form on your screen that will allow you to send the information to another domain.  The second will be more complex.  You need a form on your screen that you fill from your domain prior to sending to the second domain.</p>
@@ -732,7 +732,7 @@ document.remote.action=
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-cross-domain-form-submission/" data-id="cjj1pqy10008ltkhi5xp05j6a" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-cross-domain-form-submission/" data-id="cjj1qjcrd00341ohii53uys8i" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

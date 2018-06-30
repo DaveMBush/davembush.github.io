@@ -13,13 +13,13 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="One of the hardest things we do as programmers is naming things.  But the easiest thing to name is counter variables and most of us do it wrong several times a day. Of course, I’m talking about the no">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2014/05/ijk.png">
+<meta property="og:image" content="http://davembush.github.com/uploads/2014/05/ijk.png">
 <meta property="og:image" content="http://ir-na.amazon-adsystem.com/e/ir?t=davmbusnetapp-20&l=as2&o=1&a=0735619670">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.893Z">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.308Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="I, J, and K Should Die">
 <meta name="twitter:description" content="One of the hardest things we do as programmers is naming things.  But the easiest thing to name is counter variables and most of us do it wrong several times a day. Of course, I’m talking about the no">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2014/05/ijk.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2014/05/ijk.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -112,7 +112,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/05/ijk.png" alt="ijk" title="ijk">One of the hardest things we do as programmers is naming things.  But the easiest thing to name is counter variables and most of us do it wrong several times a day. Of course, I’m talking about the notorious habit of naming our counter variables I, J, or K depending on how far down we’ve nested our looping. </p>
+        <p><img src="/uploads/2014/05/ijk.png" alt="ijk" title="ijk">One of the hardest things we do as programmers is naming things.  But the easiest thing to name is counter variables and most of us do it wrong several times a day. Of course, I’m talking about the notorious habit of naming our counter variables I, J, or K depending on how far down we’ve nested our looping. </p>
 <h2 id="History"><a href="#History" class="headerlink" title="History"></a>History</h2><p>Now, my understanding of the history of I, J, and K as common variables that we use in programming is that the practice started in FORTRAN.  There are two reasons why FORTRAN programmers did this.  FORTRAN is primarily a math language.  I, J, and K were used in math and so the practice was carried over into FORTRAN and from there to other languages. FORTRAN encouraged this by also automatically declaring I, J and K as integers.  So using I, J and K made the code slightly easier to write and seemed to be considered a best practice at the time. The other reason I, J, and K have prevailed as indexing variables is because in the early days, our variable name length was limited and in some languages, the variable names were stored in our code and consumed memory, which was a precious resource we didn’t want to waste on long variable names. And so the practice continues to this day, largely because, “We’ve always done it that way.”</p>
 <h2 id="Story"><a href="#Story" class="headerlink" title="Story"></a>Story</h2><p>But let me tell you a story that illustrates why this is a bad idea. Admittedly, this story is pretty old, but only because in my 28 years of programming, this is still the best story I have to illustrate this issue. You see, one day, back when I was still regularly programming in C++ (for you kids out there, C++ is what Java and CSharp get most of their syntax) my manager came to me with a bug. Now the interesting thing about this bug is that it only occurred with one particular data set.  Most of the time it worked. So, I put on my detective’s hat and went to work.  Now, I try to go for the quick kill first.  So, I set break points at various locations and checked variables and found out …  nothing. That’s right, nothing. After about four hours of trying various methods of the above and trying to step through the code only to find the looping that was taking place was going to cause that to take several weeks, I finally stumbled on to the problem. And I do mean I stumbled, there’s no way I was going to find this problem using any of my standard debugging techniques. Here is what the code looked like:</p>
 <p>for(i = 0;i &lt; someValue;i++)<br>{<br>    // lots of code here<br>    for(j = 0;j &lt; someOtherValue;j++)<br>    {<br>        // still more code here<br>        for(k = 0;k &lt; yetAnotherValue;k++)<br>        {<br>            // and again, more code<br>            if(someConditionThatBarelyEverHappens)<br>            {<br>                for(i=0;i &lt; 3;i++)<br>                {<br>                    // some correcting code here<br>                 }<br>             }<br>            // more code<br>         }<br>        // more code<br>    }<br>}</p>
@@ -137,7 +137,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/i-j-and-k-should-die/" data-id="cjj1pqy8v00gztkhiadchzs9z" class="article-share-link">
+      <a data-url="http://davembush.github.com/i-j-and-k-should-die/" data-id="cjj1qjcxu00be1ohi0wehhrjn" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

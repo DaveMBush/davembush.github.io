@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="This past week I implemented a pattern I’ve been pondering for almost a year now.  I like to create rather modular and granular code such that if my data structures are nested, the components that rep">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2018/01/2018-01-02.jpg">
-<meta property="og:updated_time" content="2018-06-23T18:40:38.170Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2018/01/2018-01-02.jpg">
+<meta property="og:updated_time" content="2018-06-30T19:06:18.510Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Attaching an Angular Child Component&#39;s Form to a Parent">
 <meta name="twitter:description" content="This past week I implemented a pattern I’ve been pondering for almost a year now.  I like to create rather modular and granular code such that if my data structures are nested, the components that rep">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2018/01/2018-01-02.jpg">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2018/01/2018-01-02.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -116,7 +116,8 @@
 <li>Leaves the definition of the child form entirely in the child</li>
 <li>Leaves the processing of the data in the parent where the parent form is the “Smart Component” and the child is a “Dumb Component”</li>
 </ol>
-<p>Most solutions I was able to find attack this problem assuming the child component will be part of an array of controls.  And I suppose, if you wanted to, you could implement that pattern using an array with one element.  But, that just felt like a hack.  If you are interested in that solution, this is the wrong article. [caption id=”attachment_4544” align=”aligncenter” width=”800”]<img src="//blog.dmbcllc.com/wp-content/uploads/2018/01/2018-01-02.jpg" alt="Attaching an Angular Child Component&#39;s Form to a Parent" title="Attaching an Angular Child Component&#39;s Form to a Parent"> Photo by <a href="//visualhunt.com/author/e29ed9">loomingy1</a> on <a href="//visualhunt.com/re/b9f011">Visual hunt</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a>[/caption] </p>
+<p>Most solutions I was able to find attack this problem assuming the child component will be part of an array of controls.  And I suppose, if you wanted to, you could implement that pattern using an array with one element.  But, that just felt like a hack.  If you are interested in that solution, this is the wrong article. <figure><img src="/uploads/2018/01/2018-01-02.jpg" alt="" title="Attaching an Angular Child Component&#39;s Form to a Parent"> Photo by <a href="//visualhunt.com/author/e29ed9">loomingy1</a> on <a href="//visualhunt.com/re/b9f011">Visual hunt</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a></figure></p>
+<a id="more"></a> 
 <h2 id="Avoiding-the-Problem"><a href="#Avoiding-the-Problem" class="headerlink" title="Avoiding the Problem"></a>Avoiding the Problem</h2><p>Up until recently, I’ve been able to avoid this problem entirely by creating separate forms and listening to each individually.  I could have done the same thing here.  But, every time I use this solution, I feel like there must be a better way.  Besides, when you do this correctly, you only need to have one place where you are listening for changes to the form and one place where you send changes into the form.  The work around requires multiples of each.</p>
 <h2 id="Basics-of-Nested-Forms"><a href="#Basics-of-Nested-Forms" class="headerlink" title="Basics of Nested Forms"></a>Basics of Nested Forms</h2><p>Another way of avoiding the problem is to create the form as one monolithic component.  A very simple implementation would be to have a form that looked something like this:</p>
 <pre><code>&lt;form [formGroup]=&quot;form&quot;&gt;
@@ -172,7 +173,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/attaching-an-angular-child-component-s-form-to-a-parent/" data-id="cjj1pqy21009mtkhimad4j9zp" class="article-share-link">
+      <a data-url="http://davembush.github.com/attaching-an-angular-child-component-s-form-to-a-parent/" data-id="cjj1qjcsk004m1ohijft951op" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

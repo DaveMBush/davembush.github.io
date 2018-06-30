@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="For the purposes of this post, I’m going to assume that you already have the NUnit Test Runner installed.  The question you are looking to get answered is, “How do I run NUnit from Visual Studio” or e">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2015/04/Properties_Debug.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.946Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2015/04/Properties_Debug.png">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.427Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Run NUnit from Visual Studio">
 <meta name="twitter:description" content="For the purposes of this post, I’m going to assume that you already have the NUnit Test Runner installed.  The question you are looking to get answered is, “How do I run NUnit from Visual Studio” or e">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2015/04/Properties_Debug.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2015/04/Properties_Debug.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>For the purposes of this post, I’m going to assume that you already have the NUnit Test Runner installed.  The question you are looking to get answered is, “How do I run NUnit from Visual Studio” or even more importantly, “How do I DEBUG NUnit test from Visual Studio”.  The following step by step should help you. Right click on the project in Solution Explorer that represents your test project. From the resulting menu, select “Properties.” In the resulting window, selec the “Debug” tab from the left-hand side of the window. <img src="//blog.dmbcllc.com/wp-content/uploads/2015/04/Properties_Debug.png" alt="Properties_Debug" title="Properties_Debug"> You will want to select “Start external program” and point it to the UNnit runner that got installed when you installed NUnit. Now, whenever you run this project, with or without the debugger, NUnit will start up. Note: there is no reason to pass parameters telling it what DLL you want to run because it will load the last DLL it had up. But, if you wanted to do that, you could pass the location of the DLL as a parameter to the GUI runner. There are other parameters you can us. Check the documentation for the version of NUnit you are using for the specifics. If you are running .NET 4.x, you’ll want to go to the location in your file system where NUnit.exe lives and find the NUnit.exe.config file. Find the startup element (<startup> …. </startup>) and place this line in between the open and close startup tags:</p>
+        <p>For the purposes of this post, I’m going to assume that you already have the NUnit Test Runner installed.  The question you are looking to get answered is, “How do I run NUnit from Visual Studio” or even more importantly, “How do I DEBUG NUnit test from Visual Studio”.  The following step by step should help you. Right click on the project in Solution Explorer that represents your test project. From the resulting menu, select “Properties.” In the resulting window, selec the “Debug” tab from the left-hand side of the window. <img src="/uploads/2015/04/Properties_Debug.png" alt="Properties_Debug" title="Properties_Debug"> You will want to select “Start external program” and point it to the UNnit runner that got installed when you installed NUnit. Now, whenever you run this project, with or without the debugger, NUnit will start up. Note: there is no reason to pass parameters telling it what DLL you want to run because it will load the last DLL it had up. But, if you wanted to do that, you could pass the location of the DLL as a parameter to the GUI runner. There are other parameters you can us. Check the documentation for the version of NUnit you are using for the specifics. If you are running .NET 4.x, you’ll want to go to the location in your file system where NUnit.exe lives and find the NUnit.exe.config file. Find the startup element (<startup> …. </startup>) and place this line in between the open and close startup tags:</p>
 <supportedruntime version="4.0">
 
 <p>If you miss this step, you won’t be able to debug your 4.0 code. Alternatively, you can just set your project to use .NET 3.5. So, let’s give it a try. First, put some code in the test method you just created. For our purposes, we’ll just put in a console writeline so we have somplace to put a breakpoint.</p>
@@ -127,7 +127,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/run-nunit-from-visual-studio/" data-id="cjj1pqyh700pmtkhi2pk8r9a3" class="article-share-link">
+      <a data-url="http://davembush.github.com/run-nunit-from-visual-studio/" data-id="cjj1qjd5800ji1ohiwbfh3k8f" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

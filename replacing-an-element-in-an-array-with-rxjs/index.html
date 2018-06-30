@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="It is not uncommon in our programming endeavors to need to replace one element in an array.  Using old school procedural programming, this would be relatively easy.  Loop through the elements, when we">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/11/2017-11-21.jpg">
-<meta property="og:updated_time" content="2018-06-23T18:40:38.172Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2017/11/2017-11-21.jpg">
+<meta property="og:updated_time" content="2018-06-30T19:18:32.735Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Replacing an Element in an Array with RxJS">
 <meta name="twitter:description" content="It is not uncommon in our programming endeavors to need to replace one element in an array.  Using old school procedural programming, this would be relatively easy.  Loop through the elements, when we">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/11/2017-11-21.jpg">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2017/11/2017-11-21.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,8 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>It is not uncommon in our programming endeavors to need to replace one element in an array.  Using old school procedural programming, this would be relatively easy.  Loop through the elements, when we find the one we want to replace, change the value.  Basic for/next loop with a conditional statement. But when you move to a more functional way of programming as we need to do for NgRX, or are encouraged to do to make our code more testable, the problem becomes less straight forward. The initial solution you might try would be to just run <code>reduce()</code> against the array.  But if we do this, we still need to put that nasty conditional within our reducer function.  This is something we’d prefer to avoid.  Yes, it will work.  But it isn’t Functional.  This problem has bothered me for months.  I’ve finally spent the time to figure out the solution. [caption id=”attachment_4513” align=”aligncenter” width=”800”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/11/2017-11-21.jpg" alt="Replacing an Element in an Array with RxJS" title="Replacing an Element in an Array with RxJS"> Photo credit: <a href="//www.flickr.com/photos/manchesterlibrary/2034771121/">Manchester Library</a> via <a href="//visualhunt.com/re/1b8ae8">Visualhunt</a> / <a href="//creativecommons.org/licenses/by-sa/2.0/"> CC BY-SA</a>[/caption] </p>
+        <p>It is not uncommon in our programming endeavors to need to replace one element in an array.  Using old school procedural programming, this would be relatively easy.  Loop through the elements, when we find the one we want to replace, change the value.  Basic for/next loop with a conditional statement. But when you move to a more functional way of programming as we need to do for NgRX, or are encouraged to do to make our code more testable, the problem becomes less straight forward. The initial solution you might try would be to just run <code>reduce()</code> against the array.  But if we do this, we still need to put that nasty conditional within our reducer function.  This is something we’d prefer to avoid.  Yes, it will work.  But it isn’t Functional.  This problem has bothered me for months.  I’ve finally spent the time to figure out the solution. <figure><img src="/uploads/2017/11/2017-11-21.jpg" alt="" title="Replacing an Element in an Array with RxJS"><figcaption>Photo credit: <a href="//www.flickr.com/photos/manchesterlibrary/2034771121/">Manchester Library</a> via <a href="//visualhunt.com/re/1b8ae8">Visualhunt</a> / <a href="//creativecommons.org/licenses/by-sa/2.0/"> CC BY-SA</a></figcaption></figure></p>
+<a id="more"></a> 
 <h2 id="Simple-Problem"><a href="#Simple-Problem" class="headerlink" title="Simple Problem"></a>Simple Problem</h2><p>For the purposes of our discussion, we are going to assume that we have an array of integers, 1 through 5.  We want to change the value of 3 to 33.  If we were going to just extract the value and change it, we would use a filter.  But what we want to do here instead is split the array into two streams.  Elements that are 3 and elements that are not three.  You might reach for the filter function to do this. <code>const array = [1, 2, 3, 4, 5]; const item = array.filter((x: number) =&gt; x === 3);</code> <code>const notItem = array.filter((x: number) =&gt; x !== 3);</code></p>
 <h2 id="Merging-Arrays"><a href="#Merging-Arrays" class="headerlink" title="Merging Arrays?"></a>Merging Arrays?</h2><p>But the problem you’ll run into almost immediately is that now that we have the array split in two, how are we going to merge them back together again?  For this, we would need the <code>Observable.merge()</code> method.  But, arrays are not <code>Observables</code>. So, let’s rethink this problem.  What if we turn the array into an observable?</p>
 <h2 id="Observable-Arrays"><a href="#Observable-Arrays" class="headerlink" title="Observable Arrays"></a>Observable Arrays</h2><p>We can still use the <code>filter()</code> but now we can merge the results. <code>const array = Observable.from([1, 2, 3, 4, 5]);</code> <code>const item = array.filter((x: number) =&gt; x === 3);</code> <code>const notItem = array.filter((x: number) =&gt; x !== 3);</code> <code>const mergedList = Observable.merge(notItem, item.map((x: number) =&gt; 33);</code></p>
@@ -150,7 +151,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/replacing-an-element-in-an-array-with-rxjs/" data-id="cjj1pqygn00p0tkhi4vprlujl" class="article-share-link">
+      <a data-url="http://davembush.github.com/replacing-an-element-in-an-array-with-rxjs/" data-id="cjj1qjd4o00iz1ohixy6pfrd1" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

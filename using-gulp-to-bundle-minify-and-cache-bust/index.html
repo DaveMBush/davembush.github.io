@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="Last week I discussed how to setup Node.js and Gulp in Visual Studio 2015.  During that discussion, I mentioned that I’m using gulp to bundle, minify and cache-bust my HTML, CSS, and JavaScript files.">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2016/01/image-5.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:38.018Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2016/01/image-5.png">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.506Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Using Gulp to Bundle, Minify, and Cache-bust">
 <meta name="twitter:description" content="Last week I discussed how to setup Node.js and Gulp in Visual Studio 2015.  During that discussion, I mentioned that I’m using gulp to bundle, minify and cache-bust my HTML, CSS, and JavaScript files.">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2016/01/image-5.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2016/01/image-5.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Last week I discussed <a href="//blog.dmbcllc.com/using-node-js-and-gulp-with-an-existing-web-application-in-visual-studio-2015/">how to setup Node.js and Gulp in Visual Studio 2015</a>.  During that discussion, I mentioned that I’m using gulp to bundle, minify and cache-bust my HTML, CSS, and JavaScript files. This week, my intent is to walk you through exactly how I do that. So, if you don’t already have Node.js and Gulp installed, you may want to go back and read the article I wrote last week. Since most of the people who read this blog are ASP.NET developers, there may be a few .NET specific tips along the way.  But the Gulp file I am going to walk you through is technology agnostic.  So if you are using some other technology, you’ll still benefit from this article. <img src="//blog.dmbcllc.com/wp-content/uploads/2016/01/image-5.png" alt="image" title="image"></p>
+        <p>Last week I discussed <a href="//blog.dmbcllc.com/using-node-js-and-gulp-with-an-existing-web-application-in-visual-studio-2015/">how to setup Node.js and Gulp in Visual Studio 2015</a>.  During that discussion, I mentioned that I’m using gulp to bundle, minify and cache-bust my HTML, CSS, and JavaScript files. This week, my intent is to walk you through exactly how I do that. So, if you don’t already have Node.js and Gulp installed, you may want to go back and read the article I wrote last week. Since most of the people who read this blog are ASP.NET developers, there may be a few .NET specific tips along the way.  But the Gulp file I am going to walk you through is technology agnostic.  So if you are using some other technology, you’ll still benefit from this article. <img src="/uploads/2016/01/image-5.png" alt="image" title="image"></p>
 <h2 id="Bundling"><a href="#Bundling" class="headerlink" title="Bundling"></a>Bundling</h2><p>The first thing we want to do is that we want to combine all of our CSS files and JavaScript files into one file for CSS and one file for JavaScript.  There are several ways that you might do this, but what I wanted was some way that would allow me to work unbundled during development and bundled when I released the code.  Since I’m working with a single page application (SPA), this was a simple matter of configuring my default file to be index.debug.html for development and index.release.html and using web.config transforms to specify which should be used in which environment.  If you are working in some other environment, I’m sure you have some kind of similar way of specifying the default file based on an environment setting. So all of my development work will be done in index.debug.html. Like I said, there are many ways of bundling JavaScript and CSS code, but the way I’ve found that seems to have the least amount of work involved is by using the <a href="//www.npmjs.com/package/gulp-useref">gulp-useref module</a>.  This module lets us put tokens in our html file that specify which files we want to compress and what the resulting file name should be. Your HTML file would look something like this:</p>
 <html><br><head><br>  &lt;!-- build:css css/combined.css –&gt;<br>    <link href="css/one.css" rel="stylesheet"><br>    <link href="css/two.css" rel="stylesheet"><br>  &lt;!-- endbuild –&gt;<br></head><br><body><br>&lt;!-- other normal content goes here –&gt;<br>  &lt;!-- build:js scripts/combined.js –&gt;<br>    <script type="text/javascript" src="scripts/one.js"></script><br>    <script type="text/javascript" src="scripts/two.js"></script><br>  &lt;!-- endbuild –&gt;<br></body><br></html>
 
@@ -186,7 +186,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/using-gulp-to-bundle-minify-and-cache-bust/" data-id="cjj1pqyo200vutkhit1cg96qa" class="article-share-link">
+      <a data-url="http://davembush.github.com/using-gulp-to-bundle-minify-and-cache-bust/" data-id="cjj1qjdb700pk1ohidstzguyk" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

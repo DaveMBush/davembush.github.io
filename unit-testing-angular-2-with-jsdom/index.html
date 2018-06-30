@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="Unit Testing Angular(2+) with JSDOM can be problematic unless you know the secret handshake that allows ZoneJS and JSDOM to coexist. The great thing about Angular is that you can write Unit Tests from">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/04/image.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:38.117Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2017/04/image.png">
+<meta property="og:updated_time" content="2018-06-30T19:18:32.754Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Unit Testing Angular(2+) with JSDOM">
 <meta name="twitter:description" content="Unit Testing Angular(2+) with JSDOM can be problematic unless you know the secret handshake that allows ZoneJS and JSDOM to coexist. The great thing about Angular is that you can write Unit Tests from">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/04/image.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2017/04/image.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,8 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Unit Testing Angular(2+) with JSDOM can be problematic unless you know the secret handshake that allows ZoneJS and JSDOM to coexist. The great thing about Angular is that you can write Unit Tests from the presentation layer all the way down to calls to the server.  But up until now, you either ran those tests in a browser, which doesn’t work well in a CI system, or you used PhantomJS, which tends to be REALLY slow!  But there is a better way, and hopefully, by the time this post goes live, the patches needed to use JSDOM will be available.  If not, I’ll show you the hack that I’ve found works and the pull request I’m hoping will go live. [caption id=”” align=”aligncenter” width=”640”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/04/image.png" alt="Unit Testing Angular(2+) with JSDOM" title="Unit Testing Angular(2+) with JSDOM"> Photo credit: <a href="//www.flickr.com/photos/juanedc/14896919066/">Juanedc</a> via <a href="//visualhunt.com/re/cf947c">Visual Hunt</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a>[/caption] </p>
+        <p>Unit Testing Angular(2+) with JSDOM can be problematic unless you know the secret handshake that allows ZoneJS and JSDOM to coexist. The great thing about Angular is that you can write Unit Tests from the presentation layer all the way down to calls to the server.  But up until now, you either ran those tests in a browser, which doesn’t work well in a CI system, or you used PhantomJS, which tends to be REALLY slow!  But there is a better way, and hopefully, by the time this post goes live, the patches needed to use JSDOM will be available.  If not, I’ll show you the hack that I’ve found works and the pull request I’m hoping will go live. <figure><img src="/uploads/2017/04/image.png" alt="" title="Unit Testing Angular(2+) with JSDOM"><figcaption>Photo credit: <a href="//www.flickr.com/photos/juanedc/14896919066/">Juanedc</a> via <a href="//visualhunt.com/re/cf947c">Visual Hunt</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a></figcaption></figure></p>
+<a id="more"></a> 
 <h2 id="Why-JSDOM"><a href="#Why-JSDOM" class="headerlink" title="Why JSDOM?"></a>Why JSDOM?</h2><p>As I mentioned in the introduction, there are two problems that JSDOM fixes. To run the Angular unit tests, you need to run them in a browser.  The problem with this is that you would need to have a browser installed on your CI server to run them, if you run them at all.  It can be done, but if you are working in an environment like the one I work in, it isn’t going to be easy. The second choice is to use PhantomJS.  Unfortunately, PhantomJS, while easy to install, runs slowly.  For all but the most trivial of applications, this isn’t going to work well. JSDOM, on the other hand, runs fast like a browser, and doesn’t have the problems that running it on a CI system has.  This is because it is a headless browser that never renders.  All it does is produce HTML.  For unit tests, this is all we really care about.  And because it is running inside of Node, it is running as fast as the V8 engine will let it.  Making it theoretically faster than running the tests in Chrome.  I say, “theoretically faster” because I have not tested this and the V8 engines in the most recent browser tends to be a bit ahead of the V8 engine used in the most recent version of Node.</p>
 <h2 id="The-Problem"><a href="#The-Problem" class="headerlink" title="The Problem"></a>The Problem</h2><p>Knowing this was possible caused me to give it a try.  What I found was that I routinely crashed with the following error. <code>Cannot set property onreadystatechange of [object Object] which has only a getter</code> As I googled this, I found several fixes for JSDOM that would allow this to work, but I also discovered that JSDOM did not consider this an issue they needed to fix.  And rightly so, why should they adapt just so it would work for Angular2? But, what in the Angular2 code would cause this problem.  By doing a search for <code>onreadystatechange</code> in my node_modules directory, I discovered that ZoneJS was:</p>
 <ol>
@@ -134,7 +135,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/unit-testing-angular-2-with-jsdom/" data-id="cjj1pqyn900v5tkhicectcs2r" class="article-share-link">
+      <a data-url="http://davembush.github.com/unit-testing-angular-2-with-jsdom/" data-id="cjj1qjdan00oz1ohiov3pgxts" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

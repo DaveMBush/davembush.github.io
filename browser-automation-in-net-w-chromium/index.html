@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="Over the past ten years, I’ve successfully implemented various types of screen scraping in order to provide data to my clients.  Most of these implementations have involved accessing HTML and parsing">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2015/07/image.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.970Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2015/07/image.png">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.192Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Browser Automation in .NET w&#x2F; Chromium">
 <meta name="twitter:description" content="Over the past ten years, I’ve successfully implemented various types of screen scraping in order to provide data to my clients.  Most of these implementations have involved accessing HTML and parsing">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2015/07/image.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2015/07/image.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2015/07/image.png" alt="image" title="image"> Over the past ten years, I’ve successfully implemented various types of screen scraping in order to provide data to my clients.  Most of these implementations have involved accessing HTML and parsing out the data we needed for the web application. My latest implementation of this made use of the <a href="//htmlagilitypack.codeplex.com/">HTML Agility Pack</a> and managed to incorporate the e-Labels For Education site into the Labels For Education site.  (No links, because the e-Labels program is being phased out.) Recently, I’ve been spending a lot of times on some site doing the same thing over and over again.  But most of the sites I visit now implement some kind of AJAX so that doing a simple web request to a page without also loading and parsing the JavaScript ends up giving me a page with no useful data at all.  Unlike the work I’ve done in the past where this was sufficient. This, combined with my recent work implementing Jasmine unit test for JavaScript and running them in the PhantomJS headless browser has had me thinking, wouldn’t it be great if I could do similar kinds of screen scraping, or even browser automation, but use something like an embedded version of PhantomJS to get the work done. Well, do a search for “embedded PhantomJS for .NET” or something similar and you’ll find that that isn’t possible.  At least not yet. But there is a viable alternative.  Actually there are a couple of viable alternative.  But they all end up using the Google Chromium browser API.  The implementation I ended up using is <a href="//github.com/cefsharp">CefSharp</a>.  Mostly because this is what is available from NuGet. What follows are some of the tricks I learned along the way.</p>
+        <p><img src="/uploads/2015/07/image.png" alt="image" title="image"> Over the past ten years, I’ve successfully implemented various types of screen scraping in order to provide data to my clients.  Most of these implementations have involved accessing HTML and parsing out the data we needed for the web application. My latest implementation of this made use of the <a href="//htmlagilitypack.codeplex.com/">HTML Agility Pack</a> and managed to incorporate the e-Labels For Education site into the Labels For Education site.  (No links, because the e-Labels program is being phased out.) Recently, I’ve been spending a lot of times on some site doing the same thing over and over again.  But most of the sites I visit now implement some kind of AJAX so that doing a simple web request to a page without also loading and parsing the JavaScript ends up giving me a page with no useful data at all.  Unlike the work I’ve done in the past where this was sufficient. This, combined with my recent work implementing Jasmine unit test for JavaScript and running them in the PhantomJS headless browser has had me thinking, wouldn’t it be great if I could do similar kinds of screen scraping, or even browser automation, but use something like an embedded version of PhantomJS to get the work done. Well, do a search for “embedded PhantomJS for .NET” or something similar and you’ll find that that isn’t possible.  At least not yet. But there is a viable alternative.  Actually there are a couple of viable alternative.  But they all end up using the Google Chromium browser API.  The implementation I ended up using is <a href="//github.com/cefsharp">CefSharp</a>.  Mostly because this is what is available from NuGet. What follows are some of the tricks I learned along the way.</p>
 <h2 id="Installing-Chromium"><a href="#Installing-Chromium" class="headerlink" title="Installing Chromium"></a>Installing Chromium</h2><p>The first thing you’ll need to do once you have a project started, is that you’ll need to install the Chromium DLLs.  In the NuGet package manager, do a search for CefSharp.  This will bring up a list of plugins, you’ll want to install CefSharp.OffScreen and CefSharp.Common (I’m assuming you want to do off-screen automation here.)  The version I am working with is version 39. What I found difficult to figure out next was how to actually use the library.</p>
 <h2 id="Get-It-Initialized"><a href="#Get-It-Initialized" class="headerlink" title="Get It Initialized"></a>Get It Initialized</h2><p>You’ll want to initialize the library before you use it.  The following lines will do that.  I just put this as early in my code as possible.</p>
 <p>var settings = new CefSettings<br>    {LogSeverity = LogSeverity.Verbose};<br>settings.CefCommandLineArgs.Add(“no-proxy-server”, “1”);</p>
@@ -161,7 +161,7 @@ return tcs.Task;
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/browser-automation-in-net-w-chromium/" data-id="cjj1pqy2v00aotkhi19tpgw9l" class="article-share-link">
+      <a data-url="http://davembush.github.com/browser-automation-in-net-w-chromium/" data-id="cjj1qjcsr004w1ohiiixmsav9" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

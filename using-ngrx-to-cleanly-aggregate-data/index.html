@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="For the last 18 months, I’ve been working for an organization that has what some might consider a unique requirement.  Because of where our application’s data is sourced, we need to aggregate data on">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/09/2017-10-03.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:38.161Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2017/09/2017-10-03.png">
+<meta property="og:updated_time" content="2018-06-30T19:18:32.719Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Using NgRX to Cleanly Aggregate Data">
 <meta name="twitter:description" content="For the last 18 months, I’ve been working for an organization that has what some might consider a unique requirement.  Because of where our application’s data is sourced, we need to aggregate data on">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/09/2017-10-03.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2017/09/2017-10-03.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,8 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>For the last 18 months, I’ve been working for an organization that has what some might consider a unique requirement.  Because of where our application’s data is sourced, we need to aggregate data on the client side rather than on the server.  What this means is that for any one screen, we may make multiple calls to the server to grab all the data we need.  Fortunately, because we adopted NgRX early in our adoption of Angular, we could avoid a lot of the headaches associated with client-side aggregation. [caption id=”attachment_4457” align=”aligncenter” width=”800”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/09/2017-10-03.png" alt="Using NgRX to Cleanly Aggregate Data" title="Using NgRX to Cleanly Aggregate Data"> Photo credit: <a href="//www.flickr.com/photos/gsfc/14486243743/">NASA Goddard Photo and Video</a> via <a href="//visualhunt.com/re/296da9">Visualhunt</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a>[/caption] </p>
+        <p>For the last 18 months, I’ve been working for an organization that has what some might consider a unique requirement.  Because of where our application’s data is sourced, we need to aggregate data on the client side rather than on the server.  What this means is that for any one screen, we may make multiple calls to the server to grab all the data we need.  Fortunately, because we adopted NgRX early in our adoption of Angular, we could avoid a lot of the headaches associated with client-side aggregation. <figure><img src="/uploads/2017/09/2017-10-03.png" alt="" title="Using NgRX to Cleanly Aggregate Data"><figcaption>Photo credit: <a href="//www.flickr.com/photos/gsfc/14486243743/">NASA Goddard Photo and Video</a> via <a href="//visualhunt.com/re/296da9">Visualhunt</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a></figcaption></figure></p>
+<a id="more"></a> 
 <h2 id="The-Problem"><a href="#The-Problem" class="headerlink" title="The Problem"></a>The Problem</h2><p>There are multiple ways this problem might manifest itself in an application.  But one of the most common is a basic search screen that displays a list of results.  Everything is simple when your data comes back with all the data you need.  But in our case, the data that is returned might contain all but one or two fields that we need.  Those fields exist in other end points.  To keep the basic problem small, let’s just assume that you search for a list of records.  That search returns 10 items.  For each of those records, you now need to make two more calls to retrieve the content of the two missing fields.  This means that to get a complete result set back, you need to make a total of 21 calls.  The problem becomes even worse if you have a total of 100 records, or you now have 3 fields that you need to retrieve for each row.</p>
 <h2 id="The-Old-Way"><a href="#The-Old-Way" class="headerlink" title="The Old Way"></a>The Old Way</h2><p>Prior to using NgRX, the main way we might solve this problem would be to introduce callback hell, or promise hell if you are that lucky.</p>
 <ul>
@@ -164,7 +165,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/using-ngrx-to-cleanly-aggregate-data/" data-id="cjj1pqyen00n2tkhiqogi1u6e" class="article-share-link">
+      <a data-url="http://davembush.github.com/using-ngrx-to-cleanly-aggregate-data/" data-id="cjj1qjd3300h71ohibtm1b5po" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

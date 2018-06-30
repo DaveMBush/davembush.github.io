@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="Well, it probably looks like an odd title.  But let’s face it: we still have to support IE6 for some of our clients no matter how much we don’t like it or it shouldn’t be.  And one of the most frustr">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2009/02/tp-vol3-006.jpg">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.772Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2009/02/tp-vol3-006.jpg">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.352Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jQuery, bgiframe and IE6 z-order hacks">
 <meta name="twitter:description" content="Well, it probably looks like an odd title.  But let’s face it: we still have to support IE6 for some of our clients no matter how much we don’t like it or it shouldn’t be.  And one of the most frustr">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2009/02/tp-vol3-006.jpg">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2009/02/tp-vol3-006.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/02/tp-vol3-006.jpg" alt="tp_vol3_006"> Well, it probably looks like an odd title.  But let’s face it: we still have to support IE6 for some of our clients no matter how much we don’t like it or it shouldn’t be.  And one of the most frustrating items that we ever had to support in IE6 is the fact that certain controls and plug-ins don’t obey z-order. What this means in a practical sense is that if we have a menu layer that drops over one of these misbehaving bad boys, we have to find some hack around it.  The problem I had to solve is that the code for this project is done.  There isn’t a lot of room for tweaking.  The menu we are using is something that is not going to be modified easily.  So, any solution I came up with had to “plug in” to what we already had. Sounds like a job for jQuery to me. I did find a solution that claimed it would do the trick: <a href="//plugins.jquery.com/bgiframe/">bgiframe</a>.  But of course you notice that qualifier, “claimed.”  Yes folks, I had trouble getting it to work. What exactly does bgiframe do?  It scripts the <a href="//weblogs.asp.net/bleroy/archive/2005/08/09/how-to-put-a-div-over-a-select-in-ie.aspx">iframe hack</a> into your popover layer. You see, our menu system is based on a styled, unordered list.  When I told bgiframe to grab the UL and put the iframe in it, it just didn’t work.  Oh, it put the iframe in.  But the select windows still showed through. What was odd was that even the iframe was transparent.  Odd, I thought.  It isn’t supposed to be transparent. So after half a day of searching, looking at the source for bgiframe, and generally pulling my hair out, I finally remembered seeing this little “hack” for the src property of the iframe.  It’s actually noted in the link to the iframe hack I have above. The iframe code should look like:</p>
+        <p><img src="/uploads/2009/02/tp-vol3-006.jpg" alt="tp_vol3_006"> Well, it probably looks like an odd title.  But let’s face it: we still have to support IE6 for some of our clients no matter how much we don’t like it or it shouldn’t be.  And one of the most frustrating items that we ever had to support in IE6 is the fact that certain controls and plug-ins don’t obey z-order. What this means in a practical sense is that if we have a menu layer that drops over one of these misbehaving bad boys, we have to find some hack around it.  The problem I had to solve is that the code for this project is done.  There isn’t a lot of room for tweaking.  The menu we are using is something that is not going to be modified easily.  So, any solution I came up with had to “plug in” to what we already had. Sounds like a job for jQuery to me. I did find a solution that claimed it would do the trick: <a href="//plugins.jquery.com/bgiframe/">bgiframe</a>.  But of course you notice that qualifier, “claimed.”  Yes folks, I had trouble getting it to work. What exactly does bgiframe do?  It scripts the <a href="//weblogs.asp.net/bleroy/archive/2005/08/09/how-to-put-a-div-over-a-select-in-ie.aspx">iframe hack</a> into your popover layer. You see, our menu system is based on a styled, unordered list.  When I told bgiframe to grab the UL and put the iframe in it, it just didn’t work.  Oh, it put the iframe in.  But the select windows still showed through. What was odd was that even the iframe was transparent.  Odd, I thought.  It isn’t supposed to be transparent. So after half a day of searching, looking at the source for bgiframe, and generally pulling my hair out, I finally remembered seeing this little “hack” for the src property of the iframe.  It’s actually noted in the link to the iframe hack I have above. The iframe code should look like:</p>
 <p>&lt;iframe src=”BLOCKED SCRIPT’&lt;html&gt;&lt;/html&gt;’;” scrolling=”no” frameborder=”0” …</p>
 <p>But the script that bgiframe produces looks like:</p>
 <p>&lt;iframe src=”javascript:false;” scrolling=”no” frameborder=”0” …</p>
@@ -127,7 +127,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-bgiframe-and-ie6-z-order-hacks/" data-id="cjj1pqyc600kctkhi1zkv3q14" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-bgiframe-and-ie6-z-order-hacks/" data-id="cjj1qjd0r00eu1ohihihf6uvk" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

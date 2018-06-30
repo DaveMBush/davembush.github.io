@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="For the last two years, about 99% of the work I’ve been doing has been JavaScript programming using EXTjs.  The problems I’ve encountered along the way are primarily related to testing.  Writing unit">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2015/07/image2.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.977Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2015/07/image2.png">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.465Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Testing EXTjs with Selenium using C#">
 <meta name="twitter:description" content="For the last two years, about 99% of the work I’ve been doing has been JavaScript programming using EXTjs.  The problems I’ve encountered along the way are primarily related to testing.  Writing unit">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2015/07/image2.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2015/07/image2.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2015/07/image2.png" alt="image" title="image"> For the last two years, about 99% of the work I’ve been doing has been JavaScript programming using EXTjs.  The problems I’ve encountered along the way are primarily related to testing.  Writing unit test using the “MVC Framework” out of the box is nearly impossible, but I did eventually put together an architecture that allows me to do that.  I may blog about that in the future. Today, what I want to offer is how I overcame various hurdles related to testing EXTjs with Selenium.  The first problem nearly everyone encounters when they first use EXTjs is that the views that are created are created dynamically.  If you use the recommended itemId to uniquely identify the elements on the page, you will be left with IDs that are dynamically generated and inconsistent.  That is, just because the ID has one value today doesn’t mean it will have the same value tomorrow.  And since the controls are dynamically created based on what browser is running, XPATH queries aren’t a good solution either.</p>
+        <p><img src="/uploads/2015/07/image2.png" alt="image" title="image"> For the last two years, about 99% of the work I’ve been doing has been JavaScript programming using EXTjs.  The problems I’ve encountered along the way are primarily related to testing.  Writing unit test using the “MVC Framework” out of the box is nearly impossible, but I did eventually put together an architecture that allows me to do that.  I may blog about that in the future. Today, what I want to offer is how I overcame various hurdles related to testing EXTjs with Selenium.  The first problem nearly everyone encounters when they first use EXTjs is that the views that are created are created dynamically.  If you use the recommended itemId to uniquely identify the elements on the page, you will be left with IDs that are dynamically generated and inconsistent.  That is, just because the ID has one value today doesn’t mean it will have the same value tomorrow.  And since the controls are dynamically created based on what browser is running, XPATH queries aren’t a good solution either.</p>
 <h2 id="Custom-FindsBy-attribute"><a href="#Custom-FindsBy-attribute" class="headerlink" title="Custom FindsBy attribute"></a>Custom FindsBy attribute</h2><p>Now, you could solve this problem by creating a different Page Object for each browser and then you’d be able to use XPATH statements to go after the elements.  But, what if you could go after the itemIds directly?  By the Selenium APIs let you create your own selectors.  So, instead of writing your element properties like this:</p>
 <p>[FindsBy(How = How.Id, Using=”someId”)]<br>private IWebElement SomeId{get; [UsedImplicitly]set;}</p>
 <p>  You could do something like:</p>
@@ -170,7 +170,7 @@ return val.ToString();
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/testing-extjs-with-selenium-using-c/" data-id="cjj1pqyl700tetkhiku35zybp" class="article-share-link">
+      <a data-url="http://davembush.github.com/testing-extjs-with-selenium-using-c/" data-id="cjj1qjd8l00n11ohi7k51nl9m" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

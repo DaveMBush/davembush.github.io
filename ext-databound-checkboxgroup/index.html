@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="Today I’ve decided to post a control I created for EXTjs that might be useful to you.  The problem I was running into was that I had a group of checkbox controls that all needed to be set based on if">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2014/04/CheckBoxGroup.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.880Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2014/04/CheckBoxGroup.png">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.251Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="EXT DataBound CheckboxGroup">
 <meta name="twitter:description" content="Today I’ve decided to post a control I created for EXTjs that might be useful to you.  The problem I was running into was that I had a group of checkbox controls that all needed to be set based on if">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2014/04/CheckBoxGroup.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2014/04/CheckBoxGroup.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/04/CheckBoxGroup.png" alt="CheckBoxGroup" title="CheckBoxGroup">Today I’ve decided to post a control I created for EXTjs that might be useful to you.  The problem I was running into was that I had a group of checkbox controls that all needed to be set based on if a record exist in the database or not.  If the record is there, the box should be checked.  If it isn’t there, it shouldn’t be checked. Further, if the user checks a box, it should add a corresponding record into the database.  Since there is nothing in the current framework that deals with this situation, I decided to create a control. The config for the groupbox is the same as the config for the Ext.form.CheckboxGroup that ships with EXT 4.2 with the addition of two additional config properties, store and inputField. The store config property lets you set the store that the control is bound to just like any other control in EXT that has a store property.  It will either use the store name, or it will use the store object. The inputField config property will let you set which field in the model should be used to set the value of the checkboxes in the group. You will configure the actual check boxes under the group as you would normally.  For the purposes of binding, you will need to set the inputValue config property to the value that will make the check box true. Here’s the code:</p>
+        <p><img src="/uploads/2014/04/CheckBoxGroup.png" alt="CheckBoxGroup" title="CheckBoxGroup">Today I’ve decided to post a control I created for EXTjs that might be useful to you.  The problem I was running into was that I had a group of checkbox controls that all needed to be set based on if a record exist in the database or not.  If the record is there, the box should be checked.  If it isn’t there, it shouldn’t be checked. Further, if the user checks a box, it should add a corresponding record into the database.  Since there is nothing in the current framework that deals with this situation, I decided to create a control. The config for the groupbox is the same as the config for the Ext.form.CheckboxGroup that ships with EXT 4.2 with the addition of two additional config properties, store and inputField. The store config property lets you set the store that the control is bound to just like any other control in EXT that has a store property.  It will either use the store name, or it will use the store object. The inputField config property will let you set which field in the model should be used to set the value of the checkboxes in the group. You will configure the actual check boxes under the group as you would normally.  For the purposes of binding, you will need to set the inputValue config property to the value that will make the check box true. Here’s the code:</p>
 <p>Ext.define(‘framework.form.CheckboxGroup’, {<br>    extend: ‘Ext.form.CheckboxGroup’,<br>    alias: ‘widget.boundcheckboxgroup’,<br>    store: null,<br>    valueField: null,<br>    getBoxes: function(query) {<br>        return this.query(‘[isCheckbox]‘ + (query||’’));<br>    },<br>    init: function () {<br>        var self = this;<br>        self.callParent(arguments);<br>    },<br>    constructor: function (configs) {<br>        var self = this;<br>        self.callParent(arguments);<br>        self.store = configs.store;<br>        self.inputField = configs.inputField;</p>
 <pre><code>    self.on(&apos;afterrender&apos;, function () {
         if (typeof self.store === &apos;string&apos;) {
@@ -162,7 +162,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/ext-databound-checkboxgroup/" data-id="cjj1pqy6m00emtkhile22tnen" class="article-share-link">
+      <a data-url="http://davembush.github.com/ext-databound-checkboxgroup/" data-id="cjj1qjcw400911ohiu44xtvae" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

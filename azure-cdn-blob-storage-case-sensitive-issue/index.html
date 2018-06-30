@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="If you’ve done any work with Azure Blob storage, you already know that Blob storage is case sensitive.  If you’ve hooked the Azure CDN to blob storage, it is also case sensitive. You are probably rea">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2012/04/misc_vol4_019.jpg">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.835Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2012/04/misc_vol4_019.jpg">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.190Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Azure CDN Blob Storage Case Sensitive Issue">
 <meta name="twitter:description" content="If you’ve done any work with Azure Blob storage, you already know that Blob storage is case sensitive.  If you’ve hooked the Azure CDN to blob storage, it is also case sensitive. You are probably rea">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2012/04/misc_vol4_019.jpg">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2012/04/misc_vol4_019.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2012/04/misc_vol4_019.jpg" alt="misc_vol4_019" title="misc_vol4_019"> If you’ve done any work with Azure Blob storage, you already know that Blob storage is case sensitive.  If you’ve hooked the Azure CDN to blob storage, it is also case sensitive. You are probably reading this article because you’ve already run into this problem.  We ran into this problem when we were moving a site from an existing CDN to Azure.  The current site was on domain A and the resources hosted by the CDN were on domain B.  But the URLs to those resources were in various cases.  To make matters worse, there were multiple sites.  So it wasn’t a simple matter of just fixing up the case of one site. So we were looking for some way to make the CDN case insensitive, which you can’t do, when I finally thought, “Why don’t we make it so that it doesn’t matter with a response filter?”  I’ve done this before when I needed to make global changes and it worked well. Then I remembered, the URL Rewriting module for IIS7 does this for us.  And since this module is installed by default on Azure, all we needed to do was:</p>
+        <p><img src="/uploads/2012/04/misc_vol4_019.jpg" alt="misc_vol4_019" title="misc_vol4_019"> If you’ve done any work with Azure Blob storage, you already know that Blob storage is case sensitive.  If you’ve hooked the Azure CDN to blob storage, it is also case sensitive. You are probably reading this article because you’ve already run into this problem.  We ran into this problem when we were moving a site from an existing CDN to Azure.  The current site was on domain A and the resources hosted by the CDN were on domain B.  But the URLs to those resources were in various cases.  To make matters worse, there were multiple sites.  So it wasn’t a simple matter of just fixing up the case of one site. So we were looking for some way to make the CDN case insensitive, which you can’t do, when I finally thought, “Why don’t we make it so that it doesn’t matter with a response filter?”  I’ve done this before when I needed to make global changes and it worked well. Then I remembered, the URL Rewriting module for IIS7 does this for us.  And since this module is installed by default on Azure, all we needed to do was:</p>
 <ul>
 <li>Make everything in blob storage lowercase</li>
 <li>Install the redirect rules in web.config</li>
@@ -130,7 +130,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/azure-cdn-blob-storage-case-sensitive-issue/" data-id="cjj1pqy29009vtkhipgb3i0ld" class="article-share-link">
+      <a data-url="http://davembush.github.com/azure-cdn-blob-storage-case-sensitive-issue/" data-id="cjj1qjcsu00511ohi2z6r8lff" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

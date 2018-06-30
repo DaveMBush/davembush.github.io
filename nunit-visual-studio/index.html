@@ -13,14 +13,14 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="Many people starting out with Unit testing get stuck when it comes to using their tools with the Visual Studio environment.  If it isn’t built in, how do we make it work with Visual Studio?  In this a">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2014/11/image.png">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2014/11/image1.png">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2014/11/image2.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.924Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2014/11/image.png">
+<meta property="og:image" content="http://davembush.github.com/uploads/2014/11/image1.png">
+<meta property="og:image" content="http://davembush.github.com/uploads/2014/11/image2.png">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.409Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NUnit &amp; Visual Studio">
 <meta name="twitter:description" content="Many people starting out with Unit testing get stuck when it comes to using their tools with the Visual Studio environment.  If it isn’t built in, how do we make it work with Visual Studio?  In this a">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2014/11/image.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2014/11/image.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -128,16 +128,16 @@
 <p>For the purposes of this article, we are going to use the test runner that comes with NUnit.</p>
 <p>So the next thing you’ll need to do is go to <a href="//nunit.org">NUnit.org</a> and download and install the latest version of NUnit if you didn’t do that already to get the NUnit DLLs installed. I would suggest using the MSI installer rather than the zip file. All we want to be able to do is to run the test.</p>
 <p>Once you’ve installed NUnit, there should be a menu option “NUnit” that you can click. This should bring up the GUI runner.</p>
-<p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/11/image.png" alt="image" title="image"></p>
+<p><img src="/uploads/2014/11/image.png" alt="image" title="image"></p>
 <p>Use the “File” -&gt; “Open” to navigate to the “bin” directory of your NUnit test DLL project and open the DLL. You should see a screen that looks something like this:</p>
-<p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/11/image1.png" alt="image" title="image"></p>
+<p><img src="/uploads/2014/11/image1.png" alt="image" title="image"></p>
 <p>Click the “Run” button to run your test. You should get a green progress bar under the “Run” button and a check box over the icons in the tree on the left indicating that all of the test succeeded.</p>
 <p>“Wait?!”, you say, “I didn’t test anything, how did they succeed?”</p>
 <p>You are right. A test succeeds if it doesn’t fail. Later on this will impact how we structure our test. So keep this in mind.</p>
 <p>One of the nice things about the NUnit GUI runner is that you can keep this up while you work on your tests. By default, the system shadow copies the DLL so that you can compile the DLL in your project. When the NUnit GUI runner sees that the file has changed, it will reload it so that it is always running whatever version you recently compiled. You can change this behavior, if you really feel the need to, by navigating to “Tools” -&gt; “Settings…”</p>
 <h2 id="Debugging-Tests"><a href="#Debugging-Tests" class="headerlink" title="Debugging Tests"></a>Debugging Tests</h2><p>As with all things related to code, eventually you will need to debug your test. To do this using the the tools that come with NUnit, do the following.</p>
 <p>Right click on the project in Solution Explorer that represents your test project. From the resulting menu, select “Properties.” In the resulting window, select the “Debug” tab from the left-hand side of the window.</p>
-<p><img src="//blog.dmbcllc.com/wp-content/uploads/2014/11/image2.png" alt="image" title="image"></p>
+<p><img src="/uploads/2014/11/image2.png" alt="image" title="image"></p>
 <p>You will want to select “Start external program” and point it to the UNnit runner that got installed when you installed NUnit.</p>
 <p>Now, whenever you run this project, with or without the debugger, NUnit will start up. Note: there is no reason to pass parameters telling it what DLL you want to run because it will load the last DLL it had up. But, if you wanted to do that, you could pass the location of the DLL as a parameter to the GUI runner. There are other parameters you can us. Check the documentation for the version of NUnit you are using for the specifics.</p>
 <p>If you are running .NET 4.x, you’ll want to go to the location in your file system where NUnit.exe lives and find the NUnit.exe.config file. Find the startup element (<startup> …. </startup>) and place this line in between the open and close startup tags:</p>
@@ -164,7 +164,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/nunit-visual-studio/" data-id="cjj1pqyey00netkhi0ijod7jk" class="article-share-link">
+      <a data-url="http://davembush.github.com/nunit-visual-studio/" data-id="cjj1qjd3b00hf1ohius332i4p" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

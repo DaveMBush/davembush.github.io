@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="Not because it is all that new, but because it took me a while to find it, here’s how to create a self executing anonymous function using CSharp, just like you can do in JavaScript. ((Func)(delegate()">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2013/02/arct-059_thumb.jpg">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.862Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2013/02/arct-059_thumb.jpg">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.432Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="C# Self Executing Anonymous Function">
 <meta name="twitter:description" content="Not because it is all that new, but because it took me a while to find it, here’s how to create a self executing anonymous function using CSharp, just like you can do in JavaScript. ((Func)(delegate()">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2013/02/arct-059_thumb.jpg">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2013/02/arct-059_thumb.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="//blog.dmbcllc.com/wp-content/uploads/2013/02/arct-059.jpg"><img src="//blog.dmbcllc.com/wp-content/uploads/2013/02/arct-059_thumb.jpg" alt="arct-059" title="arct-059"></a>Not because it is all that new, but because it took me a while to find it, here’s how to create a self executing anonymous function using CSharp, just like you can do in JavaScript. ((Func<int>)(delegate() { return 0; }))();    Func&lt;int> says the the delegate will return an integer.  If you need to pass a parameter you can use the alternate form of Func&lt;parameterType,returnType&gt; delegate() {return 0;} is just basic <a href="//blog.dmbcllc.com/delegates-in-net/">delegate syntax</a> that I’ve discussed in the past.  The parentheses around everything just force the order of operation so the compiler can deal with it all. And here is the code that I needed this for</int></p>
+        <p><a href="/uploads/2013/02/arct-059.jpg"><img src="/uploads/2013/02/arct-059_thumb.jpg" alt="arct-059" title="arct-059"></a>Not because it is all that new, but because it took me a while to find it, here’s how to create a self executing anonymous function using CSharp, just like you can do in JavaScript. ((Func<int>)(delegate() { return 0; }))();    Func&lt;int> says the the delegate will return an integer.  If you need to pass a parameter you can use the alternate form of Func&lt;parameterType,returnType&gt; delegate() {return 0;} is just basic <a href="//blog.dmbcllc.com/delegates-in-net/">delegate syntax</a> that I’ve discussed in the past.  The parentheses around everything just force the order of operation so the compiler can deal with it all. And here is the code that I needed this for</int></p>
 <p>list = schools.Select(school =&gt; new SchoolItem<br>{<br>… code omited …<br>    Percentage = ((Func<int>)(delegate()<br>    {<br>        var r = 0;<br>        var found = collectionInOuterScope<br>             .Find(x =&gt; x.ID == school.Id);<br>        if (found != null)<br>        {<br>            r = found.Percentage;<br>        }<br>        return r;<br>    }))()<br>}).ToList();</int></p>
 <p>Yes, I could have just created a function and called it, but it hardly seems worth it when I’m going to call it in one place.</p>
 
@@ -124,7 +124,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/c-self-executing-anonymous-function/" data-id="cjj1pqyic00qutkhikcf2nqgk" class="article-share-link">
+      <a data-url="http://davembush.github.com/c-self-executing-anonymous-function/" data-id="cjj1qjd5y00kb1ohixj4mxg8q" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

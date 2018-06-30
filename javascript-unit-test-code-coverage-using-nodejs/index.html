@@ -13,15 +13,15 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="A couple of weeks ago, I showed how to get Node.JS and Gulp working with Visual Studio 2015.  Last week I showed you how to bundle, minify, and cache-bust using Gulp.  This week, we are going to use N">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2016/01/image-6.png">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2016/01/image-7.png">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2016/01/image-8.png">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2016/01/image-9.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:38.026Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2016/01/image-6.png">
+<meta property="og:image" content="http://davembush.github.com/uploads/2016/01/image-7.png">
+<meta property="og:image" content="http://davembush.github.com/uploads/2016/01/image-8.png">
+<meta property="og:image" content="http://davembush.github.com/uploads/2016/01/image-9.png">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.345Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript Unit Test Code Coverage Using NodeJS">
 <meta name="twitter:description" content="A couple of weeks ago, I showed how to get Node.JS and Gulp working with Visual Studio 2015.  Last week I showed you how to bundle, minify, and cache-bust using Gulp.  This week, we are going to use N">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2016/01/image-6.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2016/01/image-6.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -114,7 +114,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>A couple of weeks ago, I showed how to get <a href="//blog.dmbcllc.com/using-node-js-and-gulp-with-an-existing-web-application-in-visual-studio-2015/">Node.JS and Gulp working with Visual Studio 2015</a>.  Last week I showed you <a href="//blog.dmbcllc.com/using-gulp-to-bundle-minify-and-cache-bust/">how to bundle, minify, and cache-bust using Gulp</a>.  This week, we are going to use Node.js to provide JavaScript Unit Test Code Coverage. The main tools we will be using to pull this off are Karma and Istanbul.  The test we write will be using Jasmine. If you don’t use Visual Studio, you should still be able to adapt these instructions to your own environment.  I’ve found getting Istanbul setup kind of tricky at times.  Since everything I’m going to show you here is pure Node.JS, you can ignore the Visual Studio parts. Let’s get started. <img src="//blog.dmbcllc.com/wp-content/uploads/2016/01/image-6.png" alt="JavaScript Unit Test Code Coverage Using NodeJS" title="JavaScript Unit Test Code Coverage Using NodeJS"> </p>
+        <p>A couple of weeks ago, I showed how to get <a href="//blog.dmbcllc.com/using-node-js-and-gulp-with-an-existing-web-application-in-visual-studio-2015/">Node.JS and Gulp working with Visual Studio 2015</a>.  Last week I showed you <a href="//blog.dmbcllc.com/using-gulp-to-bundle-minify-and-cache-bust/">how to bundle, minify, and cache-bust using Gulp</a>.  This week, we are going to use Node.js to provide JavaScript Unit Test Code Coverage. The main tools we will be using to pull this off are Karma and Istanbul.  The test we write will be using Jasmine. If you don’t use Visual Studio, you should still be able to adapt these instructions to your own environment.  I’ve found getting Istanbul setup kind of tricky at times.  Since everything I’m going to show you here is pure Node.JS, you can ignore the Visual Studio parts. Let’s get started. <img src="/uploads/2016/01/image-6.png" alt="JavaScript Unit Test Code Coverage Using NodeJS" title="JavaScript Unit Test Code Coverage Using NodeJS"> </p>
 <h2 id="Assumptions"><a href="#Assumptions" class="headerlink" title="Assumptions"></a>Assumptions</h2><p>I’m going to assume that you’ve already got a project setup.  For the purposes of this discussion, we are going to assume that the files we want to test are in the /app directory and that our test are in the /jsTest directory. If you are using Visual Studio, one of the first questions you might have is, “if I put my tests in the same project as the app I am testing, won’t those test get deployed with the application?”  And the answer to that question is, “Yes, if you use the defaults.” But we aren’t going to use the defaults.  What we are going to do is that we are going to make sure that any files we create that we don’t want to deploy to the web server have their build action set to “none”.  You can find this in the file’s property window. The other way you could solve this problem is that you could have a deploy script written in Gulp that specifies exactly what files should be deployed.</p>
 <h2 id="A-Simple-Demo-File"><a href="#A-Simple-Demo-File" class="headerlink" title="A Simple Demo File"></a>A Simple Demo File</h2><p>Just so we have something to test, I’ve created a really simple demo JavaScript file that looks like this:</p>
 <p>(function() {<br>    function demo() {<br>        var self = this;<br>        function add(a, b) {<br>            return a + b;<br>        }</p>
@@ -150,7 +150,7 @@ window.demo = demo;
 <p>var gulp = require(‘gulp’);<br>var Server = require(‘karma’).Server;</p>
 <p>gulp.task(‘test’, function (done) {<br>    new Server({<br>        configFile: __dirname + ‘\\jsTests\\karma.conf.js’,<br>        singleRun: true,<br>        browserNoActivityTimeout: 60000<br>    }, function () { done(); }).start();<br>});</p>
 <p>This simple task will run Karma for you using the karma.conf.js file we just created in jsTests. If you want to have this run every time a file changes once you’ve kicked off this task, change singleRun to false.  As it is written, it only runs the tests on demand.</p>
-<h2 id="JavaScript-Unit-Test-Code-Coverage"><a href="#JavaScript-Unit-Test-Code-Coverage" class="headerlink" title="JavaScript Unit Test Code Coverage"></a>JavaScript Unit Test Code Coverage</h2><p>So, hopefully, you’ve got everything running correctly.  Let’s look at the results. The output for the code coverage should now be in /jsTests/coverage/PhantomJS* directory.  Load the index.html file in your browser. You should see a screen that looks something like this: <img src="//blog.dmbcllc.com/wp-content/uploads/2016/01/image-7.png" alt="image" title="image">   Click on ‘app/’ to see this: <img src="//blog.dmbcllc.com/wp-content/uploads/2016/01/image-8.png" alt="image" title="image"> And finally, click on ‘Demo.js’ to see <img src="//blog.dmbcllc.com/wp-content/uploads/2016/01/image-9.png" alt="image" title="image"></p>
+<h2 id="JavaScript-Unit-Test-Code-Coverage"><a href="#JavaScript-Unit-Test-Code-Coverage" class="headerlink" title="JavaScript Unit Test Code Coverage"></a>JavaScript Unit Test Code Coverage</h2><p>So, hopefully, you’ve got everything running correctly.  Let’s look at the results. The output for the code coverage should now be in /jsTests/coverage/PhantomJS* directory.  Load the index.html file in your browser. You should see a screen that looks something like this: <img src="/uploads/2016/01/image-7.png" alt="image" title="image">   Click on ‘app/’ to see this: <img src="/uploads/2016/01/image-8.png" alt="image" title="image"> And finally, click on ‘Demo.js’ to see <img src="/uploads/2016/01/image-9.png" alt="image" title="image"></p>
 <h2 id="The-Shortcut"><a href="#The-Shortcut" class="headerlink" title="The Shortcut"></a>The Shortcut</h2><p>Fortunately for you, <a href="//github.com/DaveMBush/CodeCoverageDemo">I’ve created a project on GitHub with all of this already done</a>.</p>
 
       
@@ -162,7 +162,7 @@ window.demo = demo;
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/javascript-unit-test-code-coverage-using-nodejs/" data-id="cjj1pqybq00jvtkhiu2itzqfj" class="article-share-link">
+      <a data-url="http://davembush.github.com/javascript-unit-test-code-coverage-using-nodejs/" data-id="cjj1qjd0a00e91ohisel3tbux" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

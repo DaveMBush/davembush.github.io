@@ -13,13 +13,13 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="Last week I talked about JavaScript variables gotchas.  This week, we want to take an in-depth look at JavaScript functions. Why? Well, for the same reason we looked at variables last week.  If you ke">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2016/02/image-1.png">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2016/02/wlEmoticon-smile.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:38.027Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2016/02/image-1.png">
+<meta property="og:image" content="http://davembush.github.com/uploads/2016/02/wlEmoticon-smile.png">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.331Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript Functions -- In-Depth">
 <meta name="twitter:description" content="Last week I talked about JavaScript variables gotchas.  This week, we want to take an in-depth look at JavaScript functions. Why? Well, for the same reason we looked at variables last week.  If you ke">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2016/02/image-1.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2016/02/image-1.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -115,7 +115,7 @@
         <p>Last week I talked about <a href="//blog.dmbcllc.com/javascript-variable-gotchas/">JavaScript variables gotchas</a>.  This week, we want to take an in-depth look at JavaScript functions. Why? Well, for the same reason we looked at variables last week.  If you keep using JavaScript the way you think it works instead of the way it really works, at best, you will have a much harder time debugging your JavaScript code.  Worse case, you introduce some pretty nasty bugs into your code. So, let’s start with a pretty basic JavaScript function question.  One I would use as a question if I were interviewing someone for a hard core JavaScript job. What is the difference between the following two ways of declaring a function?</p>
 <p>function foo(){<br>}</p>
 <p>var foo = function(){<br>}</p>
-<p><img src="//blog.dmbcllc.com/wp-content/uploads/2016/02/image-1.png" alt="JavaScript Functions -- In-depth" title="JavaScript Functions -- In-depth"> </p>
+<p><img src="/uploads/2016/02/image-1.png" alt="JavaScript Functions -- In-depth" title="JavaScript Functions -- In-depth"> </p>
 <h2 id="Declaring-JavaScript-Functions"><a href="#Declaring-JavaScript-Functions" class="headerlink" title="Declaring JavaScript Functions"></a>Declaring JavaScript Functions</h2><p>If you think these both do the same thing, you would be almost right.  But here is the key distinction. Remember our discussion last week about variable hoisting? When you declare a variable, the declaration is hoisted to the top of the variable scope but it isn’t assigned until the actual assignment in the code. So that the following code</p>
 <p>var foo = function(){<br>}</p>
 <p>Actually compiles to</p>
@@ -158,7 +158,7 @@
 <p>or worse</p>
 <p>var $ = function(){<br>}<br>$();</p>
 <p>So, IIFEs take care of this issue.  It keeps all of the variables we declare in a file out of global scope while still making them accessible to all of the functions we declare within the IIFE.  Since it runs at load time, we really don’t need a function name for our debug stack.</p>
-<h2 id="A-Note-About-JavaScript-and-Node-js"><a href="#A-Note-About-JavaScript-and-Node-js" class="headerlink" title="A Note About JavaScript and Node.js"></a>A Note About JavaScript and Node.js</h2><p>While everything I’ve said above is true for browser based JavaScript.  When you get into the area of Node.js development, the rules change slightly.  Specifically, each JavaScript file is already wrapped in an IIFE, this is why we need module.exports and why if you assign a variable in one JavaScript file it is not available to you to use in another JavaScript file.  So as far as I can think, there is no valid reason for using anonymous functions in Node other than laziness.  But I’m sure someone will set me straight in the comments <img src="//blog.dmbcllc.com/wp-content/uploads/2016/02/wlEmoticon-smile.png" alt="Smile">.</p>
+<h2 id="A-Note-About-JavaScript-and-Node-js"><a href="#A-Note-About-JavaScript-and-Node-js" class="headerlink" title="A Note About JavaScript and Node.js"></a>A Note About JavaScript and Node.js</h2><p>While everything I’ve said above is true for browser based JavaScript.  When you get into the area of Node.js development, the rules change slightly.  Specifically, each JavaScript file is already wrapped in an IIFE, this is why we need module.exports and why if you assign a variable in one JavaScript file it is not available to you to use in another JavaScript file.  So as far as I can think, there is no valid reason for using anonymous functions in Node other than laziness.  But I’m sure someone will set me straight in the comments <img src="/uploads/2016/02/wlEmoticon-smile.png" alt="Smile">.</p>
 <h2 id="JavaScript-Functions-Best-Practices"><a href="#JavaScript-Functions-Best-Practices" class="headerlink" title="JavaScript Functions Best Practices"></a>JavaScript Functions Best Practices</h2><p>All of this leads to the following best practices regarding the use of function in JavaScript</p>
 <ol>
 <li>Declare functions using the <code>function</code> keyword instead of the <code>var</code> keyword.</li>
@@ -175,7 +175,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/javascript-functions-in-depth/" data-id="cjj1pqyb700j9tkhiya2jve4o" class="article-share-link">
+      <a data-url="http://davembush.github.com/javascript-functions-in-depth/" data-id="cjj1qjczs00dk1ohif71mizvx" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

@@ -5,20 +5,20 @@
   
   <title>Amazing Angular2 DOM Tips, Tricks, and Warnings | Dave&#39;s Notebook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="I’ve been working with Angular2 now since RC0 and I’ve learned quite a few things about Angular2 DOM tips, tricks, and warnings that you’ll want to pay attention to as you get started. [caption id=””">
+  <meta name="description" content="I’ve been working with Angular2 now since RC0 and I’ve learned quite a few things about Angular2 DOM tips, tricks, and warnings that you’ll want to pay attention to as you get started. Photo credit: S">
 <meta name="keywords" content="angular 2,typescript,DOM">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Amazing Angular2 DOM Tips, Tricks, and Warnings">
 <meta property="og:url" content="http://davembush.github.com/amazing-angular2-dom-tips-tricks-and-warnings/index.html">
 <meta property="og:site_name" content="Dave&#39;s Notebook">
-<meta property="og:description" content="I’ve been working with Angular2 now since RC0 and I’ve learned quite a few things about Angular2 DOM tips, tricks, and warnings that you’ll want to pay attention to as you get started. [caption id=””">
+<meta property="og:description" content="I’ve been working with Angular2 now since RC0 and I’ve learned quite a few things about Angular2 DOM tips, tricks, and warnings that you’ll want to pay attention to as you get started. Photo credit: S">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/01/image.png">
-<meta property="og:updated_time" content="2018-06-23T18:40:38.098Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2017/01/image.png">
+<meta property="og:updated_time" content="2018-06-30T19:18:32.680Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Amazing Angular2 DOM Tips, Tricks, and Warnings">
-<meta name="twitter:description" content="I’ve been working with Angular2 now since RC0 and I’ve learned quite a few things about Angular2 DOM tips, tricks, and warnings that you’ll want to pay attention to as you get started. [caption id=””">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2017/01/image.png">
+<meta name="twitter:description" content="I’ve been working with Angular2 now since RC0 and I’ve learned quite a few things about Angular2 DOM tips, tricks, and warnings that you’ll want to pay attention to as you get started. Photo credit: S">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2017/01/image.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,8 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>I’ve been working with Angular2 now since RC0 and I’ve learned quite a few things about Angular2 DOM tips, tricks, and warnings that you’ll want to pay attention to as you get started. [caption id=”” align=”aligncenter” width=”581”]<img src="//blog.dmbcllc.com/wp-content/uploads/2017/01/image.png" alt="Amazing Angular2 DOM Tips, Tricks and Warnings" title="Amazing Angular2 DOM Tips, Tricks and Warnings"> Photo credit: <a href="//www.flickr.com/photos/sis/196867770/">Sister72</a> via <a href="//visualhunt.com">VisualHunt</a> / <a href="//creativecommons.org/licenses/by/2.0/">CC BY</a>[/caption] </p>
+        <p>I’ve been working with Angular2 now since RC0 and I’ve learned quite a few things about Angular2 DOM tips, tricks, and warnings that you’ll want to pay attention to as you get started. <figure><img src="/uploads/2017/01/image.png" alt="" title="Amazing Angular2 DOM Tips, Tricks and Warnings"><figcaption>Photo credit: <a href="//www.flickr.com/photos/sis/196867770/">Sister72</a> via <a href="//visualhunt.com">VisualHunt</a> / <a href="//creativecommons.org/licenses/by/2.0/">CC BY</a></figcaption></figure></p>
+<a id="more"></a> 
 <h2 id="Avoid-DOM-Manipulation"><a href="#Avoid-DOM-Manipulation" class="headerlink" title="Avoid DOM Manipulation"></a>Avoid DOM Manipulation</h2><p>One of the first things you need to understand about how Angular2 works compared to AngularJS is that any DOM manipulation you do using Angular2 isn’t really manipulating the DOM.  At least not directly.  Everything that happens at the DOM level is a result of a state change in the component.  When Angular2 realizes that the state has changed, it changes the DOM to reflect the change. What this means, generally, is that if you need to know about some state change that happened at the DOM level, you’ll want to track that change in your component class.  Can you access the DOM directly from your code?  Yes.  And sometimes you might just have to.  But you’ll produce code that is much easier to test if you avoid having your code reach up into the DOM to get current state information. You may have already heard about the experimental Web Workers support in Angular2.  To make sure you can use this, it would be best to avoid direct DOM manipulation until we are sure the Web Workers implementation will be able to deal with this properly. What this all means in practical terms is that you’ll want to avoid using libraries such as jQuery to manipulate your code and instead replicate that behavior using native Angular2 calls.</p>
 <h2 id="Only-Generate-the-HTML-You-Need"><a href="#Only-Generate-the-HTML-You-Need" class="headerlink" title="Only Generate the HTML You Need"></a>Only Generate the HTML You Need</h2><p>On a similar note, you only want to render the HTML you’re going to need at any one time.  Not everything all at once.  This will allow your code to render much more efficiently. For example, if you have a menu that has dropdown menus, the temptation is going to be to render all the HTML the menu may need all at once and use JavaScript to show or hide the dropdowns as you mouse over them or click them.  But with Angular2, you could use the *ngIf directive to include and exclude the menu option as you need them to show.  This reduces the initial page size and simplifies your code.  Been there, done that. By the way, there are other directives you’ll want to get familiar with, but *ngIf is probably the most often ignored because you are likely to try to use display:none to hide an element instead of just eliminating it from the DOM completely.</p>
 <h2 id="Minimize-Change-Detection"><a href="#Minimize-Change-Detection" class="headerlink" title="Minimize Change Detection"></a>Minimize Change Detection</h2><p>I was recently working on a component that displayed a nested array as a set of tabs and dropdown menus.  Everything was working great but I wanted to check the CSS on the dropdown so I could make some adjustments.  This is when I discovered that the HTML was being rewritten about once a second even though nothing had changed.  I couldn’t see this on the main screen, but it became super evident when I opened the developer tools. Fortunately, I had already learned about OnPush change detection.  So I was able to set my component to use Push notification:</p>
@@ -144,7 +145,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/amazing-angular2-dom-tips-tricks-and-warnings/" data-id="cjj1pqxv5001wtkhiawq9y4w0" class="article-share-link">
+      <a data-url="http://davembush.github.com/amazing-angular2-dom-tips-tricks-and-warnings/" data-id="cjj1qjcqc00201ohimdl2is9l" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

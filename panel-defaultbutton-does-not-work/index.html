@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="Or, at least, it didn’t. Here’s what happened: Yesterday a client asked me to help track down a problem he was having with setting the default button for a text box. As you should already know, you c">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2008/09/misc-vol2-051.jpg">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.842Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2008/09/misc-vol2-051.jpg">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.412Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Panel DefaultButton does not work">
 <meta name="twitter:description" content="Or, at least, it didn’t. Here’s what happened: Yesterday a client asked me to help track down a problem he was having with setting the default button for a text box. As you should already know, you c">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2008/09/misc-vol2-051.jpg">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2008/09/misc-vol2-051.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2008/09/misc-vol2-051.jpg" alt="misc_vol2_051"> Or, at least, it didn’t. Here’s what happened: Yesterday a client asked me to help track down a problem he was having with setting the default button for a text box. As you should already know, you can make ASP.NET automatically click a specific button on the page (Button, ImageButton, or LinkButton) by grouping everything in a Panel and setting the DefaultButton property to the ID of the button you want to have automatically clicked.  Of course, in situations like these, you can pull your hair out trying to find the problem. There was nothing obviously wrong with the code. Everything was grouped into a panel. All of the Panels had their DefaultButton properties set to the correct button. Maybe it’s because it is an ImageButton? No, not only are ImageButtons supported, but creating a quick demo verified that they did in fact work. But what’s this? When I put the ASCX file into design view, it does not render the panel with more than a 1px high rectangle. That’s odd… wonder why it’s doing that. Let’s try resizing it. Nope. That doesn’t work. And then I looked closer. All of the code basically looked something like this:  </p>
+        <p><img src="/uploads/2008/09/misc-vol2-051.jpg" alt="misc_vol2_051"> Or, at least, it didn’t. Here’s what happened: Yesterday a client asked me to help track down a problem he was having with setting the default button for a text box. As you should already know, you can make ASP.NET automatically click a specific button on the page (Button, ImageButton, or LinkButton) by grouping everything in a Panel and setting the DefaultButton property to the ID of the button you want to have automatically clicked.  Of course, in situations like these, you can pull your hair out trying to find the problem. There was nothing obviously wrong with the code. Everything was grouped into a panel. All of the Panels had their DefaultButton properties set to the correct button. Maybe it’s because it is an ImageButton? No, not only are ImageButtons supported, but creating a quick demo verified that they did in fact work. But what’s this? When I put the ASCX file into design view, it does not render the panel with more than a 1px high rectangle. That’s odd… wonder why it’s doing that. Let’s try resizing it. Nope. That doesn’t work. And then I looked closer. All of the code basically looked something like this:  </p>
 <tr><br>  &lt;asp:Panel DefaultButton=”m_ibKeyIngredient” ID=”m_pKeyIngredient” runat=”server” Width=”370px”&gt;<br>    <td valign="top"><br>      &lt;asp:TextBox ID=”m_tbKeyIngredient” runat=”server” Width=”244px”&gt;&lt;/asp:TextBox&gt;<br>      &lt;asp:ImageButton ID=”m_ibKeyIngredient” runat=”server” OnClick=”m_ibKeyIngredient_Click” ImageUrl=”images/gobutton.gif” ImageAlign=”AbsBottom” /&gt;<br>    </td><br>  &lt;/asp:Panel&gt;<br></tr> 
 
 <p>If you casually read over this code, you completely miss the fact that the TD elements are INSIDE of the Panel. You see the TR element and the panel and if you aren’t thinking clearly, you think the TR element is the cell when in fact, it is the row. The TD elements that represent the cell are further in and easy to miss. You need to keep in mind that the Panel renders itself as a DIV and you can’t have a DIV tag inside a TR tag. It turns out that swapping the Panel tag with the TD element solved the whole problem. Unfortunately, this took us several hours of frustration to figure out. So, what did we learn?</p>
@@ -129,7 +129,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/panel-defaultbutton-does-not-work/" data-id="cjj1pqyfm00nytkhi0d1ylmuq" class="article-share-link">
+      <a data-url="http://davembush.github.com/panel-defaultbutton-does-not-work/" data-id="cjj1qjd3v00i21ohiu4sviyza" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

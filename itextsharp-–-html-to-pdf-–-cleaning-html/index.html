@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="The last prerequisite step prior to actually converting our HTML into PDF code is to clean up the HTML. The method I use takes advantage of the XML parser in .NET but in order to use that we have to">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://blog.dmbcllc.com/wp-content/uploads/2009/07/H05K0013.jpg">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.810Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2009/07/H05K0013.jpg">
+<meta property="og:updated_time" content="2018-06-30T18:47:20.438Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iTextSharp – HTML to PDF – Cleaning HTML">
 <meta name="twitter:description" content="The last prerequisite step prior to actually converting our HTML into PDF code is to clean up the HTML. The method I use takes advantage of the XML parser in .NET but in order to use that we have to">
-<meta name="twitter:image" content="http://blog.dmbcllc.com/wp-content/uploads/2009/07/H05K0013.jpg">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2009/07/H05K0013.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,10 +111,10 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/07/H05K0013.jpg" alt="H05K0013" title="H05K0013"> The last prerequisite step prior to actually converting our HTML into PDF code is to clean up the HTML. The method I use takes advantage of the XML parser in .NET but in order to use that we have to have XHTML compliant XML. For this exercise, what I am most concerned about is that the HTML tags all have matching closing tags, that the tags are nested in a hierarchical structure, and that the tags all are lower case. Some of this we will have to rely on the user to provide, like properly nesting the tags.  But some of this we can attempt to clean up in our code.  If you know you will have complete control over your HTML, you might be able to skip this step.  But I think the code is simple enough that you’ll want to add it anyhow.  In my code, I have a function that accepts the HTML string and returns a collection of IElements that my main code will insert into the PDF.  The first thing I do in that function is make sure the code starts and ends with an open and close paragraph tag.  This is to ensure that I have at least one element that I can work with when I do the translation.</p>
+        <p><img src="/uploads/2009/07/H05K0013.jpg" alt="H05K0013" title="H05K0013"> The last prerequisite step prior to actually converting our HTML into PDF code is to clean up the HTML. The method I use takes advantage of the XML parser in .NET but in order to use that we have to have XHTML compliant XML. For this exercise, what I am most concerned about is that the HTML tags all have matching closing tags, that the tags are nested in a hierarchical structure, and that the tags all are lower case. Some of this we will have to rely on the user to provide, like properly nesting the tags.  But some of this we can attempt to clean up in our code.  If you know you will have complete control over your HTML, you might be able to skip this step.  But I think the code is simple enough that you’ll want to add it anyhow.  In my code, I have a function that accepts the HTML string and returns a collection of IElements that my main code will insert into the PDF.  The first thing I do in that function is make sure the code starts and ends with an open and close paragraph tag.  This is to ensure that I have at least one element that I can work with when I do the translation.</p>
 <p>if (!xhtmlString.ToLower().StartsWith(“</p><p>“))<br>    xhtmlString = “</p><p>“ + xhtmlString + “</p>“;<p></p>
 <p>The next thing I do is make sure that all of the white space that isn’t the space character is removed from the code.</p>
-<p>xhtmlString = xhtmlString<br>    .Replace(“\r”, string.Empty)<br>    .Replace(“\n”, string.Empty)<br>    .Replace(“\t”, string.Empty);</p>
+<p>xhtmlString = xhtmlString<br>    .Replace(“\<br>“, string.Empty)<br>    .Replace(“\n”, string.Empty)<br>    .Replace(“\t”, string.Empty);</p>
 <p>Then we want to change our BR tags to auto close.  Since I don’t deal with IMG tags in this code I don’t bother auto closing those tags.  If you decide to embellish this code to use the IMG tag, you’ll want to add code to fix that as well.</p>
 <p>xhtmlString = xhtmlString<br>    .Replace(“<br>“, “<br>“)<br>    .Replace(“<br>“, “<br>“);</p>
 <p>Since my code currently ignores any attributes in the SPAN tag, I then remove the span tag’s attributes.</p>
@@ -142,7 +142,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-cleaning-html/" data-id="cjj1pqyao00iotkhip01f3mav" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-cleaning-html/" data-id="cjj1qjcz200cv1ohi0ooijbb7" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

@@ -106,7 +106,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/11/G03A0085.jpg" alt="G03A0085" title="G03A0085"></p>
+        <p><img src="/uploads/2009/11/G03A0085.jpg" alt="G03A0085" title="G03A0085"></p>
 <p>I got this question a couple of weeks ago but just never had the time to put into answering fully.  But today I have some extra time due to the fact that I’m under-booked with projects.</p>
 <p>The question went something like this:</p>
 <p>“I want to be able to upload a file from a desktop application to a web site that has a form that accepts the file as a post.  How do I do that?”</p>
@@ -119,9 +119,9 @@
 <p>FileStream fs= new FileStream(“your file here”,<br>    System.IO.FileMode.Open, System.IO.FileAccess.Read);<br>byteArray= new byte[loFile.Length];<br>fs.Read(byteArray,0,(int) byteArray.Length);<br>fs.Close();</p>
 <p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
 <p>Then we setup the multipart boundary header.</p>
-<p>string var = “–” + boundaryID + “\r\n”  +<br>     “Content-Disposition: form-data; name=\“” + Key + “\“ filename=\“” +<br>      new FileInfo(“your file here”).Name + “\“\r\n\r\n”;</p>
+<p>string var = “–” + boundaryID + “\<br>\n”  +<br>     “Content-Disposition: form-data; name=\“” + Key + “\“ filename=\“” +<br>      new FileInfo(“your file here”).Name + “\“\<br>\n\<br>\n”;</p>
 <p>Then we write the boundary header and the content to the output stream .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
-<p>System.IO.MemoryStream ms = new System.IO.MemoryStream();<br>System.IO.BinaryWriter bw = new System.IO.BinaryWriter(ms);<br>bw.Write(Encoding.GetEncoding(1252).GetBytes(var));<br>bw.Write(byteArray);<br>bw.Write(Encoding.GetEncoding(1252).GetBytes(“\r\n”));</p>
+<p>System.IO.MemoryStream ms = new System.IO.MemoryStream();<br>System.IO.BinaryWriter bw = new System.IO.BinaryWriter(ms);<br>bw.Write(Encoding.GetEncoding(1252).GetBytes(var));<br>bw.Write(byteArray);<br>bw.Write(Encoding.GetEncoding(1252).GetBytes(“\<br>\n”));</p>
 <p>System.IO.Stream postStream = wr.GetRequestStream();<br>ms.WriteTo(postStream);<br>postStream.Close();</p>
 <p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
 <p>Note the last bw.Write() line is telling the server this is the  end of the boundary.</p>
@@ -142,7 +142,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/upload-a-file-via-webrequest-using-csharp/" data-id="cjj1pqynq00vjtkhiokfgpwww" class="article-share-link">
+      <a data-url="http://davembush.github.com/upload-a-file-via-webrequest-using-csharp/" data-id="cjj1qjdax00p91ohixfbisqt4" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -188,7 +188,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/11/C03H0075.jpg" alt="C03H0075" title="C03H0075"></p>
+        <p><img src="/uploads/2009/11/C03H0075.jpg" alt="C03H0075" title="C03H0075"></p>
 <p>Several of the projects I’m involved with use the Google Search Appliance for their search engine.  For each of these projects, we’ve wanted to integrate the results on an ASPX page so that the results look like they are part of the site rather than taking them to another site to display the results.  This is achieved by using the XML Control, the Google XSLT file, and some good old-fashioned search and replace.</p>
 <p>It has been a while since I’ve actually worked on this code.  Mostly we just copy, paste, and modify from one project to another, but I hope to give you enough here to at least get you started doing this yourself, if not everything you need.</p>
 <p>On the ASPX page that you want to display your search results on, put an XML Control.  This is the only control you will need on the page for this to work.</p>
@@ -232,7 +232,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/embedding-google-search-appliance-results-in-asp-net/" data-id="cjj1pqy5x00dytkhi0vnnlc9y" class="article-share-link">
+      <a data-url="http://davembush.github.com/embedding-google-search-appliance-results-in-asp-net/" data-id="cjj1qjcvs008w1ohibfv1pakr" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -278,7 +278,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/11/G07L0095.jpg" alt="G07L0095" title="G07L0095"> A couple of days ago I mentioned a project that I’ve been working on that is a bit out of the ordinary as far as GridViews go.  One of the issues I’ve had is that the edit template doesn’t map to the view template very well. OK, it doesn’t map at all. You see, the data that gets stored back to the database during the edit could go to two of four different tables.  But the view is generated from a stored procedure that gathers the information from those tables and makes the result look like it came from one table. So how do you have the GridView update the database under these conditions?  The secret lies in the event handlers–in this case, the RowUpdating event handler. Using the RowUpdating handler, we can do whatever we want.  The first line of code you need to make sure you include is</p>
+        <p><img src="/uploads/2009/11/G07L0095.jpg" alt="G07L0095" title="G07L0095"> A couple of days ago I mentioned a project that I’ve been working on that is a bit out of the ordinary as far as GridViews go.  One of the issues I’ve had is that the edit template doesn’t map to the view template very well. OK, it doesn’t map at all. You see, the data that gets stored back to the database during the edit could go to two of four different tables.  But the view is generated from a stored procedure that gathers the information from those tables and makes the result look like it came from one table. So how do you have the GridView update the database under these conditions?  The secret lies in the event handlers–in this case, the RowUpdating event handler. Using the RowUpdating handler, we can do whatever we want.  The first line of code you need to make sure you include is</p>
 <p>e.Cancel = true;</p>
 <p>“e” represents the System.Web.UI.WebControls.GridViewUpdateEventArgs object that is passed in.  What the line of code says is “cancel any other update processing that may have happened after this event gets called.” From here on out, you’ll need to retrieve the values from your edit controls manually  using the <a href="//blog.dmbcllc.com/2009/11/02/access-a-control-by-id-from-within-a-databound-control/">FindControByID() method I demonstrated on Monday</a> and updating the database using code.   <strong>Other places talking about the GridView and Updating a Row</strong> <a href="//blog.paulgeorge.co.uk/2009/03/25/sitecore-with-gridview-rowupdating-event-doesnt-fire/">sitecore with gridview – rowupdating event doesn’t fire</a> - gridview to in web.config resolves this issue. your web.config would then look like : system.web.ui.webcontrols.repeater system.web.ui.webcontrols. … <a href="//bloggingabout.net/blogs/dennis/archive/2006/08/24/DataBinding-in-ASP.NET-2.0-and-the-RowUpdating-event.aspx">DataBinding in ASP.NET 2.0 and the RowUpdating event - Dennis van …</a> - For a while now I’m trying to figure out why my method, triggered by the GridView.RowUpdating event, doesn’t work as all samples say it should do. All samples of course assume you’re doing everything in your .aspx page, but I have to do … <a href="//www.aspdotnetcodes.com/GridView_Insert_Edit_Update_Delete.aspx">Simple Insert, Select, Edit, Update and Delete in Asp.Net GridView …</a> - The above block of codes in RowUpdating event, finds the control in the GridView, takes those values in pass it to the CustomersCls class Update method. The first parameter GridView1.DataKeys[e.RowIndex].Values[0]. …</p>
 
@@ -291,7 +291,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/gridview-and-updating-a-row-manually/" data-id="cjj1pqy7800f8tkhifw4p5na8" class="article-share-link">
+      <a data-url="http://davembush.github.com/gridview-and-updating-a-row-manually/" data-id="cjj1qjcwu00a51ohim6937ftq" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -337,7 +337,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/11/back041.jpg" alt="back-041" title="back-041"> Databound controls are at once very easy and very frustrating.  If you just need to do some simple databinding that gets a list of items on the screen and you need the ability to edit those items, you are all set. But once you need to do anything that deviates from that simple pattern, you are kind of stuck.  One of the problems involves accessing a control in a templated item.  Probably the most common place this shows up is in the FormView control.  But you’ll also experience the problem using the GridView control with a templated column. There is a pretty simple solution to the problem.  If you are in a form view, all you need to do is use the FindControl() method of any control.  The problem is finding which parent control houses the control we are looking for.  So what we really need is a recursive control that looks for the control with a particular ID in any of the controls that are a child of the control or any of its child controls or any of its child controls, etc., until it finds the control. I’ve written such a function for my utility box.</p>
+        <p><img src="/uploads/2009/11/back041.jpg" alt="back-041" title="back-041"> Databound controls are at once very easy and very frustrating.  If you just need to do some simple databinding that gets a list of items on the screen and you need the ability to edit those items, you are all set. But once you need to do anything that deviates from that simple pattern, you are kind of stuck.  One of the problems involves accessing a control in a templated item.  Probably the most common place this shows up is in the FormView control.  But you’ll also experience the problem using the GridView control with a templated column. There is a pretty simple solution to the problem.  If you are in a form view, all you need to do is use the FindControl() method of any control.  The problem is finding which parent control houses the control we are looking for.  So what we really need is a recursive control that looks for the control with a particular ID in any of the controls that are a child of the control or any of its child controls or any of its child controls, etc., until it finds the control. I’ve written such a function for my utility box.</p>
 <p>public static Control FindControlByID</p>
 <p>(string id, ControlCollection controls) { Control returnControl = null; foreach (Control c in controls) { if (c.ID == id) return c; returnControl = FindControlByID(id, c.Controls); if (returnControl != null) return returnControl; } return returnControl; } Notice, it is a static method so we can call it from anywhere without having to instantiate the class it is in. So now, if I’m in a row and I need to find another control in that row, I can write code like this</p>
 <p>Protected Sub m_grid_RowUpdating</p>
@@ -352,7 +352,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/access-a-control-by-id-from-within-a-databound-control/" data-id="cjj1pqxuq001dtkhi76yjq6s1" class="article-share-link">
+      <a data-url="http://davembush.github.com/access-a-control-by-id-from-within-a-databound-control/" data-id="cjj1qjcpj001a1ohiirdp7cim" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -398,7 +398,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/10/B03B0035.jpg" alt="B03B0035" title="B03B0035"> The agile “Task Board,” also known as a “Scrum Board” has become a staple of the agile programming world. “Getting Things Done” (GTD) is a process for managing task in the business world. I mostly like what GTD does, but the classic implementation doesn’t fit how I work. But what if we could adapt the two?  GTD has a basic concept of task that get classified by context (where you are) and a list for each of “Next Actions,” “Projects,” “Waiting For,” and “Someday Maybe.”  There is also this thing called 43 folders that allows you to “schedule” things into the future.  You can find out more about GTD by getting the book, <a href="//www.amazon.com/gp/product/0142000280?ie=UTF8&amp;tag=davmbusnetapp-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=0142000280">Getting Things Done: The Art of Stress-Free Productivity</a><img src="//www.assoc-amazon.com/e/ir?t=davmbusnetapp-20&amp;l=as2&amp;o=1&amp;a=0142000280" alt="">. Interestingly enough, a typical task board has a column for “To do,” “In process,” “Done,” and “Blocked” or “Waiting.”  The rows are “Stories” that answer the question, “the user should be able to…” Merging the two, I’ve set up a white board that has “To do,” “In process,” and “Waiting” for the main columns.  But, realizing that I have recurring tasks that I also need to account for, I’ve set up a column for each day of the week where I can place my recurring tasks.  You should notice this as an adaptation of the 43 folders. Instead of “stories” for my rows, I have each “project” I’m working on as a row.  As a consultant I have multiple clients.  They are each a row.  I also have stuff going on at church, chores around the house, and tasks for my business that aren’t necessarily tied to any particular client. As I think of things to do, the task goes on a small post-it note.  The upper left corner specifies the project so that if the note falls off, I know where it goes.  The bottom is a notation of what I’m waiting on if/when the note goes in the “waiting” column.  The rest is typical task board stuff.  Move it to the project, column it belongs in as you are working on it. I’ve been using this for almost two months now and it has been serving me well.  But I’ve always had in the back of my mind that it would be cool to move this onto the web so that I could see the tasks anywhere I had web access.  I’ve been looking for something that would serve this purpose without encumbering me with all of the other artifacts of agile.  I don’t need burn down charts or product back logs.  All I need is a task board. Recently, my church life got a bit more complicated.  I’m now managing a project that involves multiple people.  The task board idea still works great, but I have a need for others to be able to at least see the board if not contribute to it.  So I spent some time looking again and finally found exactly what I’m looking for. <a href="//www.seenowdo.com">SeeNowDo.com</a> is a free task board application written in flash that allows you to configure the board for how you work.  You can share the task board with other users,  add and remove categories, and add and remove columns on a per project basis.  I can not only use this for projects where the tasks need to be shared, but I can also use it to replace what I currently have on my white board. I can almost even use it on my Windows Mobile phone using the SkyFire browser.  My only issue is that for some reason SkyFire clips the right so that I can’t get to one of the controls that leads to the task board view.  Bummer!</p>
+        <p><img src="/uploads/2009/10/B03B0035.jpg" alt="B03B0035" title="B03B0035"> The agile “Task Board,” also known as a “Scrum Board” has become a staple of the agile programming world. “Getting Things Done” (GTD) is a process for managing task in the business world. I mostly like what GTD does, but the classic implementation doesn’t fit how I work. But what if we could adapt the two?  GTD has a basic concept of task that get classified by context (where you are) and a list for each of “Next Actions,” “Projects,” “Waiting For,” and “Someday Maybe.”  There is also this thing called 43 folders that allows you to “schedule” things into the future.  You can find out more about GTD by getting the book, <a href="//www.amazon.com/gp/product/0142000280?ie=UTF8&amp;tag=davmbusnetapp-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=0142000280">Getting Things Done: The Art of Stress-Free Productivity</a><img src="//www.assoc-amazon.com/e/ir?t=davmbusnetapp-20&amp;l=as2&amp;o=1&amp;a=0142000280" alt="">. Interestingly enough, a typical task board has a column for “To do,” “In process,” “Done,” and “Blocked” or “Waiting.”  The rows are “Stories” that answer the question, “the user should be able to…” Merging the two, I’ve set up a white board that has “To do,” “In process,” and “Waiting” for the main columns.  But, realizing that I have recurring tasks that I also need to account for, I’ve set up a column for each day of the week where I can place my recurring tasks.  You should notice this as an adaptation of the 43 folders. Instead of “stories” for my rows, I have each “project” I’m working on as a row.  As a consultant I have multiple clients.  They are each a row.  I also have stuff going on at church, chores around the house, and tasks for my business that aren’t necessarily tied to any particular client. As I think of things to do, the task goes on a small post-it note.  The upper left corner specifies the project so that if the note falls off, I know where it goes.  The bottom is a notation of what I’m waiting on if/when the note goes in the “waiting” column.  The rest is typical task board stuff.  Move it to the project, column it belongs in as you are working on it. I’ve been using this for almost two months now and it has been serving me well.  But I’ve always had in the back of my mind that it would be cool to move this onto the web so that I could see the tasks anywhere I had web access.  I’ve been looking for something that would serve this purpose without encumbering me with all of the other artifacts of agile.  I don’t need burn down charts or product back logs.  All I need is a task board. Recently, my church life got a bit more complicated.  I’m now managing a project that involves multiple people.  The task board idea still works great, but I have a need for others to be able to at least see the board if not contribute to it.  So I spent some time looking again and finally found exactly what I’m looking for. <a href="//www.seenowdo.com">SeeNowDo.com</a> is a free task board application written in flash that allows you to configure the board for how you work.  You can share the task board with other users,  add and remove categories, and add and remove columns on a per project basis.  I can not only use this for projects where the tasks need to be shared, but I can also use it to replace what I currently have on my white board. I can almost even use it on my Windows Mobile phone using the SkyFire browser.  My only issue is that for some reason SkyFire clips the right so that I can’t get to one of the controls that leads to the task board view.  Bummer!</p>
 
       
     </div>
@@ -409,7 +409,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/agile-scrum-task-board-for-“real-life”/" data-id="cjj1pqxuz001ptkhiqje3kt5u" class="article-share-link">
+      <a data-url="http://davembush.github.com/agile-scrum-task-board-for-“real-life”/" data-id="cjj1qjcq6001v1ohiy2ng1ttz" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -455,7 +455,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/10/winter016.jpg" alt="winter-016" title="winter-016"></p>
+        <p><img src="/uploads/2009/10/winter016.jpg" alt="winter-016" title="winter-016"></p>
 <p>There are several controls that allow you to display content based on the role a user is in, including:</p>
 <p>- LoginView<br>- LoginStatus</p>
 <p>And the web.config file allows us to control which pages can be viewed based on which role a user is in.</p>
@@ -476,7 +476,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/determine-the-role-of-a-user-in-asp-net/" data-id="cjj1pqy5200d2tkhiqaiuugkm" class="article-share-link">
+      <a data-url="http://davembush.github.com/determine-the-role-of-a-user-in-asp-net/" data-id="cjj1qjcuz007u1ohizru5vjwy" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -522,7 +522,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/10/ETHN0171.png" alt="ETHN0171" title="ETHN0171"></p>
+        <p><img src="/uploads/2009/10/ETHN0171.png" alt="ETHN0171" title="ETHN0171"></p>
 <p>Since .NET first became available, passing data around during a request has become a lot easier.  The ability to set a property has made that so.  Still, there are times when setting a property just won’t do the trick.</p>
 <p>One such time is getting data from the middle tier back up to the view separate from a DataBinding operation.  That is, you databind a control to the middle tier and that method needs to set a value that will be used elsewhere in the view, not in the item that is being bound.</p>
 <p>The natural, obvious tendency is to set a session variable.  But there is a better way.</p>
@@ -543,7 +543,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/httpcontext-items-vs-session/" data-id="cjj1pqy8c00gdtkhilqhjhqd3" class="article-share-link">
+      <a data-url="http://davembush.github.com/httpcontext-items-vs-session/" data-id="cjj1qjcyk00ca1ohink7ajfi1" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -589,7 +589,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/10/F03I0043.jpg" alt="F03I0043" title="F03I0043"></p>
+        <p><img src="/uploads/2009/10/F03I0043.jpg" alt="F03I0043" title="F03I0043"></p>
 <p>I’ve had several occasions in the past where I’ve needed to do my own authentication or I’ve needed to add some additional methods to the authentication process.</p>
 <p>As easy as Microsoft has made the authentication process, you might think that in order to  manually authenticate you’d need to write all of your authentication code manually.  But nothing could be farther from the truth.</p>
 <p>In fact, most of the time all you need to do is trap an event handler in the existing login control.</p>
@@ -609,7 +609,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/forms-authentication-–-manual-authentication/" data-id="cjj1pqy6f00eftkhi3jj22emj" class="article-share-link">
+      <a data-url="http://davembush.github.com/forms-authentication-–-manual-authentication/" data-id="cjj1qjcwg009j1ohigb5qkmye" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -655,7 +655,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/09/B03B0015.jpg" alt="B03B0015" title="B03B0015"> I recently received a question from another programmer I know who’s been using PHP prior to ASP.NET that made me think harder about a problem we’ve all had in ASP.NET.  The basic problem is this:</p>
+        <p><img src="/uploads/2009/09/B03B0015.jpg" alt="B03B0015" title="B03B0015"> I recently received a question from another programmer I know who’s been using PHP prior to ASP.NET that made me think harder about a problem we’ve all had in ASP.NET.  The basic problem is this:</p>
 <p>How do you dynamically change the class of a hyperlink based on the page name so that the hyperlink that represents the current page is styled differently than all of the other hyperlinks on our screen?  If you want you can substitute any other HTML element you want, but the problem remains the same.</p>
 <p>The first, most obvious answer would be to create a case statement of some sort.</p>
 <p>string fileName = AppRelativeVirtualPath<br>    .ToLower().Replace(“~/“,””).Replace(“/“,”_”)<br>    .Replace(“.aspx”,””);<br>switch(fileName)<br>{<br>     case “fileone”:<br>             m_hyperLinkFileOne.CssClass =<br>                “selectedClass”;<br>             break;<br>    // etc…<br>}</p>
@@ -674,7 +674,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/dynamically-change-class-attribute-from-asp-net/" data-id="cjj1pqy5u00dvtkhi0ijyf4ij" class="article-share-link">
+      <a data-url="http://davembush.github.com/dynamically-change-class-attribute-from-asp-net/" data-id="cjj1qjcvg008h1ohi3vx61917" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -720,7 +720,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="//blog.dmbcllc.com/wp-content/uploads/2009/09/foodml04.jpg" alt="food-ml-04" title="food-ml-04"> PDF Tables in iTextSharp work enough like HTML tables that the slight differences between the two make programming tables for a PDF a bit confusing the first time you try. I hope to describe some of those differences here so that your experience might be a bit smoother than mine was as you start to use tables in your PDF code.  One of the first decisions you’ll need to make as you start working on your iTextSharp table is how many columns the table should have.  Keep in mind that the cells can be spanned, just like they can in HTML, so it is better to have too many columns than the bare minimum.  You can always adjust later. Once you’ve decided how many columns, you’ll need to decide how big you want each column to be.  Unlike HTML, the columns will not stretch if they are too small. Here is your initial code</p>
+        <p><img src="/uploads/2009/09/foodml04.jpg" alt="food-ml-04" title="food-ml-04"> PDF Tables in iTextSharp work enough like HTML tables that the slight differences between the two make programming tables for a PDF a bit confusing the first time you try. I hope to describe some of those differences here so that your experience might be a bit smoother than mine was as you start to use tables in your PDF code.  One of the first decisions you’ll need to make as you start working on your iTextSharp table is how many columns the table should have.  Keep in mind that the cells can be spanned, just like they can in HTML, so it is better to have too many columns than the bare minimum.  You can always adjust later. Once you’ve decided how many columns, you’ll need to decide how big you want each column to be.  Unlike HTML, the columns will not stretch if they are too small. Here is your initial code</p>
 <p>PdfPTable table= new PdfPTable(5);<br>float[] colWidths = {70, 70, 200, 70, 70};<br>table.SetWidths(colWidths);</p>
 <p>Keep in mind that the column widths are more of a weighting than an absolute unit. You’ll also need to determine how wide the iTextSharp table should be.  So far I’ve only needed to set this to 100%.</p>
 <p>table.WidthPercentage = (100.0f);</p>
@@ -743,7 +743,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-tables/" data-id="cjj1pqya800iatkhi6pwblvxb" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-tables/" data-id="cjj1qjcz500cx1ohiv88v2nsx" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
