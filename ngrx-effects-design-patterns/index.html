@@ -13,7 +13,7 @@
 <meta property="og:description" content="Since I don’t seem to have a blogs worth of any one topic to write about, I thought maybe something more along the lines of a cluster of small tips and tricks might work.  Since I’ve been writing my A">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2017/10/2017.10.17.png">
-<meta property="og:updated_time" content="2018-06-30T19:06:18.516Z">
+<meta property="og:updated_time" content="2018-07-01T18:05:24.215Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NgRX Effects Design Patterns">
 <meta name="twitter:description" content="Since I don’t seem to have a blogs worth of any one topic to write about, I thought maybe something more along the lines of a cluster of small tips and tricks might work.  Since I’ve been writing my A">
@@ -80,7 +80,7 @@
 
     <div class="row">
         <div class="col-sm-8 blog-main">
-          <article id="post-fail-tests-gracefully" class="article article-type-post" itemscope itemprop="blogPost">
+          <article id="post-ngrx-effects-design-patterns" class="article article-type-post" itemscope itemprop="blogPost">
 
   <header class="article-header">
     
@@ -112,27 +112,20 @@
       
         <p>Since I don’t seem to have a blogs worth of any one topic to write about, I thought maybe something more along the lines of a cluster of small tips and tricks might work.  Since I’ve been writing my Angular book over the last couple of weeks, there hasn’t been much new that I’ve discovered worth sharing.  But there are a few small discoveries I’ve made.  This week, they center around NgRX Effects. <figure><img src="/uploads/2017/10/2017.10.17.png" alt="" title="NgRX Effects Design Patterns"> Photo via <a href="//visualhunt.com/re/79a90d">Visual hunt</a></figure></p>
 <a id="more"></a> 
-<h2 id="Returning-No-Actions"><a href="#Returning-No-Actions" class="headerlink" title="Returning No Actions"></a>Returning No Actions</h2><p>There have been times in the past where I didn’t want to return an Action from my Effect.  Not knowing any better, I just returned the Object Literal, <code>{type: &#39;noop&#39;}</code>.  But there is a much better way. BTW, did you know that unless you tell NgRX otherwise, all @Effects must return an Action? So, what is the better way?  It turns out that the guys who wrote NgRX already thought of the possibility that you wouldn’t want to return an action from an @Effect.  All you need to do is to pass the object literal <code>{dispatch: false}</code> to the @Effect() decoractor. <code>@Effect({dispatch: false})</code> <code>member$: Observable&lt;{}&gt; =</code> <code>thie.actions$ ...</code> Like I said, I needed this because I didn’t yet know about some of the other things I’m going to mention below.  My experience says, if you need this, you are probably doing something wrong.</p>
+<h2 id="Returning-No-Actions"><a href="#Returning-No-Actions" class="headerlink" title="Returning No Actions"></a>Returning No Actions</h2><p>There have been times in the past where I didn’t want to return an Action from my Effect.  Not knowing any better, I just returned the Object Literal, <code>{type: &#39;noop&#39;}</code>.  But there is a much better way. BTW, did you know that unless you tell NgRX otherwise, all @Effects must return an Action? So, what is the better way?  It turns out that the guys who wrote NgRX already thought of the possibility that you wouldn’t want to return an action from an @Effect.  All you need to do is to pass the object literal <code>{dispatch: false}</code> to the @Effect() decoractor. </p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Effect</span>(&#123;dispatch: <span class="literal">false</span>&#125;)</span><br><span class="line">member$: Observable&lt;&#123;&#125;&gt; = </span><br><span class="line">  <span class="keyword">this</span>.actions$ ...</span><br></pre></td></tr></table></figure>
+<p>Like I said, I needed this because I didn’t yet know about some of the other things I’m going to mention below.  My experience says, if you need this, you are probably doing something wrong.</p>
 <h2 id="Strong-Typing"><a href="#Strong-Typing" class="headerlink" title="Strong Typing"></a>Strong Typing</h2><p>If you’ve read any of my other post about Angular, you’ll know I’m a very strong proponent of strongly typing everything.  Nowhere is this more useful than when creating the Effect chain.  By typing everything, I can easily tell that my code is written correctly.  Even while writing my book on how to get started with Angular, it has helped me figure out that I’m missing a closing bracket or parenthesis.  Not to mention it has told me exactly what block of code I had wrong.  I’ve probably saved hours of debugging time with this one simple enhancement to my coding practice.</p>
 <h2 id="Chaining-Observables"><a href="#Chaining-Observables" class="headerlink" title="Chaining Observables"></a>Chaining Observables</h2><p>I’m almost ashamed to mention this next one.  But, I never really caught on that <code>switchMap()</code> was a silent subscriber.  Oh! So many places you can use this. If you’ve been using Effects, you’ve probably seen code that looks like this:</p>
-<p><code>@Effect()</code></p>
-<p><code>get$:Observable&lt;Edit.Update&gt; =</code></p>
-<p><code>this.actions$</code></p>
-<p><code>.ofType(Edit.GET)</code></p>
-<p><code>.switchMap((action: Edit.Get): Observable&lt;{} | ReadonlyArray&lt;Contact&gt;&gt; =&gt;</code></p>
-<p><code>this.contactsService.get(`</code>action.id)`</p>
-<p><code>.map((x: ReadonlyArray&lt;EditForm&gt;):`</code>Edit.Update =&gt;`</p>
-<p><code>newEdit.Update(x[0]));</code></p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Effect</span>()</span><br><span class="line"><span class="keyword">get</span>$:Observable&lt;Edit.Update&gt; =</span><br><span class="line">  <span class="keyword">this</span>.actions$</span><br><span class="line">    .ofType(Edit.GET)</span><br><span class="line">    .switchMap((action: Edit.Get): Observable&lt;&#123;&#125; |</span><br><span class="line">      ReadonlyArray&lt;Contact&gt;&gt; =&gt;</span><br><span class="line">        <span class="keyword">this</span>.contactsService.get(<span class="string">``</span>action.id)</span><br><span class="line">    .map((x: ReadonlyArray&lt;EditForm&gt;):<span class="string">``</span>Edit.Update =&gt;</span><br><span class="line">      newEdit.Update(x[<span class="number">0</span>]));<span class="string">`</span></span><br></pre></td></tr></table></figure>
 <p>But, do you know why it works? That <code>switchMap()</code> bit expects that you’ll return an observable.  It subscribes to it and passes the data inside the observable to the <code>map()</code> that follows.  Kind of like how the <code>async</code> pipe works in our templates. The cool thing about this is that you can chain subscriptions together using this.  It isn’t just some cleaver way of getting the results of a service into your final action that you will return.  I’ve used <code>switchMap()</code> to get data from the store and pass that on to a <code>switchMap()</code> that call my service with that data. The only thing you need to watch out for is that your observable is either a cold observable or that you call <code>.first()</code> so you it becomes a cold observable.  Otherwise, you’ll end up in an infinite loop.  Ask me how I know :).</p>
-<h2 id="Grouping-Observables"><a href="#Grouping-Observables" class="headerlink" title="Grouping Observables"></a>Grouping Observables</h2><p>Chaining observables together using <code>switchMap()</code> works well when the output only needs to be used by the next function in the chain.  But what about when you need to use the results from two different observables at once.  There are a couple of different ways you might do this. One function you might consider using is <code>withLatestFrom()</code>. <code>firstObservable.withLatestFrom(secondObservable, ([firstResult, secondResult]) =&gt; // your code here)</code> or if you have more than two you need to combine, you can use <code>combineLatest()</code> Another way you might consider combining them is with <code>forkJoin()</code> although that might be the last tool you reach for.</p>
+<h2 id="Grouping-Observables"><a href="#Grouping-Observables" class="headerlink" title="Grouping Observables"></a>Grouping Observables</h2><p>Chaining observables together using <code>switchMap()</code> works well when the output only needs to be used by the next function in the chain.  But what about when you need to use the results from two different observables at once.  There are a couple of different ways you might do this. One function you might consider using is <code>withLatestFrom()</code>. </p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">firstObservable</span><br><span class="line">  .withLatestFrom(secondObservable, <span class="function">(<span class="params">[firstResult, secondResult]</span>) =&gt;</span> </span><br><span class="line">  <span class="comment">// your code here)</span></span><br></pre></td></tr></table></figure>
+<p>or if you have more than two you need to combine, you can use <code>combineLatest()</code> Another way you might consider combining them is with <code>forkJoin()</code> although that might be the last tool you reach for.</p>
 <h2 id="Single-Responsibility"><a href="#Single-Responsibility" class="headerlink" title="Single Responsibility"></a>Single Responsibility</h2><p>Another mistake I’ve been making is trying to make my Effect do too much.  If I restrict my effect to only doing one thing at a time and always returning one or more actions, they become much easier to manage.  Maybe this has only be my problem.  But once I saw what switchMap() could do for me, the light bulb went on in my brain.</p>
 <h2 id="Returning-Multiple-Actions"><a href="#Returning-Multiple-Actions" class="headerlink" title="Returning Multiple Actions"></a>Returning Multiple Actions</h2><p>And speaking of returning one or more actions, it is possible to return multiple actions from an Effect using.</p>
-<pre><code>.mergeMap(
-    ( result: string[] ) =&gt; {
-      return Observable.from([ new ActionOne( result ), new ActionTwo() ]);
-    }
-  )
-</code></pre>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">.mergeMap(</span><br><span class="line">  ( result: <span class="built_in">string</span>[] ) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> Observable.from([ </span><br><span class="line">      <span class="keyword">new</span> ActionOne( result ), </span><br><span class="line">      <span class="keyword">new</span> ActionTwo() </span><br><span class="line">    ]);</span><br><span class="line">  &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
       
     </div>
 
@@ -142,7 +135,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/ngrx-effects-design-patterns/" data-id="cjj2tc0hi009dz8hi3gu257gn" class="article-share-link">
+      <a data-url="http://davembush.github.com/ngrx-effects-design-patterns/" data-id="cjj35dojs00glfchi4eptso0d" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
