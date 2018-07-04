@@ -13,12 +13,12 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="When NgRX 4 came out and I discovered that the “right” way of creating Actions is to use TypeScript classes and not Object Literals, I was a bit surprised.  Why would you use a Class that requires you">
 <meta property="og:locale" content="English">
-<meta property="og:image" content="http://davembush.github.com/uploads/2017/10/2017-10-10.png">
-<meta property="og:updated_time" content="2018-07-03T21:49:07.830Z">
+<meta property="og:image" content="http://davembush.github.com/uploads/2018/07/2018-07-04.png">
+<meta property="og:updated_time" content="2018-07-04T12:24:09.150Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NgRX Actions - Class vs Object Literal">
 <meta name="twitter:description" content="When NgRX 4 came out and I discovered that the “right” way of creating Actions is to use TypeScript classes and not Object Literals, I was a bit surprised.  Why would you use a Class that requires you">
-<meta name="twitter:image" content="http://davembush.github.com/uploads/2017/10/2017-10-10.png">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2018/07/2018-07-04.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>When NgRX 4 came out and I discovered that the “right” way of creating Actions is to use TypeScript classes and not Object Literals, I was a bit surprised.  Why would you use a Class that requires you to use the “new” keyword?  Why would you put multiple classes in one file?  This is insane! <figure><img src="/uploads/2017/10/2017-10-10.png" alt="" title="NgRX 4 Actions - Class vs Object Literal"><figcaption>Photo credit: <a href="//www.flickr.com/photos/dkobras/8342620023/">dkobras</a> via <a href="//visualhunt.com/re/7df37f">Visual hunt</a> / <a href="//creativecommons.org/licenses/by-sa/2.0/"> CC BY-SA</a></figcaption></figure></p>
+        <p>When NgRX 4 came out and I discovered that the “right” way of creating Actions is to use TypeScript classes and not Object Literals, I was a bit surprised.  Why would you use a Class that requires you to use the “new” keyword?  Why would you put multiple classes in one file?  This is insane! <figure><img src="/uploads/2018/07/2018-07-04.png" alt="" title="NgRX Actions - Class vs Object Literal"><figcaption>Photo credit: <a href="//www.flickr.com/photos/dkobras/8342620023/">dkobras</a> / <a href="//creativecommons.org/licenses/by-sa/2.0/"> CC BY-SA</a></figcaption></figure></p>
 <a id="more"></a> 
 <h2 id="Options"><a href="#Options" class="headerlink" title="Options"></a>Options</h2><p>An Action is an object that contains a type variable and optionally, a payload. Depending on how you code your action, the payload may or may not have “payload” as the variable name. In NgRX version 2, payload was an optional variable. To improve type checking, payload was removed from the Action interface. The official documentation for NgRX version 4 encourages us to create a class for each action we want to dispatch. Suppose you have a Wait reducer that needs a Start action and an End action.  The code might look something like:</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Action&#125; <span class="keyword">from</span> <span class="string">'@ngrx/store'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> START = <span class="string">'Wait.Start'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Start <span class="keyword">implements</span> Action &#123;</span><br><span class="line">  readonly <span class="keyword">type</span> = START;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> END = <span class="string">'Wait.End'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> End <span class="keyword">implements</span> Action &#123;</span><br><span class="line">  readonly <span class="keyword">type</span> = END;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -149,7 +149,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/ngrx-actions-class-vs-object-literal/" data-id="cjj687k2r00h81chi3ccn4udy" class="article-share-link">
+      <a data-url="http://davembush.github.com/ngrx-actions-class-vs-object-literal/" data-id="cjj73gvsf00h1dshiccfww6tg" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
