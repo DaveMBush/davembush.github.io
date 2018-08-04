@@ -19,17 +19,27 @@ We all know about best practices.  But what does it take to really mess up a pr
 Don't Use the CLI
 -----------------
 
-I can grant a pass if you aren't using the Angular CLI because you started your project before the CLI became viable.  But, by this point you should have already converted your project over to use the CLI or be making plans to move to the CLI. Why is this a problem? Because 99% of the developers you are going to find will expect that when you ask for an Angular developer, what you mean is that you are looking for someone who can write Angular code using the Angular CLI.  This brings with is a certain number of expectations about how your code is laid out.  Some of these are outlined below.  But just as a way of generalizing, if your code doesn't look like it started as an Angular CLI project, you are going to slow down any future developers you hire.
+I can grant a pass if you aren't using the Angular CLI because you started your project before the CLI became viable.  But, by this point you should have already converted your project over to use the CLI or be making plans to move to the CLI.
+
+Why is this a problem? 
+
+Because 99% of the developers you are going to find will expect that when you ask for an Angular developer, what you mean is that you are looking for someone who can write Angular code using the Angular CLI.  This brings with is a certain number of expectations about how your code is laid out.  Some of these are outlined below.  But just as a way of generalizing, if your code doesn't look like it started as an Angular CLI project, you are going to slow down any future developers you hire.
 
 Ignore Naming Conventions
 -------------------------
 
-Ignoring naming conventions may seem trivial, but naming conventions add clarity.  The reason we name component files as components is so we know they are all part of a component.  Reducer file names should be named `foo-bar.reducer.ts`.  Not naming the files in a way that is clear reduces the ability to maintain the code in a clear and efficient way. Maybe you've come up with your own naming conventions for your organization.  This is better.  But still this is not best.  This means that you probably won't be able to use the CLI to scaffold out your code and any future developer is going to have to learn your way of writing Angular instead of the industry standard way of writing Angular. But the absolute worst thing you can do is to not have any standard or to mix standards.  This is confusing and just looks ugly.
+Ignoring naming conventions may seem trivial, but naming conventions add clarity.  The reason we name component files as components is so we know they are all part of a component.  Reducer file names should be named `foo-bar.reducer.ts`.  Not naming the files in a way that is clear reduces the ability to maintain the code in a clear and efficient way. 
+
+Maybe you've come up with your own naming conventions for your organization.  This is better.  But still this is not best.  This means that you probably won't be able to use the CLI to scaffold out your code and any future developer is going to have to learn your way of writing Angular instead of the industry standard way of writing Angular. 
+
+But the absolute worst thing you can do is to not have any standard or to mix standards.  This is confusing and just looks ugly.
 
 Cluster Code by Function Instead of Feature
 -------------------------------------------
 
-The other thing you might be tempted to do is to cluster your code by function.  That is, you might want to group all of your components together.  And then all your services under another folder.  Maybe put your reducers under one folder and your effects under another. Trust me, this just adds fuel to the argument that "NgRX is confusing".  Group all your similar NgRX code together and put all of your code together grouped by feature.  If you've named the files correctly, you won't need the directories to keep things sorted out and you won't be forced to use one module for your entire project.
+The other thing you might be tempted to do is to cluster your code by function.  That is, you might want to group all of your components together.  And then all your services under another folder.  Maybe put your reducers under one folder and your effects under another. 
+
+Trust me, this just adds fuel to the argument that "NgRX is confusing".  Group all your similar NgRX code together and put all of your code together grouped by feature.  If you've named the files correctly, you won't need the directories to keep things sorted out and you won't be forced to use one module for your entire project.
 
 Use one Module
 --------------
@@ -44,7 +54,13 @@ Yes, even if your application has only one route.  You want to lazy load your c
 Embed Colors and Fonts in Component CSS
 ---------------------------------------
 
-You should have a theme file, or an application level CSS file that defines the fonts, and colors that should be used throughout your application.  The only CSS that should be included at the component level is CSS that is necessary to layout the html within the component.  That is, position information.  If you are putting color information in, or specifying a font size or font, you are probably doing it wrong. Why is this an issue.  Well, let's suppose that someone decides that all of your warnings should be a different color.  If you can make that change in one CSS file, that is going to be a lot easier than looking through all the CSS in all of your components to make sure you found every place the color needs to be changed. Don't repeat yourself makes just as much sense in CSS as anywhere else in your code.
+You should have a theme file, or an application level CSS file that defines the fonts, and colors that should be used throughout your application.  The only CSS that should be included at the component level is CSS that is necessary to layout the html within the component.  That is, position information.  If you are putting color information in, or specifying a font size or font, you are probably doing it wrong. 
+
+Why is this an issue?  
+
+Well, let's suppose that someone decides that all of your warnings should be a different color.  If you can make that change in one CSS file, that is going to be a lot easier than looking through all the CSS in all of your components to make sure you found every place the color needs to be changed. 
+
+Don't repeat yourself makes just as much sense in CSS as anywhere else in your code.
 
 Mix Template Files and Strings
 ------------------------------
@@ -59,4 +75,8 @@ As we work on code, we might create a variable, or use an import that no longer 
 Don't Stay Up to Date
 ---------------------
 
-Angular is progressing at a pretty fast rate and the Angular CLI is as well.  I realize that it isn't always possible to keep the version you are working on up to date with the latest tools.  But not keeping your tools up to date for several months at a time is also something you want to avoid.  The sooner you update, the easier the update will be. Will the update break something?  Yes, that is likely.  You should plan that into your work flow.  Otherwise, you'll get to the point where it will take so long to update, you'll never get approval to do it because it will take too long.
+Angular is progressing at a pretty fast rate and the Angular CLI is as well.  I realize that it isn't always possible to keep the version you are working on up to date with the latest tools.  But not keeping your tools up to date for several months at a time is also something you want to avoid.  The sooner you update, the easier the update will be. 
+
+Will the update break something?  
+
+Yes, that is likely.  You should plan that into your work flow.  Otherwise, you'll get to the point where it will take so long to update, you'll never get approval to do it because it will take too long.

@@ -19,7 +19,9 @@ This past week I had my first need to do use cross field validation in Angular.�
 The Basics
 ----------
 
-As I said, the mechanics of implementing cross field validation in Angular is rather trivial.  It all hinges on the concept of a FieldGroup which is a key concept of [Reactive Forms](/tags/reactive-forms/). What we need to do to implement cross field validation is to attach a validation function to the form instead of the field. I'm going to use the AppComponent to host the FormBuilder for simplicity:
+As I said, the mechanics of implementing cross field validation in Angular is rather trivial.  It all hinges on the concept of a FieldGroup which is a key concept of [Reactive Forms](/tags/reactive-forms/). What we need to do to implement cross field validation is to attach a validation function to the form instead of the field. 
+
+I'm going to use the AppComponent to host the FormBuilder for simplicity:
 
 ``` typescript
 export class AppComponent {
@@ -35,7 +37,9 @@ export class AppComponent {
 }
 ```
 
-You'll notice that `formBuilder.group()` takes a second parameter which takes a `validator` function or function array.  This parameter can also the `asyncValidator` key or the `state` key. The function we are pointing to takes the `FormGroup` as a parameter.  So, within the function, we can access the controls that are part of the `FormGroup`.  Once we have the fields, we can access the values of the fields and perform whatever comparisons we need, which is pretty trivial.  Then, if there is an error, we call setError() on the control(s) that are impacted.
+You'll notice that `formBuilder.group()` takes a second parameter which takes a `validator` function or function array.  This parameter can also the `asyncValidator` key or the `state` key. 
+
+The function we are pointing to takes the `FormGroup` as a parameter.  So, within the function, we can access the controls that are part of the `FormGroup`.  Once we have the fields, we can access the values of the fields and perform whatever comparisons we need, which is pretty trivial.  Then, if there is an error, we call setError() on the control(s) that are impacted.
 
 ``` typescript
 static formGroupValidationFunction(formGroup: FormGroup):void {
@@ -52,7 +56,11 @@ static formGroupValidationFunction(formGroup: FormGroup):void {
 Dealing with Field Validations
 ------------------------------
 
-One of the problems I ran into was that my fields also had individual validations on them.  Specifically, the two fields were numbers that I was validating to make sure they were positive and only displayed two decimal places.  By the time I entered the validation for the FormGroup, that validation had already run.  I also wanted to clear any pre-existing errors from my form validation. It turns out that the way Angular determines if there is an error is if the forms errors object exist.  If it is null, it is assumed there aren't any errors. So, to clear the pre-existing errors, the safest thing to do is to first delete the error I was adding from each field, and then check to see if there are any other errors in the errors object.  If there aren't any errors, we then call `setError(null)` to clear out the error object.
+One of the problems I ran into was that my fields also had individual validations on them.  Specifically, the two fields were numbers that I was validating to make sure they were positive and only displayed two decimal places.  By the time I entered the validation for the FormGroup, that validation had already run.  I also wanted to clear any pre-existing errors from my form validation.
+
+It turns out that the way Angular determines if there is an error is if the forms errors object exist.  If it is null, it is assumed there aren't any errors. 
+
+Now, to clear the pre-existing errors, the safest thing to do is to first delete the error I was adding from each field, and then check to see if there are any other errors in the errors object.  If there aren't any errors, we then call `setError(null)` to clear out the error object.
 
 ``` typescript
 if(field1.errors&&field1.errors.formGroupValidationFunction) {
@@ -76,7 +84,9 @@ By doing this, we ensure that the field validation errors aren't overwritten by 
 Alternatives
 ------------
 
-The code I've shown works well enough if you only have a one-off validation.  But in my case, I needed to use the validation between multiple sets of fields.  To do this, I created a function that returns another function. The outer function takes two parameters.  Strings that are keys into the controls of the form group.  So, now instead of:
+The code I've shown works well enough if you only have a one-off validation.  But in my case, I needed to use the validation between multiple sets of fields.  To do this, I created a function that returns another function. 
+
+The outer function takes two parameters.  Strings that are keys into the controls of the form group.  So, now instead of:
 
 ``` typescript
 constructor(formBuilder:FormBuilder) {
@@ -116,4 +126,6 @@ static formGroupValidationFunction(f1: string, f2: string): Function {
 }
 ```
 
-You'll notice that my `setError()` uses the name of the function as the error key.  I just do this for clarity.  You CAN name it whatever you want.  I name it the same to be consistent with how the Angular validations work. Finally, I like to put my custom validations in a separate Static Class rather than including them in the component code.  I've only placed them in the component code here for illustrative purposes.
+You'll notice that my `setError()` uses the name of the function as the error key.  I just do this for clarity.  You CAN name it whatever you want.  I name it the same to be consistent with how the Angular validations work. 
+
+Finally, I like to put my custom validations in a separate Static Class rather than including them in the component code.  I've only placed them in the component code here for illustrative purposes.

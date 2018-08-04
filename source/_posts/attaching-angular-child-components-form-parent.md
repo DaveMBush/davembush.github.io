@@ -79,7 +79,7 @@ and then our TypeScript code looks like a normal formGroup:
 this.form = formBuilder.group({
   childInput: ''
 });
-```    
+```
 
 Embedding the Child in the Parent
 ---------------------------------
@@ -107,7 +107,15 @@ And our TypeScript code now only needs a reference to mainInput.
 Connecting the Child to the Parent
 ----------------------------------
 
-The problem is, whenever the childInput element changes, the parent form's valueChanges observer won't get notified because the parent form no longer knows about the child form.  And this is where things interesting. Hooking the child form to the parent form is actually pretty straight forward.  The trick is knowing when in the component life-cycle to run the code. The first thing to know is that we aren't going to be able to hookup the child in the parent until after the child component has been created.  This happens after ngOnInit() so we need to find another lifecycle hook to wire everything up in.  It just so happens that ngAfterViewInit() is the perfect place for this. Second, it might be tempting to hookup everything in the child component during it's ngOnInit() method.  But this would too tightly couple the child component to the parent.  Something we would like to avoid. So, the next thing we need to do is that we need to use @ViewChild() to allow the parent to get a hold of the child component, and ultimately the formGroup member variable it will initialize for us.
+The problem is, whenever the childInput element changes, the parent form's valueChanges observer won't get notified because the parent form no longer knows about the child form.  And this is where things interesting.
+
+Hooking the child form to the parent form is actually pretty straight forward.  The trick is knowing when in the component life-cycle to run the code.
+
+The first thing to know is that we aren't going to be able to hookup the child in the parent until after the child component has been created.  This happens after ngOnInit() so we need to find another lifecycle hook to wire everything up in.  It just so happens that ngAfterViewInit() is the perfect place for this. 
+
+Second, it might be tempting to hookup everything in the child component during it's ngOnInit() method.  But this would too tightly couple the child component to the parent.  Something we would like to avoid. 
+
+So, the next thing we need to do is that we need to use @ViewChild() to allow the parent to get a hold of the child component, and ultimately the formGroup member variable it will initialize for us.
 
 ``` typescript
 @ViewChild(ChildComponent) childComponent: ChildComponent;
