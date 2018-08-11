@@ -14,7 +14,7 @@
 <meta property="og:description" content="There seems to be a lot of confusion about Implement NgRX 4 in an Angular application.  Some of it I’ve contributed to because NgRX 2 isn’t quite the same as NgRX 4 and as I’ve transitioned, I’ve lear">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2017/10/2017-10-24.jpg">
-<meta property="og:updated_time" content="2018-08-05T18:35:47.536Z">
+<meta property="og:updated_time" content="2018-08-11T10:35:40.134Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Implementing NgRX 4">
 <meta name="twitter:description" content="There seems to be a lot of confusion about Implement NgRX 4 in an Angular application.  Some of it I’ve contributed to because NgRX 2 isn’t quite the same as NgRX 4 and as I’ve transitioned, I’ve lear">
@@ -194,7 +194,7 @@
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> featureSelector = createFeatureSelector&lt;FeatureState&gt;<span class="function">(<span class="params">'featureName'</span>); <span class="params">const</span> <span class="params">subSelector</span> = <span class="params">createSelector</span>(<span class="params">featureSelector, (<span class="params">x: FeatureState</span>) =&gt; x.sub</span>));</span></span><br><span class="line"><span class="function"><span class="params">store</span>.<span class="params">select</span>(<span class="params">subSelector</span>);</span></span><br></pre></td></tr></table></figure>
 <p>Where store is injected using </p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">constructor</span>(<span class="params">store: Store&lt;FeatureState&gt;</span>)&#123;&#125;</span><br></pre></td></tr></table></figure>
-<p>Note: I’m not suggesting that you write your code like this.  If you are repeating the <code>createFeatureSelector()</code> <code>createSelector()</code> code in multiple places, you should look for a way of not repeating yourself.  I’ve put it all in one place here, so you can see how they methods tie together in the bigger picture.  In my production code, I tend to write this as a separate function in a separate file that can be called from anywhere.</p>
+<p>Note: I’m not suggesting that you write your code like this.  If you are repeating the <code>createFeatureSelector()</code> <code>createSelector()</code> code in multiple places, you should look for a way of not repeating yourself.  I’ve put it all in one place here, so you can see how the methods tie together in the bigger picture.  In my production code, I tend to write this as a separate function in a separate file that can be called from anywhere.</p>
 
       
     </div>
@@ -205,7 +205,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/implementing-ngrx-4/" data-id="cjkh6uqye00ayu0hi7mjludrw" class="article-share-link">
+      <a data-url="http://davembush.github.com/implementing-ngrx-4/" data-id="cjkpac26200gdskhiec09teko" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
