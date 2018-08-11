@@ -7,7 +7,7 @@ tags:
 url: 4254.html
 id: 4254
 categories:
-  - Angular 2
+  - Angular
 date: 2017-04-04 06:30:00
 ---
 

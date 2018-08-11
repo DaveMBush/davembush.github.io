@@ -1,13 +1,13 @@
 ---
 title: Secrets to Styling Angular2
 tags:
-  - angular 2
+  - angular
   - animation
   - css
 url: 4192.html
 id: 4192
 categories:
-  - Angular 2
+  - Angular
 date: 2017-01-31 07:30:00
 ---
 
@@ -32,7 +32,7 @@ Just to make sure we have the basics covered, we want to start with generic styl
       \],
 ...
 
-If you have a component that you need to style in a way that is outside the bounds of the general CSS you’ve included, you can add CSS to the components CSS file.  This all works as expected with one small exception.  The CSS you add to this file only applies to the component and will override any other CSS that might already be applied by the general CSS. This is Angular2 CSS 101 stuff.  I’ve written pretty extensively about this in the article “[Adding CSS and JavaScript to an Angular-CLI Project](/adding-css-and-javascript-to-an-angular-2-cli-project/)”
+If you have a component that you need to style in a way that is outside the bounds of the general CSS you’ve included, you can add CSS to the components CSS file.  This all works as expected with one small exception.  The CSS you add to this file only applies to the component and will override any other CSS that might already be applied by the general CSS. This is Angular2 CSS 101 stuff.  I’ve written pretty extensively about this in the article “[Adding CSS and JavaScript to an Angular-CLI Project](https://medium.com/@davembush/adding-css-and-javascript-to-an-angular-cli-project-2b843a8283f3)”
 
 Host access
 -----------

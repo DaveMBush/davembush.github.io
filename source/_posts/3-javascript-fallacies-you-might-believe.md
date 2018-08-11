@@ -1,7 +1,7 @@
 ---
 title: 3 JavaScript Fallacies You Might Believe
 tags:
-  - angular 2
+  - angular
   - javascript
   - performance
   - react.js

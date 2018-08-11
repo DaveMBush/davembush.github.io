@@ -10,7 +10,7 @@ url: 4581.html
 id: 4581
 comments: false
 categories:
-  - Angular 2
+  - Angular
 date: 2018-03-20 06:30:51
 ---
 

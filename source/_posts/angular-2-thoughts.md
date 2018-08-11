@@ -1,12 +1,12 @@
 ---
 title: Angular 2 Thoughts
 tags:
-  - angular 2
+  - angular
   - javascript
 url: 4056.html
 id: 4056
 categories:
-  - Angular 2
+  - Angular
 date: 2016-10-04 06:30:00
 ---
 

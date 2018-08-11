@@ -1,12 +1,12 @@
 ---
 title: Angular 2 Lazy Loading
 tags:
-  - angular 2
+  - angular
   - lazy loading
 url: 4109.html
 id: 4109
 categories:
-  - Angular 2
+  - Angular
 date: 2016-12-06 07:30:00
 ---
 

@@ -1,13 +1,13 @@
 ---
 title: 'Amazing Angular2 DOM Tips, Tricks, and Warnings'
 tags:
-  - angular 2
+  - angular
   - DOM
   - typescript
 url: 4180.html
 id: 4180
 categories:
-  - Angular 2
+  - Angular
 date: 2017-01-17 07:30:00
 ---
 

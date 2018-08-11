@@ -7,7 +7,7 @@ tags:
 url: 4373.html
 id: 4373
 categories:
-  - Angular 2
+  - Angular
 date: 2017-07-04 06:30:08
 ---
 

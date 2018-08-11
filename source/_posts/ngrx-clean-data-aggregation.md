@@ -1,13 +1,13 @@
 ---
 title: Using NgRX to Cleanly Aggregate Data
 tags:
-  - angular 2
+  - angular
   - design patterns
   - NgRX
 url: 4455.html
 id: 4455
 categories:
-  - Angular 2
+  - Angular
 date: 2017-10-03 06:30:50
 ---
 

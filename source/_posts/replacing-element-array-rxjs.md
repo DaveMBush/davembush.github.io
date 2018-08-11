@@ -10,7 +10,11 @@ categories:
 date: 2017-11-21 06:30:34
 ---
 
-It is not uncommon in our programming endeavors to need to replace one element in an array.  Using old school procedural programming, this would be relatively easy.  Loop through the elements, when we find the one we want to replace, change the value.  Basic for/next loop with a conditional statement. But when you move to a more functional way of programming as we need to do for NgRX, or are encouraged to do to make our code more testable, the problem becomes less straight forward. The initial solution you might try would be to just run `reduce()` against the array.  But if we do this, we still need to put that nasty conditional within our reducer function.  This is something we'd prefer to avoid.  Yes, it will work.  But it isn't Functional.  This problem has bothered me for months.  I've finally spent the time to figure out the solution. <figure>![](/uploads/2017/11/2017-11-21.jpg "Replacing an Element in an Array with RxJS")<figcaption>Photo credit: [Manchester Library](//www.flickr.com/photos/manchesterlibrary/2034771121/) via [Visualhunt](//visualhunt.com/re/1b8ae8) / [ CC BY-SA](//creativecommons.org/licenses/by-sa/2.0/)</figcaption></figure>
+It is not uncommon in our programming endeavors to need to replace one element in an array.  Using old school procedural programming, this would be relatively easy.  Loop through the elements, when we find the one we want to replace, change the value.  Basic for/next loop with a conditional statement. 
+
+But when you move to a more functional way of programming as we need to do for NgRX, or are encouraged to do to make our code more testable, the problem becomes less straight forward. 
+
+The initial solution you might try would be to just run `reduce()` against the array.  But if we do this, we still need to put that nasty conditional within our reducer function.  This is something we'd prefer to avoid.  Yes, it will work.  But it isn't Functional.  This problem has bothered me for months.  I've finally spent the time to figure out the solution. <figure>![](/uploads/2017/11/2017-11-21.jpg "Replacing an Element in an Array with RxJS")<figcaption>Photo credit: [Manchester Library](//www.flickr.com/photos/manchesterlibrary/2034771121/) via [Visualhunt](//visualhunt.com/re/1b8ae8) / [ CC BY-SA](//creativecommons.org/licenses/by-sa/2.0/)</figcaption></figure>
 
 <!-- more --> 
 
@@ -28,7 +32,9 @@ const notItem = array.filter((x: number) => x !== 3);
 Merging Arrays?
 ---------------
 
-But the problem you'll run into almost immediately is that now that we have the array split in two, how are we going to merge them back together again?  For this, we would need the `Observable.merge()` method.  But, arrays are not `Observables`. So, let's rethink this problem.  What if we turn the array into an observable?
+But the problem you'll run into almost immediately is that now that we have the array split in two, how are we going to merge them back together again?  For this, we would need the `Observable.merge()` method.  But, arrays are not `Observables`. 
+
+Now, let's rethink this problem.  What if we turn the array into an observable?
 
 Observable Arrays
 -----------------
@@ -71,7 +77,9 @@ It turns out that `Observable.from()` takes a second parameter that controls how
 One pass Filter
 ---------------
 
-Now that we have this all working, there is one final tweak we can make.  Rather than creating two different, but very similar filters, we can use the partition() method to achieve the same result in one pass. This, combined with array destructuring, allows us to simplify the code where our filter is, to 
+Now that we have this all working, there is one final tweak we can make.  Rather than creating two different, but very similar filters, we can use the partition() method to achieve the same result in one pass. 
+
+This, combined with array destructuring, allows us to simplify the code where our filter is, to 
 
 ``` typescript
 const [item, notItem] = array.partition((x: number) => x === 3);

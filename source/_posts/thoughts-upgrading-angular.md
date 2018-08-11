@@ -1,7 +1,7 @@
 ---
 title: Upgrade to Angular from...
 tags:
-  - angular 2
+  - angular
   - portal
   - react.js
   - web 1.0
@@ -9,7 +9,7 @@ tags:
 url: 4449.html
 id: 4449
 categories:
-  - Angular 2
+  - Angular
 date: 2017-09-26 06:30:23
 ---
 

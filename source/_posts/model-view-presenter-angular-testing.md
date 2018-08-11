@@ -7,7 +7,7 @@ tags:
 url: 4426.html
 id: 4426
 categories:
-  - Angular 2
+  - Angular
 date: 2017-08-29 06:30:33
 ---
 

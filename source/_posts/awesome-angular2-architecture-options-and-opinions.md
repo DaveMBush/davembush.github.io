@@ -1,13 +1,13 @@
 ---
 title: Awesome Angular2 Architecture Options and Opinions
 tags:
-  - angular 2
+  - angular
   - archietcture
   - javascript
 url: 4157.html
 id: 4157
 categories:
-  - Angular 2
+  - Angular
 date: 2016-12-27 07:30:00
 ---
 

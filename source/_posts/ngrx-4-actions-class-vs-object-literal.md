@@ -1,13 +1,13 @@
 ---
 title: NgRX Actions - Class vs Object Literal
 tags:
-  - angular 2
+  - angular
   - NgRX
 url: 4462.html
 id: 4462
 comments: false
 categories:
-  - Angular 2
+  - Angular
 date: 2018-07-03 06:30:58
 ---
 

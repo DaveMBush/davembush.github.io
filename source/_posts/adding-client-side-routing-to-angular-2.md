@@ -1,12 +1,12 @@
 ---
 title: Adding Client Side Routing to Angular 2
 tags:
-  - angular 2
+  - angular
   - routing
 url: 4104.html
 id: 4104
 categories:
-  - Angular 2
+  - Angular
 date: 2016-11-29 07:30:00
 ---
 

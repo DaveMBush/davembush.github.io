@@ -1,13 +1,13 @@
 ---
 title: Dissecting Angular 2 Modules
 tags:
-  - angular 2
+  - angular
   - javascript
   - modules
 url: 4149.html
 id: 4149
 categories:
-  - Angular 2
+  - Angular
 date: 2016-12-20 07:30:00
 ---
 

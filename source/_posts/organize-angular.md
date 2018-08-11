@@ -2,12 +2,12 @@
 title: How to Organize an Angular Application
 tags:
   - angular
-  - angular 2
+  - angular
   - design
 url: 4358.html
 id: 4358
 categories:
-  - Angular 2
+  - Angular
 date: 2017-06-20 06:30:56
 ---
 

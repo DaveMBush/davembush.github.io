@@ -1,12 +1,12 @@
 ---
 title: This One Tweak Improved my Angular Code
 tags:
-  - angular 2
+  - angular
   - typescript
 url: 4438.html
 id: 4438
 categories:
-  - Angular 2
+  - Angular
 date: 2017-09-12 06:30:10
 ---
 

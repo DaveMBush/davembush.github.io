@@ -1,14 +1,14 @@
 ---
 title: Attaching an Angular Child Component's Form to a Parent
 tags:
-  - angular 2
+  - angular
   - child component
   - reactive forms
 url: 4533.html
 id: 4533
 comments: false
 categories:
-  - Angular 2
+  - Angular
 date: 2018-01-02 06:30:57
 ---
 

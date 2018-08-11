@@ -1,7 +1,7 @@
 ---
 title: Jedi Angular 2 Tips and Tricks
 tags:
-  - angular 2
+  - angular
   - css
   - tips
   - tricks
@@ -9,7 +9,7 @@ tags:
 url: 4246.html
 id: 4246
 categories:
-  - Angular 2
+  - Angular
 date: 2017-03-28 06:30:00
 ---
 

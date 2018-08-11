@@ -7,7 +7,7 @@ tags:
 url: 4412.html
 id: 4412
 categories:
-  - Angular 2
+  - Angular
   - RxJS
 date: 2017-08-08 06:30:11
 ---

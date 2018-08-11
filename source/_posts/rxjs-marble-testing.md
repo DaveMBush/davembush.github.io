@@ -1,13 +1,13 @@
 ---
 title: Real World RxJS Marble Testing Revealed
 tags:
-  - angular 2
+  - angular
   - Marble Testing
   - RxJS
 url: 4351.html
 id: 4351
 categories:
-  - Angular 2
+  - Angular
   - RxJS
 date: 2017-06-13 06:30:25
 ---

@@ -6,7 +6,7 @@ tags:
 url: 3406.html
 id: 3406
 categories:
-  - Angular 2
+  - Angular
 date: 2016-02-25 08:30:00
 ---
 

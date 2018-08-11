@@ -1,14 +1,14 @@
 ---
 title: Unit Testing an Angular 2 CLI Project
 tags:
-  - angular 2
+  - angular
   - javascript
   - typescript
   - unit test
 url: 4097.html
 id: 4097
 categories:
-  - Angular 2
+  - Angular
 date: 2016-11-22 19:30:00
 ---
 
@@ -28,7 +28,7 @@ Tweaking Karma
 Open up the project we’ve been working on.
 
 *   [Getting Started With Angular 2](/getting-started-angular-2/)
-*   [Adding CSS and JavaScript to an Angular CLI Project](/adding-css-and-javascript-to-an-angular-2-cli-project/)
+*   [Adding CSS and JavaScript to an Angular CLI Project](https://medium.com/@davembush/adding-css-and-javascript-to-an-angular-cli-project-2b843a8283f3)
 
 Drop into command line mode and run `ng test` The first thing you will notice is that this brings up the Chrome browser to run your test.  I don’t know about you, but I really dislike having a browser window up.  I have enough windows running on my screen as it is.  This is the first thing we need to fix.  To do this we are going to install PhantomJS. `npm install --save-dev phantomjs-prebuilt` Then, we need to tell karma to use PhantomJS.  This is a two step process.  First, we install the karma phantomjs runner `npm install --save-dev karma-phantomjs-launcher` Next, we modify the karma.conf.js file Change `require('karma-chrome-launcher'),` and `browsers: ['Chrome'],` To `require('karma-phantomjs-launcher'),` and `browsers: ['PhantomJS'],` Last, since we are not using the browser, we will need a better reporting mechanism. To do this we will install spec reporter. `npm install --save-dev karma-spec-reporter` and we replace this line in karma.conf.js
 

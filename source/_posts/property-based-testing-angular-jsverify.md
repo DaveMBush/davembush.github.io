@@ -8,7 +8,7 @@ url: 4564.html
 id: 4564
 comments: false
 categories:
-  - Angular 2
+  - Angular
 date: 2018-02-06 06:30:58
 ---
 

@@ -7,7 +7,7 @@ tags:
 url: 4290.html
 id: 4290
 categories:
-  - Angular 2
+  - Angular
 date: 2017-04-18 06:30:00
 ---
 

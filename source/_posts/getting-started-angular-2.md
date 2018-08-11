@@ -1,12 +1,12 @@
 ---
 title: Getting Started with Angular 2
 tags:
-  - angular 2
+  - angular
   - javascript
 url: 4074.html
 id: 4074
 categories:
-  - Angular 2
+  - Angular
 date: 2016-10-25 06:30:00
 ---
 

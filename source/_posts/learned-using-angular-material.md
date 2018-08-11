@@ -1,13 +1,13 @@
 ---
 title: What I Learned Using Angular Material
 tags:
-  - angular 2
+  - angular
   - angular material
 url: 4488.html
 id: 4488
 comments: false
 categories:
-  - Angular 2
+  - Angular
 date: 2017-10-31 06:30:06
 ---
 
@@ -28,7 +28,9 @@ Because Angular Material is both a CSS framework and a component library, it tur
 @import
 -------
 
-I've written before about [how to include CSS in your Angular project](/adding-css-and-javascript-to-an-angular-2-cli-project/), but I've learned a new trick while implementing Angular Material. This might be a relative new thing with the Angular CLI, but apparently, you can @import local and external CSS in your styles.css file.  When I evaluated the code that gets built, I found that the build process knows to keep the external code external yet bundles the internal code with the project.  This is something you could use regardless of what CSS framework or component library you are using.
+I've written before about [how to include CSS in your Angular project](https://medium.com/@davembush/adding-css-and-javascript-to-an-angular-cli-project-2b843a8283f3), but I've learned a new trick while implementing Angular Material. 
+
+This might be a relative new thing with the Angular CLI, but apparently, you can `@import` local and external CSS in your styles.css file.  When I evaluated the code that gets built, I found that the build process knows to keep the external code external yet bundles the internal code with the project.  This is something you could use regardless of what CSS framework or component library you are using.
 
 Layout
 ------
@@ -46,9 +48,11 @@ Testing
 The first time you write unit tests, you'll get a warning that says, "Could not find Angular Material core theme...".  To remove this error, you'll need to open karma.conf.js and add a "files:" section right under the "plugins:" section.
 
 ``` javascript
-files: [
-    { pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css', included: true, watched: true }
-],
+files: [{ 
+  pattern: './node_modules/@angular/material/prebuilt-themes/indigo-pink.css', 
+  included: true, 
+  watched: true 
+}],
 ```
 
 You can add whatever pre-built theme you'd like.  I've added indigo-pink here.
@@ -56,7 +60,13 @@ You can add whatever pre-built theme you'd like.  I've added indigo-pink here.
 Common declare/import/export
 ----------------------------
 
-Strictly speaking, this isn't Angular Material specific.  But it was because of Angular Material that I discovered this trick.  Again, because it isn't Angular Material specific, you can use this in any of your Angular code that it makes sense. Angular Material requires you to import each of the component modules individually.  This allows tree shaking to be more effective.  Rather than put this code in `app.module.ts`, I created a `material-design.module.ts` file and imported it into my `app.module.ts`. Now, if you are familiar with how imports work, you'll already know that the components that are part of a module you import are only available to the parent module's components or below.  But we want the component to be available to any module that imports `material-design.module.ts`.  To do that, we need to export the same list of modules we imported. That sounded like too much repeating myself.  In an effort to make my code DRYer, I created a read only array with all my Material modules in it and then used the spread operator to include those in my imports and exports statement.
+Strictly speaking, this isn't Angular Material specific.  But it was because of Angular Material that I discovered this trick.  Again, because it isn't Angular Material specific, you can use this in any of your Angular code that it makes sense. 
+
+Angular Material requires you to import each of the component modules individually.  This allows tree shaking to be more effective.  Rather than put this code in `app.module.ts`, I created a `material-design.module.ts` file and imported it into my `app.module.ts`. 
+
+Now, if you are familiar with how imports work, you'll already know that the components that are part of a module you import are only available to the parent module's components or below.  But we want the component to be available to any module that imports `material-design.module.ts`.  To do that, we need to export the same list of modules we imported. 
+
+That sounded like too much repeating myself.  In an effort to make my code DRYer, I created a read only array with all my Material modules in it and then used the spread operator to include those in my imports and exports statement.
 
 ``` typescript
 const materialDesignComponents: ReadonlyArray<Type<any>> = [

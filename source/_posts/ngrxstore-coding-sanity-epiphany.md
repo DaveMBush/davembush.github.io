@@ -1,13 +1,13 @@
 ---
 title: NgRX/Store Coding Sanity Epiphany
 tags:
-  - angular 2
+  - angular
   - design patterns
   - NgRX
 url: 4346.html
 id: 4346
 categories:
-  - Angular 2
+  - Angular
 date: 2017-06-06 06:30:44
 ---
 

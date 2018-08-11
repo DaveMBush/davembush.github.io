@@ -8,11 +8,17 @@ url: 4501.html
 id: 4501
 comments: false
 categories:
-  - Angular 2
+  - Angular
 date: 2017-11-14 06:30:12
 ---
 
-As you might have noticed from last week's post, I've shifted my focus from pure Angular to learning Angular Ionic.  And while last week's post focused more on just [getting Ionic setup on a Windows environment](/angular-ionic-putty-ssh-authorized_keys-format), this post will focus more on integrating Ionic and Angular CLI to work together. If you are familiar with Ionic, you should already know that it provides its own CLI that allows you to scaffold out a new application using a basic template.  This CLI is also used to help register the project with the Ionic Dashboard and scaffold out a limited number of file types if you use Ionic 3.  However, there are several problems I have with using the Ionic CLI.  First, and probably most important to me, is there is no test scaffolding!  Second, it neither follows the standard naming convention for files nor does it comply with the Angular Style Guide when it comes to directory structure. My first attempt at correcting the problem was to try to add Ionic to an existing Angular CLI project.  I almost had that working, but I got stuck trying to get the SCSS implementation working.  I finally gave up once I realized that Ionic seems to load files on demand, including SCSS files and templates.  I might come back to this once I've gained more experience with Ionic and have a better idea of how it works under the hood. So, my second thought was to just add the Angular CLI to an existing Ionic CLI project.  It turns out this was much easier to get working.  This allows me to use the standard `ng` commands to scaffold out my components, services, interfaces, etc... and because I'm using the Angular CLI scaffolding, the tests also get scaffold out for me. <figure>![](/uploads/2017/11/2017-11-14.jpg "Angular Ionic and Angular CLI")<figcaption>Photo credit: [Internet Archive Book Images](//www.flickr.com/photos/internetarchivebookimages/14762635481/) via [VisualHunt.com](//visualhunt.com/re/09daa4) / [ No known copyright restrictions](//flickr.com/commons/usage/)</figcaption></figure>
+As you might have noticed from last week's post, I've shifted my focus from pure Angular to learning Angular Ionic.  And while last week's post focused more on just [getting Ionic setup on a Windows environment](/angular-ionic-putty-ssh-authorized_keys-format), this post will focus more on integrating Ionic and Angular CLI to work together. 
+
+If you are familiar with Ionic, you should already know that it provides its own CLI that allows you to scaffold out a new application using a basic template.  This CLI is also used to help register the project with the Ionic Dashboard and scaffold out a limited number of file types if you use Ionic 3.  However, there are several problems I have with using the Ionic CLI.  First, and probably most important to me, is there is no test scaffolding!  Second, it neither follows the standard naming convention for files nor does it comply with the Angular Style Guide when it comes to directory structure. 
+
+My first attempt at correcting the problem was to try to add Ionic to an existing Angular CLI project.  I almost had that working, but I got stuck trying to get the SCSS implementation working.  I finally gave up once I realized that Ionic seems to load files on demand, including SCSS files and templates.  I might come back to this once I've gained more experience with Ionic and have a better idea of how it works under the hood. 
+
+Then, my second thought was to just add the Angular CLI to an existing Ionic CLI project.  It turns out this was much easier to get working.  This allows me to use the standard `ng` commands to scaffold out my components, services, interfaces, etc... and because I'm using the Angular CLI scaffolding, the tests also get scaffold out for me. <figure>![](/uploads/2017/11/2017-11-14.jpg "Angular Ionic and Angular CLI")<figcaption>Photo credit: [Internet Archive Book Images](//www.flickr.com/photos/internetarchivebookimages/14762635481/) via [VisualHunt.com](//visualhunt.com/re/09daa4) / [ No known copyright restrictions](//flickr.com/commons/usage/)</figcaption></figure>
 
 <!-- more -->  
 
@@ -56,7 +62,9 @@ I also use tslint quite extensively in my projects, so I also add in the followi
 .angular-cli.json
 -----------------
 
-The main file that makes the Angular CLI recognize the project as an Angular CLI project is the `.angular-cli.json` file.  The easiest thing to do is to take an existing file from another project and copy it into your Ionic project.  This file belongs in the root of your project. Once you've done that, there is one small change you need to make.  The `main.ts` file that is the entry point of the application lives under the `app` directory in an Ionic project rather than directly under `src` like it does with an Angular CLI project.  It would be tempting to change the location of the file, but the Ionic build process is looking for it under the `app` directory.  An easier fix is to change the location in our `.angular-cli.json` file so that our tests can find it.  It is the only place that needs to know of the new location. Change .angular-cli.json so main points to the right location:
+The main file that makes the Angular CLI recognize the project as an Angular CLI project is the `.angular-cli.json` file.  The easiest thing to do is to take an existing file from another project and copy it into your Ionic project.  This file belongs in the root of your project. 
+
+Once you've done that, there is one small change you need to make.  The `main.ts` file that is the entry point of the application lives under the `app` directory in an Ionic project rather than directly under `src` like it does with an Angular CLI project.  It would be tempting to change the location of the file, but the Ionic build process is looking for it under the `app` directory.  An easier fix is to change the location in our `.angular-cli.json` file so that our tests can find it.  It is the only place that needs to know of the new location. Change .angular-cli.json so main points to the right location:
 
 ``` json
 {
@@ -166,4 +174,14 @@ Because the pages that got generated don't conform to the style guide and don't 
 Tests
 -----
 
-At this point, you should have a project that looks a lot more like an Angular CLI project.  You'll still use the Ionic command to do your regular build and development cycle and the ng commands for testing and generating new files.  Running tests works the same as you should already be used to from using Angular.  The one thing you will notice is that you'll see a warning in your test: `Critical dependency: the request of a dependency is an expression` This is a known "error" that neither the Angular CLI group or the Ionic group seem interested in addressing. At this point, I haven't tried any E2E tests using this setup so I don't know if there are any additional tweaks that need to be made. You can find the code for this at this branch of a project I'm working on. [https://github.com/DaveMBush/ionic-crud/tree/Add-Angular-CLI](//github.com/DaveMBush/ionic-crud/tree/Add-Angular-CLI)
+At this point, you should have a project that looks a lot more like an Angular CLI project.  You'll still use the Ionic command to do your regular build and development cycle and the ng commands for testing and generating new files.  Running tests works the same as you should already be used to from using Angular.  The one thing you will notice is that you'll see a warning in your test: 
+
+``` text
+Critical dependency: the request of a dependency is an expression
+```
+
+This is a known "error" that neither the  Angular CLI group or the Ionic group seem interested in addressing. 
+
+At this point, I haven't tried any E2E tests using this setup so I don't know if there are any additional tweaks that need to be made. 
+
+You can find the code for this at this branch of a project I'm working on. [https://github.com/DaveMBush/ionic-crud/tree/Add-Angular-CLI](//github.com/DaveMBush/ionic-crud/tree/Add-Angular-CLI)

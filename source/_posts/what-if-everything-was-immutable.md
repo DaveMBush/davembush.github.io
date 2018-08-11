@@ -1,13 +1,13 @@
 ---
 title: What if Everything Was Immutable?
 tags:
-  - angular 2
+  - angular
   - immutable
   - javascript
 url: 4168.html
 id: 4168
 categories:
-  - Angular 2
+  - Angular
 date: 2017-01-10 07:30:00
 ---
 

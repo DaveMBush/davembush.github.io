@@ -1,13 +1,13 @@
 ---
 title: Functional Reactive Angular Revealed
 tags:
-  - angular 2
+  - angular
   - NgRX
   - RxJS
 url: 4341.html
 id: 4341
 categories:
-  - Angular 2
+  - Angular
 date: 2017-05-30 06:30:46
 ---
 

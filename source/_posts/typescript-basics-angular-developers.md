@@ -1,12 +1,12 @@
 ---
 title: TypeScript Basics for Angular Developers
 tags:
-  - angular 2
+  - angular
   - typescript
 url: 4406.html
 id: 4406
 categories:
-  - Angular 2
+  - Angular
 date: 2017-08-01 06:30:30
 ---
 

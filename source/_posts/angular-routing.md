@@ -1,12 +1,12 @@
 ---
 title: How to Implement Angular 2+ Routing
 tags:
-  - angular 2
+  - angular
   - routing
 url: 4388.html
 id: 4388
 categories:
-  - Angular 2
+  - Angular
 date: 2017-07-18 06:30:23
 ---
 

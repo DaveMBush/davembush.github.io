@@ -1,13 +1,13 @@
 ---
 title: Using Real World NgRX
 tags:
-  - angular 2
+  - angular
   - design patterns
   - NgRX
 url: 4315.html
 id: 4315
 categories:
-  - Angular 2
+  - Angular
 date: 2017-05-09 06:30:00
 ---
 
