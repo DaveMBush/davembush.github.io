@@ -46,14 +46,14 @@ import { APP_INITIALIZER } from '@angular/core'
         ...
         {
             provide: APP_INITIALIZER,
-            useFactory: () => load(),
+            useFactory: load,
             multi: true
         }
     ]
 )
 ```
 
-where load() is a function that returns a function that returns a `Promise<boolean>`. The promise function loads your configuration information and stores it in your application.  Once your configuration has been loaded, you resolve the promise using `resolve(true)`.
+where `load` is a `function` that returns a `function` that returns a `Promise<boolean>`. The promise function loads your configuration information and stores it in your application.  Once your configuration has been loaded, you resolve the promise using `resolve(true)`.
 
 This last point is really important.  If you get this wrong, the code won't wait for this to finish loading before moving on.  `useFactory` points to a `function` that returns a `function` that returns a `Promise<boolean>`!
 
