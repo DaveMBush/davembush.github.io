@@ -14,7 +14,7 @@
 <meta property="og:description" content="For the last 18 months, I’ve been working for an organization that has what some might consider a unique requirement.  Because of where our application’s data is sourced, we need to aggregate data on">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2017/09/2017-10-03.png">
-<meta property="og:updated_time" content="2018-08-11T11:11:08.708Z">
+<meta property="og:updated_time" content="2018-08-17T18:05:41.494Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Using NgRX to Cleanly Aggregate Data">
 <meta name="twitter:description" content="For the last 18 months, I’ve been working for an organization that has what some might consider a unique requirement.  Because of where our application’s data is sourced, we need to aggregate data on">
@@ -133,8 +133,10 @@
 </li>
 <li>Once all the calls have returned, return the list so it can be displayed.</li>
 </ul>
-<p>As you can see, this not only becomes difficult to manage, but it also introduces a system that is going to be perceived as slow. But, now, we can do better.</p>
-<h2 id="Using-NgRX"><a href="#Using-NgRX" class="headerlink" title="Using NgRX"></a>Using NgRX</h2><p>By using NgRX, we use a series of Effects to retrieve our data, typically via a Service.  When the effect is done, it returns the results to a reducer which puts them in our store entity for us. The basic work flow looks like something like this:</p>
+<p>As you can see, this not only becomes difficult to manage, but it also introduces a system that is going to be perceived as slow. </p>
+<p>But, now, we can do better.</p>
+<h2 id="Using-NgRX"><a href="#Using-NgRX" class="headerlink" title="Using NgRX"></a>Using NgRX</h2><p>By using NgRX, we use a series of Effects to retrieve our data, typically via a Service.  When the effect is done, it returns the results to a reducer which puts them in our store entity for us. </p>
+<p>The basic work flow looks like something like this:</p>
 <ul>
 <li>Dispatch an action to get the main results</li>
 <li>Effect hears the action and makes a call for the top-level list</li>
@@ -153,7 +155,9 @@
 <li>When each of the values are retrieved, the Effect returns an Action that uses a Reducer to put the value in the store</li>
 </ul>
 <p>You’ll notice, we no longer have the nesting mess that we had using the old way and we can list our results as soon as the first set of data is returned.</p>
-<h2 id="Meanwhile-back-on-our-View"><a href="#Meanwhile-back-on-our-View" class="headerlink" title="Meanwhile, back on our View"></a>Meanwhile, back on our View</h2><p>Now, there are two ways you can deal with displaying this information in your view and it all depends on what you are doing. The easy way is to just let the View display the information as it comes back.  Most of the time this will work.  If you need to filter your data in the display once it comes back, you will need to decide if data that doesn’t have the child fields yet should, or should not be displayed. Another quirk I had to deal with was that we were displaying child rows with child rows.  Letting the data display as we got it back gave the screen a kind of exploding effect.  For this, I added a debounceTime(500) to the store observer so that the screen only updated once all the data had been retrieved.  Using the pattern above was still easier to reason about than the old way, we just didn’t get the added benefit of being able to see the data as it was being retrieved.</p>
+<h2 id="Meanwhile-back-on-our-View"><a href="#Meanwhile-back-on-our-View" class="headerlink" title="Meanwhile, back on our View"></a>Meanwhile, back on our View</h2><p>Now, there are two ways you can deal with displaying this information in your view and it all depends on what you are doing. </p>
+<p>The easy way is to just let the View display the information as it comes back.  Most of the time this will work.  If you need to filter your data in the display once it comes back, you will need to decide if data that doesn’t have the child fields yet should, or should not be displayed. </p>
+<p>Another quirk I had to deal with was that we were displaying child rows with child rows.  Letting the data display as we got it back gave the screen a kind of exploding effect.  For this, I added a debounceTime(500) to the store observer so that the screen only updated once all the data had been retrieved.  Using the pattern above was still easier to reason about than the old way, we just didn’t get the added benefit of being able to see the data as it was being retrieved.</p>
 <h2 id="Watch-Out"><a href="#Watch-Out" class="headerlink" title="Watch Out!"></a>Watch Out!</h2><p>One of the wrong ways you might be tempted to use this pattern would be to chain all the child stuff in one effect and dispatch actions to your reducers from within the one Effect.  This would be a mistake.  Sure, it would work.  But now because your effect is doing more than one thing, your code becomes MUCH harder to reason about.  While each of your Effects may ultimately call the same reducer function, or not, you definitely want to have a separate set of Actions and Effects that retrieve the data from the server.</p>
 
       
@@ -165,7 +169,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/using-ngrx-to-cleanly-aggregate-data/" data-id="cjky99ei600h3zshi5expf7qv" class="article-share-link">
+      <a data-url="http://davembush.github.com/using-ngrx-to-cleanly-aggregate-data/" data-id="cjkyb1hqk00gvzghicd0yr12f" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
