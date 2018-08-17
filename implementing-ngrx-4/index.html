@@ -3,21 +3,21 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Implementing NgRX 4 | Dave&#39;s Notebook</title>
+  <title>Implementing NgRX 4+ | Dave&#39;s Notebook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="There seems to be a lot of confusion about Implement NgRX 4 in an Angular application.  Some of it I’ve contributed to because NgRX 2 isn’t quite the same as NgRX 4 and as I’ve transitioned, I’ve lear">
+  <meta name="description" content="There seems to be a lot of confusion about Implement NgRX 4 and above in an Angular application.  Some of it I’ve contributed to because NgRX 2 isn’t quite the same as NgRX 4 and as I’ve transitioned,">
 <meta name="keywords" content="angular,NgRX">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Implementing NgRX 4">
+<meta property="og:title" content="Implementing NgRX 4+">
 <meta property="og:url" content="http://davembush.github.com/implementing-ngrx-4/index.html">
 <meta property="og:site_name" content="Dave&#39;s Notebook">
-<meta property="og:description" content="There seems to be a lot of confusion about Implement NgRX 4 in an Angular application.  Some of it I’ve contributed to because NgRX 2 isn’t quite the same as NgRX 4 and as I’ve transitioned, I’ve lear">
+<meta property="og:description" content="There seems to be a lot of confusion about Implement NgRX 4 and above in an Angular application.  Some of it I’ve contributed to because NgRX 2 isn’t quite the same as NgRX 4 and as I’ve transitioned,">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2017/10/2017-10-24.jpg">
-<meta property="og:updated_time" content="2018-08-11T11:11:08.688Z">
+<meta property="og:updated_time" content="2018-08-17T17:12:24.041Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Implementing NgRX 4">
-<meta name="twitter:description" content="There seems to be a lot of confusion about Implement NgRX 4 in an Angular application.  Some of it I’ve contributed to because NgRX 2 isn’t quite the same as NgRX 4 and as I’ve transitioned, I’ve lear">
+<meta name="twitter:title" content="Implementing NgRX 4+">
+<meta name="twitter:description" content="There seems to be a lot of confusion about Implement NgRX 4 and above in an Angular application.  Some of it I’ve contributed to because NgRX 2 isn’t quite the same as NgRX 4 and as I’ve transitioned,">
 <meta name="twitter:image" content="http://davembush.github.com/uploads/2017/10/2017-10-24.jpg">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
@@ -87,7 +87,7 @@
     
   
     <h1 class="article-title" itemprop="name">
-      Implementing NgRX 4
+      Implementing NgRX 4+
     </h1>
   
 
@@ -111,7 +111,7 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>There seems to be a lot of confusion about Implement NgRX 4 in an Angular application.  Some of it I’ve contributed to because NgRX 2 isn’t quite the same as NgRX 4 and as I’ve transitioned, I’ve learned better ways.  In other words, I was wrong and I’m correcting my mistake!  Below is the correct, NgRX approved way, of implementing NgRX 4. </p>
+        <p>There seems to be a lot of confusion about Implement NgRX 4 and above in an Angular application.  Some of it I’ve contributed to because NgRX 2 isn’t quite the same as NgRX 4 and as I’ve transitioned, I’ve learned better ways.  In other words, I was wrong and I’m correcting my mistake!  Below is the correct, NgRX approved way, of implementing NgRX 4. </p>
 <p>If you are looking for information about how to convert to NgRX 4 from NgRX 2, you can visit my previous article, <a href="/how-to-upgrade-ngrx-to-4-x/">How to Upgrade to NgRX 4</a>. </p>
 <p>Before we get started, make sure you have TypeScript 2.4.x or above installed in your local project.  The CLI may complain, depending on what version of it you are using.  But, NgRX 4 requires us to use TypeScript 2.4.x. You should also have RxJS 5.4.x or above installed. </p>
 <p>You will also need to install @ngrx.  You can do this using the following NPM command: </p>
@@ -141,7 +141,7 @@
 <h3 id="Reducers"><a href="#Reducers" class="headerlink" title="Reducers"></a>Reducers</h3><p>Reducers are functions that allow us to change the state of our entity within our application Store.  Reducers respond to the actions that have been dispatched and return a new object based on the changes requested. </p>
 <p>To continue on with our Wait example, <code>wait.reducer.ts</code> might look like this:</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;ActionReducer&#125; <span class="keyword">from</span> <span class="string">'@ngrx/store'</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> Wait <span class="keyword">from</span> <span class="string">'./wait.actions'</span>;</span><br><span class="line"><span class="comment">// This could (and probably should) go in wait.actions.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> Action =</span><br><span class="line">    Wait.Add | Wait.End | Wait.Start;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">WaitReducer</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  state = 0, action: Action</span>): <span class="title">number</span> </span>&#123;</span><br><span class="line">  <span class="keyword">switch</span>(action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> Wait.Types.START:</span><br><span class="line">      <span class="keyword">return</span> state + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">case</span> Wait.Types.END:</span><br><span class="line">      <span class="keyword">return</span> state - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">case</span> Wait.Types.ADD:</span><br><span class="line">      <span class="comment">// TypeScript knows that our action have a value field here</span></span><br><span class="line">      <span class="keyword">return</span> state + action.value;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>Notice that we have a ‘default’ in our switch statement.  Don’t forget to add this.  It isn’t an accident.  You see, when we register our Reducers and Effects with the store and then subsequently dispatch actions to them, all the reducers and effects get called.  In the case of reducers, if you don’t return something for each one of them, you’ll end up with a store that doesn’t know what kind of state it is in.  So, always return the current state as your default. </p>
+<p>Notice that we have a <code>default</code> in our switch statement.  Don’t forget to add this.  It isn’t an accident.  You see, when we register our Reducers and Effects with the store and then subsequently dispatch actions to them, all the reducers and effects get called.  In the case of reducers, if you don’t return something for each one of them, you’ll end up with a store that doesn’t know what kind of state it is in.  So, always return the current state as your default. </p>
 <p>The one thing that may not be obvious here is that the Reducer is a function.  Not a class.  This means you can’t inject other classes into it.  This is one of the reasons that the file is named <code>wait.reducer.ts</code> and not <code>wait.reducer**s**.ts</code>. But, Effects are different.</p>
 <h3 id="Effects"><a href="#Effects" class="headerlink" title="Effects"></a>Effects</h3><p>Effects are classes.  Each Effect within the Effects class is a member variable.  This means, we name our Effects file for Wait, <code>wait.effects.ts</code>. </p>
 <p>Now, remember I said that Effects were for things that caused side effects?  You may wonder, why kind of side effect does our Wait stuff need? </p>
@@ -205,7 +205,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/implementing-ngrx-4/" data-id="cjky8fgdn00bs7ohiqgo6bm8b" class="article-share-link">
+      <a data-url="http://davembush.github.com/implementing-ngrx-4/" data-id="cjky99ed700bpzshix5vr5xtb" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
