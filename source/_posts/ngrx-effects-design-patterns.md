@@ -16,7 +16,11 @@ Since I don't seem to have a blogs worth of any one topic to write about, I thou
 Returning No Actions
 --------------------
 
-There have been times in the past where I didn't want to return an Action from my Effect.  Not knowing any better, I just returned the Object Literal, `{type: 'noop'}`.  But there is a much better way. BTW, did you know that unless you tell NgRX otherwise, all @Effects must return an Action? So, what is the better way?  It turns out that the guys who wrote NgRX already thought of the possibility that you wouldn't want to return an action from an @Effect.  All you need to do is to pass the object literal `{dispatch: false}` to the @Effect() decoractor. 
+There have been times in the past where I didn't want to return an Action from my Effect.  Not knowing any better, I just returned the Object Literal, `{type: 'noop'}`.  But there is a much better way. 
+
+BTW, did you know that unless you tell NgRX otherwise, all @Effects must return an Action? 
+
+So, what is the better way?  It turns out that the guys who wrote NgRX already thought of the possibility that you wouldn't want to return an action from an @Effect.  All you need to do is to pass the object literal `{dispatch: false}` to the @Effect() decoractor. 
 
 ``` typescript
 @Effect({dispatch: false})
@@ -48,12 +52,20 @@ get$:Observable<Edit.Update> =
       newEdit.Update(x[0]));`
 ```
 
-But, do you know why it works? That `switchMap()` bit expects that you'll return an observable.  It subscribes to it and passes the data inside the observable to the `map()` that follows.  Kind of like how the `async` pipe works in our templates. The cool thing about this is that you can chain subscriptions together using this.  It isn't just some cleaver way of getting the results of a service into your final action that you will return.  I've used `switchMap()` to get data from the store and pass that on to a `switchMap()` that call my service with that data. The only thing you need to watch out for is that your observable is either a cold observable or that you call `.first()` so you it becomes a cold observable.  Otherwise, you'll end up in an infinite loop.  Ask me how I know :).
+But, do you know why it works? 
+
+That `switchMap()` bit expects that you'll return an observable.  It subscribes to it and passes the data inside the observable to the `map()` that follows.  Kind of like how the `async` pipe works in our templates. 
+
+The cool thing about this is that you can chain subscriptions together using this.  It isn't just some cleaver way of getting the results of a service into your final action that you will return.  I've used `switchMap()` to get data from the store and pass that on to a `switchMap()` that call my service with that data. 
+
+The only thing you need to watch out for is that your observable is either a cold observable or that you call `.first()` so you it becomes a cold observable.  Otherwise, you'll end up in an infinite loop.  Ask me how I know :).
 
 Grouping Observables
 --------------------
 
-Chaining observables together using `switchMap()` works well when the output only needs to be used by the next function in the chain.  But what about when you need to use the results from two different observables at once.  There are a couple of different ways you might do this. One function you might consider using is `withLatestFrom()`. 
+Chaining observables together using `switchMap()` works well when the output only needs to be used by the next function in the chain.  But what about when you need to use the results from two different observables at once.  There are a couple of different ways you might do this. 
+
+One function you might consider using is `withLatestFrom()`. 
 
 ``` typescript
 firstObservable
@@ -61,7 +73,9 @@ firstObservable
   // your code here)
 ```
 
-or if you have more than two you need to combine, you can use `combineLatest()` Another way you might consider combining them is with `forkJoin()` although that might be the last tool you reach for.
+or if you have more than two you need to combine, you can use `combineLatest()` 
+
+Another way you might consider combining them is with `forkJoin()` although that might be the last tool you reach for.
 
 Single Responsibility
 ---------------------

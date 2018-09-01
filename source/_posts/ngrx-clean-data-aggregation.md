@@ -25,40 +25,48 @@ The Old Way
 
 Prior to using NgRX, the main way we might solve this problem would be to introduce callback hell, or promise hell if you are that lucky.
 
-*   Make a call for the original list
-*   When the list gets returned
-    *   Iterate through the records and
-        *   Make a call for Child Record One
-            *   When callback returns, add the new value to the parent record
-        *   Make a call for Child Record Two
-            *   When the callback returns, add the new value to the parent record
-*   Once all the calls have returned, return the list so it can be displayed.
+- Make a call for the original list
+- When the list gets returned
+  - Iterate through the records and
+    - Make a call for Child Record One
+      - When callback returns, add the new value to the parent record
+    - Make a call for Child Record Two
+      - When the callback returns, add the new value to the parent record
+- Once all the calls have returned, return the list so it can be displayed.
 
-As you can see, this not only becomes difficult to manage, but it also introduces a system that is going to be perceived as slow. But, now, we can do better.
+As you can see, this not only becomes difficult to manage, but it also introduces a system that is going to be perceived as slow. 
+
+But, now, we can do better.
 
 Using NgRX
 ----------
 
-By using NgRX, we use a series of Effects to retrieve our data, typically via a Service.  When the effect is done, it returns the results to a reducer which puts them in our store entity for us. The basic work flow looks like something like this:
+By using NgRX, we use a series of Effects to retrieve our data, typically via a Service.  When the effect is done, it returns the results to a reducer which puts them in our store entity for us. 
 
-*   Dispatch an action to get the main results
-*   Effect hears the action and makes a call for the top-level list
-*   When the list returns,
-    *   Iterate through the records and
-        *   we dispatch an action to get Child Record One
-        *   we dispatch an action to get Child Record Two
-*   Return an Action that will use a reducer to fill our list
-*   Child Record One Effect hears the actions for each of the rows
-*   When each of the values are retrieved the Effect returns an Action that uses a Reducer to put the value in the store
-*   Child Record Two Effect hears the actions for each of the rows
-*   When each of the values are retrieved, the Effect returns an Action that uses a Reducer to put the value in the store
+The basic work flow looks like something like this:
+
+- Dispatch an action to get the main results
+- Effect hears the action and makes a call for the top-level list
+- When the list returns,
+  - Iterate through the records and
+    - we dispatch an action to get Child Record One
+    - we dispatch an action to get Child Record Two
+- Return an Action that will use a reducer to fill our list
+- Child Record One Effect hears the actions for each of the rows
+- When each of the values are retrieved the Effect returns an Action that uses a Reducer to put the value in the store
+- Child Record Two Effect hears the actions for each of the rows
+- When each of the values are retrieved, the Effect returns an Action that uses a Reducer to put the value in the store
 
 You'll notice, we no longer have the nesting mess that we had using the old way and we can list our results as soon as the first set of data is returned.
 
 Meanwhile, back on our View
 ---------------------------
 
-Now, there are two ways you can deal with displaying this information in your view and it all depends on what you are doing. The easy way is to just let the View display the information as it comes back.  Most of the time this will work.  If you need to filter your data in the display once it comes back, you will need to decide if data that doesn't have the child fields yet should, or should not be displayed. Another quirk I had to deal with was that we were displaying child rows with child rows.  Letting the data display as we got it back gave the screen a kind of exploding effect.  For this, I added a debounceTime(500) to the store observer so that the screen only updated once all the data had been retrieved.  Using the pattern above was still easier to reason about than the old way, we just didn't get the added benefit of being able to see the data as it was being retrieved.
+Now, there are two ways you can deal with displaying this information in your view and it all depends on what you are doing. 
+
+The easy way is to just let the View display the information as it comes back.  Most of the time this will work.  If you need to filter your data in the display once it comes back, you will need to decide if data that doesn't have the child fields yet should, or should not be displayed. 
+
+Another quirk I had to deal with was that we were displaying child rows with child rows.  Letting the data display as we got it back gave the screen a kind of exploding effect.  For this, I added a debounceTime(500) to the store observer so that the screen only updated once all the data had been retrieved.  Using the pattern above was still easier to reason about than the old way, we just didn't get the added benefit of being able to see the data as it was being retrieved.
 
 Watch Out!
 ----------

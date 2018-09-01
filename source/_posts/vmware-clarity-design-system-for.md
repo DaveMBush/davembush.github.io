@@ -14,18 +14,20 @@ categories:
 date: 2018-03-20 06:30:51
 ---
 
-Unless you are a CSS wizard, you are probably using one of two CSS frameworks for your Angular projects or some sort of adaptation of them.  Bootstrap or Angular Material.  These have served us well, but they have one major flaw.  They target the "Mobile First" method of design.  This is great if your application must work on a mobile device.  But most corporate web applications target web applications. Have you ever heard any of these objections from your end users?
+Unless you are a CSS wizard, you are probably using one of two CSS frameworks for your Angular projects or some sort of adaptation of them.  Bootstrap or Angular Material.  These have served us well, but they have one major flaw.  They target the "Mobile First" method of design.  This is great if your application must work on a mobile device.  But most corporate web applications target web applications.
+
+Have you ever heard any of these objections from your end users?
 
 * Why is everything so big?
 * Why can't I have the label NEXT to the input field?
 
-And then you explain, it is so the screen can run on a mobile device and you hear, "But, this application will never run on a mobile device!"  Which is a valid point. Therefore, I was so excited to hear that VMWare has finally taken up the challenge of creating a Desktop First CSS Framework called [Clarity](//vmware.github.io/clarity/). 
+And then you explain, it is so the screen can run on a mobile device and you hear, "But, this application will never run on a mobile device!"  Which is a valid point. 
+
+Therefore, I was so excited to hear that VMWare has finally taken up the challenge of creating a Desktop First CSS Framework called [Clarity](//vmware.github.io/clarity/). 
 
 <figure style="text-align: center">
 {% asset_img 2018-03-20.jpg VMWare&#39;s Clarity Design System for Angular %}<figcaption>Photo credit: [Sean Hering Photography](//visualhunt.com/author/2edd3b) on [Visual Hunt](//visualhunt.com/re/764a8a) / [ CC BY](//creativecommons.org/licenses/by/2.0/)</figcaption>
- </figure>
-
-<!-- more --> 
+ </figure> 
 
 <!-- more -->
 
@@ -66,7 +68,11 @@ Oh, and did I mention that it is backed by VMWare?  I always like it when an op
 Why You Might Want to Pass
 --------------------------
 
-For all these benefits, there are a couple of reasons why you might want to at least wait if not ignore Clarity. As I mentioned above, the product hasn't been released yet and therefore there will be breaking changes as the project makes its way to version 1.0.  This is easily mitigated by freezing your development efforts to the current release and only upgrading when you have time to address the breaking changes. You also might want to avoid using Clarity if you really need Mobile First.  I'm sure you could adapt the CSS to work with Mobile as well as Desktop.  Personally, I'd just make sure all of my business logic was outside my components so that I could develop a Mobile front-end and a Desktop front-end without losing any functionality.  This would mean one site would use Bootstrap, Angular Material, or IONIC and the other would use Clarity.
+For all these benefits, there are a couple of reasons why you might want to at least wait if not ignore Clarity. 
+
+As I mentioned above, the product hasn't been released yet and therefore there will be breaking changes as the project makes its way to version 1.0.  This is easily mitigated by freezing your development efforts to the current release and only upgrading when you have time to address the breaking changes. 
+
+You also might want to avoid using Clarity if you really need Mobile First.  I'm sure you could adapt the CSS to work with Mobile as well as Desktop.  Personally, I'd just make sure all of my business logic was outside my components so that I could develop a Mobile front-end and a Desktop front-end without losing any functionality.  This would mean one site would use Bootstrap, Angular Material, or IONIC and the other would use Clarity.
 
 Installation - The Right Way
 ----------------------------

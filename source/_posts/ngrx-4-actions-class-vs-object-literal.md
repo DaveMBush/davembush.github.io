@@ -18,7 +18,11 @@ When NgRX 4 came out and I discovered that the "right" way of creating Actions i
 Options
 -------
 
-An Action is an object that contains a type variable and optionally, a payload. Depending on how you code your action, the payload may or may not have “payload” as the variable name. In NgRX version 2, payload was an optional variable. To improve type checking, payload was removed from the Action interface. The official documentation for NgRX version 4 encourages us to create a class for each action we want to dispatch. Suppose you have a Wait reducer that needs a Start action and an End action.  The code might look something like:
+An Action is an object that contains a type variable and optionally, a payload. Depending on how you code your action, the payload may or may not have “payload” as the variable name. In NgRX version 2, payload was an optional variable. To improve type checking, payload was removed from the Action interface. 
+
+The official documentation for NgRX version 4 encourages us to create a class for each action we want to dispatch. 
+
+Suppose you have a Wait reducer that needs a Start action and an End action.  The code might look something like:
 
 ``` typescript
 import {Action} from '@ngrx/store';
@@ -91,7 +95,9 @@ The main advantage to using the object literal way is that you don't need to cre
 Advantage Classes
 -----------------
 
-But, because of the way we import the class bundles, the way we end up using the code looks nearly the same.  The main difference is that we must instantiate the class.  But we also get the option of having a different variable type for each action, we aren't forced to use a variable named "payload" to hold all the associated data.  Further, if you need multiple payloads, you can do that.  You aren't limited by how many parameters/member variables each of your Action classes use.  When using Effects, we can type the return value of the Effect to the Action we want it to return. In fact, it is this type safety that is the main reason we should be creating Actions using the Class method instead of the object literal method.
+But, because of the way we import the class bundles, the way we end up using the code looks nearly the same.  The main difference is that we must instantiate the class.  But we also get the option of having a different variable type for each action, we aren't forced to use a variable named "payload" to hold all the associated data.  Further, if you need multiple payloads, you can do that.  You aren't limited by how many parameters/member variables each of your Action classes use.  When using Effects, we can type the return value of the Effect to the Action we want it to return. 
+
+In fact, it is this type safety that is the main reason we should be creating Actions using the Class method instead of the object literal method.
 
 Tweaking Classes For Bigger Advantage
 -------------------------------------

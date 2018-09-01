@@ -1,5 +1,5 @@
 ---
-title: Implementing NgRX 4
+title: Implementing NgRX 4+
 tags:
   - angular
   - NgRX
@@ -11,7 +11,7 @@ categories:
 date: 2017-10-24 06:30:46
 ---
 
-There seems to be a lot of confusion about Implement NgRX 4 in an Angular application.  Some of it I've contributed to because NgRX 2 isn't quite the same as NgRX 4 and as I've transitioned, I've learned better ways.  In other words, I was wrong and I'm correcting my mistake!  Below is the correct, NgRX approved way, of implementing NgRX 4. 
+There seems to be a lot of confusion about Implement NgRX 4 and above in an Angular application.  Some of it I've contributed to because NgRX 2 isn't quite the same as NgRX 4 and as I've transitioned, I've learned better ways.  In other words, I was wrong and I'm correcting my mistake!  Below is the correct, NgRX approved way, of implementing NgRX 4. 
 
 If you are looking for information about how to convert to NgRX 4 from NgRX 2, you can visit my previous article, [How to Upgrade to NgRX 4](/how-to-upgrade-ngrx-to-4-x/). 
 
@@ -139,7 +139,7 @@ export function WaitReducer(
 };
 ```
 
-Notice that we have a ‘default’ in our switch statement.  Don’t forget to add this.  It isn’t an accident.  You see, when we register our Reducers and Effects with the store and then subsequently dispatch actions to them, all the reducers and effects get called.  In the case of reducers, if you don’t return something for each one of them, you’ll end up with a store that doesn’t know what kind of state it is in.  So, always return the current state as your default. 
+Notice that we have a `default` in our switch statement.  Don’t forget to add this.  It isn’t an accident.  You see, when we register our Reducers and Effects with the store and then subsequently dispatch actions to them, all the reducers and effects get called.  In the case of reducers, if you don’t return something for each one of them, you’ll end up with a store that doesn’t know what kind of state it is in.  So, always return the current state as your default. 
 
 The one thing that may not be obvious here is that the Reducer is a function.  Not a class.  This means you can’t inject other classes into it.  This is one of the reasons that the file is named `wait.reducer.ts` and not `wait.reducer**s**.ts`. But, Effects are different.
 
