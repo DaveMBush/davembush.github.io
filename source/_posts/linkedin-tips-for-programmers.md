@@ -11,9 +11,11 @@ categories:
 date: 2018-09-22 06:00:00
 ---
 
-![image](/uploads/2015/06/image.png "image") As I was sharing my LinkedIn tips with a co-worker this past week that made me realize that I’ve accumulated an incredible amount of knowledge about using LinkedIn that I should probably share. Things that aren’t obvious to the typical user. 
+As I was sharing my LinkedIn tips with a co-worker this past week that made me realize that I’ve accumulated an incredible amount of knowledge about using LinkedIn that I should probably share. Things that aren’t obvious to the typical user. 
 
 But first, I have to ask a question. 
+
+<!-- more -->
 
 Why are you on LinkedIn? 
 
