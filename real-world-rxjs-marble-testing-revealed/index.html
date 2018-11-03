@@ -14,7 +14,7 @@
 <meta property="og:description" content="There must be some evil plot to keep this information a secret because whenever I search for how to use RxJS Marble Testing all I see is how to use it to write tests for RxJS.  Well I’ve finally “crac">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2017/06/2017-06-13.jpg">
-<meta property="og:updated_time" content="2018-10-13T18:16:28.008Z">
+<meta property="og:updated_time" content="2018-11-03T16:57:46.913Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Real World RxJS Marble Testing Revealed">
 <meta name="twitter:description" content="There must be some evil plot to keep this information a secret because whenever I search for how to use RxJS Marble Testing all I see is how to use it to write tests for RxJS.  Well I’ve finally “crac">
@@ -149,7 +149,7 @@
 <h2 id="Other-Uses"><a href="#Other-Uses" class="headerlink" title="Other Uses"></a>Other Uses</h2><p>What I’ve shown so far takes care of my 15 second refresh issue. But now, what if I have an observable that expects data? For example, how would I write a test that uses an observable based on an AJAX request as a dependency? In Angular, this would be Http. </p>
 <p>This is actually very simple. The second parameter to either <code>createHotObservable()</code> or <code>createColdObservable()</code> is the data you want to send on to the subscribe when it hits the associated marble. You pass this in as an object literal. So, just to keep things simple. Say that when you hit the “a” marble, you want to pass the subscribe an object that has a first name and a last name. Your code might look something like this:</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">testScheduler</span><br><span class="line">  .createHotObservable(</span><br><span class="line">    <span class="string">'-a|'</span>,</span><br><span class="line">    &#123;a: &#123;firstName: <span class="string">'Dave'</span>, lastName: <span class="string">'Bush'</span>&#125;&#125;</span><br><span class="line">  );</span><br></pre></td></tr></table></figure>
-<p>By using this type of marble mocking, you could not just create unit tests, but you could also create End to End tests that use marbles to return consistent data rather than hitting the back end.  Obviously, you would still need to write tests that ensure your back end is going to return the same type of data, but I see that as a separate issue from ensuring that the front end does everything it should do as a system.  Anyhow, it is an option.</p>
+<p>By using this type of marble mocking, you could not just create unit tests, but you could also create End to End tests that use marbles to return consistent data rather than hitting the back end. Obviously, you would still need to write tests that ensure your back end is going to return the same type of data, but I see that as a separate issue from ensuring that the front end does everything it should do as a system. Anyhow, it is an option.</p>
 
       
     </div>
@@ -160,7 +160,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/real-world-rxjs-marble-testing-revealed/" data-id="cjn7rjef100jy5chimaajkykw" class="article-share-link">
+      <a data-url="http://davembush.github.com/real-world-rxjs-marble-testing-revealed/" data-id="cjo1putra00jt9ohiacc7yevx" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
