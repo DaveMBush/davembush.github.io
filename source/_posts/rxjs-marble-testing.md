@@ -108,4 +108,4 @@ testScheduler
   );
 ```
 
-By using this type of marble mocking, you could not just create unit tests, but you could also create End to End tests that use marbles to return consistent data rather than hitting the back end.  Obviously, you would still need to write tests that ensure your back end is going to return the same type of data, but I see that as a separate issue from ensuring that the front end does everything it should do as a system.  Anyhow, it is an option.
+By using this type of marble mocking, you could not just create unit tests, but you could also create End to End tests that use marbles to return consistent data rather than hitting the back end. Obviously, you would still need to write tests that ensure your back end is going to return the same type of data, but I see that as a separate issue from ensuring that the front end does everything it should do as a system. Anyhow, it is an option.
