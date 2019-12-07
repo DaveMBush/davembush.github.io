@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <title>Dave&#39;s Notebook</title>
@@ -28,7 +28,7 @@
   
 
 </head>
-
+</html>
 <body>
   <nav class="navbar navbar-inverse">
   <div class="container">
@@ -129,7 +129,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/reactions-to-react-js-and-associated-bits/" data-id="cjry0nowj00ix0khiymwckxgk" class="article-share-link">
+      <a data-url="http://davembush.github.com/reactions-to-react-js-and-associated-bits/" data-id="cjt1zdr4400mbk4hiw6dqec6d" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -227,7 +227,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/javascript-object-fields/" data-id="cjry0norz00dp0khioi868o18" class="article-share-link">
+      <a data-url="http://davembush.github.com/javascript-object-fields/" data-id="cjt1zdqz500h5k4hiujpvzvq2" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -334,7 +334,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/javascript-objects-what-you-don-t-know-can-hurt-you/" data-id="cjry0nos400dv0khibknia387" class="article-share-link">
+      <a data-url="http://davembush.github.com/javascript-objects-what-you-don-t-know-can-hurt-you/" data-id="cjt1zdqz900h9k4hiida80ghb" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -405,7 +405,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/angular-2-–-first-impressions-compared-to-angular-1/" data-id="cjry0noht00200khi68kzzvdt" class="article-share-link">
+      <a data-url="http://davembush.github.com/angular-2-–-first-impressions-compared-to-angular-1/" data-id="cjt1zdqo70055k4hi4w9o3f3y" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -514,7 +514,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/javascript-functions-in-depth/" data-id="cjry0nos100ds0khi42deck64" class="article-share-link">
+      <a data-url="http://davembush.github.com/javascript-functions-in-depth/" data-id="cjt1zdqzd00hgk4hiuown550j" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -625,7 +625,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/javascript-variable-gotchas/" data-id="cjry0noss00er0khij4q4tdgj" class="article-share-link">
+      <a data-url="http://davembush.github.com/javascript-variable-gotchas/" data-id="cjt1zdqzt00hyk4himrg9861j" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -719,7 +719,7 @@ window.demo = demo;
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/javascript-unit-test-code-coverage-using-nodejs/" data-id="cjry0nosn00el0khibaim3e40" class="article-share-link">
+      <a data-url="http://davembush.github.com/javascript-unit-test-code-coverage-using-nodejs/" data-id="cjt1zdqzp00huk4hikxolouyl" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -767,10 +767,10 @@ window.demo = demo;
       
         <p>Last week I discussed <a href="/using-node-js-and-gulp-with-an-existing-web-application-in-visual-studio-2015/">how to setup Node.js and Gulp in Visual Studio 2015</a>.  During that discussion, I mentioned that I’m using gulp to bundle, minify and cache-bust my HTML, CSS, and JavaScript files. This week, my intent is to walk you through exactly how I do that. So, if you don’t already have Node.js and Gulp installed, you may want to go back and read the article I wrote last week. Since most of the people who read this blog are ASP.NET developers, there may be a few .NET specific tips along the way.  But the Gulp file I am going to walk you through is technology agnostic.  So if you are using some other technology, you’ll still benefit from this article. <img src="/uploads/2016/01/image-5.png" alt="image" title="image"></p>
 <h2 id="Bundling"><a href="#Bundling" class="headerlink" title="Bundling"></a>Bundling</h2><p>The first thing we want to do is that we want to combine all of our CSS files and JavaScript files into one file for CSS and one file for JavaScript.  There are several ways that you might do this, but what I wanted was some way that would allow me to work unbundled during development and bundled when I released the code.  Since I’m working with a single page application (SPA), this was a simple matter of configuring my default file to be index.debug.html for development and index.release.html and using web.config transforms to specify which should be used in which environment.  If you are working in some other environment, I’m sure you have some kind of similar way of specifying the default file based on an environment setting. So all of my development work will be done in index.debug.html. Like I said, there are many ways of bundling JavaScript and CSS code, but the way I’ve found that seems to have the least amount of work involved is by using the <a href="//www.npmjs.com/package/gulp-useref">gulp-useref module</a>.  This module lets us put tokens in our html file that specify which files we want to compress and what the resulting file name should be. Your HTML file would look something like this:</p>
-<html><br><head><br>  &lt;!-- build:css css/combined.css –&gt;<br>    <link href="css/one.css" rel="stylesheet"><br>    <link href="css/two.css" rel="stylesheet"><br>  &lt;!-- endbuild –&gt;<br></head><br><body><br>&lt;!-- other normal content goes here –&gt;<br>  &lt;!-- build:js scripts/combined.js –&gt;<br>    <script type="text/javascript" src="scripts/one.js"></script><br>    <script type="text/javascript" src="scripts/two.js"></script><br>  &lt;!-- endbuild –&gt;<br></body><br></html>
+<html><br><head><meta name="generator" content="Hexo 3.9.0"><br>  &lt;!-- build:css css/combined.css –&gt;<br>    <link href="css/one.css" rel="stylesheet"><br>    <link href="css/two.css" rel="stylesheet"><br>  &lt;!-- endbuild –&gt;<br></head><br><body><br>&lt;!-- other normal content goes here –&gt;<br>  &lt;!-- build:js scripts/combined.js –&gt;<br>    <script type="text/javascript" src="scripts/one.js"></script><br>    <script type="text/javascript" src="scripts/two.js"></script><br>  &lt;!-- endbuild –&gt;<br></body><br></html>
 
 <p>useref sees the build token and creates a css file named combined.css and a JavaScript file named combined.js and changes the output html so that it looks like this:</p>
-<html><br><head><br>  <link rel="stylesheet" href="css/combined.css"><br></head><br><body><br>  <script src="scripts/combined.js"></script><br></body><br></html>
+<html><br><head><meta name="generator" content="Hexo 3.9.0"><br>  <link rel="stylesheet" href="css/combined.css"><br></head><br><body><br>  <script src="scripts/combined.js"></script><br></body><br></html>
 
 <p>To use this feature in your Gulp file, install it using NPM</p>
 <p>npm install gulp-useref –save-dev</p>
@@ -840,7 +840,7 @@ window.demo = demo;
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/using-gulp-to-bundle-minify-and-cache-bust/" data-id="cjry0np2y00pe0khik3qn5ijn" class="article-share-link">
+      <a data-url="http://davembush.github.com/using-gulp-to-bundle-minify-and-cache-bust/" data-id="cjt1zdrch00tnk4hit2ea1lj4" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -907,7 +907,7 @@ window.demo = demo;
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/using-node-js-and-gulp-with-asp-net-in-visual-studio-2015/" data-id="cjry0np3700pp0khivc0h46mj" class="article-share-link">
+      <a data-url="http://davembush.github.com/using-node-js-and-gulp-with-asp-net-in-visual-studio-2015/" data-id="cjt1zdrd500u6k4hi0w7syrkj" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -1009,7 +1009,7 @@ waitForPaste();
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/cross-browser-javascript-copy-and-paste/" data-id="cjry0nom3006p0khi7xnxajni" class="article-share-link">
+      <a data-url="http://davembush.github.com/cross-browser-javascript-copy-and-paste/" data-id="cjt1zdqrp009ek4hicv184hi4" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <title>Accessing Private Fields in TypeScript | Dave&#39;s Notebook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Have you ever needed to access a private field in TypeScript?  The most common place you may find yourself needing to do this is while writing a unit test.  But, I also found myself needing to do this">
+  <meta name="description" content="Have you ever needed to access a private field in TypeScript? The most common place you may find yourself needing to do this is while writing a unit test. But, I also found myself needing to do this w">
 <meta name="keywords" content="private,testing,typescript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Accessing Private Fields in TypeScript">
 <meta property="og:url" content="http://davembush.github.com/accessing-private-fields-in-typescript/index.html">
 <meta property="og:site_name" content="Dave&#39;s Notebook">
-<meta property="og:description" content="Have you ever needed to access a private field in TypeScript?  The most common place you may find yourself needing to do this is while writing a unit test.  But, I also found myself needing to do this">
+<meta property="og:description" content="Have you ever needed to access a private field in TypeScript? The most common place you may find yourself needing to do this is while writing a unit test. But, I also found myself needing to do this w">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2017/02/image-3.png">
-<meta property="og:updated_time" content="2018-06-30T19:06:18.498Z">
+<meta property="og:updated_time" content="2019-03-09T21:08:05.557Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Accessing Private Fields in TypeScript">
-<meta name="twitter:description" content="Have you ever needed to access a private field in TypeScript?  The most common place you may find yourself needing to do this is while writing a unit test.  But, I also found myself needing to do this">
+<meta name="twitter:description" content="Have you ever needed to access a private field in TypeScript? The most common place you may find yourself needing to do this is while writing a unit test. But, I also found myself needing to do this w">
 <meta name="twitter:image" content="http://davembush.github.com/uploads/2017/02/image-3.png">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
@@ -35,7 +35,7 @@
   
 
 </head>
-
+</html>
 <body>
   <nav class="navbar navbar-inverse">
   <div class="container">
@@ -111,21 +111,32 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Have you ever needed to access a private field in TypeScript?  The most common place you may find yourself needing to do this is while writing a unit test.  But, I also found myself needing to do this while using a JavaScript library where the field wasn’t declared in the type file for the library I was using. Now, suppose you could access those private fields effortlessly and easily.  How valuable would that be to you? <figure><img src="/uploads/2017/02/image-3.png" alt="" title="Accessing Private Fields in TypeScript"> Photo via <a href="//visualhunt.com/">VisualHunt</a></figure></p>
-<a id="more"></a> 
-<h2 id="Unit-Test"><a href="#Unit-Test" class="headerlink" title="Unit Test"></a>Unit Test</h2><p>In general, when you write a unit test, you only want to access public fields for both the purposes of setting up your tests and for evaluating the success or failure of the tests. But, occasionally, this is not possible. Now, what most people don’t realize is that, unlike private members in JavaScript, where the members aren’t accessible, in TypeScript, the resulting JavaScript has the variables just as public as the public members.  In fact, the only thing that makes a member private in TypeScript is the compiler. This means that this TypeScript code:</p>
-<p>class Foo {<br>    private member1: string;<br>    private bar() { }<br>}</p>
+        <p>Have you ever needed to access a private field in TypeScript? The most common place you may find yourself needing to do this is while writing a unit test. But, I also found myself needing to do this while using a JavaScript library where the field wasn’t declared in the type file for the library I was using.</p>
+<p>Now, suppose you could access those private fields effortlessly and easily. How valuable would that be to you?</p>
+<figure><img src="/uploads/2017/02/image-3.png" alt="" title="Accessing Private Fields in TypeScript"> Photo via <a href="//visualhunt.com/">VisualHunt</a></figure>
+
+<a id="more"></a>
+<h2 id="Unit-Test"><a href="#Unit-Test" class="headerlink" title="Unit Test"></a>Unit Test</h2><p>In general, when you write a unit test, you only want to access public fields for both the purposes of setting up your tests and for evaluating the success or failure of the tests.</p>
+<p>But, occasionally, this is not possible.</p>
+<p>Now, what most people don’t realize is that, unlike private members in JavaScript, where the members aren’t accessible, in TypeScript, the resulting JavaScript has the variables just as public as the public members. In fact, the only thing that makes a member private in TypeScript is the compiler. This means that this TypeScript code:</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Foo &#123;</span><br><span class="line">    <span class="keyword">private</span> member1: <span class="built_in">string</span>;</span><br><span class="line">    <span class="keyword">private</span> bar() &#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Ends up looking something like this in JavaScript</p>
-<p>function Foo() {<br>    this.member1 = null;<br>    this.bar = function() { }<br> }</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>.member1 = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">this</span>.bar = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Which means that</p>
-<p>var v = new Foo();<br>var x = v.member1;<br>v.bar();</p>
-<p>Should be working code. But, if you type that code into JavaScript and try to compile it, it won’t compile.  Which means you can’t write your unit test in TypeScript and access the private variables. Or can you?</p>
-<h2 id="TypeScript-is-just-JavaScript-with-Sugar"><a href="#TypeScript-is-just-JavaScript-with-Sugar" class="headerlink" title="TypeScript is just JavaScript with Sugar"></a>TypeScript is just JavaScript with Sugar</h2><p>One small little fact about TypeScript that we seem to forget is that it is just JavaScript with some sugar.  What this means in practical terms is that, if we want to, or in this case, need to, we can write plain old boring JavaScript as part of our TypeScript code. And then the other little bit we tend to forget is that we can access a field using the name of the field as an indexer. That is, this:</p>
-<p>v.member = ‘x’;</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> v = <span class="keyword">new</span> Foo();</span><br><span class="line"><span class="keyword">var</span> x = v.member1;</span><br><span class="line">v.bar();</span><br></pre></td></tr></table></figure>
+<p>Should be working code.</p>
+<p>But, if you type that code into JavaScript and try to compile it, it won’t compile. Which means you can’t write your unit test in TypeScript and access the private variables.</p>
+<p>Or can you?</p>
+<h2 id="TypeScript-is-just-JavaScript-with-Sugar"><a href="#TypeScript-is-just-JavaScript-with-Sugar" class="headerlink" title="TypeScript is just JavaScript with Sugar"></a>TypeScript is just JavaScript with Sugar</h2><p>One small little fact about TypeScript that we seem to forget is that it is just JavaScript with some sugar. What this means in practical terms is that, if we want to, or in this case, need to, we can write plain old boring JavaScript as part of our TypeScript code. And then the other little bit we tend to forget is that we can access a field using the name of the field as an indexer. That is, this:</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v.member = <span class="string">'x'</span>;</span><br></pre></td></tr></table></figure>
 <p>is functionally the same as this:</p>
-<p>v[‘member’] = ‘x’;</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">v[<span class="string">'member'</span>] = <span class="string">'x'</span>;</span><br></pre></td></tr></table></figure>
 <p>And because it all compiles down to JavaScript, and the private fields are public JavaScript fields, we can use the named index to access the field.</p>
-<h2 id="JavaScript-Libraries"><a href="#JavaScript-Libraries" class="headerlink" title="JavaScript Libraries"></a>JavaScript Libraries</h2><p>Similarly, this past week I was working on finishing up some Angular 2 code.  And one of my tests was failing.  Even though the code was working in Chrome fine.  The issue was that I was using PhantomJS which doesn’t have the latest JavaScript spec implemented, so it relies on polyfills.  One of the polyfills I was using was not compressing the Regular Expressions that I was indirectly using correctly which resulting in the test throwing an exception. After tracking down the source of the problem for a day, I finally found a line at the bottom of the GitHub page that told me that I could turn the routine off by calling a function.  And here is where the trouble begins. You see, I’m using an otherwise documented internal library that has a set of types already defined for it.  This particular function is not a part of the types for this class.  So, when I tried to call it, I got a compiler error. So, I pulled out the named index trick above and got the code to compile and ultimately got my test to run successfully. It all just requires that we think outside the box a bit and most any problem can be solved.</p>
+<h2 id="JavaScript-Libraries"><a href="#JavaScript-Libraries" class="headerlink" title="JavaScript Libraries"></a>JavaScript Libraries</h2><p>Similarly, this past week I was working on finishing up some Angular 2 code. And one of my tests was failing. Even though the code was working in Chrome fine. The issue was that I was using PhantomJS which doesn’t have the latest JavaScript spec implemented, so it relies on polyfills. One of the polyfills I was using was not compressing the Regular Expressions that I was indirectly using correctly which resulting in the test throwing an exception.</p>
+<p>After tracking down the source of the problem for a day, I finally found a line at the bottom of the GitHub page that told me that I could turn the routine off by calling a function. And here is where the trouble begins.</p>
+<p>You see, I’m using an otherwise documented internal library that has a set of types already defined for it. This particular function is not a part of the types for this class. So, when I tried to call it, I got a compiler error.</p>
+<p>So, I pulled out the named index trick above and got the code to compile and ultimately got my test to run successfully. It all just requires that we think outside the box a bit and most any problem can be solved.</p>
+<h2 id="Addendum"><a href="#Addendum" class="headerlink" title="Addendum"></a>Addendum</h2><p>As TypeScript has matured, the trick above doesn’t work quite as directly as when I originally wrote this article.  Now, you need to assign the original variable to a type of Object before using the indexer method, or you can just cast your variable to an Object and use the indexer.  But typescript is now smart enough to know that the indexer is accessing a property that is private and it won’t let you at it.</p>
 
       
     </div>
@@ -136,7 +147,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/accessing-private-fields-in-typescript/" data-id="cjry0noh500180khi9q5u5gof" class="article-share-link">
+      <a data-url="http://davembush.github.com/accessing-private-fields-in-typescript/" data-id="cjt1zdq080015k4hi0ipbifps" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
