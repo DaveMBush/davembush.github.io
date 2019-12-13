@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>NgRX Actions - Class vs Object Literal | Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="When NgRX 4 came out and I discovered that the “right” way of creating Actions is to use TypeScript classes and not Object Literals, I was a bit surprised.  Why would you use a Class that requires you">
+<meta name="keywords" content="angular,NgRX">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NgRX Actions - Class vs Object Literal">
+<meta property="og:url" content="http://davembush.github.com/ngrx-actions-class-vs-object-literal/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:description" content="When NgRX 4 came out and I discovered that the “right” way of creating Actions is to use TypeScript classes and not Object Literals, I was a bit surprised.  Why would you use a Class that requires you">
+<meta property="og:locale" content="English">
+<meta property="og:image" content="http://davembush.github.com/uploads/2018/07/2018-07-04.png">
+<meta property="og:updated_time" content="2018-08-17T17:59:20.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NgRX Actions - Class vs Object Literal">
+<meta name="twitter:description" content="When NgRX 4 came out and I discovered that the “right” way of creating Actions is to use TypeScript classes and not Object Literals, I was a bit surprised.  Why would you use a Class that requires you">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2018/07/2018-07-04.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-ngrx-4-actions-class-vs-object-literal" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      NgRX Actions - Class vs Object Literal
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/ngrx-actions-class-vs-object-literal/" class="article-date"><time datetime="2018-07-03T10:30:58.000Z" itemprop="datePublished">2018-07-03</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Angular/">Angular</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>When NgRX 4 came out and I discovered that the “right” way of creating Actions is to use TypeScript classes and not Object Literals, I was a bit surprised.  Why would you use a Class that requires you to use the “new” keyword?  Why would you put multiple classes in one file?  This is insane! <figure><img src="/uploads/2018/07/2018-07-04.png" alt="" title="NgRX Actions - Class vs Object Literal"><figcaption>Photo credit: <a href="//www.flickr.com/photos/dkobras/8342620023/">dkobras</a> / <a href="//creativecommons.org/licenses/by-sa/2.0/"> CC BY-SA</a></figcaption></figure></p>
+<a id="more"></a> 
+<h2 id="Options"><a href="#Options" class="headerlink" title="Options"></a>Options</h2><p>An Action is an object that contains a type variable and optionally, a payload. Depending on how you code your action, the payload may or may not have “payload” as the variable name. In NgRX version 2, payload was an optional variable. To improve type checking, payload was removed from the Action interface. </p>
+<p>The official documentation for NgRX version 4 encourages us to create a class for each action we want to dispatch. </p>
+<p>Suppose you have a Wait reducer that needs a Start action and an End action.  The code might look something like:</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Action&#125; <span class="keyword">from</span> <span class="string">'@ngrx/store'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> START = <span class="string">'Wait.Start'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Start <span class="keyword">implements</span> Action &#123;</span><br><span class="line">  readonly <span class="keyword">type</span> = START;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> END = <span class="string">'Wait.End'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> End <span class="keyword">implements</span> Action &#123;</span><br><span class="line">  readonly <span class="keyword">type</span> = END;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>To use this code in our reducer or effects you would import like this:</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> Wait <span class="keyword">from</span> <span class="string">'./wait.actions'</span>;</span><br></pre></td></tr></table></figure>
+<p>And then we would dispatch the action using the store we’ve injected into our code. We’ll cover that later. But for now, the dispatch basically looks like this: </p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.store.dispatch(<span class="keyword">new</span> Wait.Start());</span><br></pre></td></tr></table></figure>
+<p>If you need to pass other information to an Action, your constructor can accept them: </p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> ACTION_WITH_MESSAGE = <span class="string">'Wait.ActionWithMessage'</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> ActionWithMessage <span class="keyword">implements</span> Action &#123;</span><br><span class="line">  readonly <span class="keyword">type</span> = ACTION_WITH_MESSAGE;</span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">public</span> message: <span class="built_in">string</span></span>) &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>This allows us to access the action payload as <code>Wait.message</code> instead of <code>Wait.payload</code>. Contrast this to putting the same code in a class with static methods as I’ve explained in previous articles:</p>
+<ul>
+<li><a href="/how-to-upgrade-ngrx-to-4-x/">How to Upgrade to NgRX 4</a></li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Wait &#123;</span><br><span class="line">  <span class="keyword">const</span> START = <span class="string">'Wait.Start'</span>;</span><br><span class="line">  <span class="keyword">const</span> END = <span class="string">'Wait.Start'</span>;</span><br><span class="line">  <span class="keyword">const</span> ACTION_WITH_MESSAGE = <span class="string">'Wait.ActionWithMessage'</span>;    </span><br><span class="line">  start() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="keyword">type</span>: Wait.START&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  end() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;<span class="keyword">type</span>: Wait.END&#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  actionWithMessage(message: <span class="built_in">string</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      <span class="keyword">type</span>: Wait.ACTION_WITH_MESSAGE,</span><br><span class="line">      payload: message&#125;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>In summary, we can have multiple classes and new them up.  Or we can have one class with multiple static methods that return object literals.</p>
+<h2 id="Advantage-Object-Literal"><a href="#Advantage-Object-Literal" class="headerlink" title="Advantage Object Literal"></a>Advantage Object Literal</h2><p>The main advantage to using the object literal way is that you don’t need to create an object.  You also stay with the “One class, one file” model that is so common in Angular. On the surface, this seems to be a clear winner.</p>
+<h2 id="Advantage-Classes"><a href="#Advantage-Classes" class="headerlink" title="Advantage Classes"></a>Advantage Classes</h2><p>But, because of the way we import the class bundles, the way we end up using the code looks nearly the same.  The main difference is that we must instantiate the class.  But we also get the option of having a different variable type for each action, we aren’t forced to use a variable named “payload” to hold all the associated data.  Further, if you need multiple payloads, you can do that.  You aren’t limited by how many parameters/member variables each of your Action classes use.  When using Effects, we can type the return value of the Effect to the Action we want it to return. </p>
+<p>In fact, it is this type safety that is the main reason we should be creating Actions using the Class method instead of the object literal method.</p>
+<h2 id="Tweaking-Classes-For-Bigger-Advantage"><a href="#Tweaking-Classes-For-Bigger-Advantage" class="headerlink" title="Tweaking Classes For Bigger Advantage"></a>Tweaking Classes For Bigger Advantage</h2><p>There is a further tweak we can make to using classes that will give us an additional advantage when we use the code in our Reducers. Instead of marking the action types as strings, we can make them enums.</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;Action&#125; <span class="keyword">from</span> <span class="string">'@ngrx/store'</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">enum</span> Types &#123;</span><br><span class="line">  START = <span class="string">'Wait.Start'</span>,</span><br><span class="line">  END = <span class="string">'Wait.End'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> Start <span class="keyword">implements</span> Action &#123;</span><br><span class="line">  readonly <span class="keyword">type</span> = Types.START;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> End <span class="keyword">implements</span> Action &#123;</span><br><span class="line">  readonly <span class="keyword">type</span> = Types.END;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>You’ll see below that this will give us extra type safety in our Reducers.</p>
+<h2 id="Type-Safety-in-Reducers"><a href="#Type-Safety-in-Reducers" class="headerlink" title="Type Safety in Reducers"></a>Type Safety in Reducers</h2><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123;ActionReducer&#125; <span class="keyword">from</span> <span class="string">'@ngrx/store'</span>;</span><br><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> Wait <span class="keyword">from</span> <span class="string">'./wait.actions'</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// This could go in wait.actions.ts</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">type</span> Action = Wait.End | Wait.Start;</span><br><span class="line"><span class="keyword">export</span> <span class="function"><span class="keyword">function</span> <span class="title">WaitReducer</span>(<span class="params"></span></span></span><br><span class="line"><span class="function"><span class="params">  state = 0, action: Action</span>): <span class="title">number</span> </span>&#123;</span><br><span class="line">    <span class="keyword">switch</span>(action.type) &#123;</span><br><span class="line">      <span class="keyword">case</span> Wait..Types.START:</span><br><span class="line">        <span class="keyword">return</span> state + <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">case</span> Wait.Types.END:</span><br><span class="line">        <span class="keyword">return</span> state - <span class="number">1</span>;</span><br><span class="line">      <span class="keyword">default</span>:</span><br><span class="line">        <span class="keyword">return</span> state;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>We’ve ensured that the only Actions we will get are from Wait.</p>
+<p>Now, what you can’t see here is that if the payload we were send were of different types, each case statement would automatically typecast the action to the proper type.  This only works with Enums.  If you try this with strings, it won’t work the same way.</p>
+<h2 id="Type-Safety-in-Effects"><a href="#Type-Safety-in-Effects" class="headerlink" title="Type Safety in Effects"></a>Type Safety in Effects</h2><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> * <span class="keyword">as</span> Wait <span class="keyword">from</span> <span class="string">'./wait.actions'</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Injectable</span>()</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> WaitEffects &#123;</span><br><span class="line">  <span class="meta">@Effect</span>()</span><br><span class="line">  start$: Observable&lt;Wait.Add&gt; =</span><br><span class="line">    <span class="keyword">this</span>.actions$</span><br><span class="line">      .ofType(Wait.START)</span><br><span class="line">      .switchMap(<span class="function">(<span class="params">action: Wait.Add</span>) =&gt;</span></span><br><span class="line">        Observable.timer(<span class="number">1</span>).take(<span class="number">1</span>)</span><br><span class="line">      )</span><br><span class="line">      .map((): Wait.Add =&gt;</span><br><span class="line">        (&#123;<span class="keyword">type</span>: Wait.ADD, payload: <span class="number">1</span>&#125;));</span><br><span class="line">        </span><br><span class="line">  <span class="meta">@Effect</span>()</span><br><span class="line">  end$: Observable&lt;Wait.Add&gt; =</span><br><span class="line">    <span class="keyword">this</span>.actions$</span><br><span class="line">      .ofType(Wait.END)</span><br><span class="line">      .switchMap(<span class="function">(<span class="params">action: Wait.End</span>) =&gt;</span></span><br><span class="line">        Observable.timer(<span class="number">1</span>).take(<span class="number">1</span>)</span><br><span class="line">      )</span><br><span class="line">    .map((): Wait.Add =&gt;</span><br><span class="line">      (&#123;<span class="keyword">type</span>: Wait.ADD, payload: <span class="number">-1</span>&#125;));</span><br><span class="line">    </span><br><span class="line">  <span class="keyword">constructor</span>(<span class="params"><span class="keyword">private</span> actions$: Actions</span>)&#123;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>We’ve ensured that the only Action that get returned from either Effect is the Add action.</p>
+<h2 id="Tweak-Object-Literal-Implementation"><a href="#Tweak-Object-Literal-Implementation" class="headerlink" title="Tweak Object Literal Implementation"></a>Tweak Object Literal Implementation</h2><p>Now, you might think, “I can get all that type safety by creating a separate interface for each action type.  And this would be true.  But this would be even more files and the only thing to be gained is that your Action object gets created faster because you are using Object Literals.  I’m not sure the advantage is worth the pain.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>If you are converting an NgRX 2 site to NgRX 4, you’ll probably want to follow the advice I originally gave for upgrading.  But, once you’ve upgraded, you’ll want to move to using Classes so that you can take advantage of the stronger typings this will afford you.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/ngrx-actions-class-vs-object-literal/" data-id="ck3vvptgr00h5s0hiwpltqhjt" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NgRX/">NgRX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/vmware-s-clarity-design-system-for-angular/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">VMWare&#39;s Clarity Design System for Angular</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/where-to-store-angular-configurations/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">Where To Store Angular Configurations</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/what-if-unit-testing-wasn’t-necessary-notdd/">What If Unit Testing Wasn’t Necessary? #noTDD</a>
+        </li>
+      
+        <li>
+          <a href="/linkedin-tips-for-programmers/">LinkedIn Tips For Programmers</a>
+        </li>
+      
+        <li>
+          <a href="/typescript-basics-for-angular-developers/">TypeScript Basics for Angular Developers</a>
+        </li>
+      
+        <li>
+          <a href="/the-tyranny-of-emotions/">The Tyranny of Emotions</a>
+        </li>
+      
+        <li>
+          <a href="/where-to-store-angular-configurations/">Where To Store Angular Configurations</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

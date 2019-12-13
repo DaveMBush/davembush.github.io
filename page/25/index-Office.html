@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Dave&#39;s Notebook">
+<meta property="og:url" content="http://davembush.github.com/page/25/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:locale" content="English">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dave&#39;s Notebook">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          
+  
+    <article id="post-gridview-and-updating-a-row-manually" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/gridview-and-updating-a-row-manually/">GridView and Updating A Row Manually</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/gridview-and-updating-a-row-manually/" class="article-date"><time datetime="2009-11-04T12:36:08.000Z" itemprop="datePublished">2009-11-04</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/11/G07L0095.jpg" alt="G07L0095" title="G07L0095"> A couple of days ago I mentioned a project that I’ve been working on that is a bit out of the ordinary as far as GridViews go.  One of the issues I’ve had is that the edit template doesn’t map to the view template very well. OK, it doesn’t map at all. You see, the data that gets stored back to the database during the edit could go to two of four different tables.  But the view is generated from a stored procedure that gathers the information from those tables and makes the result look like it came from one table. So how do you have the GridView update the database under these conditions?  The secret lies in the event handlers–in this case, the RowUpdating event handler. Using the RowUpdating handler, we can do whatever we want.  The first line of code you need to make sure you include is</p>
+<p>e.Cancel = true;</p>
+<p>“e” represents the System.Web.UI.WebControls.GridViewUpdateEventArgs object that is passed in.  What the line of code says is “cancel any other update processing that may have happened after this event gets called.” From here on out, you’ll need to retrieve the values from your edit controls manually  using the <a href="/2009/11/02/access-a-control-by-id-from-within-a-databound-control/">FindControByID() method I demonstrated on Monday</a> and updating the database using code.   <strong>Other places talking about the GridView and Updating a Row</strong> <a href="//blog.paulgeorge.co.uk/2009/03/25/sitecore-with-gridview-rowupdating-event-doesnt-fire/">sitecore with gridview – rowupdating event doesn’t fire</a> - gridview to in web.config resolves this issue. your web.config would then look like : system.web.ui.webcontrols.repeater system.web.ui.webcontrols. … <a href="//bloggingabout.net/blogs/dennis/archive/2006/08/24/DataBinding-in-ASP.NET-2.0-and-the-RowUpdating-event.aspx">DataBinding in ASP.NET 2.0 and the RowUpdating event - Dennis van …</a> - For a while now I’m trying to figure out why my method, triggered by the GridView.RowUpdating event, doesn’t work as all samples say it should do. All samples of course assume you’re doing everything in your .aspx page, but I have to do … <a href="//www.aspdotnetcodes.com/GridView_Insert_Edit_Update_Delete.aspx">Simple Insert, Select, Edit, Update and Delete in Asp.Net GridView …</a> - The above block of codes in RowUpdating event, finds the control in the GridView, takes those values in pass it to the CustomersCls class Update method. The first parameter GridView1.DataKeys[e.RowIndex].Values[0]. …</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/gridview-and-updating-a-row-manually/" data-id="ck3vvpt9p00a0s0hi7vk9rfht" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gridview/">gridview</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gridviewupdateventargs-cancel/">gridviewupdateventargs.cancel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/rowupdating/">rowupdating</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/update/">update</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-access-a-control-by-id-from-within-a-databound-control" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/access-a-control-by-id-from-within-a-databound-control/">Access a control by ID From Within a Databound Control</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/access-a-control-by-id-from-within-a-databound-control/" class="article-date"><time datetime="2009-11-02T07:21:07.000Z" itemprop="datePublished">2009-11-02</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/11/back041.jpg" alt="back-041" title="back-041"> Databound controls are at once very easy and very frustrating.  If you just need to do some simple databinding that gets a list of items on the screen and you need the ability to edit those items, you are all set. But once you need to do anything that deviates from that simple pattern, you are kind of stuck.  One of the problems involves accessing a control in a templated item.  Probably the most common place this shows up is in the FormView control.  But you’ll also experience the problem using the GridView control with a templated column. There is a pretty simple solution to the problem.  If you are in a form view, all you need to do is use the FindControl() method of any control.  The problem is finding which parent control houses the control we are looking for.  So what we really need is a recursive control that looks for the control with a particular ID in any of the controls that are a child of the control or any of its child controls or any of its child controls, etc., until it finds the control. I’ve written such a function for my utility box.</p>
+<p>public static Control FindControlByID</p>
+<p>(string id, ControlCollection controls) { Control returnControl = null; foreach (Control c in controls) { if (c.ID == id) return c; returnControl = FindControlByID(id, c.Controls); if (returnControl != null) return returnControl; } return returnControl; } Notice, it is a static method so we can call it from anywhere without having to instantiate the class it is in. So now, if I’m in a row and I need to find another control in that row, I can write code like this</p>
+<p>Protected Sub m_grid_RowUpdating</p>
+<p>(Object sender,GridViewUpdateEventArgs e) { int v= (DropDownList)(MyUtils.FindControlByID (“m_dropDownListId”, (GridView)(sender) .Rows(e.RowIndex).Controls)).SelectedValue; } The only real tricky point left is that you may need to climb up to a parent to grab the right controls collection.  But once you figure how how far up you need to climb, the rest is academic. And before someone says it in the comments, obviously you’ll want to check to make sure you got the control using a if(var == null) statement prior to retrieving the value. <strong>Other places talking about Finding Controls in ASP.NET</strong> <a href="//www.revenmerchantservices.com/post.aspx?id=b33bf4ef-3420-4013-8a45-4788285138bf">gridview edit</a> - FindControl(“txtFirstName”); TextBox tLastName = (TextBox)gr.FindControl(“txtLastName”); TextBox tEmail = (TextBox)gr.FindControl(“txtEmail”); Label lFirstName = (Label)gr.FindControl(“lblFirstName”); Label lLastName = (Label)gr. … <a href="//www.joe-stevens.com/2009/09/18/using-findcontrol-for-a-control-in-the-itemtemplate-of-a-listview/">Using FindControl for a control in the ItemTemplate of a ListView …</a> - I’ve been playing around with the ListView control recently and am quite impressed with it. I like how it gives full control over the markup used as apposed.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/access-a-control-by-id-from-within-a-databound-control/" data-id="ck3vvpt1d001gs0hisywo2qd1" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/controls/">controls</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/databind/">databind</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/databound/">databound</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/findcontrol/">findcontrol</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-agilescrum-task-board-for-real-life" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/agile-scrum-task-board-for-“real-life”/">Agile/Scrum Task Board for “Real Life”</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/agile-scrum-task-board-for-“real-life”/" class="article-date"><time datetime="2009-10-28T12:34:25.000Z" itemprop="datePublished">2009-10-28</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Agile/">Agile</a> / <a class="article-category-link" href="/categories/Agile/Scrum/">Scrum</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/10/B03B0035.jpg" alt="B03B0035" title="B03B0035"> The agile “Task Board,” also known as a “Scrum Board” has become a staple of the agile programming world. “Getting Things Done” (GTD) is a process for managing task in the business world. I mostly like what GTD does, but the classic implementation doesn’t fit how I work. But what if we could adapt the two?  GTD has a basic concept of task that get classified by context (where you are) and a list for each of “Next Actions,” “Projects,” “Waiting For,” and “Someday Maybe.”  There is also this thing called 43 folders that allows you to “schedule” things into the future.  You can find out more about GTD by getting the book, <a href="//www.amazon.com/gp/product/0142000280?ie=UTF8&amp;tag=davmbusnetapp-20&amp;linkCode=as2&amp;camp=1789&amp;creative=390957&amp;creativeASIN=0142000280">Getting Things Done: The Art of Stress-Free Productivity</a><img src="//www.assoc-amazon.com/e/ir?t=davmbusnetapp-20&amp;l=as2&amp;o=1&amp;a=0142000280" alt="">. Interestingly enough, a typical task board has a column for “To do,” “In process,” “Done,” and “Blocked” or “Waiting.”  The rows are “Stories” that answer the question, “the user should be able to…” Merging the two, I’ve set up a white board that has “To do,” “In process,” and “Waiting” for the main columns.  But, realizing that I have recurring tasks that I also need to account for, I’ve set up a column for each day of the week where I can place my recurring tasks.  You should notice this as an adaptation of the 43 folders. Instead of “stories” for my rows, I have each “project” I’m working on as a row.  As a consultant I have multiple clients.  They are each a row.  I also have stuff going on at church, chores around the house, and tasks for my business that aren’t necessarily tied to any particular client. As I think of things to do, the task goes on a small post-it note.  The upper left corner specifies the project so that if the note falls off, I know where it goes.  The bottom is a notation of what I’m waiting on if/when the note goes in the “waiting” column.  The rest is typical task board stuff.  Move it to the project, column it belongs in as you are working on it. I’ve been using this for almost two months now and it has been serving me well.  But I’ve always had in the back of my mind that it would be cool to move this onto the web so that I could see the tasks anywhere I had web access.  I’ve been looking for something that would serve this purpose without encumbering me with all of the other artifacts of agile.  I don’t need burn down charts or product back logs.  All I need is a task board. Recently, my church life got a bit more complicated.  I’m now managing a project that involves multiple people.  The task board idea still works great, but I have a need for others to be able to at least see the board if not contribute to it.  So I spent some time looking again and finally found exactly what I’m looking for. <a href="//www.seenowdo.com">SeeNowDo.com</a> is a free task board application written in flash that allows you to configure the board for how you work.  You can share the task board with other users,  add and remove categories, and add and remove columns on a per project basis.  I can not only use this for projects where the tasks need to be shared, but I can also use it to replace what I currently have on my white board. I can almost even use it on my Windows Mobile phone using the SkyFire browser.  My only issue is that for some reason SkyFire clips the right so that I can’t get to one of the controls that leads to the task board view.  Bummer!</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/agile-scrum-task-board-for-“real-life”/" data-id="ck3vvpt1s001us0hi79hshrwg" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/agile/">agile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/getting-things-done/">getting things done</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gtd/">gtd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/project-management/">project management</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/task-board/">task board</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/task-management/">task management</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-determine-the-role-of-a-user-in-asp-net" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/determine-the-role-of-a-user-in-asp-net/">Determine The Role of a User in ASP.NET</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/determine-the-role-of-a-user-in-asp-net/" class="article-date"><time datetime="2009-10-13T10:46:21.000Z" itemprop="datePublished">2009-10-13</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/forms-authentication/">forms authentication</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/10/winter016.jpg" alt="winter-016" title="winter-016"></p>
+<p>There are several controls that allow you to display content based on the role a user is in, including:</p>
+<p>- LoginView<br>- LoginStatus</p>
+<p>And the web.config file allows us to control which pages can be viewed based on which role a user is in.</p>
+<p>But what if you need to determine the role a user is in using the APIs? How do you do that?</p>
+<p>It turns out that the API for this is really rather straightforward.</p>
+<p>If you are in an ASPX or ASCX file, you can use</p>
+<p>if(User.IsInRole(“roleNameHere”))<br>{<br>  // do something here<br>}</p>
+<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }If you are in other code where the User property is not available, you’ll need to use the HttpContext class like we’ve used previously this week to get access to the current context.</p>
+<p>if(HttpContext.Current.User.IsInRole(“roleName”))<br>{<br>  // do something here<br>}</p>
+<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/determine-the-role-of-a-user-in-asp-net/" data-id="ck3vvpt7k007ps0higlnz80lq" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/authentication/">authentication</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/isinrole/">isinrole</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/roles/">roles</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/user/">user</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-httpcontext-items-vs-session" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/httpcontext-items-vs-session/">HttpContext.Items[] vs Session[]</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/httpcontext-items-vs-session/" class="article-date"><time datetime="2009-10-12T10:00:00.000Z" itemprop="datePublished">2009-10-12</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/10/ETHN0171.png" alt="ETHN0171" title="ETHN0171"></p>
+<p>Since .NET first became available, passing data around during a request has become a lot easier.  The ability to set a property has made that so.  Still, there are times when setting a property just won’t do the trick.</p>
+<p>One such time is getting data from the middle tier back up to the view separate from a DataBinding operation.  That is, you databind a control to the middle tier and that method needs to set a value that will be used elsewhere in the view, not in the item that is being bound.</p>
+<p>The natural, obvious tendency is to set a session variable.  But there is a better way.</p>
+<p>The problem with session variables is that they have to be cleaned up manually or they will hang around longer than we actually need them.  This will use up more session memory than is required and can potentially cause side effects that will be difficult to debug.</p>
+<p>Instead you can use the Items[] collection that is part of the HttpContext class.  It works the same as a session variable, but it only hangs around for the duration of the request.  Once the information is sent back to the browser, the variables that were set in the Items[] collection go away.</p>
+<p>You might set your variable in the middle tier like this:</p>
+<p>HttpContext.Current.Items[“myVar”] = “Some Data Here”;</p>
+<p>And retrieve it later like this:</p>
+<p>string myVar = (string)(HttpContext.Current.Items[“myVar”]);</p>
+<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/httpcontext-items-vs-session/" data-id="ck3vvptag00aws0hitxdoc7yq" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/httpcontext/">httpcontext</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/items/">items</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/session/">session</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-forms-authentication-manual-authentication" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/forms-authentication-–-manual-authentication/">Forms Authentication – Manual Authentication</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/forms-authentication-–-manual-authentication/" class="article-date"><time datetime="2009-10-05T11:45:05.000Z" itemprop="datePublished">2009-10-05</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/forms-authentication/">forms authentication</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/10/F03I0043.jpg" alt="F03I0043" title="F03I0043"></p>
+<p>I’ve had several occasions in the past where I’ve needed to do my own authentication or I’ve needed to add some additional methods to the authentication process.</p>
+<p>As easy as Microsoft has made the authentication process, you might think that in order to  manually authenticate you’d need to write all of your authentication code manually.  But nothing could be farther from the truth.</p>
+<p>In fact, most of the time all you need to do is trap an event handler in the existing login control.</p>
+<p>A couple of years ago, I was asked to create a login page that used a web service to authenticate the user.  I also needed to add another form field to the login screen, so it became obvious that to do this I’d need to turn the login control into a templated control.</p>
+<p>Once this was done it was a simple matter to trap the click event of the login button, authenticate against the web service, and then set the authentication cookie for ASP.NET.</p>
+<p>Since I can’t show you how to authenticate against the service–your implementation will almost certainly be different–we will skip that section.  But to set the cookie, all we need to do is to revert to the ASP.NET 1.1 way of setting up the login.</p>
+<p>if (Request.QueryString[“ReturnUrl”] != null)<br>{<br>    FormsAuthentication.RedirectFromLoginPage<br>        (m_tbUsername.Text, persistentCookie);<br>}<br>else<br>{<br>    FormsAuthentication.SetAuthCookie<br>        (m_tbUsername.Text, persistentCookie);<br>    Response.Redirect(“~/“);<br>}</p>
+<p>The first line checks to see if there was a Return URL specified.  If there was we can use the RedirectFromLoginPage API.  Otherwise, we need to set the Authentication Cookie manually and redirect on our  own.</p>
+<p>The persistentCookie parameter is true if we want the user to always be logged in.  Otherwise, the login is for the session. .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/forms-authentication-–-manual-authentication/" data-id="ck3vvpt9b009js0hib18143tv" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/authentication/">authentication</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/formsauthentication/">formsauthentication</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/manual/">manual</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redirectfromloginpage/">redirectfromloginpage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/setauthcookie/">setauthcookie</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-dynamically-change-class-attribute-from-asp-net" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/dynamically-change-class-attribute-from-asp-net/">Dynamically Change class Attribute From ASP.NET</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/dynamically-change-class-attribute-from-asp-net/" class="article-date"><time datetime="2009-09-29T09:25:00.000Z" itemprop="datePublished">2009-09-29</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/09/B03B0015.jpg" alt="B03B0015" title="B03B0015"> I recently received a question from another programmer I know who’s been using PHP prior to ASP.NET that made me think harder about a problem we’ve all had in ASP.NET.  The basic problem is this:</p>
+<p>How do you dynamically change the class of a hyperlink based on the page name so that the hyperlink that represents the current page is styled differently than all of the other hyperlinks on our screen?  If you want you can substitute any other HTML element you want, but the problem remains the same.</p>
+<p>The first, most obvious answer would be to create a case statement of some sort.</p>
+<p>string fileName = AppRelativeVirtualPath<br>    .ToLower().Replace(“~/“,””).Replace(“/“,”_”)<br>    .Replace(“.aspx”,””);<br>switch(fileName)<br>{<br>     case “fileone”:<br>             m_hyperLinkFileOne.CssClass =<br>                “selectedClass”;<br>             break;<br>    // etc…<br>}</p>
+<p>But we all know just how ugly that code will get once we start adding pages to our site.   Yuck!  Unfortunately, this is exactly the code I’ve been recommending up until today.</p>
+<p>What was I thinking?!</p>
+<p>If you are familiar with ASP.NET at all, you should already be familiar with the Page_Load event handler.  I bet that’s where you do 90% of your page initialization.  But did you know that there is a load event that fires for each control?</p>
+<p>Further, you can have all of your controls point to the same load event handler.  So if we take advantage of this, we can write very tight code that automatically sets the class based on the current page name.</p>
+<p>// This code assumes that the ID of the hyperLink<br>//  controls follow<br>// the form of m_hyperLinkDestinationPageName<br>// ie, a link to default.aspx would become<br>// m_hyperLinkDefault<br>void HyperLinkLoad(Object sender, EventArgs args)<br>{<br>    // Only need to do this once if you have ViewState<br>    // enabled.<br>    if(!IsPostBack)<br>    {<br>        string fileName = AppRelativeVirtualPath<br>            .ToLower().Replace(“~/“,””).Replace(“/“,”_”)<br>            .Replace(“.aspx”,””);<br>        // sender will always point to the control that<br>        // fired the event so, assuming that only<br>        // asp:hyperlink controls call HyperLinkLoad<br>        if(“m_hyperlink”+file ==<br>           ((HyperLinkControl)sender)<br>           .ID.ToLower())<br>           ((HyperLinkControl)sender).CssClass=<br>              “selectedClass”;<br>    }<br>}</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/dynamically-change-class-attribute-from-asp-net/" data-id="ck3vvpt8q008ws0hi3jwz3pkl" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/class/">class</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dynamic-classing/">dynamic classing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/">html</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-itextsharp-tables" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/itextsharp-tables/">iTextSharp Tables</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/itextsharp-tables/" class="article-date"><time datetime="2009-09-17T10:43:14.000Z" itemprop="datePublished">2009-09-17</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iTextSharp/">iTextSharp</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/09/foodml04.jpg" alt="food-ml-04" title="food-ml-04"> PDF Tables in iTextSharp work enough like HTML tables that the slight differences between the two make programming tables for a PDF a bit confusing the first time you try. I hope to describe some of those differences here so that your experience might be a bit smoother than mine was as you start to use tables in your PDF code.  One of the first decisions you’ll need to make as you start working on your iTextSharp table is how many columns the table should have.  Keep in mind that the cells can be spanned, just like they can in HTML, so it is better to have too many columns than the bare minimum.  You can always adjust later. Once you’ve decided how many columns, you’ll need to decide how big you want each column to be.  Unlike HTML, the columns will not stretch if they are too small. Here is your initial code</p>
+<p>PdfPTable table= new PdfPTable(5);<br>float[] colWidths = {70, 70, 200, 70, 70};<br>table.SetWidths(colWidths);</p>
+<p>Keep in mind that the column widths are more of a weighting than an absolute unit. You’ll also need to determine how wide the iTextSharp table should be.  So far I’ve only needed to set this to 100%.</p>
+<p>table.WidthPercentage = (100.0f);</p>
+<p>Next you’ll want to set the default cell information.  This took me a while to decipher, and I’m still not exactly sure I completely understand it.  But here is an example from some code  I’ve created that sets the borders to white and sets the padding to 10 points.</p>
+<p>table.DefaultCell.Border = (PdfPCell.BOTTOM_BORDER);<br>table.DefaultCell.BorderColor = New iTextSharp.text.Color(255, 255, 255);<br>table.DefaultCell.BorderColorBottom = New iTextSharp.text.Color(255, 255, 255);<br>table.DefaultCell.Padding = 10;</p>
+<p>Next it is just a matter of adding the cells in left to right, top to bottom order.  While there is a way to specify the row and column you want to place the content into using another API, the default API expects the information in order. You can do this using the AddCell() method.  Again, this method will take a string, so you can add the content directly.  But if you are going to need control over the font size, I recommend that you first create a PdfPCell() object that has the content, passing its constructor a Phrase() object.  This will allow much more control.</p>
+<p>table.AddCell(New PdfPCell(New Phrase(“Last Name”)));</p>
+<p>If you need to you can adjust the fonts for an entire row using a loop.</p>
+<p>foreach(PdfPCell c in (PdfPRow)(table.Rows(1)).Cells)<br>{<br>    c.Border = PdfPCell.BOTTOM_BORDER;<br>    c.BorderWidthBottom = 2;<br>    c.PaddingBottom = 4;<br>    c.PaddingTop = 2;<br>    (Chunk)(c.Phrase(0)).Font = headerFont;<br>}</p>
+<p>Finally, it might be useful to include a header row and a footer row.  This way, as your table spans pages, the header and footer rows print on each page. The code for this is really rather simple, even though it wasn’t clear the first time I looked. You place your header row as the first rows in your table and your footer row right after the header rows, prior to the real content.  Then you specify your header rows in your code as.</p>
+<p>table.HeaderRows = 2;<br>table.FooterRows = 1;</p>
+<p>Which would make the first two rows a header that displays on each page and the third row a footer that displays on each page. If you need to place your table at a specific location, you can use the column API to include the table in a column.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/itextsharp-tables/" data-id="ck3vvptck00d1s0hi7rhks9eo" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PDF/">PDF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iTextSharp/">iTextSharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tables/">tables</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-setting-up-you-forms-based-authentication-database" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/setting-up-your-forms-based-authentication-database/">Setting Up Your Forms Based Authentication Database</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/setting-up-your-forms-based-authentication-database/" class="article-date"><time datetime="2009-09-14T09:41:24.000Z" itemprop="datePublished">2009-09-14</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/forms-authentication/">forms authentication</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/09/B01I0003.jpg" alt="B01I0003" title="B01I0003"></p>
+<p>I was recently asked if I would cover some topics related to Forms Based Authentication.  The person who requested this information has some specific issues that he wants covered that I won’t be covering for a while because I think there are some other issues that need to be covered first.</p>
+<p>One of those is setting up the database.</p>
+<p>When I owned my hosting companies, I saw more confusion in this area than just about any other topic that came up.</p>
+<p>So here’s the step-by-step process you need to go through to set up your database for Forms Based Authentication.</p>
+<p>In your hosting company’s control panel, create the SQL database.  You’ll want to create a database with a size of at least 10 meg with 5 meg allocated to the log file and 5 meg allocated to the database.  You’ll also want to make sure the user you attach to the database has DBO rights.  You may need to contact support to enable this.</p>
+<p>Next, you’ll want to run aspnet_regsql.exe which you can find under c:\windows\Microsoft.NET\Framework\v2.0.50727.  This will provide you a wizard interface and will ultimately create the appropriate tables for you. The wizard is self explanatory, so I won’t repeat it here except to say that you’ll want to enter your connection information to connect to the server you just created your database on, not one of your databases locally.</p>
+<p>Next you’ll need to add the connection information to your web.config file for the application you are setting up Forms Based Authentication for.</p>
+<connectionstrings><br> <remove name="LocalSqlServer"><br> <add name="LocalSqlServer" connectionstring="Data Source=sqlserverGoesHere;
+    Initial Catalog=YourDatabaseName;
+    Persist Security Info=True;
+    User ID=YourSqlUserID;
+    password=YourSqlPassword" providername="System.Data.SqlClient"><br></add></remove></connectionstrings>
+
+<p>The “remove” element is needed because typically the machine.config file on the server has its own entry that you won’t be using.</p>
+<p>Unfortunately, you’ll need to create your own UI for adding users and assigning them to roles.  It isn’t that hard to do and once you’ve done it you can move the administration controls from project to project.  If I were you, I’d create the control set once in a special sub-directory so that I could move it from project to project.</p>
+<p><strong>Other places talking about Forms Based Authentication:</strong></p>
+<p><a href="//geekswithblogs.net/bjackett/archive/2009/09/03/single-sign-on-across-.net-web-apps-using-forms-based-authentication.aspx">Single Sign-On Across .Net Web Apps Using Forms Based Authentication</a> - Achieving single sign-on capabilities using Forms Based Authentication is much easier than I had initially expected, yet it took awhile to find the exact settings required. To get FBA working in SharePoint click here for a good starter …</p>
+<p><a href="//geekswithblogs.net/kjones/archive/2009/07/17/133567.aspx">Forms Based Authentication and Active Directory</a> - I recently had to configure Forms Based Authentication for our website (in my case SharePoint, but the same would apply to a plain ASP.NET website) and I wanted to configure it to use Active Directory for the account storage. …</p>
+<p><a href="//avinashkt.blogspot.com/2009/08/configuring-forms-based-authentication.html">Avinash: Configuring Forms Based Authentication (FBA) in SharePoint</a> - 6) Change Authentication Provider for Forms based site. 7) Change configuration files settings. 8) Change policy for Web Application 9) Add users/roles as site administrator (Primary and Secondary). 10) Check Forms Based Authentication …</p>
+<p><a href="//blog.sharepoint-voodoo.net/?p=6">Easy-Bake Forms Based Authentication</a> - In a hosted environment I often see situations where a customer wants to quickly and easily add Forms Based Authentication to their SharePoint Web Application. Unfortunately, it is neither quick nor easy to add this functionality, …</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/setting-up-your-forms-based-authentication-database/" data-id="ck3vvptkr00kos0hi6qb9jcy8" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aspnet-regsql/">aspnet_regsql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/forms-based-authentication/">forms based authentication</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-itextsharp-html-to-pdf-finishing-up" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/itextsharp-–-html-to-pdf-–-finishing-up/">iTextSharp – HTML to PDF – Finishing Up</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/itextsharp-–-html-to-pdf-–-finishing-up/" class="article-date"><time datetime="2009-08-12T10:19:24.000Z" itemprop="datePublished">2009-08-12</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iTextSharp/">iTextSharp</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/08/tiger.jpg" alt="tiger" title="tiger"> In the last post I mentioned there were a few topics we need to close up today.  The two topics we’ve left undone are popping the attribute information off the stack when we hit a closing element and dealing with the paragraph gap that normally appears between paragraph elements.</p>
+<p>The first thing you’ll want to do when you hit a closing element is to retrieve its name again.  Just like we did at the beginning element.  Once you have that you can pop the attribute information off the stack(s).</p>
+<p>You’ll also want to undo any indentation that you applied during the opening element.</p>
+<p>To handle the paragraph break, I defined a _crlfAtEnd attribute in my resource file.  If it was defined as true, I added an extra line feed at the end to account for the gap.</p>
+<p> 1: isBlock = Resources.html2pdf</p>
+<p> 2:    .ResourceManager</p>
+<p> 3:    .GetString(tagName + “_isBlock”);</p>
+<p> 4: if (isBlock != null &amp;&amp; </p>
+<p> 5:    isBlock.ToLower() == “true”)</p>
+<p> 6: {</p>
+<p> 7:    isBlock = Resources.html2pdf</p>
+<p> 8:        .ResourceManager</p>
+<p> 9:        .GetString(tagName + “_crlfAtEnd”);</p>
+<p> 10:     if (isBlock != null &amp;&amp; </p>
+<p> 11:        isBlock.ToLower() == “true”)</p>
+<p> 12:    {</p>
+<p> 13:        et = stack.Peek();</p>
+<p> 14:        Font f = getCurrentFont();</p>
+<p> 15:        if (et is Phrase)</p>
+<p> 16:        {</p>
+<p> 17:            ((Phrase)(et)).Add(</p>
+<p> 18:                new Chunk(“\n\<br>“, f)); </p>
+<p> 19:            stack.Pop();</p>
+<p> 20:        }</p>
+<p> 21:    }</p>
+<p> 22:    p = new Paragraph();</p>
+<p> 23:    ((Paragraph)p).Add(“”);</p>
+<p> 24:    ((Paragraph)p).SetLeading(m_leading, 1);</p>
+<p> 25:    list.Add(p);</p>
+<p> 26:    stack.Push(p);</p>
+<p> 27: }</p>
+<p>One problem I’ve had with this in the past is that this cr/lf gets added at the end even if the block is the last block.  I really need to find some way to detect that this is the last place this occurs either nested or in the outermost block.  But I’ll leave that enhancement for you.</p>
+<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; border: 0px;padding:0px; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-finishing-up/" data-id="ck3vvptc000cjs0hi5br59ww5" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/net/">.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PDF/">PDF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/">html</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iTextSharp/">iTextSharp</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <div id="page-nav">
+    <nav><ul class="pagination"><li><a class="page-prev" rel="prev" href="/page/24/"><i class="fa fa-chevron-left"></i> Prev</a></li><li><a class="page-number" href="/">1</a></li><li class="disabled"><span class="page-space">&hellip;</span></li><li><a class="page-number" href="/page/23/">23</a></li><li><a class="page-number" href="/page/24/">24</a></li><li class="active"><span class="page-number">25</span></li><li><a class="page-number" href="/page/26/">26</a></li><li><a class="page-number" href="/page/27/">27</a></li><li class="disabled"><span class="page-space">&hellip;</span></li><li><a class="page-number" href="/page/31/">31</a></li><li><a class="page-next" rel="next" href="/page/26/">Next <i class="fa fa-chevron-right"></i></a></li></ul></nav>
+  </div>
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/what-if-unit-testing-wasn’t-necessary-notdd/">What If Unit Testing Wasn’t Necessary? #noTDD</a>
+        </li>
+      
+        <li>
+          <a href="/linkedin-tips-for-programmers/">LinkedIn Tips For Programmers</a>
+        </li>
+      
+        <li>
+          <a href="/typescript-basics-for-angular-developers/">TypeScript Basics for Angular Developers</a>
+        </li>
+      
+        <li>
+          <a href="/the-tyranny-of-emotions/">The Tyranny of Emotions</a>
+        </li>
+      
+        <li>
+          <a href="/where-to-store-angular-configurations/">Where To Store Angular Configurations</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

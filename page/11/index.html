@@ -76,6 +76,108 @@
         <div class="col-sm-8 blog-main">
           
   
+    <article id="post-cross-browser-javascript-copy-and-paste" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/cross-browser-javascript-copy-and-paste/">Cross Browser JavaScript Copy and Paste</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/cross-browser-javascript-copy-and-paste/" class="article-date"><time datetime="2016-01-14T13:30:00.000Z" itemprop="datePublished">2016-01-14</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Javascript/">Javascript</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I’ve searched all over the Internet for a Cross Browser JavaScript Copy and Paste solution.  I couldn’t find anything that really worked.  But I was able to put together the bits and pieces I found into a rather simple solutions. As you may have noticed, I’ve written <a href="/tags/javascript/">quite a few articles about programming in JavaScript</a> in the past couple of years because I’ve spent most of my time programming in JavaScript.  For the last three months, I’ve been working on a browser based application that needed to be able to copy and paste between the browser and an external spreadsheet.  The main struggle in making this all work correct is that what needs to be copied to the clipboard is the underlying data of the application. Getting this all working in IE, even the most recent version that runs under Windows 10, was pretty easy.  And fortunately, the browser of choice at this company is Internet Explorer.  But, it is IE 11, which takes twice as long to do anything with JavaScript as Chrome does.  Chrome is their secondary browser and my mission has been to find a way to get copy and paste working reliably using Chrome so that the end user would have a better experience with the application. While the work I’ve been doing has been using Angular, the solution that I provide in this article using plain JavaScript with no dependency on any framework.  I want the solution to be available regardless of what framework you might be predisposed to use.  If you use angular, or jQuery, or whatever, the code should be easy enough to adapt. <img src="/uploads/2016/01/image-1.png" alt="image" title="image"> </p>
+<h2 id="Demo-HTML"><a href="#Demo-HTML" class="headerlink" title="Demo HTML"></a>Demo HTML</h2><p>For the purposes of this article, the HTML we are dealing with looks like this:</p>
+<body><br>    <div tabindex="0" id="element1"><br>        Element To Paste Into<br>    </div><br>    <div tabindex="0" id="element2"><br>        Another Element To Paste Into<br>    </div><br>    <script src="App/app.js"></script><br></body>
+
+<p>The <code>tabindex</code> attribute makes the element focusable.  We’ll use the <code>id</code> in our JavaScript to bind event handlers to the element.</p>
+<h2 id="Demo-CSS"><a href="#Demo-CSS" class="headerlink" title="Demo CSS"></a>Demo CSS</h2><p>This is the CSS that we are using in the code to layout the <code>DIV</code>s:</p>
+<p>#element1 {<br>    width: 49%;<br>    height: 100px;<br>    float: left;<br>    border: 1px solid black;<br>}</p>
+<p>#element2 {<br>    width: 49%;<br>    height: 100px;<br>    float: right;<br>    border: 1px solid black;<br>}</p>
+<p>This is really simple CSS.  Just enough to layout the screen with the <code>DIV</code>s side by side.</p>
+<h2 id="Trapping-CTRL-C-and-CTRL-V"><a href="#Trapping-CTRL-C-and-CTRL-V" class="headerlink" title="Trapping CTRL-C and CTRL-V"></a>Trapping CTRL-C and CTRL-V</h2><p>To start out with, we need a way of trapping the <code>CTRL-C</code> and <code>CTRL-V</code> keystrokes on the element we want to copy or paste or content into.  This is pretty standard JavaScript that anyone who has worked with JavaScript before should already be familiar with.</p>
+<p>function keyBoardListener(evt) {<br>    if (evt.ctrlKey) {<br>        switch(evt.keyCode) {<br>            case 67: // c<br>                copy(evt.target);<br>                break;<br>            case 86: // v<br>                paste(evt.target);<br>                break;<br>        }<br>    }<br>}</p>
+<p>document.getElementById(‘element1’)<br>    .addEventListener(‘keydown’, keyBoardListener);<br>document.getElementById(‘element2’)<br>    .addEventListener(‘keydown’, keyBoardListener);</p>
+<h2 id="Internet-Explorer"><a href="#Internet-Explorer" class="headerlink" title="Internet Explorer"></a>Internet Explorer</h2><p>You may have noticed that the code above is calling a copy function and a paste function that we have not declared yet.  That is where a lot of the magic happens. Implementing copy and paste using Internet Explorer is pretty trivial.</p>
+<p>function paste(target) {<br>   if (window.clipboardData) {<br>        target.innerText = window.clipboardData<br>            .getData(‘Text’);<br>        return;<br>    }<br>}</p>
+<p>function copy(target){<br>    if(window.clipboardData){<br>        window.clipboardData.setData(‘Text’,<br>            target.innerText);<br>    }<br>}</p>
+<p>However, keep in mind that this method has been deprecated.  But it gives us a place to start. A better way to implement the copy, would be by using newer document.execCommand(‘copy’) because that method generally works well in all three of the major browsers.  </p>
+<p>function copy(target){<br>    target.select();<br>    document.execCommand(‘copy’);<br>}</p>
+<h2 id="Chrome-amp-Firefox"><a href="#Chrome-amp-Firefox" class="headerlink" title="Chrome &amp; Firefox"></a>Chrome &amp; Firefox</h2><p>But the problem with using this method is that in Chrome and Firefox, the copy command only works with elements that are editable.  In chrome the element doesn’t have to be visible and with Firefox it does.  This requires us to change our copy command so that it will work in all three browsers.</p>
+<p>function copy(target) {<br>    // standard way of copying<br>    var textArea = document.createElement(‘textarea’);<br>    textArea.setAttribute<br>        (‘style’,’width:1px;border:0;opacity:0;’);<br>    document.body.appendChild(textArea);<br>    textArea.value = target.innerHTML;<br>    textArea.select();<br>    document.execCommand(‘copy’);<br>    document.body.removeChild(textArea);<br>}</p>
+<p>By making the text area 1 pixel wide, giving it no boarder, and making it transparent, it isn’t really visible to the user and it fulfills the requirements of all three browsers.</p>
+<h2 id="But-What-about-Paste"><a href="#But-What-about-Paste" class="headerlink" title="But What about Paste?"></a>But What about Paste?</h2><p>OK. Getting copy working in a three browsers is pretty trivial.  But, paste, on the other hand, is where all of the tricks come into play. In short, you can’t read from the clipboard during the keyboard event.  However, we can trap the system level paste event.  Sometimes.  The problem is that ‘sometimes’ quirk. In Chrome the paste event will fire all of the time.  In Firefox, it will only fire when an editable field is on the screen.  Further, the paste event can only be bound to certain elements.  The only one we can be sure will always be available is the window element.  Capturing paste at the window level doesn’t tell us what element we should paste into. But with a little JavaScript magic we can use the keyboard event handler in combination with a paste event handler to grab the contents from the clipboard and put the data where we want it. We are going to need to put some variables in place that will hold</p>
+<ol>
+<li>A flag that will tell us that the paste event has fired.</li>
+<li>A variable to hold the data from the clipboard that we retrieve.</li>
+</ol>
+<p>When the paste event fires, we will set these two variables. Meanwhile, back in our paste event, we will setup a timeout function that will look to see if the flag has been set, and if it has it will retrieve the data from the data variable and place it into the DIV. Oh.  And we have that issue that the paste event will only fire if an editable field is on the screen.  Fortunately, paste fires after the keydown event.  So as part of our keydown event, we will dynamically create a textarea to enable the paste event for Firefox. So our paste code for Chrome and FireFox looks like this:</p>
+<p>function paste(target) {<br>    function waitForPaste() {<br>        if (!systemPasteReady) {<br>            setTimeout(waitForPaste, 250);<br>            return;<br>        }</p>
+<pre><code>    target.innerHTML = systemPasteContent;
+    systemPasteReady = false;
+    document.body.removeChild(textArea);
+    textArea = null;
+}
+
+// FireFox requires at least one editable
+// element on the screen for the paste event to fire
+textArea = document.createElement(&apos;textarea&apos;);
+textArea.setAttribute
+    (&apos;style&apos;, &apos;width:1px;border:0;opacity:0;&apos;);
+document.body.appendChild(textArea);
+textArea.select();
+waitForPaste();
+</code></pre><p>}</p>
+<p>function systemPasteListener(evt) {<br>    systemPasteContent =<br>        evt.clipboardData.getData(‘text/plain’);<br>    systemPasteReady = true;<br>    evt.preventDefault();<br>}</p>
+<p>window.addEventListener(‘paste’,systemPasteListener);</p>
+<h2 id="Back-to-Internet-Explorer"><a href="#Back-to-Internet-Explorer" class="headerlink" title="Back to Internet Explorer"></a>Back to Internet Explorer</h2><p>I know what you are thinking now.  Why not make Internet Explorer work the same way?  Yeah, I thought the same thing.  But as soon as you take out the lnternet Explorer specific paste code, you get an exception in the paste event handler.  Turns out, the only way the paste event works is if you access the clipboard.getData() method.  At least, that’s how it works today.  So, I’m just leaving that code as it is. And there you have it.  Cross browser JavaScript Copy and Paste.</p>
+<h2 id="Cross-Browser-JavaScript-Copy-and-Paste-Source-Code"><a href="#Cross-Browser-JavaScript-Copy-and-Paste-Source-Code" class="headerlink" title="Cross Browser JavaScript Copy and Paste Source Code"></a>Cross Browser JavaScript Copy and Paste Source Code</h2><p>A project with the final code is available on <a href="//github.com/DaveMBush/CrossBrowserCopyAndPaste">GitHub</a>.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/cross-browser-javascript-copy-and-paste/" data-id="ck44dkbaf0024i0hibrzi2lby" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/copy-amp-paste/">copy &amp; paste</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cross-browser/">cross browser</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-increase-your-excellence-capacity" class="article article-type-post" itemscope itemprop="blogPost">
 
   <header class="article-header">
@@ -127,7 +229,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/increase-your-excellence-capacity/" data-id="cjt1zdqx400fbk4hiq2amcme8" class="article-share-link">
+      <a data-url="http://davembush.github.com/increase-your-excellence-capacity/" data-id="ck44dkbbz003ii0hi2mcu7q30" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -222,7 +324,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/javascript-alchemy-with-strings-numbers-and-booleans/" data-id="cjt1zdqzw00i1k4hig3cmw6v9" class="article-share-link">
+      <a data-url="http://davembush.github.com/javascript-alchemy-with-strings-numbers-and-booleans/" data-id="ck44dkbcx004hi0hi8rpwilsx" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -313,7 +415,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/javascript-truthy-and-falsy-–-pain-and-pleasure/" data-id="cjt1zdqzj00hok4hi2gu5hj4h" class="article-share-link">
+      <a data-url="http://davembush.github.com/javascript-truthy-and-falsy-–-pain-and-pleasure/" data-id="ck44dkbcu004fi0hixx3ho4z2" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -392,7 +494,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/6-reasons-i-moved-my-money-to-…/" data-id="cjt1zdpzd000kk4hia1gqzhw1" class="article-share-link">
+      <a data-url="http://davembush.github.com/6-reasons-i-moved-my-money-to-…/" data-id="ck44dkb8b000gi0hi50fb3ap1" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -468,7 +570,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/values-beliefs-green-civics-and-programming/" data-id="cjt1zdrd000u2k4hib4tyykvm" class="article-share-link">
+      <a data-url="http://davembush.github.com/values-beliefs-green-civics-and-programming/" data-id="ck44dkbg8007ui0hi3559old8" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -541,7 +643,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/nunit-2-vs-nunit-3-what-you-need-to-know/" data-id="cjt1zdqt300auk4hipocfrl2a" class="article-share-link">
+      <a data-url="http://davembush.github.com/nunit-2-vs-nunit-3-what-you-need-to-know/" data-id="ck44dkbau002fi0hirffhtggn" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -604,7 +706,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/adventures-working-with-angular’s-scope/" data-id="cjt1zdqnq004sk4hi3pyttqhx" class="article-share-link">
+      <a data-url="http://davembush.github.com/adventures-working-with-angular’s-scope/" data-id="ck44dkb8n000oi0hisv9e8gvb" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -686,7 +788,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/how-to-be-personally-agile/" data-id="cjt1zdqw900eck4hiu42gzub5" class="article-share-link">
+      <a data-url="http://davembush.github.com/how-to-be-personally-agile/" data-id="ck44dkbbs003bi0hi1bg4g3tv" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -747,113 +849,12 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/random-computer-freeze-linked-to-unlikely-culprit/" data-id="cjt1zdr4o00mtk4hirda2aosu" class="article-share-link">
+      <a data-url="http://davembush.github.com/random-computer-freeze-linked-to-unlikely-culprit/" data-id="ck44dkbec005si0hiweaq6nhd" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/computer/">computer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/freeze/">freeze</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/keyboard/">keyboard</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-are-you-doing-angular-right" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/are-you-doing-angular-right/">Are You Doing Angular Right?</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/are-you-doing-angular-right/" class="article-date"><time datetime="2015-11-05T12:30:00.000Z" itemprop="datePublished">2015-11-05</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Javascript/">Javascript</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>I’ve written that <a href="/tags/angular-js/">I’m using Angular</a> to write a couple applications before.  One at my main contract and a couple side projects.  I know I’m kind of late to the game, but one of my frustrations with the documentation around Angular is that very little of the sample code that you can find on the Internet shows the sample using anything close to a best practice.  That’s the danger of writing about something you are too familiar with. So, in this post, I’d like to cover a few best practices that I’ve discovered, or implemented in my own code, and explain in a bit more detail what is going on inside the controller.  I concentrate on the controller because this is a place that will be used the most.  Once you understand it, the rest of what you need to know will trickle down to services, factories, and directives.</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><img src="/uploads/2015/10/image4.png" alt="image" title="image"></h2><h2 id="IIFEs"><a href="#IIFEs" class="headerlink" title="IIFEs"></a>IIFEs</h2><p>The first thing you’ll almost never see in the demos, but you might pick up on eventually, is that you should always write your angular code inside of and IIFE.  What’s an IIFE you ask?  IIFE stands for Immediately Invoked Function Expression.  The most common looks like this:</p>
-<p>(function(){<br>    // your code goes here<br>})();</p>
-<p>Why do we do this?  So that we can declare variables that are “global” to everything inside of the IIFE without polluting the global namespace.  If you follow the rest of the tips in this article, you shouldn’t end up writing any kind of global variables.  But, there is another good reason for using an IIFE.  You can pass parameters into it.  The most common implementation I use is that I pass any global variables I need for the code inside as parameters.  This keeps JSHint happy without having to specify global variables as comments or putting them in a configuration file.  Since “angular”:</p>
-<p>(function(angular){<br> // your code goes here<br>})(window.angular);</p>
-<h2 id="Single-Responsibility-Applies-to-Files"><a href="#Single-Responsibility-Applies-to-Files" class="headerlink" title="Single Responsibility Applies to Files"></a>Single Responsibility Applies to Files</h2><p>Another big problem I see with a lot of samples, is that they mix controllers and directives and modules declarations all together.  At one level I get it, why separate them when it is just a small demo.  On the other hand, doing inadvertently promotes bad code to the masses. How much code have you seen that looks like:</p>
-<p>var app = angular.module(‘app’, [<br>    // Angular modules<br>    // Custom modules<br>    // 3rd Party Modules<br>    ]);<br>app.config([‘<br>    function () {<br>        // code here<br>    });<br>angular.module(‘Controllers’).controller(‘Controller’,[ function () {<br>   // code here<br>    }]);<br>angular.module(‘Controllers’).controller(‘controllerName’,<br>    [‘$scope’, function ($scope)<br>    {<br>       // Code here<br>    }]);</p>
-<p>When they should specify what should be in a separate file.  Maybe by wrapping them in IIFEs.</p>
-<p>// top level app.js file<br>(function(angular){<br>angular.module(‘app’, [<br>    // Angular modules<br>    // Custom modules<br>    // 3rd Party Modules<br>    ]);<br>})(window.angular);</p>
-<p>// config.js that lives in a file parallel to app.js<br>(function(angular){<br>angular.module(‘app’).config([‘ function () { // code here }); })(window.angular); // controllers holder that lives parallel to app.js (function(angular){ angular.module(‘Controllers’).controller(‘Controller’,[ function () { // code here }]); })(window.angular); // controller that lives parallel to the view it is associated with (function(angular){ angular.module(‘Controllers’).controller(‘controllerName’, [‘$scope’, function ($scope) { // Code here }]); })(window.angular);</p>
-<h2 id="Namespace-Everything"><a href="#Namespace-Everything" class="headerlink" title="Namespace Everything"></a>Namespace Everything</h2><p>As I’ve already hinted at in the code above, I place my controllers and the views they are attached to in separate directories based on the route or state that I will use to get to them.  I use states, so to be clear the state does not necessarily represent the url that I will be using to access the view.  This works out pretty nicely because for every state, there is a directory and for every sub state, there is a sub directory.  Each directory generally has two files.  controller.js and view.html.  When I specify the name of the controller, I use dot notation to represent where it is in the directory structure.  Similarly, when I specify the state in app.config(), I use the same dot notation.  So if my state were ‘edit.contact’ you should expect to see a directory structure of ‘edit/contact’ with the two files inside of it.</p>
-<h2 id="ControllerAs"><a href="#ControllerAs" class="headerlink" title="ControllerAs"></a>ControllerAs</h2><p>I’ve only seen this explained in one place (<a href="/pluralsight">PluralSight of course</a>) where this is explained in a way that I could grasp. Here’s the deal.  What you first need to understand is how the code you write in angular relates to the code you would write in JavaScript without the framework.  (BTW, one complaint I’ve heard from hiring managers is that while they can find people who can write Angular, they can’t find people who can write Angular AND understand JavaScript.  So much is hidden from us by using Angular.  If you want to be awesome at Angular, be awesome at JavaScript.) So, let’s sketch out a basic controller.</p>
-<p>(function ()<br>{<br>    ‘use strict’;<br>    angular.module(‘Controllers’).controller(‘edit.contacts’,<br>        [‘$scope’, function ($scope)<br>    {<br>        // Your controller code here<br>    }]);</p>
-<p>})();</p>
-<p>What is happening here?  Well what you’ve essentially done is create an anonymous constructor for your controller.</p>
-<p>Let’s rearrange some code so that you can see this more clearly.</p>
-<p>(function ()<br>{<br>    ‘use strict’;</p>
-<pre><code>editContacts.$inject = \[&apos;$scope&apos;\];
-function editContacts($scope)
-{
-    // your code here
-};
-
-angular.module(&apos;Controllers&apos;).controller(&apos;edit.contacts&apos;, editContacts);
-</code></pre><p>})();</p>
-<p>So, now the code looks like regular JavaScript.  And if I told you that editContacts was the object constructor, the next thing that you might expect is that you could then write code that looked something like this:</p>
-<p>(function ()<br>{<br>    ‘use strict’;</p>
-<pre><code>editContacts.$inject = \[&apos;$scope&apos;\];
-function editContacts($scope)
-{
-    var self = this;
-    function someMethod(){
-        self.variableName = &apos;foo&apos;;
-    };
-
-    self.someMethod = someMethod;
-    // your code here
-};
-
-angular.module(&apos;Controllers&apos;).controller(&apos;edit.contacts&apos;, editContacts);
-</code></pre><p>})();</p>
-<p>This is the way I like to write JavaScript classes, but you can use any method you prefer.  It is just plain old JavaScript at this point. The other piece that might need some explaining is the ‘editContacts.$inject’ thing.  This is just an alternate way of specifying the services that need to be injected into your constructor.  I haven’t decided if I like using this way, or if I like having them specified in the controller definition at the bottom.  By leaving the injection at the bottom, I am left with code that looks mostly like plain old JavaScript.  By leaving them at the top, I can see that what I’m injecting matches the parameters I am expecting.  Of course, if you are willing to throw some external tools into the mix, you can have that line created for you automatically at build time. So, under the hood, what Angular is doing for you is looking for the controller by the name that you gave it and calling the function associated with it using the ‘new’ keyword.  If you want some of your functions and methods exposed to the view, you need to attach them to the $scope, which is why we need to inject it as a parameter to our constructor.  But, if you use the ControllerAs keyword, it assigns the object to a variable the the name you specified as the ‘As’ and attaches it to $scope.  What this means is that you almost never have to pass in the $scope object to your constructor and all of your public methods and fields are available to the view for free using the syntax ‘asName.variableName’.</p>
-<h2 id="Using-Controllers-in-Directives"><a href="#Using-Controllers-in-Directives" class="headerlink" title="Using Controllers in Directives"></a>Using Controllers in Directives</h2><p>The final piece I want to talk about today gets back to my discussion about demos that don’t use good coding practices.  Most directive demos that use controllers write the controller inline.  But you don’t have to do it this way, and I would recommend that you don’t.  Controllers should be in their own file.  Separation of concerns and Single Responsibility.  You define  your controller just like you would any other controller in the separate file.  I define them using the controller function hanging off the directive object</p>
-<p>directive(‘directiveName’)<br>    .controller(controllerDefinitionHere);</p>
-<p>And then use the name of the directive in the controller property in my directive code.</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/are-you-doing-angular-right/" data-id="cjt1zdqpk006ok4hizpeyb4ql" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular-js/">angular.js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/best-practices/">best practices</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
 
 
     </footer>
@@ -907,7 +908,7 @@ angular.module(&apos;Controllers&apos;).controller(&apos;edit.contacts&apos;, ed
   
   <div class="sidebar-module">
     <h4>Archives</h4>
-    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
   </div>
 
 

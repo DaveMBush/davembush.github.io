@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Browser Automation in .NET w/ Chromium | Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Over the past ten years, I’ve successfully implemented various types of screen scraping in order to provide data to my clients.  Most of these implementations have involved accessing HTML and parsing">
+<meta name="keywords" content="c#,CefSharp,Chromium">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Browser Automation in .NET w&#x2F; Chromium">
+<meta property="og:url" content="http://davembush.github.com/browser-automation-in-net-w-chromium/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:description" content="Over the past ten years, I’ve successfully implemented various types of screen scraping in order to provide data to my clients.  Most of these implementations have involved accessing HTML and parsing">
+<meta property="og:locale" content="English">
+<meta property="og:image" content="http://davembush.github.com/uploads/2015/07/image.png">
+<meta property="og:updated_time" content="2018-06-30T18:23:01.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Browser Automation in .NET w&#x2F; Chromium">
+<meta name="twitter:description" content="Over the past ten years, I’ve successfully implemented various types of screen scraping in order to provide data to my clients.  Most of these implementations have involved accessing HTML and parsing">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2015/07/image.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-browser-automation-in-net-w-chromium" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      Browser Automation in .NET w/ Chromium
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/browser-automation-in-net-w-chromium/" class="article-date"><time datetime="2015-07-09T10:00:00.000Z" itemprop="datePublished">2015-07-09</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/c/">c#</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2015/07/image.png" alt="image" title="image"> Over the past ten years, I’ve successfully implemented various types of screen scraping in order to provide data to my clients.  Most of these implementations have involved accessing HTML and parsing out the data we needed for the web application. My latest implementation of this made use of the <a href="//htmlagilitypack.codeplex.com/">HTML Agility Pack</a> and managed to incorporate the e-Labels For Education site into the Labels For Education site.  (No links, because the e-Labels program is being phased out.) Recently, I’ve been spending a lot of times on some site doing the same thing over and over again.  But most of the sites I visit now implement some kind of AJAX so that doing a simple web request to a page without also loading and parsing the JavaScript ends up giving me a page with no useful data at all.  Unlike the work I’ve done in the past where this was sufficient. This, combined with my recent work implementing Jasmine unit test for JavaScript and running them in the PhantomJS headless browser has had me thinking, wouldn’t it be great if I could do similar kinds of screen scraping, or even browser automation, but use something like an embedded version of PhantomJS to get the work done. Well, do a search for “embedded PhantomJS for .NET” or something similar and you’ll find that that isn’t possible.  At least not yet. But there is a viable alternative.  Actually there are a couple of viable alternative.  But they all end up using the Google Chromium browser API.  The implementation I ended up using is <a href="//github.com/cefsharp">CefSharp</a>.  Mostly because this is what is available from NuGet. What follows are some of the tricks I learned along the way.</p>
+<h2 id="Installing-Chromium"><a href="#Installing-Chromium" class="headerlink" title="Installing Chromium"></a>Installing Chromium</h2><p>The first thing you’ll need to do once you have a project started, is that you’ll need to install the Chromium DLLs.  In the NuGet package manager, do a search for CefSharp.  This will bring up a list of plugins, you’ll want to install CefSharp.OffScreen and CefSharp.Common (I’m assuming you want to do off-screen automation here.)  The version I am working with is version 39. What I found difficult to figure out next was how to actually use the library.</p>
+<h2 id="Get-It-Initialized"><a href="#Get-It-Initialized" class="headerlink" title="Get It Initialized"></a>Get It Initialized</h2><p>You’ll want to initialize the library before you use it.  The following lines will do that.  I just put this as early in my code as possible.</p>
+<p>var settings = new CefSettings<br>    {LogSeverity = LogSeverity.Verbose};<br>settings.CefCommandLineArgs.Add(“no-proxy-server”, “1”);</p>
+<p>Cef.OnContextInitialized = ()<br>    => Cef.SetCookiePath(“cookies”, true);</p>
+<p>if (!Cef.Initialize(settings, shutdownOnProcessExit: false,<br>    performDependencyCheck: true))<br>{<br>     throw new Exception(“Unable to Initialize Cef”);<br>}</p>
+<p>If you want to use a proxy server, you’ll need to look up the documentation for how to set the proxy server. The Cef.SetCookiePath sets the location of your cookie file.</p>
+<h2 id="Creating-The-Browser-“Window”"><a href="#Creating-The-Browser-“Window”" class="headerlink" title="Creating The Browser “Window”"></a>Creating The Browser “Window”</h2><p>Now that you have this all set, you can use the ChromiumWebBrowser class to create a browser window.  Since the browser is disposable, you’ll want to either wrap the code in a using() statement or you’ll want to make sure you dispose of the browser object when you are done. You’ll want to set a few things on the browser object next.</p>
+<p>browser.BrowserSettings<br>    .FileAccessFromFileUrlsAllowed = true;<br>browser.BrowserSettings<br>    .UniversalAccessFromFileUrlsAllowed = true;<br>browser.BrowserSettings<br>    .WebSecurityDisabled = true;</p>
+<p>And then you’ll want to wait for the browser to initialize. Now the code I was given for this looks like this:</p>
+<p>public static Task WaitForBrowserToInitialize(this ChromiumWebBrowser browser)<br>{<br>    var tcs = new TaskCompletionSource<bool>();</bool></p>
+<pre><code>EventHandler handler = null;
+handler = (sender, args) =&gt;
+{
+    browser.BrowserInitialized -= handler;
+    tcs.TrySetResult(true);
+};
+browser.BrowserInitialized += handler;
+
+return tcs.Task;
+</code></pre><p>}</p>
+<p>You’ll recognize this as an extension method.  What it is doing is waiting for the BrowserInitialized event to fire and then telling the task it can return.  This works great the first time you use it, but I found that when I created a new browser “window” the initialization happened so quickly that this was unreliable.  I’ve replaced this code with the more reliable version below.</p>
+<p>public static Task WaitForBrowserToInitialize<br>    (this ChromiumWebBrowser browser)<br>{<br>    while (!Browser.IsBrowserInitialized)<br>    {<br>        await Task.Delay(100);<br>    }<br>}</p>
+<p>It does the same thing.  It is just more reliable.</p>
+<h2 id="Load-a-Page"><a href="#Load-a-Page" class="headerlink" title="Load a Page"></a>Load a Page</h2><p>Everything else is pretty straight forward.  To load a web page:</p>
+<p>public static Task LoadUrl(this ChromiumWebBrowser browser,string url)<br>{<br>    browser.Load(url);<br>    return browser.WaitForPage();<br>}</p>
+<p>That WaitForPage() method looks like this:</p>
+<p>public static Task WaitForPage(this ChromiumWebBrowser browser)<br>{<br>    var tcs = new TaskCompletionSource<bool>();<br>    EventHandler<navstatechangedeventargs> handler = null;<br>    handler = (sender, args) =&gt;<br>    {<br>        //Wait for while page to finish loading not<br>        // just the first frame<br>        if (!args.IsLoading)<br>        {<br>            browser.NavStateChanged -= handler;<br>            tcs.TrySetResult(true);<br>        }<br>    };</navstatechangedeventargs></bool></p>
+<pre><code>browser.NavStateChanged += handler;
+return tcs.Task;
+</code></pre><p>}</p>
+<h2 id="Get-Data-Out"><a href="#Get-Data-Out" class="headerlink" title="Get Data Out"></a>Get Data Out</h2><p>If you need to get data out of the page, you can use GetSourceAsync();</p>
+<p>var source = await browser.GetSourceAsync();</p>
+<p>or you can use JavaScript to get at the DOM using</p>
+<p>await EvaluateScriptAsync(javaScriptCodeHere);</p>
+<p>  Note, you can also use EvaluateScriptAsync to do things like clicking buttons, scrolling the window and a lot of other useful things.</p>
+<h3 id="Other-Places-Talking-About-Chromium-for-NET"><a href="#Other-Places-Talking-About-Chromium-for-NET" class="headerlink" title="Other Places Talking About Chromium for .NET"></a>Other Places Talking About Chromium for .NET</h3><ul>
+<li><a href="//umaranis.com/2013/10/16/how-to-embed-chrome-browser-in-net-application/">Embed Chromium Using CefGlue</a></li>
+<li><a href="//thechriskent.com/2014/08/18/embedded-chromium-in-winforms/">Embedded Chromium in WinForms</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/browser-automation-in-net-w-chromium/" data-id="ck3vvpt4u004ys0hichoajvpb" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CefSharp/">CefSharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Chromium/">Chromium</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/debugging-software/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">Debugging Software</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/what-browser-is-selenium-currently-running/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">What Browser Is Selenium Currently Running</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/what-if-unit-testing-wasn’t-necessary-notdd/">What If Unit Testing Wasn’t Necessary? #noTDD</a>
+        </li>
+      
+        <li>
+          <a href="/linkedin-tips-for-programmers/">LinkedIn Tips For Programmers</a>
+        </li>
+      
+        <li>
+          <a href="/typescript-basics-for-angular-developers/">TypeScript Basics for Angular Developers</a>
+        </li>
+      
+        <li>
+          <a href="/the-tyranny-of-emotions/">The Tyranny of Emotions</a>
+        </li>
+      
+        <li>
+          <a href="/where-to-store-angular-configurations/">Where To Store Angular Configurations</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

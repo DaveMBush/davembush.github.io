@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Dave&#39;s Notebook">
+<meta property="og:url" content="http://davembush.github.com/page/21/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:locale" content="English">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dave&#39;s Notebook">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          
+  
+    <article id="post-sql-for-programmers-finding-a-string" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/sql-for-programmers-finding-a-string/">SQL For Programmers - Finding a String</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/sql-for-programmers-finding-a-string/" class="article-date"><time datetime="2013-12-04T23:27:40.000Z" itemprop="datePublished">2013-12-04</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL-For-Programmers/">SQL For Programmers</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2008/09/tp-vol3-025.jpg" alt="tp_vol3_025"> Many times in our queries, we aren’t looking for an exact match.  We are looking for one string that exists in another.  There are a couple statements available to us that will allow us to do this. The first of these is the LIKE statement, and if you are familiar with DOS or the Linux equivalent, this should look familiar to you.  The most common usage of LIKE looks like this:</p>
+<p>SELECT * FROM someTable<br>WHERE fieldName LIKE ‘%stringHere%’</p>
+<p><a href="//11011.net/software/vspaste"></a>Note the % inside the single quote marks. This statement is telling SQL to find all of the rows from someTable where the contents of fieldName has the string ‘stringHere’ in it. You could also do something like:</p>
+<p>SELECT * FROM someTable<br>WHERE fieldName LIKE ‘stringHere%’</p>
+<p><a href="//11011.net/software/vspaste"></a>which would find all the rows where fieldName started with ‘stringHere’ You can also use the following pattern matching characters:</p>
+<p>Symbol</p>
+<p>Descriptions</p>
+<p>_</p>
+<p>Look for any single character</p>
+<p>[]</p>
+<p>Look for any single character listed in the set fieldName LIKE ‘[abc]%’ Looks for anything that starts with a, b, or c.</p>
+<p>[^]</p>
+<p>Look for any single character not listed in the set fieldName LIKE ‘[^abc]%’ Looks for anything that doesn’t start with a, b or c.</p>
+<p>If you need to find a string that includes one of these symbols, you’ll need to ESCAPE it and you’ll need to define the escape sequence. So to look for a % in the middle of the string you would use:</p>
+<p>SELECT * FROM someTable<br>WHERE fieldName LIKE ‘%%stringHere%’ ESCAPE ‘%’</p>
+<p><a href="//11011.net/software/vspaste"></a>This will look for all rows where the fieldName starts with the string ‘%stringHere’ because we’ve told it that % is the escape character and we’ve used %% twice in our search string. <strong>A few other posts about SQL that might help you:</strong> <a href="//www.computerbasedtraininginc.com/blog/2008/09/like-matching-to-a-pattern-part-3-of-3/">LIKE (Matching to a Pattern), Part 3 of 3</a> <a href="//exemedia.blogspot.com/2008/08/sql-tutorial.html">SQL Tutorial</a></p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/sql-for-programmers-finding-a-string/" data-id="ck3vvptlh00l7s0hikpggktrg" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/like/">like</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/">sql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tsql/">tsql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/where-clause/">where clause</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-jquery-retrieving-html-fragments" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/jquery-retrieving-html-fragments/">jQuery - Retrieving HTML Fragments</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/jquery-retrieving-html-fragments/" class="article-date"><time datetime="2013-11-20T21:54:21.000Z" itemprop="datePublished">2013-11-20</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/jQuery/">jQuery</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/01/sunset-bird.jpg" alt="sunset-bird"> A couple of weeks ago I mentioned that I had built a <a href="/2009/01/06/jquery-positioning-elements/">tooltip using jQuery</a>.  We focused mostly on the positioning of the tooltip at the time because, historically, that’s where most of the work has been. But there are other time-saving features that also make the tooltip code I wrote a lot more flexible.  For example, in the past, the javascript code we wrote for tooltips often required us to place the HTML for the tooltip in the HTML page we wanted the tooltip on.  This has two drawbacks. First, if you need the tooltip on multiple pages, you need to include the HTML on multiple pages.  You could, of course, use master pages in ASP.NET or includes of some sort in other web development languages to get around this, but the fact remains that you still need to do this. Second, the HTML is not as modular as it might be.  This isn’t as big of an issue, since we could argue that most of our HTML is not as modular as it might be, but when I show you how you can overcome this with jQuery, I think you will recognize the improvement. When I sat down to develop this tooltip, I created an HTML page that has the HTML for the tooltip, and nothing else, in it.  This allowed me to concentrate on the HTML and forget about all the javascript issues.  Once I had the tooltip looking the way I wanted, I copied out the HTML fragment that represented the tooltip, leaving out the HTML that had the head tag, body tag, and other code I needed to make the HTML page an HTML page.  I pasted this code into another HTML file, but this time the HTML file ONLY has the fragment. The other thing you’ll want to do is to dynamically create the positional DIV that you will use to hold the tooltip.  This is another place where we typically had to put the content in our HTML page.  Instead we will put this information in the jQuery script.  While I could have included this in the fragment, doing it this way actually makes coding the tooltip easier:</p>
+<p>$(‘<div id="tooltip"></div>‘).appendTo(‘body’);<br>$(‘#tooltip’).hide().load(‘js/ToolTip.htm’);</p>
+<p><a href="//11011.net/software/vspaste"></a>Two lines of code to get our shell of a tooltip in the page. The first line creates the HTML fragment and appends it to the end of the elements inside the body tag. The second line retrieves the DIV element we just inserted, hides it, and then loads the HTML fragment that represents our tooltip. Finally, to get content into the tooltip, we use the HTML property.  I created a class called toolTipCenter that is the location where the tooltip content will go.  To insert content for the tooltip, all you need to do is:</p>
+<p>$(‘#tooltip .toolTipCenter’).html(‘Tooltip Content Here.’);</p>
+<p><a href="//11011.net/software/vspaste"></a></p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/jquery-retrieving-html-fragments/" data-id="ck3vvptf500fis0hia6rslfgt" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery/">jQuery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tooltip/">tooltip</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-jquery-events" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/jquery-events/">jQuery - Events</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/jquery-events/" class="article-date"><time datetime="2013-11-06T20:45:24.000Z" itemprop="datePublished">2013-11-06</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/jQuery/">jQuery</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>As well as being able to change the class associated with an element or a set of elements on a screen, jQuery also allows you to fire events.  You might want to do this, for example, if you want to simulate the clicking of a button. Of course, if you are going to fire an event, you’ll probably need some sort of event listener setup to handle that. We will address firing events first since it has the least amount of code needed. All you need to do is select the element or elements using the selectors we’ve already discussed and then call the method trigger(‘eventname’). So, to click a button, your code might look something like this:</p>
+<p>$(“#main”).trigger(‘click’);</p>
+<p>Since the click method is so common, jQuery has a shortcut method, click(), that does the same thing, so we can rewrite our code as:</p>
+<p>$(“#main”).click();</p>
+<p>But if we click a button, we probably want some JavaScript to execute because of it.  This is where jQuery makes life much easier for the JavaScript programmer. If you are familiar with JavaScript you are probably most familiar with attaching code to your HTML elements by using the on____ attributes.  To attach a method to the click event of the anchor tag you might write something like:</p>
+<p><a href="#" onclick="method();">text</a></p>
+<p><a href="//11011.net/software/vspaste"></a>If you were particularly clever, you might do some sort of event binding using code:</p>
+<p>document.getElementById(‘anchorId’).onclick = functionName;</p>
+<p>But even doing that we are left with the ugly potential of having already assigned a function to the element, in which case this code would overwrite it. In fact, if you’ve been coding JavaScript for a while, you are probably quite familiar with the problem of needing to add an event handler to the onload event of the document only to find out that doing so wiped out some critical JavaScript code that was already assigned to that event. You’ll be happy to know that assigning code to an event in jQuery is both simple and non-destructive.</p>
+<p>$(‘#anchorId’).bind(‘click’,function()<br>{ //code goes here })</p>
+<p>This code would normally be placed inside the ready handler that you’ve seen in previous posts so that your code would ultimately look something like this:</p>
+<p>$(function() {<br>    $(‘#anchorId’).bind(‘click’, function()<br>    { //code goes here })<br>});</p>
+<p><a href="//11011.net/software/vspaste"></a>And since the click event is so common, we can replace bind(‘click’,function…) with click(function()….)</p>
+<p>$(function() {<br>    $(‘#anchorId’).click( function()<br>    { //code goes here })<br>});</p>
+<p><a href="//11011.net/software/vspaste"></a>And if someone decides to attach another method to the same click event, both methods will run.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/jquery-events/" data-id="ck3vvptev00fas0his7ip5sei" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/events/">events</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery/">jQuery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-aspnet-mvc-controller-to-view" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/asp-net-mvc-controller-to-view/">ASP.NET MVC - Controller to View</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/asp-net-mvc-controller-to-view/" class="article-date"><time datetime="2013-10-30T19:04:38.000Z" itemprop="datePublished">2013-10-30</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET-MVC/">ASP.NET MVC</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/04/ka-vol1-100.jpg" alt="ka_vol1_100"> A couple of weeks ago we looked at ASP.NET MVC routing in the MVC framework.  The routing controls which method in which controller gets called.</p>
+<p>The obvious next question is, how do we get from the controller to the view?</p>
+<p>First, we need to look at the general layout of our Views.</p>
+<p>If you open up the sample project that we created, you’ll see that there are a few directories that have been created.  The one we want to take a look at today is the View directory.</p>
+<p>You’ll see that under each View directory is a directory that has the same name as each of the controllers in the Controller directory as well as a directory named ‘Shared’ that has nothing to do with MVC directly.  Don’t worry about figuring that one out right now.</p>
+<p>Under each of the directories that map to the controller, you’ll see that there is an ASPX file that maps to each of the methods in the controllers, or is otherwise called from those controllers.</p>
+<p>The easiest way to get from the Controller action to the View it corresponds to is to return View() from that action, as in:</p>
+<p>public ActionResult About()<br>{<br>    return View();<br>}</p>
+<p><a href="//11011.net/software/vspaste"></a>This would then call ~/Home/About</p>
+<p>But what if the new page needs to have data sent along to it?</p>
+<p>In this case, you can assign the data to the ViewData property.  The ViewData property works a lot like a Session object in that it is keyed.</p>
+<p>So, to pass data you would use</p>
+<p>ViewData[“Key”] = objectData;</p>
+<p><a href="//11011.net/software/vspaste"></a>You can see that the sample project does this in the HomeController.Index method.</p>
+<p>public ActionResult Index()<br>{<br>    ViewData[“Message”] = “Welcome to ASP.NET MVC!”;<br>    return View();<br>}</p>
+<p><a href="//11011.net/software/vspaste"></a>And you can see that the Index.aspx file picks it up later:</p>
+<pre><code>&lt;h2&gt;**_&lt;%_****_= Html.Encode(ViewData\[&quot;Message&quot;\])_** **_%&gt;_**&lt;/h2&gt;
+&lt;p&gt; To learn more about ASP.NET MVC visit 
+    &lt;a href=&quot;http://asp.net/mvc&quot; title=&quot;ASP.NET MVC Website&quot;&gt; http://asp.net/mvc&lt;/a&gt;.
+&lt;/p&gt; 
+</code></pre><p>Returning View() is not the only way of specifying the View we want to display from the Controller.  You can also return Redirect(), RedirectAction(), RedirectToRoute().</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/asp-net-mvc-controller-to-view/" data-id="ck3vvpt4b004fs0hi5ieb74vr" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MVC/">MVC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/controller/">controller</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/view/">view</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-csharp-enum" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/csharp-enum/">CSharp Enum</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/csharp-enum/" class="article-date"><time datetime="2013-10-02T16:57:23.000Z" itemprop="datePublished">2013-10-02</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/c/">c#</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2008/11/tp-vol4-002.jpg" alt="tp_vol4_002"> It is often tempting when working with your code to test against static values in your system.  For example:</p>
+<p>if (i == 1)<br>{<br>    // do something }<br>else if (i == 2)<br>{<br>    // do something }</p>
+<p>Or, if you are a bit more clever, you use a switch statement instead.  But neither of these methods tell you what 1 and 2 actually represent. Now, you could use constants:</p>
+<p>const int Thing1 = 1;<br>const int Thing2 = 2;</p>
+<p>var i = 1;<br>if (i == Thing1)<br>{<br>    // do something }<br>else if (i == Thing2)<br>{<br>    // do something }</p>
+<p>Which goes a bit further.  But if I need to use Thing1 and Thing2 in other sections of my code, I’m kind of stuck.  Oh, I guess one could use a class with properties and evaluate against them, but there is a better way. Enums. When you have a set of items that are all related to each other, you can create an enumeration (enum) to represent them as a set.  There are several of these built into the .NET Framework.  One of the most common is the DialogResult enum that holds all of the return values for a DialogBox. We can create our own by either placing code similar to the following in an existing file or in a new code file:</p>
+<p>enum Thing {<br>    One,<br>    Two<br>}</p>
+<p>Which can then be used in our code as:</p>
+<p>switch (i)<br>{<br>    case Thing.One:<br>        // do something break;<br>    case Thing.Two:<br>        // do something break;<br>}</p>
+<p>In the example above One represents zero and Two represents the value of one.  But it really doesn’t matter because we are always going to reference the value by name. You are not stuck with having to have Thing.One be one.  You can assign a value to it or any of the other values.</p>
+<p>enum Thing {<br>    One =2,<br>    Two<br>}</p>
+<p>In the code above, One equals the value 2 and Two equals 3.  Each item in the list is automatically incremented by one unless it is overwritten with a value. In the case of items that need to be bit representations you can do something like:</p>
+<p>enum Thing {<br>    BitOne = 1,<br>    BitTwo = 2,<br>    BitThree = 4<br>}</p>
+<p>And then your code can evaluate them using bit wise and statements:</p>
+<p>if ((i &amp; Thing.BitTwo) &gt; 0)<br>{<br>}</p>
+<p>  This will be true if i is equal to 2, 3, 6, or 7.  The expression above is a lot easier to evaluate than “if i is equal to 2, 3, 6 or 7.” Aside from the practical ease of coding that enums provide, it also makes the code much clearer.  Which would you rather do?  Lookup what the return value for OK is or just have intellisense provide it to you from the DialogResult enum?  Obviously, having it provided by its name is much easier.  You should provide the same benefit to any future developer who works on YOUR code.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/csharp-enum/" data-id="ck3vvpt6d006ls0hiero154ik" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-jquery-expandcollapse-using-head-tags" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/jquery-expand-collapse-using-head-tags/">jQuery Expand/Collapse Using Head Tags</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/jquery-expand-collapse-using-head-tags/" class="article-date"><time datetime="2013-09-25T16:05:40.000Z" itemprop="datePublished">2013-09-25</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/jQuery/">jQuery</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/10/animal010.jpg" alt="animal-010" title="animal-010"></p>
+<p>I’ve spent a good chunk of the last two days working on an interesting project for one of my clients that I think the rest of the jQuery community could benefit from.</p>
+<p>The task started when my client came to me with an existing script that was being used in a DotNetNuke system to expand and collapse content under head tags that was produced by an article editing system similar to the Text/HTML module.</p>
+<p>The problem with the way the author had created the system is that the content author would have had to add DIV tags to the content and if any additional sections were added to the content the jQuery and CSS code would have to be modified.</p>
+<p>The question that was posed to me was, “Is there any way of protecting the code that is relevant to the jQuery so that the content authors can’t mess it up?”  My response was basically, No, but if the jQuery was written correctly, that shouldn’t be an issue.  You should be able to have the jQuery add the additional DIV tags for you so that the content authors can just concentrate on writing the article.</p>
+<p>Of course, he got all excited about that possibility along with the fact that he’d be able to re-use the code.</p>
+<p>One final note.  We decided to use H4, H5, and H6 tags so that if the user didn’t want the expand collapse functionality for a particular section they could use H1, H2, and H3 for that purpose.</p>
+<p>The first thing we needed to do was place a DIV tag around the content we want to have impacted by our code.  I’m using the class HEC to indicate this.</p>
+<p>In DotNetNuke, there are a bunch of DIV tags that are ultimately surrounding the first tag I want to impact and some other extraneous DIV tags at the bottom that got in the way of the presentation, so rather than creating a selector that looked for the content within the HEC class, I’m looking for the content that is within the parent of the H4 element that is within the HEC class.</p>
+<p>Since the page may have  multiple sections of HEC classes, I iterate through each parent that is found and start a search and replace to add additional DIV tags to the markup.  This allows me to place a DIV around the content that is between each H4 tag and another DIV around the group of H4 and DIV tags that go together.</p>
+<p>I also place open DIV tags at the top of the HTML and closing DIV tags at the end so that we end up with HTML that is as valid as what we started out with.</p>
+<p>For subsections, I grab the first sibling of each H4 tag (and ultimately H5 tag) and change its HTML as well, similar to how I changed the parent elements.</p>
+<p>You’ll notice by looking at the code below that the DIV tags are classed so that you can apply a stylesheet to them.</p>
+<p>The last bit of information is that I insert instructional information and an expand-all and collapse-all button/link prior to the first H4 tag.</p>
+<p>All of this work allows the content authors to write using a regular WYSIWYG HTML editor without having to worry about adding none visible markup to make it display correctly.</p>
+<p>Here’s a snippet of the source:</p>
+<p>$(function() {<br>    var strHeader = “<div class="showHideControls"><span class="showAll showHide">Expand All</span> <span class="hideAll showHide">Collapse All</span></div>“ +<br>        “<div class="instructions-arrow">Click arrow to view step details</div>“;<br>    var strHtml;<br>    $(“.HEC h4”).parent().each(function() {<br>        strHtml = $(this).html();<br>        strHtml = strHtml.replace(/&lt;\/h4&gt;/gi, “<div class="content">“);<br>        strHtml = strHtml.replace(/&lt;h4/gi, “</div><div class="accordian">&lt;h4”);<br>        strHtml = “<div><div>“ + strHtml + “</div></div>“;<br>        $(this).html(strHtml);<br>        $(“h4”).bind(“click”, function(event) {<br>            $(this).next().slideToggle(“slow”);<br>            return false;<br>        });<br>    });</div></p>
+<p>// to implement the sub sections, you would select the<br>// div that is next() to the header and apply similar<br>// search and replace logic</p>
+<p>// start in collapsed mode<br> $(“.HEC .content”).hide();</p>
+<pre><code>$(&quot;.HEC .accordian:first&quot;).before(strHeader);
+$(&quot;.HEC .showAll&quot;).bind(&quot;click&quot;, function() {
+    $(&quot;.HEC .content&quot;).show();
+    // other .show()s go here for the subsections
+});
+$(&quot;.HEC .hideAll&quot;).bind(&quot;click&quot;, function() {
+    $(&quot;.HEC .content&quot;).hide();
+    // other hide()s go here for the subsections
+
+});
+</code></pre><p>});</p>
+<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/jquery-expand-collapse-using-head-tags/" data-id="ck3vvpteg00ews0hi7ww62dws" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/collapse/">collapse</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dotnetnuke/">dotnetnuke</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/expand/">expand</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/">html</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery/">jQuery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-do-programmers-even-need-a-degree" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/do-programmers-even-need-a-degree/">Do Programmers even NEED a degree?</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/do-programmers-even-need-a-degree/" class="article-date"><time datetime="2013-09-11T15:32:04.000Z" itemprop="datePublished">2013-09-11</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Opinion/">Opinion</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Well, a post that is no longer available really got  things going in blog-o-sphere.  Shoot!  Even <a href="//www.joelonsoftware.com/items/2008/01/08.html">Joel Spolsky</a> got involved.  I saw another post, but I’m sorry to say, I can’t find it right now. The original article put forth the idea that we are teaching the right stuff in our undergraduate Computer science degree programs. Joel’s article suggested that what we really need is a bachelor of fine arts program for programmers.  That programming, and computer science are really two entirely different disciplines. I think Joel’s onto something and his solution is probably the closest to what our current educational system can handle.  But, I have another solution to the problem that goes further. Why get a degree at all.  Most of you reading this post know as well as I do that a good 80% of what most programmers learn, they didn’t learn from college.  Let’s face reality here.  First, any degree program is, at best, 20 years behind.  It’s just a fact.  Ours is not the only industry facing this reality.  Second, the really good programmers are already doing what these schools are trying to teach. Joel suggest that we have people from the industry come in and teach this BA course work he’s suggesting.  There are several major problem with this.  First, most (not all) of the really good programmers can’t teach.  Some could with some training, but the school isn’t going to train them.  And those who can teach, probably don’t know the recent material.  There ARE exceptions.  My point here is that the exceptions won’t fill the need. But, what would happen if we went back to a really old way of doing things?  It worked.  We are almost doing some form of this already, mostly after graduation.  What if we just skipped the programming degree completely. I’ve been in this field long enough (20+ years) to know that most of the really good programmers got into our field through some back door.  I was a camp and recreation major that converted to programming via DePaul’s career change program.  A hoop I jumped through simply so I could get the first job.  At least 80% of what I was taught I was already doing as I had experimented with Basic, Pascal, and C. I know another guy who dropped out of school his sophomore year because he already had the job he was going to school to get. And don’t even get me started on certifications.  Let’s say we stop testing knowledge and start testing aptitude.  The aptitude test I took nearly knocked me out of the DuPaul program.  At the end of the program, the main prof told me i was the best natural talent he’d seen come through the program.  Wonder if he knows he almost never saw me? Let’s face it, what we as programmers need to know to do our jobs effectively can’t be taught.  And most of what can be taught could be taught on the job. So, here’s my recommendation.  Why don’t we go back to using the apprentice system?  This allows a good senior programmer to get a feel for what kind of programmer the new guy is going to be.  It would help the new programmer find out really quickly if this is what he really wants to do with his life.  He give the formal training the new programmer needs. Unless you’re just starting out, you know that most of what you learn, you learn from experience.  Why not just admit that and stop trying to fit programming into a degreed program that largely doesn’t work for our industry? See also:</p>
+<ul>
+<li><a href="//www.cus-productions.com/index.php/2008/01/08/computer-science-education-where-are-the-software-engineers-of-tomorrow/">http://www.cus-productions.com/index.php/2008/01/08/computer-science-education-where-are-the-software-engineers-of-tomorrow/</a></li>
+<li><a href="//blogs.msdn.com/alfredth/archive/2008/01/09/a-fine-arts-degree-in-computer-programming.aspx">http://blogs.msdn.com/alfredth/archive/2008/01/09/a-fine-arts-degree-in-computer-programming.aspx</a></li>
+<li><a href="//blogs.msdn.com/steverowe/archive/2008/01/09/do-we-need-a-new-kind-of-cs-degree.aspx">http://blogs.msdn.com/steverowe/archive/2008/01/09/do-we-need-a-new-kind-of-cs-degree.aspx</a></li>
+<li><a href="//benramsey.com/archives/php-programmer-need-computer-science-degree/">http://benramsey.com/archives/php-programmer-need-computer-science-degree/</a></li>
+<li><a href="//codebetter.com/blogs/jeremy.miller/archive/2006/07/19/147495.aspx">http://codebetter.com/blogs/jeremy.miller/archive/2006/07/19/147495.aspx</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/do-programmers-even-need-a-degree/" data-id="ck3vvpt8f008is0hiy0jjm3u6" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/education/">education</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programming/">programming</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-jquery-json-and-aspnet" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/jquery-json-and-asp-net/">jQuery, JSON, and ASP.NET</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/jquery-json-and-asp-net/" class="article-date"><time datetime="2013-09-04T14:42:49.000Z" itemprop="datePublished">2013-09-04</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/jQuery/">jQuery</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/01/g03a0003.jpg" alt="G03A0003"> A few months ago, I demonstrated <a href="/2008/08/04/aspnet-ajax-using-json-heres-how/">how to use ASP.NET’s JSON capabilities</a>.  Lately, I’ve been demonstrating how to use jQuery.  Both use a considerable amount of JavaScript so if there is some way we could eliminate or reduce the amount of code we had to load, performance would naturally increase. Fortunately, there is.  <strong>What stays the same</strong> You are still going to create a JSON enabled web service just like you did in the earlier article by giving the web service class the attribute, “ScriptService.”  You remember, this is what enables the web service to return JSON. <strong>What is different</strong> You will not, however, be including this block in your ASPX file:</p>
+<pre><code>&lt;asp:ScriptManager ID=&quot;ScriptManager1&quot; runat=&quot;server&quot;&gt;
+  &lt;Services&gt;
+    &lt;asp:ServiceReference path=&quot;~/WebService.asmx&quot; /&gt;
+  &lt;/Services&gt;
+&lt;/asp:ScriptManager&gt; 
+</code></pre><p><a href="//11011.net/software/vspaste"></a>You might still need the ScriptManager if you are using MS-AJAX on your page, but if you don’t have any other MS-AJAX on your page, you can remove the entire block of code. In the jQuery for your page, your code will look something like this:</p>
+<p>$.ajax({<br>    type: “POST”,<br>    url: “WebService.asmx/Add”,<br>    data: “{a:1,b:4}”,<br>    contentType: “application/json; charset=utf-8”,<br>    dataType: “json”,<br>    success: function(result) {<br>        alert(result.d);<br>    }<br>});</p>
+<p>You can get the full documentation for the $.ajax() global method here: <a href="//docs.jquery.com/Ajax/jQuery.ajax" title="http://docs.jquery.com/Ajax/jQuery.ajax">http://docs.jquery.com/Ajax/jQuery.ajax</a> A few things that need to be pointed out here:</p>
+<ol>
+<li>For this to work, type must be “POST.”</li>
+<li>url: is the name of the asmx file followed by a slash followed by the name of the web service method you want to call.</li>
+<li>data: is a JSON name/value pair list of all the parameters in the form of {parametername: parameterValue[,…]} if there are no parameter just use “{}”.  Don’t use “” or your code will not work.</li>
+<li>contentType and dataType tell jQuery we are working with JSON.</li>
+<li>The function pointed to by success will be called when the request has finished successfully, it will pass in a variable of type json.  The d property holds the return value.</li>
+<li><p>If the return value is a structure or class d will have properties hanging off of it specifying</p>
+</li>
+<li><p>type information of the structure or class</p>
+</li>
+<li>property for each property/variable in the structure or class.</li>
+</ol>
+<p>You could take most of that AJAX call and turn it into some sort of helper function, but even if you don’t the amount of code you will end up loading using this method is significantly less than what you would load using both together.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/jquery-json-and-asp-net/" data-id="ck3vvptez00fds0hiiqwxbdw7" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery/">jQuery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/json/">json</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-vb-net-hide-module-name" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/vb-net-hide-module-name/">VB.NET Hide Module Name</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/vb-net-hide-module-name/" class="article-date"><time datetime="2013-08-28T13:11:12.000Z" itemprop="datePublished">2013-08-28</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/VB-NET/">VB.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/06/misc_vol3_064.jpg" alt="misc_vol3_064" title="misc_vol3_064"> Here’s a quick tip for those of you still using modules in your VB.NET applications.</p>
+<p>If you create a module and don’t want to see the module name in your intellisense, you can hide it with an attribute.  This can be extremely useful when you have a lot of modules that would show up in your intellisense code and they don’t have names that conflict with each other.</p>
+<p><strong><em>&lt;HideModuleName()&gt;</em></strong> _<br>Module Module1<br>    Sub NewFunction()<br>        Return<br>    End Sub</p>
+<p>End Module </p>
+<p><a href="//11011.net/software/vspaste"></a></p>
+<p>You can still reference NewFunction() via Module1</p>
+<p>Module1.NewFunction()</p>
+<p><a href="//11011.net/software/vspaste"></a>But Module1 will no longer show in intellisense.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/vb-net-hide-module-name/" data-id="ck3vvptrb00q2s0hi2dv8ady5" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hide/">hide</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/modules/">modules</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vb-net-attributes/">vb.net attributes</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-cms-vs-code-it-yourself" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/cms-vs-code-it-yourself/">CMS vs Code It Yourself</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/cms-vs-code-it-yourself/" class="article-date"><time datetime="2013-08-14T12:42:39.000Z" itemprop="datePublished">2013-08-14</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Opinion/">Opinion</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/04/trav064.jpg" alt="trav-064" title="trav-064"> This post has been percolating in my brain for several weeks now and I think it’s finally at the point where it’s “done.”  Well, see…</p>
+<p>The problem area is this.  At what point and under what conditions would you write the code yourself vs. using a content management system?  And if you were to use a content management system, which one should you use and why?</p>
+<p>Along the way I’ll tell you what my current choices are, but more importantly, I’ll tell you what my thought process is.  So even if you decide to use different tools than I do, you can ask the same questions to select the tools you have decided to use.</p>
+<p><strong>My Primary Tools</strong></p>
+<p>I think in order to give the rest of this post some context, it makes the most sense to tell you what my current tools are.</p>
+<ol>
+<li>WordPress<ol>
+<li>Linux/Apache</li>
+<li>Windows/Apache</li>
+<li>Windows/IIS</li>
+</ol>
+</li>
+<li>DotNetNuke</li>
+<li>Write it myself.</li>
+</ol>
+<p><strong>Advantages of WordPress</strong></p>
+<p>I’ve actually had people ask me why I use WordPress for my .NET blog instead of some .NET blog engine.  The primary reason is, it has been around longer so it has more plug-ins and more themes available than anything I can find for .NET.</p>
+<p>What this means to me is that I can achieve a lot of goals by simply searching for an appropriate plug-in.</p>
+<p>Just by way of example, here are some of the plug-ins I’ve used.</p>
+<ul>
+<li>Plug-in to allow me to change the Title tag for each page from the “standard” title.</li>
+<li>Plug-in to create a forum on my site</li>
+<li>Plug-in to allow pages to redirect to other pages.</li>
+<li>Plug-in to automatically cross-link my post</li>
+<li>Plug-in to automatically cross-link my site with other sites (not using that here… yet)</li>
+<li>Plug-in to run a slide show</li>
+<li>Plug-in to keep out spam</li>
+<li>Plug-in for forms creation.</li>
+<li>Plug-in for podcasting.</li>
+<li>Plug-in for increased role-based access to just about every imaginable module in WordPress.</li>
+</ul>
+<p>So you have the ability to easily create anything from a blog to a brochure site to e-commerce (yes, there are e-commerce-related plugins) without having to write any code.</p>
+<p>While there are several themes that you can pay for, there are so many themes that are free that I’ve never had to buy one of the “premium” themes for any of my sites.  It does help that I can tweak the themes.  But they generally work out of the box.</p>
+<p>Finally, I find that my clients find WordPress sites easier to manage than DotNetNuke.</p>
+<p><strong>Disadvantages of WordPress</strong></p>
+<p>You are limited in how flexible your UI is compared to my other two options.  But I rarely find this to be a problem.</p>
+<p>I don’t consider myself a PHP programmer, so I can’t create any new plug-ins I might need.  I can hack the PHP, and anyone who’s familiar with ASP.NET probably could at least hack PHP as well, so don’t let the fact that you don’t know PHP keep you from a PHP solution.</p>
+<p>It also doesn’t run as well under Windows as it does under Linux.  If all you know is Windows, this might be an issue for you.</p>
+<p><strong>Advantages of DotNetNuke</strong></p>
+<p>There are two main advantages of DotNetNuke over WordPress that would make me choose it over WordPress in most situations.  First, I know .NET, so if I need to write my own module, I can do that.  Second, it allows much greater freedom in HOW things are presented on the page.</p>
+<p>There are also quite a few skins available for DotNetNuke, however most of them you have to pay for and I’ve never put up a site yet that I didn’t buy a theme for.</p>
+<p><strong>Disadvantages of DotNetNuke</strong></p>
+<p>There are two huge disadvantages to DotNetNuke as well.  The first is that it is harder for my clients to manage.  In fact, while managing a DotNetNuke site is easier than having to change code, I would suggest that you not even tell the end user that they can manage the site.  You might expose specific pages to them, but leave the overall administration to people who understand DNN.</p>
+<p>Second, the level of granularity of role based permissions is less than the plug-in for WordPress gives me, and I’ve yet to find a module for DotNetNuke that gives me the same level of granularity.</p>
+<p>Finally, because you can mix and match skins and containers in such a way that it is difficult for the skin designers to test every possible mix, I find that every skin I’ve used has needed to be tweaked.  Unlike the WordPress themes that just work.</p>
+<p><strong>Write it Yourself</strong></p>
+<p>Of course, the advantage to writing all the code yourself is that you have complete control.  The disadvantage is that you have to write everything yourself, including the skin.</p>
+<p><strong>A Word about Skins and Themes</strong></p>
+<p>As recent as 3 years ago, I used to have the presentation layer designed for me by a designer.  This process typically cost between $5,000 and $10,000 depending on how many iterations we went through.</p>
+<p>However, I’ve come to the realization that design matters very little.  Yes, the site has to look good.  Yes, it has to be usable.  But it doesn’t have to be unique from every other design.  In fact, with the number of sites available today, I doubt that even a unique design is really that unique.</p>
+<p>So save yourself a lot of time and money and just go grab a design from one of the many sites that specialize in skins or themes for sites.  Even if you have to modify it a bit, you’ll be much further ahead of the game.</p>
+<p>The flexibility that DotNetNuke gives you comes at a pretty high cost both in terms of finding Skins that work reliably right out of the box and in terms of training users to use the site.  So just because DNN is more flexible does not necessarily mean it is “better.”</p>
+<p><strong>The Questions I Ask</strong></p>
+<p>What are the requirements of the site?</p>
+<p>If I have a requirement that can only be met by one of the platforms, that pretty much ends the list of questions.  If I can meet all the requirements with WordPress, that will probably be my choice of platform unless a future question indicates other wise.  My second choice would be DotNetNuke.</p>
+<p>Is there any possibility of a future requirement that would lead me to another platform?</p>
+<p>We want to try our best not to lock ourselves out of expansion.  At the same time we don’t want to provide more room for growth than will ever be needed.</p>
+<p>Will the requirements for this project require me to write special code?</p>
+<p>If I can’t find a plug-in or module that does what I need it to do, then I’m going to automatically be left with two choices.  Write it myself or use DotNetNuke and write a module.</p>
+<p>Does the client want to be able to maintain the site himself?</p>
+<p>If the answer to this is “yes” I’m going to lean very heavily toward WordPress as my first choice and DotNetNuke as my second.</p>
+<p>What servers are available to install this on?</p>
+<p>If you don’t have a Linux server, you are kind of stuck.  This isn’t true in my case, but for some of my clients, it is a factor.  It doesn’t completely rule out using WordPress but it does discourage from going in that direction.</p>
+<p>Is Search Engine Optimization a Factor?</p>
+<p>For most people it is.  Again, this favors WordPress.</p>
+<p><strong>When Would You Just Write It Yourself?</strong></p>
+<p>At this point, hardly ever.  Sometimes the choice is made for you. “I want you to write this from scratch using ASP.NET.”  Well, OK, if you’re willing to pay for it…</p>
+<p>But it really seems silly to have to write code I know I can get for next to nothing.</p>
+<p>You may not have the same selection of tools that I do.  I wish I had some time to look at a few others.  But you should be asking similar questions about the project at hand as you decide how you are going to achieve the goals of the project.  “If all you have is a hammer, everything looks like a nail.”</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/cms-vs-code-it-yourself/" data-id="ck3vvpt5o005ss0hi3acc27n2" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WordPress/">WordPress</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/cms/">cms</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dotnetnuke/">dotnetnuke</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <div id="page-nav">
+    <nav><ul class="pagination"><li><a class="page-prev" rel="prev" href="/page/20/"><i class="fa fa-chevron-left"></i> Prev</a></li><li><a class="page-number" href="/">1</a></li><li class="disabled"><span class="page-space">&hellip;</span></li><li><a class="page-number" href="/page/19/">19</a></li><li><a class="page-number" href="/page/20/">20</a></li><li class="active"><span class="page-number">21</span></li><li><a class="page-number" href="/page/22/">22</a></li><li><a class="page-number" href="/page/23/">23</a></li><li class="disabled"><span class="page-space">&hellip;</span></li><li><a class="page-number" href="/page/31/">31</a></li><li><a class="page-next" rel="next" href="/page/22/">Next <i class="fa fa-chevron-right"></i></a></li></ul></nav>
+  </div>
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/what-if-unit-testing-wasn’t-necessary-notdd/">What If Unit Testing Wasn’t Necessary? #noTDD</a>
+        </li>
+      
+        <li>
+          <a href="/linkedin-tips-for-programmers/">LinkedIn Tips For Programmers</a>
+        </li>
+      
+        <li>
+          <a href="/typescript-basics-for-angular-developers/">TypeScript Basics for Angular Developers</a>
+        </li>
+      
+        <li>
+          <a href="/the-tyranny-of-emotions/">The Tyranny of Emotions</a>
+        </li>
+      
+        <li>
+          <a href="/where-to-store-angular-configurations/">Where To Store Angular Configurations</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

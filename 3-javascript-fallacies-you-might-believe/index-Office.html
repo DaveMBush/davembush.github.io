@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>3 JavaScript Fallacies You Might Believe | Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="You know, you think the whole world knows something is true until you hear someone people respect say something really dumb.  The three JavaScript fallacies I have here are actual statements I’ve hear">
+<meta name="keywords" content="angular,javascript,performance,react.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="3 JavaScript Fallacies You Might Believe">
+<meta property="og:url" content="http://davembush.github.com/3-javascript-fallacies-you-might-believe/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:description" content="You know, you think the whole world knows something is true until you hear someone people respect say something really dumb.  The three JavaScript fallacies I have here are actual statements I’ve hear">
+<meta property="og:locale" content="English">
+<meta property="og:image" content="http://davembush.github.com/uploads/2017/03/image-2.png">
+<meta property="og:updated_time" content="2019-01-05T19:06:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="3 JavaScript Fallacies You Might Believe">
+<meta name="twitter:description" content="You know, you think the whole world knows something is true until you hear someone people respect say something really dumb.  The three JavaScript fallacies I have here are actual statements I’ve hear">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2017/03/image-2.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-3-javascript-fallacies-you-might-believe" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      3 JavaScript Fallacies You Might Believe
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/3-javascript-fallacies-you-might-believe/" class="article-date"><time datetime="2017-03-14T11:30:00.000Z" itemprop="datePublished">2017-03-14</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Javascript/">Javascript</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>You know, you think the whole world knows something is true until you hear someone people respect say something really dumb.  The three JavaScript fallacies I have here are actual statements I’ve heard over the last week during a discussion about Angular2 and Rect.  What makes these fallacies particularly interesting is that they sound plausible.  In fact, there are time when they are even true.  But in the larger context of a JavaScript application they are nearly always false.</p>
+<p>So, here are 3 JavaScript Fallacies you may still believe that you may want to reevaluate.</p>
+<figure><img src="/uploads/2017/03/image-2.png" alt="" title="3 JavaScript Fallacies You Might Believe"><figcaption>Photo credit: <a href="//www.flickr.com/photos/barkbud/4341791754/">bark</a> via <a href="//visualhunt.com/re/8dc251">VisualHunt</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a></figcaption></figure>
+
+<a id="more"></a>
+<h2 id="Direct-Access-to-the-DOM-is-Faster-than-using-a-Virtual-DOM"><a href="#Direct-Access-to-the-DOM-is-Faster-than-using-a-Virtual-DOM" class="headerlink" title="Direct Access to the DOM is Faster than using a Virtual DOM"></a>Direct Access to the DOM is Faster than using a Virtual DOM</h2><p>OK. I will grant that if you only ever want to change one thing on the screen at a time, yes accessing the DOM directly from JavaScript is probably going to be faster than going through some kind of Virtual DOM layer as is common in React, Angular2 and several other libraries and frameworks that are available today.</p>
+<p>But, the fact is, that’s not how most code works. If you are writing this kind of application and you are using a library or framework that uses a virtual DOM layer, something is wrong. I would argue you’ve probably chosen the wrong library for what you are trying to do.</p>
+<p>But, let’s assume that you are writing a typical SPA application that doesn’t just update one area of the screen. In this case, the fastest way to make this update is all at once. One call to the DOM from JavaScript. I’ve written before about how <a href="/javascript-performance-tweaks/">slow accessing the DOM is</a>. And for all the performance enhancements since I wrote that article, accessing the DOM is still one of the slowest things you can do. So, a framework that lets you write your code in a way similar to how you would write to the DOM directly, but lets you do this in a way that doesn’t actually write to the DOM until the last minute is FASTER than writing to the DOM directly.</p>
+<h2 id="Immutable-Objects-are-Necessarily-Slower-than-Mutable-Objects"><a href="#Immutable-Objects-are-Necessarily-Slower-than-Mutable-Objects" class="headerlink" title="Immutable Objects are Necessarily Slower than Mutable Objects"></a>Immutable Objects are Necessarily Slower than Mutable Objects</h2><p>Functional JavaScript programming has become the latest cool new buzzword in the JavaScript community, for a lot of good reasons, but one main concept that comes along for the ride is the idea of making all of our object immutable. This means, for example, that if I want to modify an array, instead of changing the current array, I would create a new array and copy the elements and the new element into it. No more push.</p>
+<p>Similarly, for a regular object that isn’t a list, we would create a new object and copy the existing elements into it and then overwrite the items that have changed.</p>
+<h3 id="Why"><a href="#Why" class="headerlink" title="Why?"></a>Why?</h3><p>Now, why would we want to go to all of this work? It does seem like it would be faster to just modify the existing object. Right?</p>
+<p>But you see, there is this little thing called “change detection” that more than makes up for all of this overhead I just described.</p>
+<p>In most of our applications, at some point we want to know if an object has changed, right? If we can’t rely on the fact that we have a new object, we have to do a deep comparison of the two objects until we’ve determined that there is a difference, or we’ve been through the whole list and verified that the nothing has changed.</p>
+<p>Once we can rely on objects being immutable, we can use the equals operator (==, or ===) to see if the object has changed. I’m sure you can see that this takes much less time than evaluating an entire object tree, even if you object only has two properties in it that need to be compared.</p>
+<h3 id="Real-Problem"><a href="#Real-Problem" class="headerlink" title="Real Problem?"></a>Real Problem?</h3><p>But let’s step back and look at the bigger picture. In most of the code that I write, what we are really talking about is immutable arrays. Yes there are other non-array places where we would use immutable objects, but my guess is that immutable objects impacts 80% of my code. Get a list of records from the database for example.</p>
+<p>The fact of the matter is, every time I access the database, I get a new array back anyhow. Even in the case of retrieving a single record, I still get a new object back.</p>
+<p>If I need to delete an element from an array, here again, I’ll end up creating a new object.</p>
+<p>In fact, except modifying a row, or adding a record to the end of a list, just about everything I tend to do with an array ends up being an immutable operation anyhow. By making everything immutable, we are forcing the areas that we aren’t already implementing immutability to be immutable. The point is, in terms of performance the net is an obvious gain both in terms of performance and in terms of consistency.</p>
+<p>And, going back to the issue of rendering our data into the DOM, because the change detection is faster, we can determine that a particular component doesn’t need to have the DOM updated quicker rather than re-rendering the entire DOM.</p>
+<h2 id="Backwards-Compatibility-means-I-can’t-upgrade-my-Development-Environment"><a href="#Backwards-Compatibility-means-I-can’t-upgrade-my-Development-Environment" class="headerlink" title="Backwards Compatibility means I can’t upgrade my Development Environment"></a>Backwards Compatibility means I can’t upgrade my Development Environment</h2><p>Continuing on, remember the conversation I’m referencing was about React and Angular2. And the guy who was making these statements about performance was asserting that he couldn’t upgrade his React environment to use the latest and greatest tool chain because he had to support older browsers. He specifically stated IE6. Now, knowing the site he’s talking about, I doubt we make any money at all from people who run IE6. But, let’s just assume for a second that we do.</p>
+<h3 id="So-what-you’re-telling-me-is…"><a href="#So-what-you’re-telling-me-is…" class="headerlink" title="So, what you’re telling me is…"></a>So, what you’re telling me is…</h3><p>… that you are willing to let performance suffer for 99% of your very large customer based because you need to support the 1% (I’m being generous here) of the people who have refused to upgrade and probably aren’t producing any revenue for the company? Maybe I’m missing something, but this seems rather short-sighted. That, or maybe you just don’t know that the new features in the newer browsers allow you to not just write better JavaScript but also allow you to do things without JavaScript that perform better. If you are really interested in writing fast web sites, you should be moving to the latest and greatest tool chain as often as is humanly possible.</p>
+<h3 id="Bugs-and-Security-Risk"><a href="#Bugs-and-Security-Risk" class="headerlink" title="Bugs and Security Risk"></a>Bugs and Security Risk</h3><p>Just this last week I saw a study that said that over a third of the web sites on the Internet were running code that left them venerable to security risk. That is, the code they were running had known security risk. By not upgrading your tools for public facing sites, you are leaving your company at risk. When your site is compromised, do you want to be the one who has to explain to your boss that it is because you refused to upgrade your tools? I sure don’t.</p>
+<h3 id="But-what-about-the-old-browsers"><a href="#But-what-about-the-old-browsers" class="headerlink" title="But what about the old browsers?"></a>But what about the old browsers?</h3><p>Well, if you really need to support the old stuff, there are polyfills that you can apply that will let you run the newer stuff in the older browsers. Seems to me you get the best of both worlds. Your customers who are up to date benefit with a better performing, and less buggy website, and the customers using older browser still get to see something. Are there places where you might still have to make some compromises. Sure. There are a few places. But not enough that you shouldn’t upgrade.</p>
+<h2 id="What-is-the-Bigger-Problem"><a href="#What-is-the-Bigger-Problem" class="headerlink" title="What is the Bigger Problem?"></a>What is the Bigger Problem?</h2><p>So, how can this happen? How can really smart people make really bad choices like this?</p>
+<p>I don’t really know, but I have a few theories.</p>
+<p>One is just plain arrogance. Being so sure you are right that you never stop to think you might be wrong.</p>
+<p>I have to admit, when I first learned about immutability, I thought it sounded slow too. But, my thinking went along the lines of, “well, much smarter people than me are working on this, they must think it makes sense. I wonder why?” And then I started digging for answers.</p>
+<p>So, I would encourage those who are responsible for making decisions to make sure that the people they are listening to can actually back up what they are saying and not just assume they are right because they seem so confident.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/3-javascript-fallacies-you-might-believe/" data-id="ck3vvpszf0001s0hima6j41ll" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/performance/">performance</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react-js/">react.js</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/confident-programmer-secrets-revealed/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">Confident Programmer Secrets, Revealed</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/coasting-curiosity-diversification-and-being-awesome/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">Coasting, Curiosity, Diversification and Being Awesome</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/what-if-unit-testing-wasn’t-necessary-notdd/">What If Unit Testing Wasn’t Necessary? #noTDD</a>
+        </li>
+      
+        <li>
+          <a href="/linkedin-tips-for-programmers/">LinkedIn Tips For Programmers</a>
+        </li>
+      
+        <li>
+          <a href="/typescript-basics-for-angular-developers/">TypeScript Basics for Angular Developers</a>
+        </li>
+      
+        <li>
+          <a href="/the-tyranny-of-emotions/">The Tyranny of Emotions</a>
+        </li>
+      
+        <li>
+          <a href="/where-to-store-angular-configurations/">Where To Store Angular Configurations</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

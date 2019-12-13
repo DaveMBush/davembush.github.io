@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>You Can Start Using Node Today | Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="I was just getting started writing an article about using Node/JavaScript to drive my Selenium tests and as I was writing the “Prerequisite” section, I realized I have never written the basics about h">
+<meta name="keywords" content="javascript,node,npm,nvm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="You Can Start Using Node Today">
+<meta property="og:url" content="http://davembush.github.com/you-can-start-using-node-today/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:description" content="I was just getting started writing an article about using Node/JavaScript to drive my Selenium tests and as I was writing the “Prerequisite” section, I realized I have never written the basics about h">
+<meta property="og:locale" content="English">
+<meta property="og:image" content="http://davembush.github.com/uploads/2016/07/image-4.png">
+<meta property="og:updated_time" content="2018-06-30T19:18:32.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="You Can Start Using Node Today">
+<meta name="twitter:description" content="I was just getting started writing an article about using Node/JavaScript to drive my Selenium tests and as I was writing the “Prerequisite” section, I realized I have never written the basics about h">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2016/07/image-4.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-you-can-start-using-node-today" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      You Can Start Using Node Today
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/you-can-start-using-node-today/" class="article-date"><time datetime="2016-08-02T10:30:00.000Z" itemprop="datePublished">2016-08-02</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Javascript/">Javascript</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I was just getting started writing an article about using Node/JavaScript to drive my Selenium tests and as I was writing the “Prerequisite” section, I realized I have never written the basics about how to get setup with Node or even why you would want to. As popular as Node is, I am still finding that many of the people I work with have no idea what it is or if they do, they only have a partial idea and can’t see how it would apply to the work they do on a daily basis. So, let’s start with the fundamentals. <figure><img src="/uploads/2016/07/image-4.png" alt="" title="You Can Start Using Node Today"><figcaption>Photo credit: <a href="//www.flickr.com/photos/stevendepolo/5749192025/">stevendepolo</a> via <a href="//visualhunt.com">VisualHunt.com</a> / <a href="//creativecommons.org/licenses/by/2.0/">CC BY</a></figcaption></figure></p>
+<a id="more"></a> 
+<h2 id="What-is-Node"><a href="#What-is-Node" class="headerlink" title="What is Node?"></a>What is Node?</h2><p>I think the best place to start with our introduction is by providing a comprehensive view of what Node is.  A rather simplistic description would be, “Node is the V8 JavaScript engine from the Chrome browser, wrapped in an executable, that lets you run JavaScript without a browser.” Now, with that simplistic definition, you might think, “Why would I want to do that?”  Maybe you are assuming that this implementation only lets you do the same stuff that you can do in the browser.  And this is where you would be wrong. So, let’s start over. Node allows you to write cross platform applications that will run directly on your computer using JavaScript as the language. And now I hear everyone thinking, “Yeah, yeah, that was the promise of Java.” OK.  Maybe that’s true.  Time will tell.</p>
+<h2 id="What-Can-You-Do-with-Node"><a href="#What-Can-You-Do-with-Node" class="headerlink" title="What Can You Do with Node?"></a>What Can You Do with Node?</h2><p>Several well-known applications use Node.  You may be surprised at how much node is already being used.  Here’s a short list:</p>
+<ul>
+<li>Many Web Servers</li>
+<li>Desktop Applications</li>
+<li>Developer Build Processes</li>
+</ul>
+<p>Does any of that surprise you? There is a <a href="//github.com/nodejs/node/wiki/Projects,-Applications,-and-Companies-Using-Node">long list of companies</a> who are using Node for some part of their development process or infrastructure.  Some more notable implementations include:</p>
+<ul>
+<li>VS Code by Microsoft – a code editor built using Node and Electron.</li>
+<li>Slack Desktop App – uses Node and Electron</li>
+</ul>
+<p>In short, you can do just about anything you can think of.</p>
+<h2 id="Installing-Node"><a href="#Installing-Node" class="headerlink" title="Installing Node"></a>Installing Node</h2><p>This falls under the category of “Things I wish I had known.” You can just go to the <a href="//nodejs.org/en/">Node site</a> and download the version you want to use.  But at some point, you are going to want to use multiple versions of Node.  One version for one project and a different version for some other project.  For that, you are going to need a tool called ‘NVM’.  Life will be a lot easier if you just install NVM first and then install Node from there. If you are running Windows, you’ll want to <a href="//github.com/coreybutler/nvm-windows/releases">grab NVM from here</a>.  Everyone else can <a href="//github.com/creationix/nvm">get NVM from here</a>. Once you have NVM installed, you should be able to run <code>nvm install _version.number.here_</code> or you can run <code>nvm install node</code> To install the latest version. You can run this command for each version you want to have installed. To see which versions are installed, you can run <code>nvm ls</code> And to use a specific version you can run <code>nvm use _version.number.here_</code></p>
+<h2 id="Using-the-Node-Package-Manager"><a href="#Using-the-Node-Package-Manager" class="headerlink" title="Using the Node Package Manager"></a>Using the Node Package Manager</h2><p>When you installed Node, you also installed the Node Package Manager(NPM).  For those of you who are coming from the Microsoft world, NPM is like NuGet.  It is how we install additional “Modules” (think libraries) into our Node environment. The commands for NPM are pretty straight forward and most of the time, the documentation will tell you exactly what command to run to get it into your development environment.  But, it is helpful to know why you are running the various commands. But, before you start installing Node packages into your development environment, you are going to want a package.json file.  The easiest way to create this in a form that NPM can use is to use the command <code>npm init</code> which will walk you through all of the questions you need to answer to create a proper package.json file. The next command you are going to encounter is <code>npm install</code>. But <code>npm install</code> has several switches that you’ll be using.  Each with a different purpose. <code>npm install _packagename_</code> This will install the most recent version of the package into your node_modules directory and record the dependency in your package.json file in the dependencies section. If you want to be explicit about where you are saving the file you can use the <code>--save</code> flag.  It does the same thing as <code>npm install package</code>. <code>npm install --save _packagename_</code> Your other option for saving is <code>--save-dev</code>. This puts the dependency in the devDependencies section. You might wonder why you would have two different dependency sections. The reason for this is because you might have modules that you need simply to build the project. They aren’t needed when you deploy the project. So having the two different sections allows you to deploy without the extra set of modules.</p>
+<h2 id="Node-JavaScript"><a href="#Node-JavaScript" class="headerlink" title="Node JavaScript"></a>Node JavaScript</h2><p>I once had someone assert that even within the same versions of JavaScript, there are different versions of JavaScript.  His main point was that there are differences between JavaScript on the browser and JavaScript in Node.  I assert, they are the same version of JavaScript, but the API that is available, or required, is different based on the environment. So, JavaScript on Node is syntactically no different than the JavaScript you write now.  However, Node does solve an age old problem we’ve had in client side code automatically. This problem is global scope pollution. If we write JavaScript that looks like this:</p>
+<p>var a = ‘abc’;</p>
+<p>Without wrapping the code in a function, the code will end up in global scope. The fix for this is to wrap all of our files in immediately invoked function expressions (IIFEs).  I’ve written about using IIFEs before as a best practice for Angular programming.  In fact, it is a best practice for all client side JavaScript programming. But, in Node it is completely unnecessary because Node puts each file in its own scope.  Putting something on the global scope is something you have to do intentionally.  This is good, but it does require us to write some extra code. You see, the problem is, if all of the code we write is only local to the file we write it in, how are we going to be able to write code in a modular fashion?  We don’t want all of our code in one monolithic file.</p>
+<h2 id="Modules"><a href="#Modules" class="headerlink" title="Modules"></a>Modules</h2><p>So, to handle this problem, Node implements two keywords/functions/variables (depends on how you think about it) We’ll just call them keywords for now. The first is the requires() keyword.</p>
+<p>var foo = require(‘fooScript’);</p>
+<p>This says go find the script “fooScript.js” and assign what was exported from it to our “foo” variable.  If the file you need to require has been installed with NPM, then all you need is the name of the module, like I did above.  But if you are requiring in a file from your own code, you’ll need to require using a path reference.  For you Windows people, this always works using forward slashes (/) not backslash (\). This probably leaves you asking the question, how does fooScript expose its content to the module requiring it? With code that looks like this:</p>
+<p>module.exports = fooFunc;</p>
+<p>This line normally appears at the end of a file.  In the case of the line above, assume that fooFunc is a function that is defined somewhere above the module.exports line. You could also write the exports using:</p>
+<p>exports = fooFunc;</p>
+<p>They do the same thing. If our fooFunc is in a file named “fooScript.js” then our foo variable above can call the fooFunc() function by using foo.</p>
+<p>var foo = require(‘fooScript’);<br>foo(); // this line calls fooFunc() in fooScript.</p>
+<h2 id="Optimizations"><a href="#Optimizations" class="headerlink" title="Optimizations"></a>Optimizations</h2><p>What took me a while to grasp is that you can export anything.  A function, a variable, an object.  It really doesn’t matter.  But you have to be aware of some optimizations that Node makes for you. You see, it would be pretty stupid to process the file every time it was required into another file.  So rather than do that, Node caches the export and assigns that the next time it is required.  If you export an object, the next time you require it, you will get the same object.  So an exported object becomes a singleton.  If you want to be able to create new objects, you are better off exporting the function (or class in ES2015) that creates the object and new-ing it up when you need it.</p>
+<h2 id="Your-Turn"><a href="#Your-Turn" class="headerlink" title="Your Turn"></a>Your Turn</h2><p>So, now it is your turn.  If you have not tried using Node.js install it and try a few things.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/you-can-start-using-node-today/" data-id="ck3vvptvf00t9s0hi5esnmqsj" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/npm/">npm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nvm/">nvm</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/4-reasons-to-drop-mvvm/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">4 Reasons To Drop MVVM</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/10-reasons-projects-succeed/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">10 Reasons Projects Succeed</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/what-if-unit-testing-wasn’t-necessary-notdd/">What If Unit Testing Wasn’t Necessary? #noTDD</a>
+        </li>
+      
+        <li>
+          <a href="/linkedin-tips-for-programmers/">LinkedIn Tips For Programmers</a>
+        </li>
+      
+        <li>
+          <a href="/typescript-basics-for-angular-developers/">TypeScript Basics for Angular Developers</a>
+        </li>
+      
+        <li>
+          <a href="/the-tyranny-of-emotions/">The Tyranny of Emotions</a>
+        </li>
+      
+        <li>
+          <a href="/where-to-store-angular-configurations/">Where To Store Angular Configurations</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

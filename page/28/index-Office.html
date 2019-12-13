@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Dave&#39;s Notebook">
+<meta property="og:url" content="http://davembush.github.com/page/28/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:locale" content="English">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dave&#39;s Notebook">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          
+  
+    <article id="post-unable-to-find-connectionfor-object-webconfig" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/unable-to-find-connection-for-object-web-config/">Unable to find connection...for object web.config</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/unable-to-find-connection-for-object-web-config/" class="article-date"><time datetime="2009-03-18T08:40:09.000Z" itemprop="datePublished">2009-03-18</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/03/j01c0089.jpg" alt="J01C0089"> I’ve seen this error a couple of different times.  Mostly from other people calling me with the problem.  So I still don’t know what ultimately causes the problem.  But if you’re having this problem, here’s how you fix it. First, a bit of background. You’ll open a dataset you’ve been working with for months and see the following error message:</p>
+<blockquote>
+<p>Unable to find connection [connectionName] (web.config)1 for object ‘Web.config’.  The connection string could not be found in application settings, or the data provider associated with the connection string could not be loaded.</p>
+</blockquote>
+<p>What has happened is that the list of connection strings the tables in your dataset use has become corrupt.  In the most recent case of this we ended up with two connection strings with the same name pointing to two different connections. Here’s what you need to do to start trouble-shooting the problem.</p>
+<ul>
+<li>Close the dataset window with the error.</li>
+<li>Right click the dataset in the solution explorer</li>
+<li>Select “Open with…” from the context menu</li>
+<li>Select “Source Code (Text) Editor” from the list and press the “OK” button.</li>
+</ul>
+<p>Your code will now be opened in text mode so you can view the XML.  You want to be careful at this point because if you mess things up too badly, you won’t have anything useful.  As things stand now there is hope of recovery.  A backup would be a good thing to make sure you have right about now. Near the top of the file, you’ll see a <connections> element with several <connection> elements within it.  Most datasets should only have one <connection> element.  If you are having trouble like I’ve described above, you’ll have at least two and one will be incorrect.  Delete it or otherwise fix it, save the file and reopen normally.  If you are lucky, everything will be working correctly again.</connection></connection></connections></p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/unable-to-find-connection-for-object-web-config/" data-id="ck3vvptpf00oks0hijprb4ezl" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/connection-string/">connection string</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dataset/">dataset</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/error/">error</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web-config/">web.config</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-jquery-using-slider-as-a-scrollbar" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/jquery-using-slider-as-a-scrollbar/">jQuery - Using Slider as a Scrollbar</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/jquery-using-slider-as-a-scrollbar/" class="article-date"><time datetime="2009-03-12T12:23:18.000Z" itemprop="datePublished">2009-03-12</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/jQuery/">jQuery</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/03/misc-vol3-074.jpg" alt="misc_vol3_074"> Last week I introduced the jQuery UI element known as a slider and indicated that this control could easily be used as a custom scrollbar. Today I’m going to show you exactly how that’s done. First we need to adjust our HTML.  We need to add a content area to the HTML we had last week.  I’m going to put this content area to the right of the scrollbar, but you could put it to the left by simply changing the CSS.</p>
+<pre><code>&lt;div id=&quot;slider&quot;&gt;&lt;/div&gt;
+&lt;div id=&quot;scroller&quot;&gt;&lt;div id=&quot;content&quot;&gt; here is lots of text&lt;br /&gt;
+&lt;/div&gt;&lt;/div&gt; 
+</code></pre><p>The CSS to position this all correctly looks like this:</p>
+<p>#slider {<br>    height: 242px;<br>    width: 13px;<br>    margin:0px 10px 0px 10px;<br>    float:left;<br>}</p>
+<p>#scroller {<br>    width: 1159px;<br>    height: 243px;<br>    overflow:hidden;<br>}</p>
+<p>#content {<br>    width: 215px;<br>}</p>
+<p>Not much exciting here.  Slider is basically the same as last week.  The area we want to scroll is composed of two elements, a div we’ve given the ID “content” that is nested inside another div we’ve named “scroller.”  The scroller is a fixed height and set so that if the content is longer than the scroller, it will not be displayed. The rest is simple jQuery magic:</p>
+<p>$(function() {<br>$(“#slider”).slider(<br>    { change: handleChange,<br>        slide: handleSlide,<br>        min: -100,<br>    max: 0 });<br>});</p>
+<p>function handleChange(e, ui) {<br>    var maxScroll = $(“#scroller”)<br>      .attr(“scrollHeight”) -<br>      $(“#scroller”).height();<br>    $(“#scroller”)<br>      .animate({ scrollTop: -ui.value *<br>     (maxScroll / 100)<br>    }, 1000);</p>
+<p>}</p>
+<p>function handleSlide(e, ui) {<br>    var maxScroll = $(“#scroller”)<br>      .attr(“scrollHeight”) -<br>      $(“#scroller”).height();<br>    $(“#scroller”)<br>      .attr({ scrollTop: -ui.value<br>        * (maxScroll / 100)   });</p>
+<p>}</p>
+<p>At the top of our Javascript, we are simply wiring up our slider control.  The most notable thing you’ll want to pay attention to here is that I’ve set the minimum height and maximum height so that zero is at the top of the slider.  If you don’t do this, the slider will start with the thumb at the bottom.  Not exactly what we have in mind. We need to wire up two event handlers, slide and change, so that the content area will scroll as we move the thumb.  We’ve done that in the document-ready function. The two event handlers first determine the maximum scroll height and then position the content area within the scroller area.  Again, to make this work correctly, we needed to negate the value that was passed in in the ui parameter. Obviously, it would not take a whole lot of work to package this all up as a plugin that does all the work for you, but it helps to know how to do it if you need to.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/jquery-using-slider-as-a-scrollbar/" data-id="ck3vvptfe00frs0hipfwm45o8" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery/">jQuery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrollbar/">scrollbar</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrolling-content/">scrolling content</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/slider/">slider</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ui/">ui</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-infinite-302-loop-how-would-you-even-know" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/infinite-302-loop-how-would-you-even-know/">Infinite 302 Loop - How would you even know?</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/infinite-302-loop-how-would-you-even-know/" class="article-date"><time datetime="2009-03-11T11:08:36.000Z" itemprop="datePublished">2009-03-11</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a> / <a class="article-category-link" href="/categories/ASP-NET/ASP-NET-MVC/">ASP.NET MVC</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/03/trav-053.jpg" alt="trav-053"> It happens eventually to all web developers.  It’s happened to me twice in the last week.  You make one simple change to your web site and then you can no longer access it.  When you browse to it in IE you get some completely useless “We can’t access the page you are looking for” error.  In FireFox, it at least tells you that you have a “Redirect Loop” and in IE6, if you are fortunate enough to still be writing for that browser, you can see that it is blinking at you as it tries to retrieve the page(s) multiple times.  But how do you know what’s redirecting to what?  For that matter, other than running a browser that told you, how would you even know it was a 302 error? I know I’ve mentioned this before but it’s definitely worth repeating.  Get yourself a copy of <a href="//www.fiddler2.com">Fiddler</a>.  Fiddler is a proxy that runs on local host.  By default when you run it, it automatically installs itself as a proxy in IE so you really don’t have to know much more than how to install software to get up and running with it. When you access a web site with it, it will tell you everything that is going on.  What headers are being sent.  What headers are coming back from the server.  Files that are being requested.  Status codes that are coming back. Any time I have a client-side problem with my web sites, or any time I have a problem with my web sites that I can’t explain from the server side, I reach for Fiddler.  More often than not, it tells me or at least guides me to what the real problem is. For example, last week I was given the task of creating a 301 redirect from one domain to another.  I thought I had the code written correctly to do this, but when we went to access the domain it went into an infinite loop.  Obviously something was wrong, but what? When I ran similar code on other domains it worked correctly. When I ran Fiddler, I found that the page was redirecting to itself multiple times.  Odd.  What would make it do that? So back to my code, where I quickly discovered that I had left out a character in my replace function so that domain A was never being rewritten to domain B so domain A was constantly redirecting to itself. This morning’s error was a little more fun.  My designer was trying to install a module into DotNetNuke last night when the site suddenly “stopped working.” Same deal.  Only this time it is because there is some module that is redirecting from the home page to another page and then that other page is redirecting back to the home page. Again, I would have never been able to track this down if I hadn’t had Fiddler to help me. I’ve also used this to verify that javascript tracking codes are working correctly.  If you need to see traffic that is going between the browser and the server, Fiddler is the tool you are looking for.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/infinite-302-loop-how-would-you-even-know/" data-id="ck3vvptb400bls0hiwo6xq7xn" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/301/">301</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/302/">302</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fiddler/">fiddler</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/infinite-loop/">infinite loop</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-windows-forms-passing-parameters-at-runtime" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/windows-forms-passing-parameters-at-runtime/">Windows Forms - Passing Parameters at Runtime</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/windows-forms-passing-parameters-at-runtime/" class="article-date"><time datetime="2009-03-09T11:37:11.000Z" itemprop="datePublished">2009-03-09</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/winforms/">winforms</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/03/misc-vol4-028.jpg" alt="misc_vol4_028"> I received the following question over the weekend:</p>
+<blockquote>
+<p>I’ve made a C# form application and I need to send a report name at runtime. How do I add an incoming parameter to the command line? Such as “crFORM.exe Shipform.rpt”</p>
+</blockquote>
+<p>I have to assume the question relates more to how to retrieve the parameter in the code than how to pass it because the example shows how we’d pass it. All WinForms CSharp programs have a static method called Main() that looks something like this:</p>
+<p>[STAThread]<br>static void Main()<br>{<br>    Application.EnableVisualStyles();<br>    Application.SetCompatibleTextRenderingDefault(false);<br>    Application.Run(new Form1());<br>}</p>
+<p><a href="//11011.net/software/vspaste"></a>If you are using Visual Studio 2008 to build your applications, this code can be found in Program.cs. To accept parameters you will need to modify this method so that it accepts a string array as a parameter.  Most people name this parameter “args.”</p>
+<p>[STAThread]<br>static void Main(String[] args)<br>{<br>    …<br>}</p>
+<p>If a parameter was passed, args will have a length greater than zero.  To retrieve the command line arguments all you need to do is retrieve the parameters out of args.</p>
+<p>[STAThread]<br>static void Main(String[] args)<br>{</p>
+<pre><code>if (args.Length &gt; 0)
+{
+    string arg1 = args\[0\];
+    // do something appropriate with
+    // arg1 here. }
+Application.EnableVisualStyles();
+Application.SetCompatibleTextRenderingDefault(false);
+Application.Run(new Form1());
+</code></pre><p>}</p>
+<p><a href="//11011.net/software/vspaste"></a></p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/windows-forms-passing-parameters-at-runtime/" data-id="ck3vvptuv00sqs0higz8x3zk2" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/arguements/">arguements</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/command-line/">command line</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/main/">main</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/winforms/">winforms</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-aspnet-application-error-detecting-404s" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/asp-net-application-error-detecting-404-s/">ASP.NET Application_Error Detecting 404&#39;s</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/asp-net-application-error-detecting-404-s/" class="article-date"><time datetime="2009-03-02T10:56:18.000Z" itemprop="datePublished">2009-03-02</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/02/misc-vol3-046.jpg" alt="misc_vol3_046"> For many of you, this is going to be a “Duh!” kind of post.  But while working on this today, I found so many people asking this question and so many others giving the wrong answer, I’m compelled to post anyhow. If you know the answer, then you are welcome to stop reading now.  I didn’t write this for you.  I wrote this for the hundreds of people who will search for this information and won’t be able to find the answer.  The fact of the matter is, that’s why I write most of what I write–so people searching for the information can find it.  So here’s the question: I’ve set up an Application_Error event handler in my Global.asax file and I have implemented a server transfer for errors.  Now I want to set up a specific page to handle 404 errors.  How do I detect a 404 error and call the 404-specific page? The main answer to this question involves retrieving the exception that triggered the event in the first place.  To do that, we call Server.GetLastError():</p>
+<p>Exception ex = Server.GetLastError();</p>
+<p>What we need to do next is determine if the exception is an HttpException or something else.  Once we have determined that it is an HttpException we will have access to Http-specific properties and methods that will give us the rest of the information we are looking for.  In our case we want to call the GetHttpCode() method, which will return the Http status code and compare it to the number 404. Our resulting code looks like this:</p>
+<p>void Application_Error(object sender, EventArgs e)<br>{<br>    Exception ex = Server.GetLastError();<br>    if (ex is HttpException)<br>    {<br>        if (((HttpException)(ex)).GetHttpCode() == 404)<br>            Server.Transfer(“~/Error404.aspx”);<br>    }<br>    // Code that runs when an unhandled error occurs Server.Transfer(“~/DefaultError.aspx”);</p>
+<p>}</p>
+<p>That’s all there is to it.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/asp-net-application-error-detecting-404-s/" data-id="ck3vvpt3v003xs0hijzbifjja" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/404/">404</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/application-error/">application_error</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/exceptions/">exceptions</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-tab-control-activetabindex-lost-on-postback" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/tab-control-activetabindex-lost-on-postback/">Tab Control ActiveTabIndex Lost on Postback</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/tab-control-activetabindex-lost-on-postback/" class="article-date"><time datetime="2009-02-25T10:26:36.000Z" itemprop="datePublished">2009-02-25</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/02/tran-land-01.jpg" alt="tran-land-01"> I just got off the phone with a client who is using the MS-AJAX TabControl in one of his applications and any time he causes a postback, the tab resets to the first tab. If you’ve never seen the problem, you’re lucky.  There are a couple of ways around the problem.  The first and easiest if it works in your situation is to put the tab in an update panel so that you never actually do a full postback. However, there are times when this won’t work.  In this particular case it is because one of the tabs holds the file upload control, which can’t be used inside an update panel.  (Another problem we had to find a way around last week.) What do you do then? Turns out this is a bug in the way that the tab works.  This problem turns up in various situations.  If you are fighting the bug, the solution is actually pretty simple. First, put the following  javascript in your aspx or ascx file:</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
+    function TabChanged(sender, args)
+    {
+        sender.get_clientStateField().value =
+            sender.saveClientState();
+    }
+&lt;/script&gt; 
+</code></pre><p>And then wire up the TabChanged function to your tab control:</p>
+<p>&lt;ajaxControlToolkit:TabContainer ID=”TabContainer1” runat=”server” OnClientActiveTabChanged=”TabChanged” &gt;<br>&lt;/ajaxControlToolkit:TabContainer> /&gt;</p>
+<p>  This will fix the problem.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/tab-control-activetabindex-lost-on-postback/" data-id="ck3vvptmt00mcs0hin2z66ltr" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/activetabindex/">activetabindex</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ajax/">ajax</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/postback/">postback</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tab-control/">tab control</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tabcontrol/">tabcontrol</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-jquery-bgiframe-and-ie6-z-order-hacks" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/jquery-bgiframe-and-ie6-z-order-hacks/">jQuery, bgiframe and IE6 z-order hacks</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/jquery-bgiframe-and-ie6-z-order-hacks/" class="article-date"><time datetime="2009-02-19T10:19:38.000Z" itemprop="datePublished">2009-02-19</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/jQuery/">jQuery</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/02/tp-vol3-006.jpg" alt="tp_vol3_006"> Well, it probably looks like an odd title.  But let’s face it: we still have to support IE6 for some of our clients no matter how much we don’t like it or it shouldn’t be.  And one of the most frustrating items that we ever had to support in IE6 is the fact that certain controls and plug-ins don’t obey z-order. What this means in a practical sense is that if we have a menu layer that drops over one of these misbehaving bad boys, we have to find some hack around it.  The problem I had to solve is that the code for this project is done.  There isn’t a lot of room for tweaking.  The menu we are using is something that is not going to be modified easily.  So, any solution I came up with had to “plug in” to what we already had. Sounds like a job for jQuery to me. I did find a solution that claimed it would do the trick: <a href="//plugins.jquery.com/bgiframe/">bgiframe</a>.  But of course you notice that qualifier, “claimed.”  Yes folks, I had trouble getting it to work. What exactly does bgiframe do?  It scripts the <a href="//weblogs.asp.net/bleroy/archive/2005/08/09/how-to-put-a-div-over-a-select-in-ie.aspx">iframe hack</a> into your popover layer. You see, our menu system is based on a styled, unordered list.  When I told bgiframe to grab the UL and put the iframe in it, it just didn’t work.  Oh, it put the iframe in.  But the select windows still showed through. What was odd was that even the iframe was transparent.  Odd, I thought.  It isn’t supposed to be transparent. So after half a day of searching, looking at the source for bgiframe, and generally pulling my hair out, I finally remembered seeing this little “hack” for the src property of the iframe.  It’s actually noted in the link to the iframe hack I have above. The iframe code should look like:</p>
+<p>&lt;iframe src=”BLOCKED SCRIPT’&lt;html&gt;&lt;/html&gt;’;” scrolling=”no” frameborder=”0” …</p>
+<p>But the script that bgiframe produces looks like:</p>
+<p>&lt;iframe src=”javascript:false;” scrolling=”no” frameborder=”0” …</p>
+<p>the src=”javascript” thing works most of the time.  In fact, I kind of got everything working by putting the iframe arount the LI tags instead of around the UL tag.  Only I had some other issues when I did that, and it is a sub-optimal way of getting this all working.  Hack of a hack. Now, I fixed this by changing the bgiframe source.  But if you don’t want to be that intrusive, you can just call bgiframe using the src parameter.</p>
+<p>$(“ul”).bgiframe({ src: “BLOCKED SCRIPT’&lt;html&gt;&lt;/html&gt;’;” });</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/jquery-bgiframe-and-ie6-z-order-hacks/" data-id="ck3vvpte600els0hi81yzfvwg" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bgiframe/">bgiframe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hack/">hack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ie6/">ie6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iframe/">iframe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery/">jQuery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/select/">select</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-aspnet-mvc-model-bll-or-dal" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/asp-net-mvc-model-bll-or-dal/">ASP.NET MVC - Model != BLL or DAL</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/asp-net-mvc-model-bll-or-dal/" class="article-date"><time datetime="2009-02-11T10:36:37.000Z" itemprop="datePublished">2009-02-11</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET-MVC/">ASP.NET MVC</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Last week I introduced the ASP.NET MVC framework by talking a bit about what the model, view and controller are. In the comments, John Meyer said,</p>
+<blockquote>
+<p>I respectfully disagree with your claim that the model is you BLL. MVC is a UI layer pattern, and as such all models, views, and controllers are strictly in the UI level.</p>
+</blockquote>
+<p>While historically, MVC has been described in the way I stated–while the ASP.NET MVC guys have also portrayed the Model as BLL or below–I have to agree with John.  Here’s why: At least as far as ASP.NET is concerned, the model is inherited from a specific class.  This means that any implementation code you place in the class will be forever tied to the class it inherits from. So if in some point in the future you decide that a WebForms implementation would work out better for you, or you wanted to put a Windows Forms implementation on top of it, you’d have to do quite a bit of refactoring of your code just so you could. If instead you treat the Model as a “View Model” as John suggests, and have the View Model call the Business Logic Layer, you end up with two major benefits. First, your Business Logic Layer is completely decoupled from the View implementation.  You are no longer forever tied to MVC as an architecture or ASP.NET MVC as the primary architecture.  You can use whatever view implementation you want. Second, you are not forced to put View specific data code in your Business Logic Layer.  Doing so would cloud the actual implementation of your BLL and actually further couple your view layer to your BLL, something that third tier is specifically designed to avoid. Based on the feedback from John and my own thinking on the subject, I recommend a three-tiered approach that places the MVC as the view entity calling the BLL from the Model of the MVC set, which would in turn call the Data Access layer.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/asp-net-mvc-model-bll-or-dal/" data-id="ck3vvpt3s003us0hiaoo2da5a" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MVC/">MVC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Three-Tiered/">Three Tiered</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/archietcture/">archietcture</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bll/">bll</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dal/">dal</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/view/">view</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-responseredirect-and-javascript" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/asp-net-response-redirect-and-javascript/">ASP.NET Response.Redirect() and JavaScript</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/asp-net-response-redirect-and-javascript/" class="article-date"><time datetime="2009-01-28T10:10:10.000Z" itemprop="datePublished">2009-01-28</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/01/toco-toucan.jpg" alt="A toucan perched on a branch in Brazil."> Yesterday we covered issues surrounding using ASP.NET’s Response.Redirect in server side code. We noted that not handing it correctly could prevent code from running on the server that we want to run. The other issue is emitting Javascript in the server side in association with Response.Redirect(). This also leads to unexpected problems if you aren’t thinking about what is actually happening with your code.  Take this code as an example:</p>
+<pre><code>protected void Page_Load(object sender, EventArgs e)
+{
+    string myscript = @&quot;&lt;script language=&apos;javascript&apos;&gt;
+</code></pre><p>alert(‘hello world’);<br>“;<br>        ClientScript.RegisterClientScriptBlock<br>            (“”.GetType(), “s”, myscript);<br>        Response.Redirect(“~/newpage.aspx”,false);</p>
+<pre><code>}
+</code></pre><p>The question is, why does the javascript never display “hello world”? Actually, the javascript is typically a little more complicated than “hello world.” But the question is always, “Why didn’t my javascript execute? It works fine without the redirect.” Once again, we need to think more clearly about what we’ve actually written. What we’ve actually told the server to do is the following:</p>
+<ol>
+<li>Render the javascript to display “hello world” in an alert box on the client.</li>
+<li>Set the header (not the header element, but the header that tells the browser whether the code executed successfully or not) to “302 redirect.”</li>
+</ol>
+<p>When the browser finally gets the stream back from the server, it will actually see step 2 first because the header comes before the javascript code. The browser will look at that 302, ignore everything else on the page, and faithfully redirect to the page specified as part of the 302.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/asp-net-response-redirect-and-javascript/" data-id="ck3vvptis00j3s0hiedv3hfb6" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/302/">302</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redirect/">redirect</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/response/">response</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-responseredirect-executes-too-soon-on-the-server" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/response-redirect-executes-too-soon-on-the-server/">Response.Redirect() executes too soon on the Server.</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/response-redirect-executes-too-soon-on-the-server/" class="article-date"><time datetime="2009-01-27T10:43:45.000Z" itemprop="datePublished">2009-01-27</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/01/tp-vol4-017.jpg" alt="tp_vol4_017"> I’ve seen this question a couple of times in various situations. The first involves Javascript and the second involves server side code. Both are caused by a misunderstanding of what this function does and how web pages work. Let’s start with the easy one: server side code.  You might have code that looks something like this:</p>
+<p>protected void Page_Load(object sender, EventArgs e)<br>{</p>
+<pre><code>// Do something here Response.Redirect(&quot;~/newpage.aspx&quot;);
+
+// do some more code here }
+</code></pre><p>The problem with this code, which is probably obvious to most of you, is that the “do some more code here” section will never fire because we’ve done a redirect right before it. But is this as obvious?</p>
+<p>protected void Page_Load(object sender, EventArgs e)<br>{</p>
+<pre><code>// Do something here Response.Redirect(&quot;~/newpage.aspx&quot;);
+</code></pre><p>}<br>protected void Button1_Click(object sender, EventArgs e)<br>{<br>    // do some more code here }</p>
+<p>The problem here is that Page_Load is the first event to fire. Button1_Click() will never execute because we’ve done the redirect during our page load. Aside from the fact that you should not perform form processing code during Page_Load(), the other issue is that events can fire in any order. So maybe you were smart and processed your form in a Button.Click event handler, but have you accounted for the fact that your databinding code may need to put data in the database AFTER you run Response.Redirect()? There is a way around this. Response.Redirect() has two overloads. The first, which we are all very used to, is the one I’ve shown above. But all it does is call the second which has two parameters, the URL and a boolean value, to indicate if we should stop processing right away and return to the browser. The default that gets sent in with the first overload is TRUE. Go ahead and quit. By modifying our code to:</p>
+<p>protected void Page_Load(object sender, EventArgs e)<br>{</p>
+<pre><code>// Do something here Response.Redirect(&quot;~/newpage.aspx&quot;,false);
+</code></pre><p>}<br>protected void Button1_Click(object sender, EventArgs e)<br>{<br>    // do some more code here }</p>
+<p>we can be sure that our Button1_Click method, or databinding code, will be executed. Tomorrow we’ll look at the issues involved with Javascript.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/response-redirect-executes-too-soon-on-the-server/" data-id="ck3vvptj100jds0hi3t40iv7y" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/events/">events</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redirect/">redirect</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/response/">response</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <div id="page-nav">
+    <nav><ul class="pagination"><li><a class="page-prev" rel="prev" href="/page/27/"><i class="fa fa-chevron-left"></i> Prev</a></li><li><a class="page-number" href="/">1</a></li><li class="disabled"><span class="page-space">&hellip;</span></li><li><a class="page-number" href="/page/26/">26</a></li><li><a class="page-number" href="/page/27/">27</a></li><li class="active"><span class="page-number">28</span></li><li><a class="page-number" href="/page/29/">29</a></li><li><a class="page-number" href="/page/30/">30</a></li><li><a class="page-number" href="/page/31/">31</a></li><li><a class="page-next" rel="next" href="/page/29/">Next <i class="fa fa-chevron-right"></i></a></li></ul></nav>
+  </div>
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/what-if-unit-testing-wasn’t-necessary-notdd/">What If Unit Testing Wasn’t Necessary? #noTDD</a>
+        </li>
+      
+        <li>
+          <a href="/linkedin-tips-for-programmers/">LinkedIn Tips For Programmers</a>
+        </li>
+      
+        <li>
+          <a href="/typescript-basics-for-angular-developers/">TypeScript Basics for Angular Developers</a>
+        </li>
+      
+        <li>
+          <a href="/the-tyranny-of-emotions/">The Tyranny of Emotions</a>
+        </li>
+      
+        <li>
+          <a href="/where-to-store-angular-configurations/">Where To Store Angular Configurations</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

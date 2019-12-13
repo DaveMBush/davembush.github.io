@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Dave&#39;s Notebook">
+<meta property="og:url" content="http://davembush.github.com/page/3/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:locale" content="English">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dave&#39;s Notebook">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          
+  
+    <article id="post-implementing-ngrx-4" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/implementing-ngrx-4/">Implementing NgRX 4+</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/implementing-ngrx-4/" class="article-date"><time datetime="2017-10-24T10:30:46.000Z" itemprop="datePublished">2017-10-24</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Angular/">Angular</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>There seems to be a lot of confusion about Implement NgRX 4 and above in an Angular application.  Some of it I’ve contributed to because NgRX 2 isn’t quite the same as NgRX 4 and as I’ve transitioned, I’ve learned better ways.  In other words, I was wrong and I’m correcting my mistake!  Below is the correct, NgRX approved way, of implementing NgRX 4. </p>
+<p>If you are looking for information about how to convert to NgRX 4 from NgRX 2, you can visit my previous article, <a href="/how-to-upgrade-ngrx-to-4-x/">How to Upgrade to NgRX 4</a>. </p>
+<p>Before we get started, make sure you have TypeScript 2.4.x or above installed in your local project.  The CLI may complain, depending on what version of it you are using.  But, NgRX 4 requires us to use TypeScript 2.4.x. You should also have RxJS 5.4.x or above installed. </p>
+<p>You will also need to install @ngrx.  You can do this using the following NPM command: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save @ngrx/store @ngrx/effects</span><br></pre></td></tr></table></figure>
+<p>And finally, I’ve found that I need to use the –aot switch both when I’m using production and development builds, so you’ll want to add that to your scripts in your <code>package.json</code> file. <figure><img src="/uploads/2017/10/2017-10-24.jpg" alt="" title="Implementing NgRX 4"><figcaption>Photo credit: <a href="//www.flickr.com/photos/cfaobam/12119410373/">cfaobam</a> via <a href="//visualhunt.com/re/300eff">VisualHunt.com</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a></figcaption></figure></p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/implementing-ngrx-4/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/implementing-ngrx-4/" data-id="ck3vvptb700bos0hihmd963ri" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NgRX/">NgRX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-ngrx-effects-design-patterns" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/ngrx-effects-design-patterns/">NgRX Effects Design Patterns</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/ngrx-effects-design-patterns/" class="article-date"><time datetime="2017-10-17T10:30:03.000Z" itemprop="datePublished">2017-10-17</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/none/">none</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Since I don’t seem to have a blogs worth of any one topic to write about, I thought maybe something more along the lines of a cluster of small tips and tricks might work.  Since I’ve been writing my Angular book over the last couple of weeks, there hasn’t been much new that I’ve discovered worth sharing.  But there are a few small discoveries I’ve made.  This week, they center around NgRX Effects. <figure><img src="/uploads/2017/10/2017.10.17.png" alt="" title="NgRX Effects Design Patterns"> Photo via <a href="//visualhunt.com/re/79a90d">Visual hunt</a></figure></p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/ngrx-effects-design-patterns/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/ngrx-effects-design-patterns/" data-id="ck3vvpth700hjs0hi9uqpxcaj" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-ngrx-clean-data-aggregation" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/using-ngrx-to-cleanly-aggregate-data/">Using NgRX to Cleanly Aggregate Data</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/using-ngrx-to-cleanly-aggregate-data/" class="article-date"><time datetime="2017-10-03T10:30:50.000Z" itemprop="datePublished">2017-10-03</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Angular/">Angular</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>For the last 18 months, I’ve been working for an organization that has what some might consider a unique requirement.  Because of where our application’s data is sourced, we need to aggregate data on the client side rather than on the server.  What this means is that for any one screen, we may make multiple calls to the server to grab all the data we need.  Fortunately, because we adopted NgRX early in our adoption of Angular, we could avoid a lot of the headaches associated with client-side aggregation. <figure><img src="/uploads/2017/09/2017-10-03.png" alt="" title="Using NgRX to Cleanly Aggregate Data"><figcaption>Photo credit: <a href="//www.flickr.com/photos/gsfc/14486243743/">NASA Goddard Photo and Video</a> via <a href="//visualhunt.com/re/296da9">Visualhunt</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a></figcaption></figure></p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/using-ngrx-to-cleanly-aggregate-data/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/using-ngrx-to-cleanly-aggregate-data/" data-id="ck3vvptgo00h1s0hix4h0k5k0" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NgRX/">NgRX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-patterns/">design patterns</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-thoughts-upgrading-angular" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/upgrade-to-angular-from/">Upgrade to Angular from...</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/upgrade-to-angular-from/" class="article-date"><time datetime="2017-09-26T10:30:23.000Z" itemprop="datePublished">2017-09-26</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Angular/">Angular</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>As I’ve been interviewing for a new contract, the question, “How do we Upgrade to Angular from …?” has come up several times.  And as I’ve thought about the question, several patterns have emerged. <figure><img src="/uploads/2017/09/2017-09-26.jpg" alt="" title="Upgrade Angular from ..."><figcaption>Photo credit: <a href="//www.flickr.com/photos/archer10/12414442945/">archer10 (Dennis) 102M Views</a> via <a href="//visualhunt.com/re/426124">Visualhunt</a> / <a href="//creativecommons.org/licenses/by-sa/2.0/"> CC BY-SA</a></figcaption></figure></p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/upgrade-to-angular-from/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/upgrade-to-angular-from/" data-id="ck3vvptp700ocs0hi0lq79d7e" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/portal/">portal</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react-js/">react.js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web-1-0/">web 1.0</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web-2-0/">web 2.0</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-one-tweak-improved-angular-code" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/this-one-tweak-improved-my-angular-code/">This One Tweak Improved my Angular Code</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/this-one-tweak-improved-my-angular-code/" class="article-date"><time datetime="2017-09-12T10:30:10.000Z" itemprop="datePublished">2017-09-12</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Angular/">Angular</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I made a tweak to my Angular code process over the last month or so that has resulted in greater productivity in my development environment and fewer bugs. </p>
+<p>Now, I didn’t make this change because I thought it would improve my productivity.  At least that wasn’t the primary reason.  I made the change because I thought it would reduce the chance of introducing bugs into my code.  And while it does reduce the number of bugs in my code, the result has been generally improved productivity. </p>
+<p>What is this great secret? <figure><img src="/uploads/2017/09/2017-09-12.jpg" alt="" title="This One Tweak Improved my Angular Code"><figcaption>Photo credit: <a href="//www.flickr.com/photos/sheila_sund/36859429262/">docoverachiever</a> via <a href="//visualhunt.com/re/d75fb5">Visual Hunt</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a></figcaption></figure></p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/this-one-tweak-improved-my-angular-code/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/this-one-tweak-improved-my-angular-code/" data-id="ck3vvptho00hxs0hicgijs3t3" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-thinking-in-javascript" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/thinking-in-javascript/">Thinking in JavaScript</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/thinking-in-javascript/" class="article-date"><time datetime="2017-09-05T10:30:54.000Z" itemprop="datePublished">2017-09-05</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Javascript/">Javascript</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Over the last week I’ve gradually come to the realization that the fundamental reason why most people have trouble with JavaScript is because it doesn’t fit their mental model of how programming should be done.  This isn’t to say that most programmers don’t manage to achieve their end goal.  But if you sit back and take an objective look at the code we end up writing, you have to admit, the code ends up being quite ugly. </p>
+<p>Now, this isn’t a dig at the way we’ve been doing things.  We’ve all been doing the best we can with what we have.  But, the JavaScript world has progressed and there is a better mental model that has developed and should even be expanded which will allow us to develop more complex and feature rich applications now and well into the future. <figure><img src="/uploads/2017/09/2017-09-05.jpg" alt="" title="Thinking in JavaScript"><figcaption>Photo credit: <a href="//www.flickr.com/photos/froderik/8283727226/">freddie boy</a> via <a href="//visualhunt.com/re/fb4c57">Visual Hunt</a> / <a href="//creativecommons.org/licenses/by-sa/2.0/"> CC BY-SA</a></figcaption></figure></p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/thinking-in-javascript/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/thinking-in-javascript/" data-id="ck3vvptos00nys0hinjnivs5j" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MVC/">MVC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NgRX/">NgRX</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mvvm/">mvvm</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/redux/">redux</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-model-view-presenter-angular-testing" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/model-view-presenter-angular-and-testing/">Model View Presenter, Angular, and Testing</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/model-view-presenter-angular-and-testing/" class="article-date"><time datetime="2017-08-29T10:30:33.000Z" itemprop="datePublished">2017-08-29</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Angular/">Angular</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>While testing Components is possible, it is not easy and is often pointless.  Using the Model View Presenter pattern, or a variation of it, solves the problem. </p>
+<p>Here’s the deal. Long time readers of my blog know I’ve been a proponent of Unit Testing for a very long time. While I was learning React, I went through the exercise of trying to write test as I was learning.  Now, the great thing about Angular and React is that it is possible to test your components.  The problem with testing components is that you are either testing that your HTML ended up in the right spot, that Angular directives did what they should, or you are evaluating the DOM to verify that component logic worked.  In most cases, putting tests that do any of these at the component level is the wrong way to test. <figure><img src="/uploads/2017/08/2017-08-27.jpg" alt="" title="Model View Presenter, Angular, and Testing"><figcaption>Photo credit: <a href="//www.flickr.com/photos/tamworthboroughcouncil/15657023428/">Tamworth Borough Council</a> via <a href="//visualhunt.com/re/e21893">Visualhunt.com</a> / <a href="//creativecommons.org/licenses/by/2.0/"> CC BY</a></figcaption></figure></p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/model-view-presenter-angular-and-testing/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/model-view-presenter-angular-and-testing/" data-id="ck3vvptg800gls0hisfuta1i5" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/mvp/">mvp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unit-test/">unit test</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-angular-observable-secrets-revealed" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/angular-observable-secrets-revealed/">Angular Observable Secrets Revealed</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/angular-observable-secrets-revealed/" class="article-date"><time datetime="2017-08-08T10:30:11.000Z" itemprop="datePublished">2017-08-08</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Angular/">Angular</a> / <a class="article-category-link" href="/categories/Angular/RxJS/">RxJS</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>If you’ve been programming JavaScript based applications for any length of time, you’ve probably already made the progression from callback hell to promises, but just to recap.  Whenever we make any kind of asynchronous call in JavaScript, we need to provide a callback function to the call so that, when the call completes, the function can be called with any resulting data.  Function calls you may typically make that need this kind of feature are <code>setTimeout()</code>, <code>setInterval(),</code> and AJAX calls using the various libraries that support this. </p>
+<p>The problem with using callbacks is that you can end up with “Callback Hell” where you have callbacks inside of other callbacks.  Our code becomes messy and difficult to reason about. </p>
+<p>To try to flatten this situation out, promises were created.  Instead of creating a callback function and passing it into the asynchronous function, the asynchronous function returns a promise that has a function we can pass our function into.  This function can return yet another promise.  The result is that instead of having nested callbacks, all of our callbacks live at the same level. </p>
+<p>However, in the process, we lost the ability to cancel an asynchronous function using callbacks.  Most of the time, this was not a huge concern, but in the case of AJAX calls, we did end up making more request than we really needed to.  Most people never even recognized this as an issue.  But if you go and take a look at some of your older code, you will see that you have several places where the code would work more efficiently if you were able to cancel a call that was being superseded by a new call. </p>
+<p>Meanwhile, some additional functions were added to JavaScript Arrays.  Maybe you’ve seen some of them?  map(), reduce(), and filter() are three of the more common functions. </p>
+<p>What?  You haven’t seen these?  If you have and you know how they work, you can skip this next section.  But, if you haven’t, pay careful attention because this next section is critical to understanding how Observables work. <figure><img src="/uploads/2017/08/2017-08-08.jpg" alt="" title="Angular Observable Secrets Revealed"> Photo via <a href="//visualhunt.com/re/4ba464">VisualHunt.com</a></figure></p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/angular-observable-secrets-revealed/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/angular-observable-secrets-revealed/" data-id="ck3vvpt3j003ms0hiqljpih8y" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RxJS/">RxJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/observables/">observables</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-typescript-functional-programming" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/enforce-typescript-functional-programming/">Enforce TypeScript Functional Programming</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/enforce-typescript-functional-programming/" class="article-date"><time datetime="2017-07-25T10:30:00.000Z" itemprop="datePublished">2017-07-25</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/none/">none</a> / <a class="article-category-link" href="/categories/none/TypeScript/">TypeScript</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>As consistent readers of this blog are aware, I’ve fallen in love with Functional Programming.  But I also live in a primarily Angular/TypeScript world where some code is still Object Oriented and other code is more Functional in nature.  And while TypeScript lets you do some Functional things, I’ve found it hard to force functional concepts in TypeScript.  So, I’ve gone searching.  Wouldn’t it be great if there were some sort of flag you could set that said, “Hey compiler, I’m in ‘Functional’ mode now!”  And the compiler would make sure that you never used a conditional statement, never accessed hidden parameters, and never mutated state? </p>
+<p>Well, I think I’ve figured out some of how to manage all of this using nothing more than TypeScript and some TSLint rules. <figure><img src="/uploads/2017/07/2017-07-25.jpg" alt=""><figcaption>Photo credit: <a href="//www.flickr.com/photos/archer10/15127010075/">archer10 (Dennis) 99M Views</a> via <a href="//visualhunt.com/re/52cd50">VisualHunt.com</a> / <a href="//creativecommons.org/licenses/by-sa/2.0/"> CC BY-SA</a></figcaption></figure></p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/enforce-typescript-functional-programming/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/enforce-typescript-functional-programming/" data-id="ck3vvptp200o8s0hivwqacdeh" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/functional/">functional</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tslint/">tslint</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/typescript/">typescript</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-angular-routing" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/how-to-implement-angular-routing/">How to Implement Angular Routing</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/how-to-implement-angular-routing/" class="article-date"><time datetime="2017-07-18T10:30:23.000Z" itemprop="datePublished">2017-07-18</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Angular/">Angular</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>In the old world where all of our pages were on the server and every change on the client side required a full round trip to the server, each page was a unique URL on the server.  In the SPA world, we only load one “Page” from the server and the client takes care of making it look like we have moved from one page to another. </p>
+<p>When done well, we can create pages that reuse existing content on the screen causing a minimal screen refresh while still allowing the user to link to a specific “Page” in our application. </p>
+<p>These “Pages” are called “Routes”  As in, here is the route to some code I want to execute. <figure><img src="/uploads/2017/07/2017-07-18.png" alt="" title="How to Implement Angular 2+ Routing"> Photo via <a href="//visualhunt.com/re/9589c4">Visual Hunt</a></figure></p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/how-to-implement-angular-routing/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/how-to-implement-angular-routing/" data-id="ck3vvpt2z0030s0hi1kbbvidq" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/routing/">routing</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <div id="page-nav">
+    <nav><ul class="pagination"><li><a class="page-prev" rel="prev" href="/page/2/"><i class="fa fa-chevron-left"></i> Prev</a></li><li><a class="page-number" href="/">1</a></li><li><a class="page-number" href="/page/2/">2</a></li><li class="active"><span class="page-number">3</span></li><li><a class="page-number" href="/page/4/">4</a></li><li><a class="page-number" href="/page/5/">5</a></li><li class="disabled"><span class="page-space">&hellip;</span></li><li><a class="page-number" href="/page/31/">31</a></li><li><a class="page-next" rel="next" href="/page/4/">Next <i class="fa fa-chevron-right"></i></a></li></ul></nav>
+  </div>
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/what-if-unit-testing-wasn’t-necessary-notdd/">What If Unit Testing Wasn’t Necessary? #noTDD</a>
+        </li>
+      
+        <li>
+          <a href="/linkedin-tips-for-programmers/">LinkedIn Tips For Programmers</a>
+        </li>
+      
+        <li>
+          <a href="/typescript-basics-for-angular-developers/">TypeScript Basics for Angular Developers</a>
+        </li>
+      
+        <li>
+          <a href="/the-tyranny-of-emotions/">The Tyranny of Emotions</a>
+        </li>
+      
+        <li>
+          <a href="/where-to-store-angular-configurations/">Where To Store Angular Configurations</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

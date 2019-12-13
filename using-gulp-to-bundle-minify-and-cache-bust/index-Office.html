@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Using Gulp to Bundle, Minify, and Cache-bust | Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Last week I discussed how to setup Node.js and Gulp in Visual Studio 2015.  During that discussion, I mentioned that I’m using gulp to bundle, minify and cache-bust my HTML, CSS, and JavaScript files.">
+<meta name="keywords" content="bundling,gulp,minification,node.js">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using Gulp to Bundle, Minify, and Cache-bust">
+<meta property="og:url" content="http://davembush.github.com/using-gulp-to-bundle-minify-and-cache-bust/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:description" content="Last week I discussed how to setup Node.js and Gulp in Visual Studio 2015.  During that discussion, I mentioned that I’m using gulp to bundle, minify and cache-bust my HTML, CSS, and JavaScript files.">
+<meta property="og:locale" content="English">
+<meta property="og:image" content="http://davembush.github.com/uploads/2016/01/image-5.png">
+<meta property="og:updated_time" content="2018-06-30T20:06:57.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Using Gulp to Bundle, Minify, and Cache-bust">
+<meta name="twitter:description" content="Last week I discussed how to setup Node.js and Gulp in Visual Studio 2015.  During that discussion, I mentioned that I’m using gulp to bundle, minify and cache-bust my HTML, CSS, and JavaScript files.">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2016/01/image-5.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-using-gulp-to-bundle-minify-and-cache-bust" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      Using Gulp to Bundle, Minify, and Cache-bust
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/using-gulp-to-bundle-minify-and-cache-bust/" class="article-date"><time datetime="2016-01-28T13:30:00.000Z" itemprop="datePublished">2016-01-28</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Javascript/">Javascript</a> / <a class="article-category-link" href="/categories/Javascript/Node-js/">Node.js</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Last week I discussed <a href="/using-node-js-and-gulp-with-an-existing-web-application-in-visual-studio-2015/">how to setup Node.js and Gulp in Visual Studio 2015</a>.  During that discussion, I mentioned that I’m using gulp to bundle, minify and cache-bust my HTML, CSS, and JavaScript files. This week, my intent is to walk you through exactly how I do that. So, if you don’t already have Node.js and Gulp installed, you may want to go back and read the article I wrote last week. Since most of the people who read this blog are ASP.NET developers, there may be a few .NET specific tips along the way.  But the Gulp file I am going to walk you through is technology agnostic.  So if you are using some other technology, you’ll still benefit from this article. <img src="/uploads/2016/01/image-5.png" alt="image" title="image"></p>
+<h2 id="Bundling"><a href="#Bundling" class="headerlink" title="Bundling"></a>Bundling</h2><p>The first thing we want to do is that we want to combine all of our CSS files and JavaScript files into one file for CSS and one file for JavaScript.  There are several ways that you might do this, but what I wanted was some way that would allow me to work unbundled during development and bundled when I released the code.  Since I’m working with a single page application (SPA), this was a simple matter of configuring my default file to be index.debug.html for development and index.release.html and using web.config transforms to specify which should be used in which environment.  If you are working in some other environment, I’m sure you have some kind of similar way of specifying the default file based on an environment setting. So all of my development work will be done in index.debug.html. Like I said, there are many ways of bundling JavaScript and CSS code, but the way I’ve found that seems to have the least amount of work involved is by using the <a href="//www.npmjs.com/package/gulp-useref">gulp-useref module</a>.  This module lets us put tokens in our html file that specify which files we want to compress and what the resulting file name should be. Your HTML file would look something like this:</p>
+<html><br><head><br>  &lt;!-- build:css css/combined.css –&gt;<br>    <link href="css/one.css" rel="stylesheet"><br>    <link href="css/two.css" rel="stylesheet"><br>  &lt;!-- endbuild –&gt;<br></head><br><body><br>&lt;!-- other normal content goes here –&gt;<br>  &lt;!-- build:js scripts/combined.js –&gt;<br>    <script type="text/javascript" src="scripts/one.js"></script><br>    <script type="text/javascript" src="scripts/two.js"></script><br>  &lt;!-- endbuild –&gt;<br></body><br></html>
+
+<p>useref sees the build token and creates a css file named combined.css and a JavaScript file named combined.js and changes the output html so that it looks like this:</p>
+<html><br><head><br>  <link rel="stylesheet" href="css/combined.css"><br></head><br><body><br>  <script src="scripts/combined.js"></script><br></body><br></html>
+
+<p>To use this feature in your Gulp file, install it using NPM</p>
+<p>npm install gulp-useref –save-dev</p>
+<p>Make sure that you run NPM in the directory your gulpfile.js file is in. In your gulp file, you’ll add the following code:</p>
+<p>var gulp = require(‘gulp’);<br>var useref = require(‘gulp-useref’);</p>
+<p>gulp.task(‘useRef’, [],function() {<br>    return gulp.src(‘index.debug.html’)<br>        .pipe(useref())<br>        .pipe(gulp.dest(‘index’));<br>});</p>
+<p>The end result is that there will be a new index.debug.html file in a sub directory named index along with the new css/combined.css and scripts/combined.js file.</p>
+<h2 id="Conditional-Processing"><a href="#Conditional-Processing" class="headerlink" title="Conditional Processing"></a>Conditional Processing</h2><p>One of the many things I like about Gulp is that it is stream based.  That is, I don’t have to write files to a directory unless or until I want to.  Unlike Grunt (the other popular file processing Node.js based tool) where everything is entirely file based. However, because I have three different types of files coming out of the previous process, and I want to compress each of the files, I’ll need some way to conditionally process the files coming out of useref. For this, we need <a href="//github.com/robrich/gulp-if">gulp-if</a>. You can install gulp-if using NPM using the following command:</p>
+<p>npm install gulp-if –save-dev</p>
+<p>The basic using of gulp-if looks like this:</p>
+<p>var gulpif = require(‘gulp-if’);</p>
+<p>gulpif(/* file condition here <em>/, /\</em> next stream process goes here*/);</p>
+<h2 id="Minify-JavaScript"><a href="#Minify-JavaScript" class="headerlink" title="Minify JavaScript"></a>Minify JavaScript</h2><p>The next thing we want to do is that we want to minify the resulting combined JavaScript file.  There are several that you could use.  The one I settled on is <a href="//www.npmjs.com/package/gulp-uglify">gulp-uglify</a>. Install gulp-uglify using</p>
+<p>npm install gulp-uglify –save-dev</p>
+<p>So, combining this with gulp-if, the usage would look like this:</p>
+<p>var gulpif = require(‘gulp-if’);<br>var uglify = require(‘gulp-uglify’);</p>
+<p>… other code here</p>
+<p>.pipe(gulpif(‘*.js’, uglify()));</p>
+<p>This is just the general gist.  We’ll put all of this together in a few more paragraphs.</p>
+<h2 id="Minify-CSS"><a href="#Minify-CSS" class="headerlink" title="Minify CSS"></a>Minify CSS</h2><p>To minify CSS, I decided to use <a href="//www.npmjs.com/package/gulp-cssnano">gulp-cssnano</a> Install gulp-cssnano using:</p>
+<p>npm install gulp-cssnano –save-dev</p>
+<p>And use it in our code like this:</p>
+<p>var cssnano = require(‘gulp-cssnano’);<br>var gulpif = require(‘gulp-if’);</p>
+<p>… code here …</p>
+<p>.pipe(gulpif(‘*.css’, uglify()));</p>
+<h2 id="Map-Files"><a href="#Map-Files" class="headerlink" title="Map Files"></a>Map Files</h2><p>Once we have all of our files minified, we’ll want some way of being able to see the original source code even though you have a minified file that the site is using.  I’m not going to go into a lot of detail about what a map file is or what it does here.  But if you have a problem on a production server, you are going to want to at least have map files available so you can track the issue down. To create a map file, you’ll want to use <a href="//www.npmjs.com/package/gulp-sourcemaps">gulp-sourcemaps</a>. Install using</p>
+<p>npm install gulp-sourcemaps –save-dev</p>
+<p>I’ll show you how this all plugs in soon.</p>
+<h2 id="One-More-Package"><a href="#One-More-Package" class="headerlink" title="One More Package"></a>One More Package</h2><p>Yes, believe it or not, there is one more package we need yet to make this all work. You see, to get the minify stuff to work with useref we need to install the <a href="//www.npmjs.com/package/lazypipe">lazypipe</a> module. Which you can install using:</p>
+<p>npm install lazypipe –save-dev</p>
+<h2 id="Putting-it-All-Together"><a href="#Putting-it-All-Together" class="headerlink" title="Putting it All Together"></a>Putting it All Together</h2><p>And so now, finally, we can put this all together in one big script.</p>
+<p>var gulp = require(‘gulp’);<br>var useref = require(‘gulp-useref’);<br>var uglify = require(‘gulp-uglify’);<br>var cssnano = require(‘gulp-cssnano’);<br>var lazypipe = require(‘lazypipe’);<br>var sourcemaps = require(‘gulp-sourcemaps’);<br>var gulpif = require(‘gulp-if’);</p>
+<p>// compressTasks is a sub process used by useRef (below)<br>// that compresses (takes out white space etc) the<br>// javascript and css files<br>var compressTasks = lazypipe()<br>    .pipe(sourcemaps.init, { loadMaps: true })<br>    .pipe(function () { return gulpif(‘<em>.js’, uglify()); })<br>    .pipe(function() {<br>        return gulpif(‘</em>.css’, cssnano({<br>                zindex: false }));<br>    });</p>
+<p>// useRef looks at markers in index.debug.html and<br>// combines all of the files into one file.  once the<br>// files are combined the compressTasks process<br>// is called and then the files are all written out to<br>// the index directory.<br>gulp.task(‘useRef’, [],function() {<br>    return gulp.src(‘index.debug.html’)<br>        .pipe(useref({},<br>            lazypipe()<br>            .pipe(compressTasks)</p>
+<pre><code>    ))
+.pipe(sourcemaps.write(&apos;.&apos;))
+.pipe(gulp.dest(&apos;index&apos;));
+</code></pre><p>});</p>
+<h2 id="Compressing-The-HTML-file"><a href="#Compressing-The-HTML-file" class="headerlink" title="Compressing The HTML file"></a>Compressing The HTML file</h2><p>So, as the comments say and as I’ve mentioned before, this places everything in the index directory.  What we want to do next is to compress the HTML file and move the index.debug.html back up to the root directory with the name index.release.html and place the css file and the javascript file in the appropriate directories hanging off the root. To compress the HTML file, you can use the NPM module <a href="//www.npmjs.com/package/gulp-htmlmin">gulp-htmlmin</a>, which you can install using</p>
+<p>npm install gulp-htmlmin –save-dev</p>
+<p>And the code</p>
+<p>var htmlmin = require(‘gulp-htmlmin’);</p>
+<p>// minIndex takes all of the whitespace out of the<br>// main index file<br>gulp.task(‘minIndex’, [‘useRef’], function() {<br>    return gulp.src(‘index/index.debug.html’)<br>        .pipe(htmlmin({ collapseWhitespace: true,<br>             removeComments: true }))<br>        .pipe(gulp.dest(‘index’));<br>});</p>
+<h2 id="Rename-the-Index-File"><a href="#Rename-the-Index-File" class="headerlink" title="Rename the Index File"></a>Rename the Index File</h2><p>For renaming the file, we use <a href="//www.npmjs.com/package/gulp-rename">gulp-rename</a></p>
+<p>npm install gulp-rename –save-dev</p>
+<p>And the following code:</p>
+<p>var gulpRename = require(‘gulp-rename’);</p>
+<p>// renameIndex renames the index file and puts it<br>// in the root directory<br>gulp.task(‘renameIndex’, [‘minIndex’], function () {<br>    return gulp.src(‘index/index.debug.html’)<br>        .pipe(gulpRename(‘index/index.release.html’))<br>        .pipe(gulp.dest(‘.’));<br>});</p>
+<p>This renames the file and puts it in the root directory.</p>
+<h2 id="Moving-Files"><a href="#Moving-Files" class="headerlink" title="Moving Files"></a>Moving Files</h2><p>Next we need to get the files that are in our index directory back out to the directories the belong in.  To do this, we use the built-in node command gulp.dest().</p>
+<p>gulp.task(‘copyJs’, [‘useRef’], function () {<br>    // copy the js and map files generated from useref to<br>    // the real app directory<br>    return gulp.src(‘index/app/<em>.</em>‘)<br>        .pipe(gulp.dest(‘app’));<br>});</p>
+<p>gulp.task(‘copyCss’, [‘useRef’], function () {<br>    // copy the css and map files generated from useref to<br>    // the real css directory<br>    return gulp.src(‘index/css/<em>.</em>‘)<br>        .pipe(gulp.dest(‘css’));<br>});</p>
+<h2 id="Cache-busting"><a href="#Cache-busting" class="headerlink" title="Cache-busting"></a>Cache-busting</h2><p>One of the age old problems of using CSS and JavaScript pages on our site is that when we put new versions up, we have no way of telling the browser that we just put a new file up unless we change the file name.  The trick is to make the file look like a new file.  This is typically done by putting a query parameter at the end. Once again, there are several solutions to this problem available for Gulp, but the one I like the best reads the file and generates a hash string for it and appends that as the query string.  This make the file look unique but only causes the browser to download the file if it really is different. To implement cache-busting, you’ll want to install <a href="//www.npmjs.com/package/gulp-cache-bust">gulp-cache-bust</a></p>
+<p>npm install gulp-cache-bust –save-dev</p>
+<p>And the final bit of code to make all of this work:</p>
+<p>var cacheBuster = require(‘gulp-cache-bust’);</p>
+<p>// cacheBuster looks at the css and js files and appends a hash to the<br>// request to cause the file to get reloaded when the file changes.<br>gulp.task(‘cacheBuster’, [‘copyCss’, ‘copyJs’, ‘renameIndex’], function () {<br>    return gulp.src(‘index/index.release.html’)<br>        .pipe(cacheBuster())<br>        .pipe(gulp.dest(‘.’));<br>});</p>
+<h2 id="Enhancements"><a href="#Enhancements" class="headerlink" title="Enhancements"></a>Enhancements</h2><p>If you wanted to go to the trouble, you could create this as one great big script that never actually put the files in the index directory.  But I have found having the files written out to the intermediate directory to be valuable for debugging purposes.</p>
+<h2 id="The-Final-Code"><a href="#The-Final-Code" class="headerlink" title="The Final Code"></a>The Final Code</h2><p>You can get <a href="//github.com/DaveMBush/BundleMinifyAndCacheBustWithGulp">the complete Gulp script from GitHub</a>.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/using-gulp-to-bundle-minify-and-cache-bust/" data-id="ck3vvptqp00pis0hie5jrkrl2" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bundling/">bundling</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gulp/">gulp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/minification/">minification</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node-js/">node.js</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/using-node-js-and-gulp-with-asp-net-in-visual-studio-2015/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">Using Node.js and Gulp with ASP.NET in Visual Studio 2015</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/javascript-unit-test-code-coverage-using-nodejs/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">JavaScript Unit Test Code Coverage Using NodeJS</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/what-if-unit-testing-wasn’t-necessary-notdd/">What If Unit Testing Wasn’t Necessary? #noTDD</a>
+        </li>
+      
+        <li>
+          <a href="/linkedin-tips-for-programmers/">LinkedIn Tips For Programmers</a>
+        </li>
+      
+        <li>
+          <a href="/typescript-basics-for-angular-developers/">TypeScript Basics for Angular Developers</a>
+        </li>
+      
+        <li>
+          <a href="/the-tyranny-of-emotions/">The Tyranny of Emotions</a>
+        </li>
+      
+        <li>
+          <a href="/where-to-store-angular-configurations/">Where To Store Angular Configurations</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>

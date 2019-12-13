@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Running Selenium In Parallel With Any .NET Unit Testing Tool | Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Running Selenium in parallel from .NET seems to be a problem because, as of the time of this writing, I’ve yet to find a viable way of running selenium test on multiple browsers using Selenium Grid.">
+<meta name="keywords" content="c#,testing,.net,nunit,selenium,parallel">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Running Selenium In Parallel With Any .NET Unit Testing Tool">
+<meta property="og:url" content="http://davembush.github.com/running-selenium-in-parallel-with-any-net-unit-testing-tool/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:description" content="Running Selenium in parallel from .NET seems to be a problem because, as of the time of this writing, I’ve yet to find a viable way of running selenium test on multiple browsers using Selenium Grid.">
+<meta property="og:locale" content="English">
+<meta property="og:updated_time" content="2018-06-23T18:40:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Running Selenium In Parallel With Any .NET Unit Testing Tool">
+<meta name="twitter:description" content="Running Selenium in parallel from .NET seems to be a problem because, as of the time of this writing, I’ve yet to find a viable way of running selenium test on multiple browsers using Selenium Grid.">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-running-selenium-in-parallel-with-any-net-unit-testing-tool" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      Running Selenium In Parallel With Any .NET Unit Testing Tool
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/running-selenium-in-parallel-with-any-net-unit-testing-tool/" class="article-date"><time datetime="2014-07-31T17:15:00.000Z" itemprop="datePublished">2014-07-31</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Selenium/">Selenium</a> / <a class="article-category-link" href="/categories/Selenium/Testing/">Testing</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Running Selenium in parallel from .NET seems to be a problem because, as of the time of this writing, I’ve yet to find a viable way of running selenium test on multiple browsers using <a href="//docs.seleniumhq.org/docs/07_selenium_grid.jsp">Selenium Grid</a>.  This doesn’t mean that there aren’t a few articles out there that have some kind of solution.  But they’ve never satisfied me as something that I could easily plug into my already created test. While my preferred testing tools are <a href="//www.nunit.org/">NUnit</a> and <a href="//www.specflow.org/">SpecFlow</a>, the method I am about to propose should work with any existing test harness you might want to use.  The only prerequisite is that you are using <a href="//code.google.com/p/selenium/wiki/PageObjects">Page Models</a> to wrap your access to any particular web page. This article assumes that you already:</p>
+<ul>
+<li>know how to write Selenium tests</li>
+<li>know how to use Selenium Grid</li>
+<li>know how to use the Page Model pattern</li>
+<li>know how to use your chosen test harness.</li>
+</ul>
+<p>OK.  On to the main event.</p>
+<h2 id="Here-Is-The-Problem"><a href="#Here-Is-The-Problem" class="headerlink" title="Here Is The Problem"></a>Here Is The Problem</h2><p>In order to run multiple browsers at the same time, the easiest way is to provide a wrapper Page Model that calls multiple instances of the page model at the same time. The hard way of doing this would be to create an Interface that represented the real page model and then create a proxy class that would hold a list of all of the real page model objects we needed to call.  Each time a property or method on the proxy gets called, all it would do would be to pass the call down into the real objects in parallel. This would work, but the main draw back is that I really don’t want to have to write a method for each method in my real page model.  So the question is, how can we get around this?</p>
+<h2 id="DynamicObject-To-The-Rescue"><a href="#DynamicObject-To-The-Rescue" class="headerlink" title="DynamicObject To The Rescue"></a>DynamicObject To The Rescue</h2><p>Enter the little known class, <a href="//msdn.microsoft.com/en-us/library/system.dynamic.dynamicobject(v=vs.110">DynamicObject</a>.aspx).   In .NET 4, Microsoft introduced the dynamic keyword.  One of the main uses is for places where  you need to be able to declare a variable in your code that the compiler won’t know how to resolve the type of until runtime.  I could have used this several years ago when I had two assemblies that needed to reference each other.  In that case, I used reflection.  But dynamic would have worked with a lot less work. DynamicObject is a specific class that allows us to resolve property and method calls at runtime using our own logic. We will also use the Task Parallel library to implement our parallel calls. For completeness, and so that no one is confused when they try to implement this code, you’ll need the following using statements at the top of the CS file.</p>
+<h2 id="Using-Statements-And-Constructor"><a href="#Using-Statements-And-Constructor" class="headerlink" title="Using Statements And Constructor"></a>Using Statements And Constructor</h2><p>using System;<br>using System.Collections.Concurrent;<br>using System.Dynamic;<br>using System.Reflection;<br>using System.Threading.Tasks;</p>
+<p>So, let’s get started.  The first thing we will need is a class declaration:</p>
+<p>class ParallelPageModel<tpage>:  DynamicObject<br>{<br>}</tpage></p>
+<p>TPage allows us to specify the Interface the real Page Model implements.  Yes, we still need the interface, but we won’t need to create a new wrapper class for every page model we want to wrap.  The class  inherits from DynamicObject so that all of our on the fly goodness will work. Next, we’ll need some place to store an array of PageObjects we want to proxy.  So we add a private variable _page for that purpose.</p>
+<p>private readonly TPage[] _pages;</p>
+<p>By using TPage[], we create a variable that is the same type array as the Page Models we are proxying. Next we need a constructor.</p>
+<p>ParallelPageModel(params TPage[] pages)<br>{<br>    _pages = pages;<br>}</p>
+<p>By using the params keyword, we can either  pass in page objects as an array or as individual parameters. The magic happens in three overridden methods that are in DynamicObject:</p>
+<ul>
+<li>TryInvokeMember – resolves any method calls.</li>
+<li>TrySetMember – resolves any property setters</li>
+<li>TryGetMember – resolves any property getters</li>
+</ul>
+<p>So let’s add those methods next:</p>
+<p>public override bool TryInvokeMember<br>    (InvokeMemberBinder binder,<br>      object[] args,<br>      out object result)<br>{<br>}</p>
+<p>public override bool TrySetMember<br>    (SetMemberBinder binder, object value)<br>{<br>}</p>
+<p>public override bool TryGetMember<br>    (GetMemberBinder binder, out object result)<br>{<br>}</p>
+<h2 id="TryInvokeMember"><a href="#TryInvokeMember" class="headerlink" title="TryInvokeMember"></a>TryInvokeMember</h2><p>Inside of the TryInvokeMember method, the first thing we will want to do is to use reflection to call into the real methods.  Since we could have multiple instances of the same method we need to call we will want to do this in a loop. When I first worked this out, I started by just implementing a foreach loop but we are going to jump right to using Parallel.ForEach() Parallel.ForEach() will let us pass in an array and run a lambda expression on each element in the array.  So, our foreach loop will look like this:</p>
+<p>var results = new ConcurrentBag<object>();<br>Parallel.ForEach(_pages, page =&gt;<br>{<br>    var thisResult = typeof (TPage)<br>       .InvokeMember(binder.Name,<br>        BindingFlags.InvokeMethod |<br>        BindingFlags.Public |<br>        BindingFlags.Instance,<br>        null, page, args);<br>    results.Add(thisResult);<br>});</object></p>
+<p>Note that our lambda expression is not doing anything more than a simple reflection call. The result that is returned is added to our ConcurrentBag collection.  ConcurrentBag is a collection that is specifically made for parallel calls.  We could get into trouble if we added something to a List&lt;&gt; collection unless we added some parallelization gatekeeping around it.  I’m for doing as little work as possible. The second thing we want to do is to process the return results. For this we need to setup a basic foreach loop.</p>
+<p>foreach (var thisResult in results)<br>{<br>}</p>
+<p>Inside the foreach loop we will process the results collection. If the type that got  returned is the same type as the type that the page is proxying for, we just make our result value, the return value the TryInvokeMember is going to return for us to the code that called the proxy, equal to the proxy object.</p>
+<p>if (thisResult is TPage)<br>{<br>    result = this;<br>}</p>
+<p>If the result is not null, meaning either that a previous result was null or we haven’t processed the loop yet, we want to check to see if the value of the current loop result is the same as the loop results we’ve already processed.  If it isn’t, we throw an exception.</p>
+<p>else if (result != null)<br>{<br>    if (!result.Equals(thisResult)) // not the same value<br>    {<br>        throw new Exception<br>           (“Call to method returns different values.”);<br>    }<br>}</p>
+<p>Finally, we just set the result to whatever we have at this point.</p>
+<p>else<br>{<br>    result = thisResult;<br>}</p>
+<p>And then the last thing we want to do is to return true to tell the system we were able to process the method.</p>
+<h2 id="TryGetMember"><a href="#TryGetMember" class="headerlink" title="TryGetMember"></a>TryGetMember</h2><p>Since the implementation for TryGetMember looks very similar to TryInvokeMethod we’ll tackle that next. In fact, the only difference between the two methods is the code inside of the Parallel.ForEach parameter block. So, here it is:</p>
+<p>Parallel.ForEach(_pages, page =&gt;<br>{<br>    var thisResult = typeof(TPage)<br>        .GetProperty(binder.Name).GetValue(page);<br>    results.Add(thisResult);<br>});</p>
+<h2 id="TrySetMember"><a href="#TrySetMember" class="headerlink" title="TrySetMember"></a>TrySetMember</h2><p>TrySetMember is the easiest implementation of all since there are no results to worry about.</p>
+<p>Parallel.ForEach(_pages,<br>     page =&gt; typeof (TPage)<br>        .GetProperty(binder.Name).SetValue(page, value));<br>return true;</p>
+<h2 id="Casting"><a href="#Casting" class="headerlink" title="Casting"></a>Casting</h2><p>So the code above will work, but you won’t get any intellisense help from Visual Studio if you use this code without tweaking it. What we need is some way of casting the ParallelPageModel object to the TPage type that we pass in. For that we are going to use a cool library I found called <a href="//github.com/ekonbenefits/impromptu-interface">ImpromptuInterface</a>. You’ll need to add a using statement.</p>
+<p>using ImpromptuInterface;</p>
+<p>And then you’ll need to add this method to the ParallelPageModel class.</p>
+<p>public TPage Cast()<br>{<br>    return this.ActLike();<br>}</p>
+<p>You would use this like this:</p>
+<p>IMyPageModel p = pageModelProxy.Cast();</p>
+<p>Where IMyPageModel is the interface that specifies what your real PageModel class looks like. Just in case someone is tempted to mention this in the comments, you can’t us operator overloading to achieve the cast because we need it to return TPage, which could be anything and the compiler can’t deal with that.  If you really want to use operator overloading you’ll need to provide your own specific implementation that ends up calling the code above.</p>
+<h2 id="Calling-The-ParallelPageModel"><a href="#Calling-The-ParallelPageModel" class="headerlink" title="Calling The ParallelPageModel"></a>Calling The ParallelPageModel</h2><p>To setup the ParallelPageModel, your code would look something like this, assuming that you have a page model class called MyPageModel with an interface of IMyPageModel.</p>
+<p>var pages = new ConcurrentStack<imypagemodel>();<br>Parallel.Invoke(<br>    () =><br>        pages.Push(PageFactory.GetPageModel(“FireFoxGrid”),<br>    () =><br>        pages.Push(PageFactory.GetPageModel(“IE11Grid”));<br>var pagesArray = pages.ToArray();<br>MyTypedPage =<br>    new ParallelPageModel<imypagemodel>(pagesArray).Cast();</imypagemodel></imypagemodel></p>
+<h2 id="Considerations"><a href="#Considerations" class="headerlink" title="Considerations"></a>Considerations</h2><p>I only just started using this.  It works for my current implementation.  But you may need to tweak it so that it works for you. For example, my assumption here is that you are only dealing with simple types or the page model type you are a proxy for.  There is no code here that will handle a situation where the call to a method would return a entirely new page model. Since the code I am testing is a collection of Single Page Applications and I am not testing navigation at this point, this is not a consideration for me.  But it would be relatively easy code to implement.  If I did that, I would probably handle it but subclassing this main class that does the bulk of the work and override the Try*Member method that needed to deal with that situation.  The other possible way of dealing with the situation is to pass in a list of types that need to be wrapped in their own parallelization object as parameters in the constructor and add some generic code in the ParallelPageModel class. Finally, I am well aware that this code may have bugs.  If you find one, go ahead and fix it. You can leave a comment so that others will benefit.   There is a <a href="//github.com/DaveMBush/ParallelSeleniumUsingNUnit">demo project on GitHub.</a></p>
+<h4 id="Other-Places-Talking-about-Parallel-Selenium"><a href="#Other-Places-Talking-about-Parallel-Selenium" class="headerlink" title="Other Places Talking about Parallel Selenium"></a>Other Places Talking about Parallel Selenium</h4><ul>
+<li><a href="//slmoloch.blogspot.com/2009/12/design-of-selenium-tests-for-aspnet_19.html">Using MbUnit to achieve parallelization</a></li>
+<li><a href="//www.browserstack.com/automate/c-sharp">Use Browser Stack</a></li>
+</ul>
+<p>And of course a ton of links to people asking how this can be achieved.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/running-selenium-in-parallel-with-any-net-unit-testing-tool/" data-id="ck3vvptk400k6s0hi784rqxx0" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/net/">.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nunit/">nunit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/parallel/">parallel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/selenium/">selenium</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/testing/">testing</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/why-get-certified/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">Why Get Certified?</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/javascript-boolean-confusion/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">JavaScript Boolean Confusion</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/what-if-unit-testing-wasn’t-necessary-notdd/">What If Unit Testing Wasn’t Necessary? #noTDD</a>
+        </li>
+      
+        <li>
+          <a href="/linkedin-tips-for-programmers/">LinkedIn Tips For Programmers</a>
+        </li>
+      
+        <li>
+          <a href="/typescript-basics-for-angular-developers/">TypeScript Basics for Angular Developers</a>
+        </li>
+      
+        <li>
+          <a href="/the-tyranny-of-emotions/">The Tyranny of Emotions</a>
+        </li>
+      
+        <li>
+          <a href="/where-to-store-angular-configurations/">Where To Store Angular Configurations</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2019 Dave M Bush<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>
