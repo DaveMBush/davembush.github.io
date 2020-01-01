@@ -11,14 +11,24 @@ categories:
 date: 2017-01-10 07:30:00
 ---
 
-The first time a programmer who was trained in the classical procedural/object oriented history is confronted with the concept of making everything immutable, the first question that comes to mind is, “won’t that make my application slow?”  This is because of how most programmers have been trained.  Making everything immutable generally means that we must copy a lot of memory from one place to another.  Moving memory around is generally considered slow. And so, most programmers dismiss the whole idea as crazy talk.  But is it really all that crazy? <figure>![](/uploads/2016/12/image-4.png "What if Everything Was Immutable?")<figcaption>Photo credit: [Paul Stevenson](//www.flickr.com/photos/pss/354177349/) via [Visualhunt](//visualhunt.com) / [CC BY](//creativecommons.org/licenses/by/2.0/)</figcaption></figure>
+The first time a programmer who was trained in the classical procedural/object oriented history is confronted with the concept of making everything immutable, the first question that comes to mind is, “won’t that make my application slow?”  This is because of how most programmers have been trained.  Making everything immutable generally means that we must copy a lot of memory from one place to another.  Moving memory around is generally considered slow.
 
-<!-- more --> 
+And so, most programmers dismiss the whole idea as crazy talk.  But is it really all that crazy?
+
+<figure>![](/uploads/2016/12/image-4.png "What if Everything Was Immutable?")<figcaption>Photo credit: [Paul Stevenson](//www.flickr.com/photos/pss/354177349/) via [Visualhunt](//visualhunt.com) / [CC BY](//creativecommons.org/licenses/by/2.0/)</figcaption></figure>
+
+<!-- more -->
 
 Two Paths
 ---------
 
-So, let’s look at some computer history.  If you’ve been in this industry any length of time, you’ve probably heard the name Turing and you know the Turing machine has something to do with programming.  But you may not know how it impacts your day to day programming life. In short, Turing is the guy we can point to as the father of modern computing, complete with the fact that we generally process everything sequentially.  It is this sequential processing that causes us to have instructions working on memory and it has served us well. But there is another branch of computer science that was made popular by Alonzo Church that is based on Lambda Calculus.  This branch of computer science is where the bulk of Functional Programming can be traced back to.  In this branch, everything is a function.  Any parameters you pass in cannot have their state changed and the value that is returned is a new value. The main benefits to this newer functional style are:
+So, let’s look at some computer history.  If you’ve been in this industry any length of time, you’ve probably heard the name Turing and you know the Turing machine has something to do with programming.  But you may not know how it impacts your day to day programming life.
+
+In short, Turing is the guy we can point to as the father of modern computing, complete with the fact that we generally process everything sequentially.  It is this sequential processing that causes us to have instructions working on memory and it has served us well.
+
+But there is another branch of computer science that was made popular by Alonzo Church that is based on Lambda Calculus.  This branch of computer science is where the bulk of Functional Programming can be traced back to.  In this branch, everything is a function.  Any parameters you pass in cannot have their state changed and the value that is returned is a new value.
+
+The main benefits to this newer functional style are:
 
 *   If I pass in the same parameters, I’ll always get back the same value.
 *   State is never mutated accidentally because state is never mutated.
@@ -40,23 +50,31 @@ As we’ve already mentioned, that fact that something is immutable means it can
 
 ### Memory Efficiency
 
-The other thing that happens with immutable object is that every string representation only exist once.  So, we never duplicate memory. What do I mean by this? Well, take this example from C#
+The other thing that happens with immutable object is that every string representation only exist once.  So, we never duplicate memory.
 
+What do I mean by this? Well, take this example from C#
+
+``` javascript
 var string1 = "abc";
 var string2 = "abc";
 
-if(string1 == string2){
+if (string1 == string2) {
   writeLn('is equal');
 }
+```
 
 ### Testing Equality
 
-`string1` and `string2` point to the same object “abc” not two different instances of “abc”.  This is why we can write `string1 == string2`.  Unfortunately, the == operator is overloaded so we are still doing string comparison.  But if you want efficiency, you can use the [Intern()](/net-string-pool-not-just-for-the-compiler/) method and ReferenceEquals() to bypass this overload and use pointer comparison.  This is a good thing because we test for string equality and inequality so often the performance penalty we incur from making strings immutable is more than offset by the performance gains we get testing for equality.
+`string1` and `string2` point to the same object “abc” not two different instances of “abc”.  This is why we can write `string1 == string2`.  Unfortunately, the == operator is overloaded so we are still doing string comparison.  
+
+But if you want efficiency, you can use the [Intern()](/net-string-pool-not-just-for-the-compiler/) method and ReferenceEquals() to bypass this overload and use pointer comparison.  This is a good thing because we test for string equality and inequality so often the performance penalty we incur from making strings immutable is more than offset by the performance gains we get testing for equality.
 
 Make Everything Immutable
 -------------------------
 
-If you think about the code you typically write, how much of the time would you benefit from every object in your code working in a similar way to strings? Wouldn’t it be a great thing if you knew that when you passed an object into a function, that function was not going to change the object at all?  Can you think of times that might have prevented a bug? Think of the memory optimizations you would benefit from. And how much easier would it be to test for equality if all you had to test was a memory pointer?  Not only would it be fast, but it would be reliable and a lot less work to code.
+If you think about the code you typically write, how much of the time would you benefit from every object in your code working in a similar way to strings? Wouldn’t it be a great thing if you knew that when you passed an object into a function, that function was not going to change the object at all?  Can you think of times that might have prevented a bug? Think of the memory optimizations you would benefit from.
+
+And how much easier would it be to test for equality if all you had to test was a memory pointer?  Not only would it be fast, but it would be reliable and a lot less work to code.
 
 Immutability is Hard – or is it?
 --------------------------------
@@ -66,4 +84,6 @@ So now that you know what the benefits are, you are probably thinking, “Yes, b
 Impact on Angular2
 ------------------
 
-By using immutable object in Angular2 along with libraries like [NgRX/Store](//github.com/ngrx/store) you can see some major performance increases because the view will be able to determine when it needs to change based on simple object pointer comparison rather than checking entire objects.  For compute-intensive tasks, this is going to be a huge benefit. But it is also well worth learning how to use this before you ever need it simply because it will be a new way of thinking about your project that may take some time to get accustomed to.
+By using immutable object in Angular2 along with libraries like [NgRX/Store](//github.com/ngrx/store) you can see some major performance increases because the view will be able to determine when it needs to change based on simple object pointer comparison rather than checking entire objects.  For compute-intensive tasks, this is going to be a huge benefit.
+
+But it is also well worth learning how to use this before you ever need it simply because it will be a new way of thinking about your project that may take some time to get accustomed to.
