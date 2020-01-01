@@ -6,7 +6,7 @@
   <title>Unit Testing an Angular 2 CLI Project | Dave&#39;s Notebook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="This week we want to continue our series about Angular 2 by looking at the Unit Testing capabilities that Angular 2 provides for us.  What we want to cover today is:  Tweaking Karma to avoid using the">
-<meta name="keywords" content="angular,javascript,unit test,typescript">
+<meta name="keywords" content="unit test,angular,javascript,typescript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Unit Testing an Angular 2 CLI Project">
 <meta property="og:url" content="http://davembush.github.com/unit-testing-an-angular-2-cli-project/index.html">
@@ -14,7 +14,7 @@
 <meta property="og:description" content="This week we want to continue our series about Angular 2 by looking at the Unit Testing capabilities that Angular 2 provides for us.  What we want to cover today is:  Tweaking Karma to avoid using the">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2016/11/image-3.png">
-<meta property="og:updated_time" content="2018-08-11T11:11:08.000Z">
+<meta property="og:updated_time" content="2020-01-01T14:36:56.514Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Unit Testing an Angular 2 CLI Project">
 <meta name="twitter:description" content="This week we want to continue our series about Angular 2 by looking at the Unit Testing capabilities that Angular 2 provides for us.  What we want to cover today is:  Tweaking Karma to avoid using the">
@@ -117,21 +117,40 @@
 <li>Code Coverage</li>
 <li>Tips to testing components</li>
 </ul>
-<p>This article was written using Angular CLI version 1.0.0-beta.20-4  (Tip, if you are upgrading on windows, <code>rm –rf node_modules dist temp</code> just means to delete the three directories.  You can do that part manually, or install bash for Windows and run the command in bash.) <figure><img src="/uploads/2016/11/image-3.png" alt title="Unit Testing an Angular 2 CLI Project"><figcaption>Photo credit: <a href="//www.flickr.com/photos/jimmiehomeschoolmom/4427775569/">jimmiehomeschoolmom</a> via <a href="//visualhunt.com">VisualHunt.com</a> / <a href="//creativecommons.org/licenses/by-nc-sa/2.0/">CC BY-NC-SA</a></figcaption></figure></p>
-<a id="more"></a> 
+<p>This article was written using Angular CLI version 1.0.0-beta.20-4  (Tip, if you are upgrading on windows, <code>rm –rf node_modules dist temp</code> just means to delete the three directories.  You can do that part manually, or install bash for Windows and run the command in bash.)</p>
+<figure><img src="/uploads/2016/11/image-3.png" alt title="Unit Testing an Angular 2 CLI Project"><figcaption>Photo credit: <a href="//www.flickr.com/photos/jimmiehomeschoolmom/4427775569/">jimmiehomeschoolmom</a> via <a href="//visualhunt.com">VisualHunt.com</a> / <a href="//creativecommons.org/licenses/by-nc-sa/2.0/">CC BY-NC-SA</a></figcaption></figure>
+
+<a id="more"></a>
 <h2 id="Tweaking-Karma"><a href="#Tweaking-Karma" class="headerlink" title="Tweaking Karma"></a>Tweaking Karma</h2><p>Open up the project we’ve been working on.</p>
 <ul>
 <li><a href="/getting-started-angular-2/">Getting Started With Angular 2</a></li>
 <li><a href="https://medium.com/@davembush/adding-css-and-javascript-to-an-angular-cli-project-2b843a8283f3" target="_blank" rel="noopener">Adding CSS and JavaScript to an Angular CLI Project</a></li>
 </ul>
-<p>Drop into command line mode and run <code>ng test</code> The first thing you will notice is that this brings up the Chrome browser to run your test.  I don’t know about you, but I really dislike having a browser window up.  I have enough windows running on my screen as it is.  This is the first thing we need to fix.  To do this we are going to install PhantomJS. <code>npm install --save-dev phantomjs-prebuilt</code> Then, we need to tell karma to use PhantomJS.  This is a two step process.  First, we install the karma phantomjs runner <code>npm install --save-dev karma-phantomjs-launcher</code> Next, we modify the karma.conf.js file Change <code>require(&#39;karma-chrome-launcher&#39;),</code> and <code>browsers: [&#39;Chrome&#39;],</code> To <code>require(&#39;karma-phantomjs-launcher&#39;),</code> and <code>browsers: [&#39;PhantomJS&#39;],</code> Last, since we are not using the browser, we will need a better reporting mechanism. To do this we will install spec reporter. <code>npm install --save-dev karma-spec-reporter</code> and we replace this line in karma.conf.js</p>
-<p>reporters: config.angularCli &amp;&amp; config.angularCli.codeCoverage<br>          ? [‘progress’, ‘karma-remap-istanbul’]<br>          : [‘progress’],</p>
+<p>Drop into command line mode and run <code>ng test</code> The first thing you will notice is that this brings up the Chrome browser to run your test.  I don’t know about you, but I really dislike having a browser window up.  I have enough windows running on my screen as it is.  This is the first thing we need to fix.  To do this we are going to install PhantomJS.</p>
+<p><code>npm install --save-dev phantomjs-prebuilt</code></p>
+<p>Then, we need to tell karma to use PhantomJS.  This is a two step process.  First, we install the karma phantomjs runner <code>npm install --save-dev karma-phantomjs-launcher</code> Next, we modify the karma.conf.js file Change <code>require(&#39;karma-chrome-launcher&#39;),</code> and <code>browsers: [&#39;Chrome&#39;],</code> To <code>require(&#39;karma-phantomjs-launcher&#39;),</code> and <code>browsers: [&#39;PhantomJS&#39;],</code> Last, since we are not using the browser, we will need a better reporting mechanism.</p>
+<p>To do this we will install spec reporter.</p>
+<p><code>npm install --save-dev karma-spec-reporter</code></p>
+<p>and we replace this line in karma.conf.js</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">reporters: config.angularCli &amp;&amp; config.angularCli.codeCoverage</span><br><span class="line">          ? ['progress', 'karma-remap-istanbul']</span><br><span class="line">          : ['progress'],</span><br></pre></td></tr></table></figure>
 <p>with</p>
-<p>reporters: config.angularCli &amp;&amp; config.angularCli.codeCoverage<br>          ? [‘spec’, ‘karma-remap-istanbul’]<br>          : [‘spec’],</p>
-<p>And we add a require line at the top of the file with the other requires <code>require(&#39;karma-spec-reporter&#39;),</code> Now, when we run <code>ng test</code> We get a nice text report in our terminal windows instead of the browser popping up.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">reporters: config.angularCli &amp;&amp; config.angularCli.codeCoverage</span><br><span class="line">          ? ['spec', 'karma-remap-istanbul']</span><br><span class="line">          : ['spec'],</span><br></pre></td></tr></table></figure>
+<p>And we add a require line at the top of the file with the other requires</p>
+<p><code>require(&#39;karma-spec-reporter&#39;),</code></p>
+<p>Now, when we run <code>ng test</code> We get a nice text report in our terminal windows instead of the browser popping up.</p>
 <h2 id="Code-Coverage"><a href="#Code-Coverage" class="headerlink" title="Code Coverage"></a>Code Coverage</h2><p>To get a code coverage report for our test use the command ng test –cc The code coverage files will end up in a directory named ‘coverage’ hanging off the root of your project.  You can view the coverage/index.html file to see how well your files are covered.</p>
-<h2 id="Testing-Components"><a href="#Testing-Components" class="headerlink" title="Testing Components"></a>Testing Components</h2><p>For the purposes of this article, I’m going to assume you have some familiarity with creating Jasmine tests.  If you don’t the documentation for Jasmine is pretty easy to understand. But what I do want to cover here is how we test components. If you open up the <code>app.component.spec.ts</code> file, you’ll notice a <code>TestBed</code> class that gets used quite a bit.  Since your test isn’t going to test modules because they only package our other code together, you need some way of faking that out so you can test the components.  To do that, you use <code>TestBed.configureTestingModule(</code> { declarations: [ AppComponent ] }); Which just sets up the declarations you need to reference the component you need to test.  You can put anything in this block that you would normally put in your module definition. Another <code>TestBed</code> method you’ll see is <code>TestBed.createComponent()</code>, which you probably have guessed, creates an instance of the module so you can test it.  The object it creates has a <code>debugElement</code> property hanging off of it.  There are two properties that hang off this object that you’ll make use of a lot.  <code>componentInstance</code> is the actual instance of the component that you created.  Any properties and methods that your component has will be available off of <code>componentInstance</code>. The other object that will be available is <code>nativeElement</code>.  This is the DOM element that the component renders to and you can use <code>querySelector(cssSelectorGoesHere)</code> to select the first element matches the selector or <code>querySelectorAll(cssSelectorGoesHere)</code> to retrieve an array of elements that match. Of course, a test isn’t any good if you don’t make changes to the component and test for them.  And for that we have <code>detectChanges()</code>.  You’ll see that being used in the third test.  You’ll want to use that before you <code>expect()</code> anything.</p>
-<h2 id="Ready-Set-…"><a href="#Ready-Set-…" class="headerlink" title="Ready, Set, …"></a>Ready, Set, …</h2><p>Now that we have some way of testing our code, we can actually begin to write so.  Don’t forget to subscribe to the email I sent out so you don’t miss the next article in this series. Code so far is located at <a href="//github.com/DaveMBush/GettingStartedWithAngular2/tree/Step2">https://github.com/DaveMBush/GettingStartedWithAngular2/tree/Step2</a></p>
+<h2 id="Testing-Components"><a href="#Testing-Components" class="headerlink" title="Testing Components"></a>Testing Components</h2><p>For the purposes of this article, I’m going to assume you have some familiarity with creating Jasmine tests.  If you don’t the documentation for Jasmine is pretty easy to understand.</p>
+<p>But what I do want to cover here is how we test components.</p>
+<p>If you open up the <code>app.component.spec.ts</code> file, you’ll notice a <code>TestBed</code> class that gets used quite a bit.  Since your test isn’t going to test modules because they only package our other code together, you need some way of faking that out so you can test the components.  To do that, you use</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TestBed.configureTestingModule( &#123; declarations: [ AppComponent ] &#125;);</span><br></pre></td></tr></table></figure>
+<p>Which just sets up the declarations you need to reference the component you need to test.  You can put anything in this block that you would normally put in your module definition.</p>
+<p>Another <code>TestBed</code> method you’ll see is</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TestBed.createComponent()</span><br></pre></td></tr></table></figure>
+<p>which you probably have guessed, creates an instance of the module so you can test it.  The object it creates has a <code>debugElement</code> property hanging off of it.  There are two properties that hang off this object that you’ll make use of a lot.  <code>componentInstance</code> is the actual instance of the component that you created.  Any properties and methods that your component has will be available off of <code>componentInstance</code>.</p>
+<p>The other object that will be available is <code>nativeElement</code>.  This is the DOM element that the component renders to and you can use <code>querySelector(cssSelectorGoesHere)</code> to select the first element matches the selector or <code>querySelectorAll(cssSelectorGoesHere)</code> to retrieve an array of elements that match.</p>
+<p>Of course, a test isn’t any good if you don’t make changes to the component and test for them.  And for that we have <code>detectChanges()</code>.  You’ll see that being used in the third test.  You’ll want to use that before you <code>expect()</code> anything.</p>
+<h2 id="Ready-Set-…"><a href="#Ready-Set-…" class="headerlink" title="Ready, Set, …"></a>Ready, Set, …</h2><p>Now that we have some way of testing our code, we can actually begin to write so.  Don’t forget to subscribe to the email I sent out so you don’t miss the next article in this series.</p>
+<p>Code so far is located at <a href="//github.com/DaveMBush/GettingStartedWithAngular2/tree/Step2">https://github.com/DaveMBush/GettingStartedWithAngular2/tree/Step2</a></p>
 
       
     </div>
@@ -142,7 +161,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/unit-testing-an-angular-2-cli-project/" data-id="ck4vee249008h8ohiyqwkckuf" class="article-share-link">
+      <a data-url="http://davembush.github.com/unit-testing-an-angular-2-cli-project/" data-id="ck4vf886c0089r8himxxlo8yv" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -228,6 +247,7 @@
   <div class="container">
     <div id="footer-info" class="inner">
       &copy; 2020 Dave M Bush<br>
+      All opinions are my own and do not reflect any company I have or am currently working at.<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
