@@ -9,8 +9,6 @@ tags:
   - mvp
 ---
 
-# An Angular Application Architecture That Works
-
 The purpose of this article is to specify a working architecture that everyone can us for any app.  This architecture aims to achieve the following goals:
 
 - Ensure that all parts of an application have a home so that anyone can pick up any application that uses this architecture and modify the application without having to learn where everything lives.
