@@ -71,7 +71,7 @@ projectFolder
         - *.service.ts
         - *.reducer.ts
         - *.selector.ts
-        form store slice module goes here
+        (optional form store slice module goes here)
       +- supporting-component-1
       +- store
         supporting route specific NgRX files go here
@@ -83,6 +83,7 @@ projectFolder
         - *.service.ts
         - *.reducer.ts
         - *.selector.ts
+        route store slice module goes here
       route1 components go here
       route1 module goes here
     +- route-1-subroute-a
