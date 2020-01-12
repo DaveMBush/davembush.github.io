@@ -11,7 +11,7 @@ tags:
 
 # An Angular Application Architecture That Works
 
-The purpose of this article is to specify a working architecture that everyone can use for any app.  This architecture aims to achieve the following goals:
+The purpose of this article is to specify a working seed architecture for most enterprise Angular application.  This architecture aims to achieve the following goals:
 
 - Ensure that all parts of an application have a home so that anyone can pick up any application that uses this architecture and modify the application without having to learn where everything lives.
 - Reduce the overall complexity of any one application by using well-established design patterns that work within the Angular ecosystem.
@@ -21,7 +21,7 @@ The purpose of this article is to specify a working architecture that everyone c
 
 ## Guiding Principles
 
-- Try not to drift too far afield of the [Angular Style Guide](https://angular.io/guide/styleguide)
+- Largely adhere to the [Angular Style Guide](https://angular.io/guide/styleguide)
 - Prefer Functional/Reactive programming over Imperative/Object Oriented programming.
 - Prefer Composition over Inheritance when using Object Oriented programming
 - For Object Oriented code, and where it applies, Functional/Reactive code, make your code S..D
@@ -35,7 +35,7 @@ The purpose of this article is to specify a working architecture that everyone c
 
 ## Directory Structure
 
-Let's start with the directory structure our applications will use.  To start with, I use the directory structure outlined in the [Angular Style Guide](https://angular.io/guide/styleguide) with some small modification that still obey the general principles outlined in the style guide.
+Let's start with the directory structure our applications will use.  To start with, the directory structure outlined in the [Angular Style Guide](https://angular.io/guide/styleguide) is used. There are minor modifications that still obey the general principles outlined in the style guide.
 
 ``` text
 projectFolder
@@ -57,7 +57,7 @@ projectFolder
     +- route-1
       +- form
         a route may contain a reactive of templated form
-        +- <form-name>-store
+        +- <form-name>-store feature
         Current state of form only in an NgRX store slice.
         Its single responsibility is to singularly maintain
         the state of the form fields along with various other
@@ -72,6 +72,7 @@ projectFolder
         - *.reducer.ts
         - *.selector.ts
         (optional form store slice module goes here)
+        form components go here
       +- supporting-component-1
       +- store
         supporting route specific NgRX files go here
@@ -98,7 +99,9 @@ projectFolder
       only services, if any, that aren't used by your store go here
 ```
 
-What is slightly different from the style guide is that I create a separate directory for dialogs and routes as these will be where my top-level components will live.  Within a route or a dialog, everything that route or dialog needs should live under it.  In the case where a class is needed by multiple routes or dialogs, these files live under shared.
+What is slightly different from the style guide is that a separate directory is created for dialogs and routes as these will be where my top-level components will live.  Within a route or a dialog, everything that route or dialog needs should live under it.  In the case where a class is needed by multiple routes or dialogs, these files live under shared.
+
+The same apllies to Angular forms. A separate directory is created that houses form level components and the corresponding but separate NgRx store slice. To keep with the principals of single responsibility, the form and its store only handle the state of the form fields. The
 
 As a guiding principle, you should think of each route as a stand-alone application with its own module.  It should be able to run on its own using the classes, functions, etc from either its directory and sub-directories or the classes, functions, etc in the shared directory.
 
@@ -106,7 +109,7 @@ This leads us to Lazy Loading
 
 ## Lazy Loading
 
-While it is possible to create an application where the routes are all specified in one file, this file will quickly get out of hand if you are working with a large application.  You can save yourself a lot of trouble and reduce the cognitive load necessary to digest one file with all the routes if you commit to lazy loading up front.
+While it is possible to create an application where the routes are all specified in one file, for large applications, performance will eventually be impacted.  You can save yourself a lot of trouble and reduce the cognitive load necessary to digest one file with all the routes if you commit to lazy loading up front.
 
 ### Routes
 
@@ -214,7 +217,7 @@ Use SCSS for your theme project and CSS for your application projects.
 
 ## NgRX
 
-We've already addressed some of how NgRX should be used when we talked about using Features instead of one great big Store blob.
+We've already addressed how NgRX applied when using features and feature modules instead of one great big Store blob.
 
 But, there are some other major places where NgRX gets misused that need to be addressed.
 
@@ -231,6 +234,15 @@ Similarly, your actions, reducers, and effects should only relate to each other.
 Some code I've seen has also aliased actions so that, technically action A is actually action B. Don't do that! All the above make your code incredibly hard to track flow of control.
 
 If you were to do this, which I still don't recommend, you should create actions that are clearly multi-use actions.
+
+So what if indeed a particular event needs to kick-off or update sperate slices of a store? The can be answered in a few ways.
+
+*It may be worthwhile re-examining teh architecture of your overall store. Is there good rational a single effect will affect to separate slices of a store in the first place?
+This is espcially important if the resulting actions end up doing the same thing or are using the same data. If so, consider normalizing the store slices and removing redundancies.
+*If that passes the sniff test, consider dispatching different actions in sequence. For example you may be updating different parts of the application each with
+different information and structure and or different service calls. Under this scenario separate store slice will be updated with via different store action sets and different information structures, regardless of whether they we initiated by the same event.
+
+To reiterate, do not mix the various store slice actions just to intercept the same event.
 
 ### Flat Store
 
