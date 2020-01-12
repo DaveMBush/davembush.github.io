@@ -63,9 +63,9 @@ projectFolder
         the state of the form fields along with various other
         fields such as validity, dirtiness, etc. This store
         slice is 'dumb' and does not take into consideration
-        route or app level business logic' for this route. That
-        logic is handled in the store 'state' directly under the
-        'route' folder. Each extension is:
+        route or app level business logic.
+        That logic is handled in the store 'state' directly
+        under the 'route' folder. Each extension is:
         - *.actions.ts
         - *.effects.ts
         - *.service.ts
