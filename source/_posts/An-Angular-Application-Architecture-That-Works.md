@@ -57,18 +57,21 @@ projectFolder
     +- route-1
       +- form
         a route may contain a reactive of templated form
-        +- <form>-store
-        Current state of form only in an ngrx store slice.
-        Its single responsibility is to singularly maintain the state of the form fields
-        along with various other fields such as validity, dirtiness,
-        etc. This store slice is 'dumb' and does not take into consideration
-        'extra form, route or app level business logic' for this route. That is handled
-        in the store 'state' directly under the route.
+        +- <form-name>-store
+        Current state of form only in an NgRX store slice.
+        Its single responsibility is to singularly maintain
+        the state of the form fields along with various other
+        fields such as validity, dirtiness, etc. This store
+        slice is 'dumb' and does not take into consideration
+        route or app level business logic' for this route. That
+        logic is handled in the store 'state' directly under the
+        'route' folder.
         - *.actions.ts
         - *.effects.ts
         - *.service.ts
         - *.reducer.ts
         - *.selector.ts
+        form store slice module goes here
       +- supporting-component-1
       +- store
         supporting route specific NgRX files go here
