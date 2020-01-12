@@ -235,12 +235,12 @@ Some code I've seen has also aliased actions so that, technically action A is ac
 
 If you were to do this, which I still don't recommend, you should create actions that are clearly multi-use actions.
 
-So what if indeed a particular event needs to kick-off or update sperate slices of a store? The can be answered in a few ways.
+So what if indeed a particular event needs to kick-off or update seperate slices of a store? The can be answered in a few ways.
 
 * It may be worthwhile re-examining the architecture of your overall store. Is there good rational a single effect will affect to separate slices of a store in the first place? This is espcially important if the resulting actions end up doing the same thing or are using the same data. If so, consider normalizing the store slices and removing redundancies.
 
-* If that passes the sniff test, consider dispatching different actions in sequence. For example you may be updating different parts of the application each with
-  different information and structure and or different service calls. Under this scenario separate store slice will be updated with via different store action sets and different information structures, regardless of whether they we initiated by the same event.
+* If that passes the sniff test, consider dispatching different actions in sequence for that event. For example you may be updating different parts of the application each with
+  different information and structure and or different service calls. Under this scenario, separate store slices will be updated via different store action sets and different information structures, regardless of whether they we initiated by the same event.
 
 To reiterate, do not mix the various store slice actions just to intercept the same event.
 
