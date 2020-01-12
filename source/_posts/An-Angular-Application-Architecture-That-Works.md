@@ -11,7 +11,7 @@ tags:
 
 # An Angular Application Architecture That Works
 
-The purpose of this article is to specify a working seed architecture for most enterprise Angular application.  This architecture aims to achieve the following goals:
+The purpose of this article is to specify a working seed architecture for most enterprise Angular applications.  This architecture aims to achieve the following goals:
 
 - Ensure that all parts of an application have a home so that anyone can pick up any application that uses this architecture and modify the application without having to learn where everything lives.
 - Reduce the overall complexity of any one application by using well-established design patterns that work within the Angular ecosystem.
