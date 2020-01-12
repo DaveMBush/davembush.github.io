@@ -65,7 +65,7 @@ projectFolder
         slice is 'dumb' and does not take into consideration
         route or app level business logic' for this route. That
         logic is handled in the store 'state' directly under the
-        'route' folder.
+        'route' folder. Each extension is:
         - *.actions.ts
         - *.effects.ts
         - *.service.ts
@@ -77,7 +77,7 @@ projectFolder
         supporting route specific NgRX files go here
         these include actions, effects, services, reducers,
         and selectors.  Each set of files get their own
-        directory.  The extension for each are:
+        directory. Each extension is:
         - *.actions.ts
         - *.effects.ts
         - *.service.ts
