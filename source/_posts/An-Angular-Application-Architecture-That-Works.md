@@ -195,7 +195,7 @@ Use SCSS for your theme project and CSS for your application projects.
 
 ## NgRX
 
-We've already addressed how NgRX applied when using features and feature modules instead of one great big Store blob.
+We've already addressed some of how NgRX should be used when we talked about using Features instead of one great big Store blob.
 
 But, there are some other major places where NgRX gets misused that need to be addressed.
 
