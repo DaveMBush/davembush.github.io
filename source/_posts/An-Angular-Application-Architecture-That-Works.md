@@ -58,7 +58,7 @@ projectFolder
         supporting route specific NgRX files go here
         these include actions, effects, services, reducers,
         and selectors.  Each set of files get their own
-        directory. Each extension is:
+        directory. The extensions for each are:
         - *.actions.ts
         - *.effects.ts
         - *.service.ts
