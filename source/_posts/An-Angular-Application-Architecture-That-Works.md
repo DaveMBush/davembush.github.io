@@ -81,8 +81,6 @@ projectFolder
 
 What is slightly different from the style guide is that a separate directory is created for dialogs and routes as these will be where my top-level components will live.  Within a route or a dialog, everything that route or dialog needs should live under it.  In the case where a class is needed by multiple routes or dialogs, these files live under shared.
 
-The same apllies to Angular forms. A separate directory is created that houses form level components and the corresponding but separate NgRx store slice. To keep with the principals of single responsibility, the form and its store only handle the state of the form fields. The
-
 As a guiding principle, you should think of each route as a stand-alone application with its own module.  It should be able to run on its own using the classes, functions, etc from either its directory and sub-directories or the classes, functions, etc in the shared directory.
 
 This leads us to Lazy Loading
