@@ -87,7 +87,7 @@ This leads us to Lazy Loading
 
 ## Lazy Loading
 
-While it is possible to create an application where the routes are all specified in one file, for large applications, performance will eventually be impacted.  You can save yourself a lot of trouble and reduce the cognitive load necessary to digest one file with all the routes if you commit to lazy loading up front.
+While it is possible to create an application where the routes are all specified in one file, this file will quickly get out of hand if you are working with a large application.  You can save yourself a lot of trouble and reduce the cognitive load necessary to digest one file with all the routes if you commit to lazy loading up front.
 
 ### Routes
 
