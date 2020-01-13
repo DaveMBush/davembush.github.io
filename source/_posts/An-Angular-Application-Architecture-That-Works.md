@@ -33,7 +33,7 @@ The purpose of this article is to specify a working architecture that everyone c
 
 ## Directory Structure
 
-Let's start with the directory structure our applications will use.  To start with, the directory structure outlined in the [Angular Style Guide](https://angular.io/guide/styleguide) is used. There are minor modifications that still obey the general principles outlined in the style guide.
+Let's start with the directory structure our applications will use.  To start with, the directory structure outlined in the [Angular Style Guide](https://angular.io/guide/styleguide) should be used with some minor modifications that still obey the general principles outlined in the style guide.
 
 ``` text
 projectFolder
