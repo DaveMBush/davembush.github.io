@@ -235,8 +235,6 @@ If you have the option, you should flatten your data on the server before you re
 
 The reason you want to work with a flat store is because of immutability. Because the store is immutable, or at least, it SHOULD be, you will need to ensure that when you change an element of the data the object pointers above it all change as well. If you don't, your change detection mechanisms won't work correctly.
 
-To reiterate, for unflattened or 'nested' objects (objects composed of objects, etc), Object.assign() and/or spread merely conducts a 'shallow' copy. In this frequent scenario, a truly mutated object is not created. As such, immutability contexts are broken which, in Angular's case, results in no change detection and faulty UI behavior. Note however, deep copy can be achieved by deep copying ('cloning') and by using 3rd party libraries such as _.lodash or _.underscore. Although this will work, it plays second fiddle to a object normalization best practice described above.
-
 If you use Normalizr and reassemble the nesting in your selectors, you won't have to deal with this mess.
 
 ### Store Everything
