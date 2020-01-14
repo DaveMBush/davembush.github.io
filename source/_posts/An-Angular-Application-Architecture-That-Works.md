@@ -115,7 +115,7 @@ One way you can reduce the nesting without a lot of effort is to style the @host
 
 Another way you can reduce nesting is by recognizing patterns in your code and extracting them into their own component.
 
-Finally, consider using for your templates is cyclomatic complexity.  Codelyzer has a rule you can add to your linting.  I'd set this to no more than 10.  Cyclomatic complexity measures how many paths there are through your code.  Once you've added if, switch or for loops in your template, you've introduced some cyclomatic complexity. If you keep to the metrics I've already mentioned, you should never hit the cyclomatic complexity metric.
+Finally, consider measuring the cyclomatic complexity of your templates.  Codelyzer has a rule you can add to your linting.  I'd set this to no more than 10.  Cyclomatic complexity measures how many paths there are through your code.  Once you've added if, switch or for loops in your template, you've introduced some cyclomatic complexity. If you keep to the metrics I've already mentioned, you should never hit the cyclomatic complexity metric.
 
 ### Component Services
 
@@ -215,10 +215,9 @@ If you were to do this, which I still don't recommend, you should create actions
 
 So what if indeed a particular event needs to kick-off or update seperate slices of a store? The can be answered in a few ways.
 
-* It may be worthwhile re-examining the architecture of your overall store. Is there good rational a single effect will affect to separate slices of a store in the first place? This is espcially important if the resulting actions end up doing the same thing or are using the same data. If so, consider normalizing the store slices and removing redundancies.
+- It may be worthwhile re-examining the architecture of your overall store. Is there a good rational for why a single effect will affect  separate slices of a store in the first place? This is espcially important if the resulting actions end up doing the same thing or are using the same data. If so, consider normalizing the store slices and removing redundancies.
 
-* If that passes the sniff test, consider dispatching different actions in sequence for that event. For example you may be updating different parts of the application each with
-  different information and structure and or different service calls. Under this scenario, separate store slices will be updated via different store action sets and different information structures, regardless of whether they we initiated by the same event.
+- If that passes the sniff test, consider dispatching different actions in sequence for that event. For example you may be updating different parts of the application each with different information and structure and or different service calls. Under this scenario, separate store slices will be updated via different store action sets and different information structures, regardless of whether they were initiated by the same event.
 
 To reiterate, do not mix the various store slice actions just to intercept the same event.
 
