@@ -9,7 +9,7 @@ tags:
   - mvp
 ---
 
-The purpose of this article is to specify a working architecture that everyone can use for any app.  This architecture aims to achieve the following goals:
+The purpose of this article is to specify a working architecture that everyone can use for any Angular applications.  This architecture aims to achieve the following goals:
 
 - Ensure that all parts of an application have a home so that anyone can pick up any application that uses this architecture and modify the application without having to learn where everything lives.
 - Reduce the overall complexity of any one application by using well-established design patterns that work within the Angular ecosystem.
@@ -19,7 +19,7 @@ The purpose of this article is to specify a working architecture that everyone c
 
 ## Guiding Principles
 
-- Try not to drift too far afield of the [Angular Style Guide](https://angular.io/guide/styleguide)
+- Largely adhere to the [Angular Style Guide](https://angular.io/guide/styleguide)
 - Prefer Functional/Reactive programming over Imperative/Object Oriented programming.
 - Prefer Composition over Inheritance when using Object Oriented programming
 - For Object Oriented code, and where it applies, Functional/Reactive code, make your code S..D
@@ -33,7 +33,7 @@ The purpose of this article is to specify a working architecture that everyone c
 
 ## Directory Structure
 
-Let's start with the directory structure our applications will use.  To start with, I use the directory structure outlined in the [Angular Style Guide](https://angular.io/guide/styleguide) with some small modification that still obey the general principles outlined in the style guide.
+Let's start with the directory structure our applications will use.  To start with, the directory structure outlined in the [Angular Style Guide](https://angular.io/guide/styleguide) should be used with some minor modifications that still obey the general principles outlined in the style guide.
 
 ``` text
 projectFolder
@@ -58,12 +58,13 @@ projectFolder
         supporting route specific NgRX files go here
         these include actions, effects, services, reducers,
         and selectors.  Each set of files get their own
-        directory.  The extension for each are:
+        directory. The extensions for each are:
         - *.actions.ts
         - *.effects.ts
         - *.service.ts
         - *.reducer.ts
         - *.selector.ts
+        route store slice module goes here
       route1 components go here
       route1 module goes here
     +- route-1-subroute-a
@@ -78,7 +79,7 @@ projectFolder
       only services, if any, that aren't used by your store go here
 ```
 
-What is slightly different from the style guide is that I create a separate directory for dialogs and routes as these will be where my top-level components will live.  Within a route or a dialog, everything that route or dialog needs should live under it.  In the case where a class is needed by multiple routes or dialogs, these files live under shared.
+What is slightly different from the style guide is that a separate directory is created for dialogs and routes as these will be where my top-level components will live.  Within a route or a dialog, everything that route or dialog needs should live under it.  In the case where a class is needed by multiple routes or dialogs, these files live under shared.
 
 As a guiding principle, you should think of each route as a stand-alone application with its own module.  It should be able to run on its own using the classes, functions, etc from either its directory and sub-directories or the classes, functions, etc in the shared directory.
 
@@ -114,7 +115,7 @@ One way you can reduce the nesting without a lot of effort is to style the @host
 
 Another way you can reduce nesting is by recognizing patterns in your code and extracting them into their own component.
 
-Finally, consider using for your templates is cyclomatic complexity.  Codelyzer has a rule you can add to your linting.  I'd set this to no more than 10.  Cyclomatic complexity measures how many paths there are through your code.  Once you've added if, switch or for loops in your template, you've introduced some cyclomatic complexity. If you keep to the metrics I've already mentioned, you should never hit the cyclomatic complexity metric.
+Finally, consider measuring the cyclomatic complexity of your templates.  Codelyzer has a rule you can add to your linting.  I'd set this to no more than 10.  Cyclomatic complexity measures how many paths there are through your code.  Once you've added if, switch or for loops in your template, you've introduced some cyclomatic complexity. If you keep to the metrics I've already mentioned, you should never hit the cyclomatic complexity metric.
 
 ### Component Services
 
@@ -211,6 +212,14 @@ Similarly, your actions, reducers, and effects should only relate to each other.
 Some code I've seen has also aliased actions so that, technically action A is actually action B. Don't do that! All the above make your code incredibly hard to track flow of control.
 
 If you were to do this, which I still don't recommend, you should create actions that are clearly multi-use actions.
+
+So what if indeed a particular event needs to kick-off or update seperate slices of a store? The can be answered in a few ways.
+
+- It may be worthwhile re-examining the architecture of your overall store. Is there a good rational for why a single effect will affect  separate slices of a store in the first place? This is espcially important if the resulting actions end up doing the same thing or are using the same data. If so, consider normalizing the store slices and removing redundancies.
+
+- If that passes the sniff test, consider dispatching different actions in sequence for that event. For example you may be updating different parts of the application each with different information and structure and or different service calls. Under this scenario, separate store slices will be updated via different store action sets and different information structures, regardless of whether they were initiated by the same event.
+
+To reiterate, do not mix the various store slice actions just to intercept the same event.
 
 ### Flat Store
 
