@@ -215,7 +215,7 @@ If you were to do this, which I still don't recommend, you should create actions
 
 So what if indeed a particular event needs to kick-off or update seperate slices of a store? The can be answered in a few ways.
 
-- It may be worthwhile re-examining the architecture of your overall store. Is there a good rational for why a single effect will affect  separate slices of a store in the first place? This is espcially important if the resulting actions end up doing the same thing or are using the same data. If so, consider normalizing the store slices and removing redundancies.
+- It may be worthwhile re-examining the architecture of your overall store. Is there a good rational for why a single event will affect separate slices of a store in the first place? This is especially important if the resulting actions end up doing the same thing or are using the same data. If so, consider normalizing the store slices and removing redundancies.
 
 - If that passes the sniff test, consider dispatching different actions in sequence for that event. For example you may be updating different parts of the application each with different information and structure and or different service calls. Under this scenario, separate store slices will be updated via different store action sets and different information structures, regardless of whether they were initiated by the same event.
 
@@ -234,6 +234,8 @@ If you are going to flatten the data on the client side, you should use [Normali
 If you have the option, you should flatten your data on the server before you return it. The main advantage to doing this is that you will return less data.
 
 The reason you want to work with a flat store is because of immutability. Because the store is immutable, or at least, it SHOULD be, you will need to ensure that when you change an element of the data the object pointers above it all change as well. If you don't, your change detection mechanisms won't work correctly.
+
+To reiterate, for unflattened or 'nested' objects (objects composed of objects, etc), Object.assign() and/or spread merely conducts a 'shallow' copy. In this frequent scenario, a truly mutated object is not created. As such, immutability contexts are broken which, in Angular's case, results in no change detection and faulty UI behavior. Note however, deep copy can be achieved by deep copying ('cloning') and by using 3rd party libraries such as _.lodash or _.underscore. Although this will work, it plays second fiddle to a object normalization best practice described above.
 
 If you use Normalizr and reassemble the nesting in your selectors, you won't have to deal with this mess.
 
