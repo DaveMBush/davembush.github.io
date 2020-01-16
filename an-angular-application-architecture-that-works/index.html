@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="The purpose of this article is to specify a working architecture that everyone can use for any Angular applications.  This architecture aims to achieve the following goals:  Ensure that all parts of a">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2020-01-15T23:27:53.588Z">
+<meta property="og:updated_time" content="2020-01-16T10:29:30.160Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="An Angular Application Architecture That Works">
 <meta name="twitter:description" content="The purpose of this article is to specify a working architecture that everyone can use for any Angular applications.  This architecture aims to achieve the following goals:  Ensure that all parts of a">
@@ -196,9 +196,9 @@
 <p>If you were to do this, which I still don’t recommend, you should create actions that are clearly multi-use actions.</p>
 <p>So what if indeed a particular event needs to kick-off or update seperate slices of a store? The can be answered in a few ways.</p>
 <ul>
-<li><p>It may be worthwhile re-examining the architecture of your overall store. Is there a good rational for why a single <code>Effect</code> will impact separate slices of a store in the first place? This is especially important if the resulting actions end up doing the same thing or are using the same data. If so, consider normalizing the store slices and removing redundancies.</p>
+<li><p>It may be worthwhile re-examining the architecture of your overall store. Is there a good rational for why a single Action will impact separate slices of a store in the first place? This is especially important if the resulting actions end up doing the same thing or are using the same data. If so, consider normalizing the store slices and removing redundancies.</p>
 </li>
-<li><p>If that passes the sniff test, consider dispatching different actions in sequence for that event. For example you may be updating different parts of the application each with different information and structure or different service calls. Under this scenario, separate store slices will be updated via different store action sets and different information structures, regardless of whether they were initiated by the same event.</p>
+<li><p>If that passes the sniff test, consider dispatching different actions in sequence for that event. For example, you may be updating different parts of the application each with different information and structure or different service calls. Under this scenario, separate store slices will be updated via different store action sets and different information structures, regardless of whether they were initiated by the same event.</p>
 </li>
 </ul>
 <p>To reiterate, do not mix the various store slice actions just to intercept the same event.</p>
@@ -249,7 +249,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/an-angular-application-architecture-that-works/" data-id="ck5fxrjq101tvhcx2bn1d5nik" class="article-share-link">
+      <a data-url="http://davembush.github.com/an-angular-application-architecture-that-works/" data-id="ck5gleak401w2d8x2fhow0t7n" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
