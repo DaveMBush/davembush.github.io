@@ -9,9 +9,17 @@ categories:
 date: 2016-08-09 18:30:00
 ---
 
-We’ll get to Reasons Projects Succeed soon, but I need to do some setup work first. I’ve been thinking about starting an Open Source project for a while.  The only issue was; I didn’t have an idea for a project that didn’t already exist.  Now I do.  So, I’ve begun the process. The issue with starting a project like this is that I would much rather just start coding.  In fact, I would much rather not even make this Open Source.  But making it Open Source has forced me to face project management issues head on. I’ve been listening to enough podcast recently to know that putting something up on GitHub isn’t going to make a project Open Source any more than it will make it successful.  Therefor, I’ve decided to start the project as though it had a team of people already working on it.  It is a team of one for now.  But, one thing I’ve learned in life is that having the structure in place to handle a larger team now will not just benefit me in the future, but it will actually help my small little team of me today. I’ve started looking at other successful Open Source projects to see what they are doing and to determine what components of what they are doing I want to include in my project.  As I’ve gone through this exercise, the thought occurred to me, “If the organizations I’ve worked for implemented half of what these projects implement, the projects would have been run so much more efficiently and the projects that were in trouble may have avoided the trouble.” <figure>![](/uploads/2016/07/image-5.png "10 Reasons Projects Succeed")<figcaption>Photo credit: [Nguyen Vu Hung (vuhung)](//www.flickr.com/photos/vuhung/8576985602/) via [Visual Hunt](//visualhunt.com) / [CC BY](//creativecommons.org/licenses/by/2.0/)</figcaption></figure>
+We’ll get to Reasons Projects Succeed soon, but I need to do some setup work first.
 
-<!-- more --> 
+I’ve been thinking about starting an Open Source project for a while.  The only issue was; I didn’t have an idea for a project that didn’t already exist.  Now I do.  So, I’ve begun the process.
+
+The issue with starting a project like this is that I would much rather just start coding.  In fact, I would much rather not even make this Open Source.  But making it Open Source has forced me to face project management issues head on.
+
+I’ve been listening to enough podcast recently to know that putting something up on GitHub isn’t going to make a project Open Source any more than it will make it successful.  Therefor, I’ve decided to start the project as though it had a team of people already working on it.  It is a team of one for now.  But, one thing I’ve learned in life is that having the structure in place to handle a larger team now will not just benefit me in the future, but it will actually help my small little team of me today.
+
+I’ve started looking at other successful Open Source projects to see what they are doing and to determine what components of what they are doing I want to include in my project.  As I’ve gone through this exercise, the thought occurred to me, “If the organizations I’ve worked for implemented half of what these projects implement, the projects would have been run so much more efficiently and the projects that were in trouble may have avoided the trouble.” <figure>![](/uploads/2016/07/image-5.png "10 Reasons Projects Succeed")<figcaption>Photo credit: [Nguyen Vu Hung (vuhung)](//www.flickr.com/photos/vuhung/8576985602/) via [Visual Hunt](//visualhunt.com) / [CC BY](//creativecommons.org/licenses/by/2.0/)</figcaption></figure>
+
+<!-- more -->
 
 Clear Mission Statement
 -----------------------
@@ -32,7 +40,11 @@ The thing that strikes me most about well-run projects is that they set clear ex
 Easy Development Environment
 ----------------------------
 
-This one drives me crazy.  In just about every organization I go to, setting up my development environment takes a day.  Some places it takes three days.  Simply because I don’t have rights, or the items I need are scatter here and there. Why not write the documentation for this, or better yet, take the time to write a script, that walks you through exactly how to get the development environment setup?  Life would be so much easier. And for places that already have this, when is the last time you verified that the instructions or script still worked?  Stuff changes and we barely notice until the new guy shows up.
+This one drives me crazy.  In just about every organization I go to, setting up my development environment takes a day.  Some places it takes three days.  Simply because I don’t have rights, or the items I need are scatter here and there.
+
+Why not write the documentation for this, or better yet, take the time to write a script, that walks you through exactly how to get the development environment setup?  Life would be so much easier.
+
+And for places that already have this, when is the last time you verified that the instructions or script still worked?  Stuff changes and we barely notice until the new guy shows up.
 
 Continuous Integration Server
 -----------------------------
@@ -67,11 +79,11 @@ Here’s another places that drives me crazy.  Did you ever notice that in an O
 Opt-In
 ------
 
-OK.  This one is going to scare the managers.  But what would happen if the team of programmers where you worked were able to choose what projects they worked on?  I know in some places this wouldn’t work because there is only one project.  But in larger organizations? In most places, you get hired for a gig and then you get assigned to some project.  In some cases, you get hired for one project and assigned to another.   So even the choice you thought you had, you don’t have. Here are some advantages to this:
+OK.  This one is going to scare the managers.  But what would happen if the team of programmers where you worked were able to choose what projects they worked on?  I know in some places this wouldn’t work because there is only one project.  But in larger organizations? In most places, you get hired for a gig and then you get assigned to some project.  In some cases, you get hired for one project and assigned to another.   So even the choice you thought you had, you don’t have.
+
+Here are some advantages to this:
 
 1.  Poorly run projects would get abandoned.
 2.  Projects with no viable reason would get abandoned.
 3.  Programmers would work on things they enjoyed.
 4.  Product owners would have to contribute.
-
-  **What about you?  What do you think makes projects succeed or fail?  Leave a comment.**
