@@ -10,20 +10,32 @@ categories:
 date: 2016-04-14 07:30:00
 ---
 
-If you are using one of the many frameworks that say they are using JavaScript MVVM, you might not be using it the way it should be used. Many of my clients aren't. This article will attempt to answer three questions.
+If you are using one of the many frameworks that say they are using JavaScript MVVM, you might not be using it the way it should be used. Many of my clients aren't.
+
+This article will attempt to answer three questions.
 
 *   What is MVVM?
 *   What are the advantages of MVVM?
 *   What are good MVVM coding practices?
 
-  <figure>![](/uploads/2016/04/image-1.png "JavaScript & MVVM")<figcaption>Photo credit: [uka0310](//www.flickr.com/photos/uka0310/8038385310/) via [VisualHunt](//visualhunt.com) / [CC BY](//creativecommons.org/licenses/by/2.0/)</figcaption></figure>
+<figure>![](/uploads/2016/04/image-1.png "JavaScript & MVVM")<figcaption>Photo credit: [uka0310](//www.flickr.com/photos/uka0310/8038385310/) via [VisualHunt](//visualhunt.com) / [CC BY](//creativecommons.org/licenses/by/2.0/)</figcaption></figure>
 
-<!-- more --> 
+<!-- more -->
 
 What is JavaScript MVVM?
 ------------------------
 
-The first question we need to ask before we can ever start coding is, “What is MVVM?”  The reason for this is that if you don’t understand what this design pattern is attempting to do, you’ll probably ending up making some pretty severe coding mistakes when it comes time to implement it. In the MVVM design pattern, like the MVC design pattern, the first M represents the Model and the first V represents the View.  As with MVC, the Model represents the data you are trying to manipulate.  The View represents the presentation layer.  In MVVM, there is also an entity called a ViewModel which is an object or set of objects that represent the View’s State.  This would include any data you want to present from your Model as well as ancillary states such as what elements are enabled/disabled or visible/hidden.  Not that these are the only items.  This is just a few examples. What makes MVVM cool is that you don’t have to worry about how data gets from the View to the ViewModel or from the ViewModel back into the View.  That all happens automatically.  Although, depending on the implementation, you might have to write a bit more code to notify the View that something changed in the ViewModel so that it knows to update itself. But, you may be left wondering, “Where do event handlers go?” Well, that is one of the things I find confusing about calling it MVVM.  Because in every implementation I’ve ever worked on, there is still a controller of some sorts.  Or, call it a ViewController.  It is the thing that responds to events in the view and updates the ViewModel as needed. So, in general, you have a View that updates the ViewModel automatically and fires events to the ViewController.  This is all specified declaratively.  When an event is fired, the ViewController responds to the event and updates the ViewModel with any state changes.  When the ViewModel changes, it notifies the View that the View should update the presentation.  When the controller needs to know about the current state of the View, it ask the ViewModel for that information because it should be reflected there. ![JavaScript MVVM](/uploads/2016/04/image-2.png "JavaScript MVVM") If you've ever used one of the many MVVM frameworks out there, you'll recognize that many of them combine the ViewModel and the ViewController into one entity.  I've separated them out here for clarity and because I believe that if all possible, they should be maintained separately to maintain the Single Responsibility Principle.  However I recognize that the best you may be able to do is provide to separate sections in one class.  The main point here is that any state changes to the view happen because the ViewModel was updated and not because the ViewController called into the View to make the change.
+The first question we need to ask before we can ever start coding is, “What is MVVM?”  The reason for this is that if you don’t understand what this design pattern is attempting to do, you’ll probably ending up making some pretty severe coding mistakes when it comes time to implement it.
+
+In the MVVM design pattern, like the MVC design pattern, the first M represents the Model and the first V represents the View.  As with MVC, the Model represents the data you are trying to manipulate.  The View represents the presentation layer.  In MVVM, there is also an entity called a ViewModel which is an object or set of objects that represent the View’s State.  This would include any data you want to present from your Model as well as ancillary states such as what elements are enabled/disabled or visible/hidden.  Not that these are the only items.  This is just a few examples.
+
+What makes MVVM cool is that you don’t have to worry about how data gets from the View to the ViewModel or from the ViewModel back into the View.  That all happens automatically.  Although, depending on the implementation, you might have to write a bit more code to notify the View that something changed in the ViewModel so that it knows to update itself.
+
+But, you may be left wondering, “Where do event handlers go?” Well, that is one of the things I find confusing about calling it MVVM.  Because in every implementation I’ve ever worked on, there is still a controller of some sorts.  Or, call it a ViewController.  It is the thing that responds to events in the view and updates the ViewModel as needed.
+
+So, in general, you have a View that updates the ViewModel automatically and fires events to the ViewController.  This is all specified declaratively.  When an event is fired, the ViewController responds to the event and updates the ViewModel with any state changes.  When the ViewModel changes, it notifies the View that the View should update the presentation.  When the controller needs to know about the current state of the View, it ask the ViewModel for that information because it should be reflected there.
+
+![JavaScript MVVM](/uploads/2016/04/image-2.png "JavaScript MVVM") If you've ever used one of the many MVVM frameworks out there, you'll recognize that many of them combine the ViewModel and the ViewController into one entity.  I've separated them out here for clarity and because I believe that if all possible, they should be maintained separately to maintain the Single Responsibility Principle.  However, I recognize that the best you may be able to do is provide to separate sections in one class.  The main point here is that any state changes to the view happen because the ViewModel was updated and not because the ViewController called into the View to make the change.
 
 What JavaScript MVVM is Not
 ---------------------------

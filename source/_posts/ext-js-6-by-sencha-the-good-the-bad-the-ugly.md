@@ -10,16 +10,28 @@ categories:
 date: 2016-04-07 07:30:00
 ---
 
-Long time readers may remember that I started using Ext JS about 3 years ago.  At the time, I was using version 4.2.2.  I recently started a new contract where they are using Ext JS 6.0.1.  I have to say, this version solves a lot of the architectural issues I had with the 4.x series.  But, there are still problems. Since I’ve provided an evaluation of [Angular 2](/angular-2-first-impressions-compared-to-angular-1/) and [React JS](/react-js-and-associated-bits/), I thought providing an evaluation of the current version of Ext JS would be appropriate since these three seem to be the main players in the corporate world. <figure>![](/uploads/2016/04/image.png "Ext JS by Sencha - The Good, The Bad, The Ugly")<figcaption>Photo credit: [sanbeiji](//www.flickr.com/photos/sanbeiji/5606497634/) via [Visual Hunt](//visualhunt.com) / [CC BY-SA](//creativecommons.org/licenses/by-sa/2.0/)</figcaption></figure>
+Long time readers may remember that I started using Ext JS about 3 years ago.  At the time, I was using version 4.2.2.  I recently started a new contract where they are using Ext JS 6.0.1.  I have to say, this version solves a lot of the architectural issues I had with the 4.x series.  But, there are still problems.
 
-<!-- more --> 
+Since I’ve provided an evaluation of [Angular 2](/angular-2-first-impressions-compared-to-angular-1/) and [React JS](/react-js-and-associated-bits/), I thought providing an evaluation of the current version of Ext JS would be appropriate since these three seem to be the main players in the corporate world.
+
+<figure>![](/uploads/2016/04/image.png "Ext JS by Sencha - The Good, The Bad, The Ugly")<figcaption>Photo credit: [sanbeiji](//www.flickr.com/photos/sanbeiji/5606497634/) via [Visual Hunt](//visualhunt.com) / [CC BY-SA](//creativecommons.org/licenses/by-sa/2.0/)</figcaption></figure>
+
+<!-- more -->
 
 Ext JS - The Good
 -----------------
 
 ### MVVM
 
-I’ve always had three major complaints about Ext JS.  Of the three, the fact that Ext JS is nearly impossible to test is the one that drove me away.  In fact, I almost didn’t interview for the contract I have now because they are using Ext JS.  This is because the 4.2 version that I was using implemented what they called the MVC framework.  The problem is, the MVC framework they implemented was not anything [the Gang of Four](/designPatterns) would recognize.  Once I realized that what they were calling MVC wasn’t really MVC, I was able to learn how to use the product much better. But being the TDD guy that I am, I was always frustrated by their implementation of MVC because in order to test anything in the Controller, I had to have the view available.  And while I tried several ways of mitigating this problem, I was never completely satisfied with the solution.  I ought to be able to test my controller without a view, or if I have to have a view, it should be some sort of fake view, or be able to render into a fake DOM like React JS does. But, in Ext JS 6, they’ve provided an alternate framework.  This time it is also more accurately named.  They have provided an MVVM implementation.  In the View, you provide your layout, declarative syntax to access the View’s state from the ViewModel and to specify the event handlers using listener blocks that tell the view what methods to call in the associated ViewController class. In the ViewController, your methods can access the ViewModel by calling getModel() and can set the state of the view by calling the ViewModel’s set() method.  Once this is done, the View can update using the ViewModel’s new state. What this means for testing is that I can test without the View by overriding the ViewContoller.getModel() method to return the ViewModel.  Run my test for a method and check the state of the ViewModel.  Look Ma, no View!
+I’ve always had three major complaints about Ext JS.  Of the three, the fact that Ext JS is nearly impossible to test is the one that drove me away.  In fact, I almost didn’t interview for the contract I have now because they are using Ext JS.  This is because the 4.2 version that I was using implemented what they called the MVC framework.  The problem is, the MVC framework they implemented was not anything [the Gang of Four](/designPatterns) would recognize.  Once I realized that what they were calling MVC wasn’t really MVC, I was able to learn how to use the product much better.
+
+But being the TDD guy that I am, I was always frustrated by their implementation of MVC because in order to test anything in the Controller, I had to have the view available.  And while I tried several ways of mitigating this problem, I was never completely satisfied with the solution.  I ought to be able to test my controller without a view, or if I have to have a view, it should be some sort of fake view, or be able to render into a fake DOM like React JS does.
+
+But, in Ext JS 6, they’ve provided an alternate framework.  This time it is also more accurately named.  They have provided an MVVM implementation.  In the View, you provide your layout, declarative syntax to access the View’s state from the ViewModel and to specify the event handlers using listener blocks that tell the view what methods to call in the associated ViewController class.
+
+In the ViewController, your methods can access the ViewModel by calling getModel() and can set the state of the view by calling the ViewModel’s set() method.  Once this is done, the View can update using the ViewModel’s new state.
+
+What this means for testing is that I can test without the View by overriding the ViewContoller.getModel() method to return the ViewModel.  Run my test for a method and check the state of the ViewModel.  Look Ma, no View!
 
 ### Everything You Need
 
@@ -69,7 +81,9 @@ Ext JS - The Ugly
 
 ### Ugly HTML
 
-There is a lot that is ugly about Ext JS, but nothing is more visibly ugly than the HTML it produces.  This is because, in order to produces a view that will render on any browser, they’ve resorted to using HTML tables to wrap just about every standard control.  This is getting better.  There is less HTML generated in Ext JS 6 than there was in Ext JS 4, but it is still relatively ugly. And that whole nesting issue could go away tomorrow if they would give up on trying to control the rendering of the view through JavaScript.  Why do with JavaScript what CSS was designed to do and does MUCH better?!
+There is a lot that is ugly about Ext JS, but nothing is more visibly ugly than the HTML it produces.  This is because, in order to produces a view that will render on any browser, they’ve resorted to using HTML tables to wrap just about every standard control.  This is getting better.  There is less HTML generated in Ext JS 6 than there was in Ext JS 4, but it is still relatively ugly.
+
+And that whole nesting issue could go away tomorrow if they would give up on trying to control the rendering of the view through JavaScript.  Why do with JavaScript what CSS was designed to do and does MUCH better?!
 
 ### SASS isn’t SASS
 
@@ -77,7 +91,11 @@ Up until version 6, Sencha’s theming engine used standard SASS.  With version
 
 ### None Standard JavaScript
 
-But of all the issues I have with Ext JS 6, the one that bugs me the most is that their framework provides something that runs on JavaScript but really isn’t JavaScript.  They have their own way of declaring a class.  Their own way of instantiating a class.  Their own requires engine.  Their own bundling and minification engine. And since I can’t even use “use strict”; in what they have now – something that has been around long enough that it should be supported by every seriously used framework in existence – it makes me wonder what future embellishments to the JavaScript language we won’t be able to use because Sencha thinks they have a better idea. Will I be able to use the “class” keyword in the future instead of Ext.define()?
+But of all the issues I have with Ext JS 6, the one that bugs me the most is that their framework provides something that runs on JavaScript but really isn’t JavaScript.  They have their own way of declaring a class.  Their own way of instantiating a class.  Their own requires engine.  Their own bundling and minification engine.
+
+And since I can’t even use “use strict”; in what they have now – something that has been around long enough that it should be supported by every seriously used framework in existence – it makes me wonder what future embellishments to the JavaScript language we won’t be able to use because Sencha thinks they have a better idea.
+
+Will I be able to use the “class” keyword in the future instead of Ext.define()?
 
 ### None Standard Build Tools
 
