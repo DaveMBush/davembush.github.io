@@ -25,13 +25,17 @@ Well, I think this is a basic question, but you would be amazed at how few peopl
 
 This simple statement:
 
+``` javascript
 var a = {}
+```
 
 creates an object and assigns it to the variable `a`.
 
 Of course, it isn’t very useful at this point and it is functionally the same as if we’d written:
 
+``` javascript
 var a = new Object();
+```
 
 Notice that I said, “functionally the same.”  What is going on under the hood isn’t exactly the same, but the result is the same.  In both cases, you end up with an essentially empty object that is assigned to the variable `a`.  So, what is the difference between these two methods?
 
@@ -39,8 +43,10 @@ In the first case, we are assigning an object literal.  `{}` is the object.
 
 In the second case, it is the `new` keyword that creates the object.  This object is then passed into the `Object` function and is accessible inside of the Object function as the `this` keyword.  It is the same as if we had written our own function that looked like this:
 
+``` javascript
 function Object(){
 }
+```
 
 Now that we have an object, we can attach fields to it that we can use as properties and methods of our object.  And, once again, we can achieve this result in multiple ways.
 
@@ -49,31 +55,39 @@ Make Your Object Useful
 
 The easiest way to add fields to our object is to do it as part of creating our object literal.
 
+``` javascript
 var a = {
     someProperty: 'A',
     someFunction: function(){
     }
 }
+```
 
 Which we can later access like this:
 
+``` javascript
 var b = a.someProperty;
 
 // and
 
 a.someFunction();
+```
 
 But, if you needed to create multiple objects that all look the same, this could get rather tedious.  Fortunately for us, JavaScript provides us the ability to initialize objects using JavaScript functions.  So, the equivalent code using a function initializer, would look something like this:
 
+``` javascript
 function A(){
     this.someProperty = 'A';
     this.someFunction = function(){
     }
 }
+```
 
 And now when we create a new object using the `new` keyword
 
+``` javascript
 var a = new A();
+```
 
 We can call the fields in the same way we did when we used the object literal.
 
@@ -84,9 +98,11 @@ You’ll notice that we are using `this` to represent the object that was passed
 
 What?!
 
-OK. Let’s back up.  Remember, in JavaScript we are using a function to initialize the object.  How did that object get passed to the function?  It got passed to the function as the function’s context.  JavaScript has no concept of an object that is assigned to a specific function.  There are no classes in JavaScript that keep associations between the resulting object and the code it is associated with.  In JavaScript, everything is an object.  And, if you want to, you can call a function passing it whatever object you want!
+OK.
 
-In fact, this happens naturally all of the time.
+Let’s back up.  Remember, in JavaScript we are using a function to initialize the object.  How did that object get passed to the function?  It got passed to the function as the function’s context.  JavaScript has no concept of an object that is assigned to a specific function.  There are no classes in JavaScript that keep associations between the resulting object and the code it is associated with.  In JavaScript, everything is an object.  And, if you want to, you can call a function passing it whatever object you want!
+
+In fact, this happens naturally all the time.
 
 If you use a JavaScript function as an event handler, the object that is passed to that event handler is the DOM element that fired the event.  Probably not what you would have in mind.
 
@@ -103,15 +119,18 @@ Well, if you remember our discussion about variables and closures, you should be
 
 Let’s say that we want someFunction to access someProperty:
 
+``` javascript
 function A(){
     this.someProperty = 'A';
     this.someFunction = function(){
         this.someProperty = 'B';
     }
 }
+```
 
 In order to ensure we were always accessing the right context, we assign this to a variable and use that variable.
 
+``` javascript
 function A(){
     var self = this;
     self.someProperty = 'A';
@@ -119,6 +138,7 @@ function A(){
         self.someProperty = 'B';
     }
 }
+```
 
 There are a few standard naming conventions for the variable that represents the original context.  You can use self, like I’ve done above.  I’ve also seen that used. _this is one that I’ve seen but I find way too confusing to be useful. Finally, I’ve seen a variable with the same name as the initialization function.  Assuming the initialization function is upper cased, the variable would be the same name only lower cased.
 
@@ -126,6 +146,7 @@ Finally, if you want to be a purist and use the most recently sanctioned way of 
 
 If you did want to use `bind()`, then you could setup your code like:
 
+``` javascript
 function A(){
     this.someProperty = 'A';
     this.someFunction = function(){
@@ -133,6 +154,7 @@ function A(){
     }
     this.someFunction.bind(this);
 }
+```
 
 Which would ensure that `this`, really is the `this` you are expecting.
 
@@ -145,11 +167,14 @@ We now have a very convenient way of creating new objects that do something usef
 
 One awkward way to handle this would be to create the object and then change the value of the property.
 
+``` javascript
 var a = new A();
 a.someProperty = 'B';
+```
 
 But we are using a function to initialize our object.  Why not just pass it a parameter with the value we want to use?
 
+``` javascript
 function A(_someProperty){
     var self = this;
     self.someProperty = _someProperty;
@@ -157,6 +182,7 @@ function A(_someProperty){
         self.someProperty = 'B';
     }
 }
+```
 
 End
 ---
