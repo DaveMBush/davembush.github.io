@@ -76,305 +76,6 @@
         <div class="col-sm-8 blog-main">
           
   
-    <article id="post-javascript-scope" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/javascript-scope/">JavaScript Scope</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/javascript-scope/" class="article-date"><time datetime="2015-06-18T10:00:00.000Z" itemprop="datePublished">2015-06-18</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Javascript/">Javascript</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2015/06/ppl-men-060.jpg" alt="ppl-men-060" title="ppl-men-060"></p>
-<p>If you’ve been programming in any other environment than JavaScript for a while, you may be making assumptions about JavaScript Scope that just aren’t true.  One of those assumptions is how variables get evaluated when you run the JavaScript code and what variables are visible and at what point in the code they are visible.</p>
-<p>Just as a test to see how well you know your JavaScript, let’s create a few tests scenarios.</p>
-<h2 id="Quiz"><a href="#Quiz" class="headerlink" title="Quiz"></a>Quiz</h2><h3 id="1-Given-the-following-code"><a href="#1-Given-the-following-code" class="headerlink" title="1) Given the following code:"></a>1) Given the following code:</h3><p>var foo;<br>foo = “xyz”;</p>
-<p>function bar()<br>{<br>    foo = “abc”;<br>    var foo;<br>}<br>bar();<br>console.log(foo);</p>
-<p>What is displayed in the console window when console.log(foo) is executed?</p>
-<p>Why?</p>
-<h3 id="2-Given-the-following-code"><a href="#2-Given-the-following-code" class="headerlink" title="2) Given the following code:"></a>2) Given the following code:</h3><p>var i = 20;</p>
-<p>for(var i = 0;i &lt; 10;i++){<br>    console.log(i);<br>}</p>
-<p>console.log(‘final i: ‘ + i);</p>
-<p>What is the value of i when console.log(‘final i: ‘ + i) is executed?</p>
-<p>Why?</p>
-<h3 id="3-What-is-wrong-with-the-following-code"><a href="#3-What-is-wrong-with-the-following-code" class="headerlink" title="3) What is wrong with the following code?"></a>3) What is wrong with the following code?</h3><p>foo();</p>
-<p>var foo = function(){<br>    console.log(‘foo was called’);<br>}</p>
-<h3 id="4-Why-would-changing-the-previous-code-to-this-next-block-of-code-fix-the-issue-with-the-previous-code"><a href="#4-Why-would-changing-the-previous-code-to-this-next-block-of-code-fix-the-issue-with-the-previous-code" class="headerlink" title="4) Why would changing the previous code to this next block of code fix the issue with the previous code?"></a>4) Why would changing the previous code to this next block of code fix the issue with the previous code?</h3><p>foo();</p>
-<p>function foo(){<br>    console.log(‘foo was called’);<br>}</p>
-<h2 id="Answers"><a href="#Answers" class="headerlink" title="Answers"></a>Answers</h2><p>1) The value of foo when console.log(foo) is executed is “xyz”</p>
-<p>2) The value of i when console.log(‘final i: ‘ + i) is executed is 10</p>
-<p>3) foo is declared but undefined when we try to call it on the first line</p>
-<p>4) because foo is both declared and defined when it is called on the first line</p>
-<h2 id="Why"><a href="#Why" class="headerlink" title="Why?"></a>Why?</h2><p>How did you do?</p>
-<h2 id="1-“Hoisting”"><a href="#1-“Hoisting”" class="headerlink" title="1) “Hoisting”"></a>1) “Hoisting”</h2><p>The first thing you need to understand about how JavaScript processes code is that it goes through the block of code you are working with and processes the variable declarations first.  That is anything in the global scope (window for browsers, global for server) or anything within a function block.  From the JavaScript compiler’s perspective, the code in example 1 looks like this:</p>
-<p>var foo;<br>foo = “xyz”;</p>
-<p>function bar()<br>{<br>    var foo;<br>    foo = “abc”;<br>}<br>bar();<br>console.log(foo);</p>
-<p>So that the foo = “abc” line assigns the string “abc” to the variable foo in the bar function’s local scope.  Not impacting the variable foo in global scope so that the result at the end of the code sample is that the foo variable still has the value “xyz”.</p>
-<h2 id="2-Only-functions-and-catch-blocks-create-“block-scope”"><a href="#2-Only-functions-and-catch-blocks-create-“block-scope”" class="headerlink" title="2) Only functions and catch blocks create “block scope”"></a>2) Only functions and catch blocks create “block scope”</h2><p>In most languages that I use, if I wanted to create a variable that only had effect within a for, if, or while block, I could create a variable within the braces, or inline like in this example, and the code in the outer block would be left untouched.  But in JavaScript, this would only work if you were using the LET keyword which only appears in ECMA6 and above.</p>
-<p>In JavaScript, it is perfectly legal to declare a variable multiple time.  The compiler will not complain.  So, when we run the code in example 2, the declaration within the for() is ignored and it just reuses the declaration at the beginning of the code snippet.</p>
-<p>If you really wanted to declare a function within its own scope, you could create the scope with a try/catch block, like this:</p>
-<p>try {throw i;}<br>catch(i){<br>    for(var i = 0;i&lt; 10;i++) {<br>        console.log(i);<br>    }<br>}</p>
-<p>console.log(‘final i: ‘ + i);</p>
-<p>Which would give you the behavior you were probably expecting.  The code above will print out ‘final i: 20’ like you were probably expecting above.</p>
-<h2 id="3-“Hoisting”-and-function-assignments"><a href="#3-“Hoisting”-and-function-assignments" class="headerlink" title="3) “Hoisting” and function assignments"></a>3) “Hoisting” and function assignments</h2><p>Going back to our discussion about variable declarations being processed first, and then doing any assignments, it becomes obvious that we can’t call a function that we haven’t assigned to the variable yet.  I don’t think I need to discuss this any further than I already have.  This works like any other variable declaration as I’ve discussed above.</p>
-<h2 id="4-“Hoisting”-and-function-declarations"><a href="#4-“Hoisting”-and-function-declarations" class="headerlink" title="4) “Hoisting” and function declarations"></a>4) “Hoisting” and function declarations</h2><p>Function declarations, on the other hand, behave differently than function assignments.  In the case of function declarations, the variable AND the function that is “assigned” to it get pulled to the top of our code.  So using function declarations over function assignments is preferred simply because it assures us that the function pointer is available whenever we need it.</p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>So, maybe you thought you knew JavaScript.  Maybe you did.  Maybe you discovered you didn’t know it as well as you thought. I would encourage you to really learn the language.  One of the best resources I’ve found for learning programming stuff is <a href="/pluralsight">PluralSight</a>.  Check them out.  They have a deal where you can get the first 10 days free, up to 200 minutes.</p>
-<h3 id="Other-places-talking-about-JavaScript-Scoping"><a href="#Other-places-talking-about-JavaScript-Scoping" class="headerlink" title="Other places talking about JavaScript Scoping"></a>Other places talking about JavaScript Scoping</h3><ul>
-<li><a href="//ilikekillnerds.com/2015/03/things-every-javascript-developer-should-know/">Things Every JavaScript Programmer Should Know</a></li>
-<li><a href="//debugmode.net/2015/02/03/hoisting-in-javascript-simplified/">Hoisting In JavaScript</a></li>
-<li><a href="//abdulapopoola.com/2014/03/10/three-important-javascript-concepts/">Three Important JavaScript Concepts</a></li>
-<li><a href="/youDontKnowJsObjectsAndClosures">You Don’t Know JS: Object and Closures</a></li>
-</ul>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/javascript-scope/" data-id="ck7i1uz6h003gwox2spbopd06" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hoist/">hoist</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scope/">scope</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-why-is-it-called-inversion-of-control" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/why-is-it-called-“inversion-of-control”/">Why Is It Called “Inversion of Control”?</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/why-is-it-called-“inversion-of-control”/" class="article-date"><time datetime="2015-06-11T10:00:00.000Z" itemprop="datePublished">2015-06-11</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Software-Architecture/">Software Architecture</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2015/05/CHIL0007.png" alt="CHIL0007" title="CHIL0007">There is a guy I’m working with who is trying to wrap his head around design principles.  He’s been watching a lot of <a href="/pluralsight">PluralSight videos</a>.  As he was processing information about <a href="/pluralsightIoC">Inversion of Control</a>, he asked the natural question I’ve never actually considered before.  “Why is it called Inversion of Control?  Normally, when you talk about ‘Inversion’ you are talking about reversing something or negating something.  That isn’t what we are doing here.” </p>
-<h2 id="What-Is-Inversion-of-Control"><a href="#What-Is-Inversion-of-Control" class="headerlink" title="What Is Inversion of Control?"></a>What Is Inversion of Control?</h2><p>So, let’s start with a definition of what Inversion of Control is.  And let’s start the definition by explaining what it isn’t. In the old days, back when I started programming.  We had this thing called “Procedural Programming.” Control of your application flowed from beginning to end with looping to take care of any kind of waiting that needed to take place.  <a href="//martinfowler.com/bliki/InversionOfControl.html">Martin Fowler describes this</a> using an illustration that is version similar to a basic “How to program in C#” console application that is in the beginning of most beginner programming books.</p>
-<blockquote>
-<p>Let’s consider a simple example. Imagine I’m writing a program to get some information from a user and I’m using a command line enquiry. I might do it something like this</p>
-<p>  #ruby<br>  puts ‘What is your name?’<br>  name = gets<br>  process_name(name)<br>  puts ‘What is your quest?’<br>  quest = gets<br>  process_quest(quest)</p>
-<p>In this interaction, my code is in control: it decides when to ask questions, when to read responses, and when to process those results.</p>
-</blockquote>
-<p>What Inversion of Control does is that it puts something other than the main code in charge of doing critical parts of the program so that those other parts of the program can be swapped out by the person implementing the code.</p>
-<h2 id="Examples-of-Inversion-of-Control"><a href="#Examples-of-Inversion-of-Control" class="headerlink" title="Examples of Inversion of Control"></a>Examples of Inversion of Control</h2><p>If you’ve ever written a WebForms or Windows Forms application, you’ve already experience inversion of control.</p>
-<h3 id="OnPageLoad-or-OnFormLoad"><a href="#OnPageLoad-or-OnFormLoad" class="headerlink" title="OnPageLoad() or OnFormLoad()"></a>OnPageLoad() or OnFormLoad()</h3><p>You have probably never even given this much thought.  You think these two methods are where your code starts.  But the reality is, the code started long before these methods ever got called.  The thing that is in control is the .NET framework.  You’ve created a delegate that gets called by the framework so that your page or form does what you want it to.  Without this inversion of control, you would have to write a whole lot more code.</p>
-<h3 id="Event-Handlers"><a href="#Event-Handlers" class="headerlink" title="Event Handlers"></a>Event Handlers</h3><p>While you might think of OnPageLoad and OnFormLoad as event handlers, the way they are implemented are more like virtual functions.  Event handlers, on the other hand, are a specific type of delegate that say, “When this thing happens, let me know about it.”  The code that fires the event doesn’t even really care what you do during the event.  Again, the control has been “Inverted” because there is a lot of code that is running that you have no control over and probably have no knowledge of.</p>
-<h3 id="Virtual-Functions"><a href="#Virtual-Functions" class="headerlink" title="Virtual Functions"></a>Virtual Functions</h3><p>One of my favorite methods of inverting control is to use virtual functions.  I can have a parent class that controls the flow of the program that calls various virtual functions in order.  But my child class can provide the implementation of the functions to make them do various things.  I used this, at one time in the past, to create a framework for submitting links to various bookmarking sites.  They all worked essentially the same way, all I had to do was implement the specific details for each site while 80% of my code stayed the same in the base class.</p>
-<h3 id="Delegates-or-Callback-Functions"><a href="#Delegates-or-Callback-Functions" class="headerlink" title="Delegates or Callback Functions"></a>Delegates or Callback Functions</h3><p>Another common way of implementing inversion is by using delegates or callbacks.  This work in a similar way to virtual functions expect that the functions are typically passed in to a method.  Much of the current implementation of JavaScript uses this method of inverting control as a primary pattern (but not limited to it as the only way.)</p>
-<h3 id="Dependency-Injection"><a href="#Dependency-Injection" class="headerlink" title="Dependency Injection"></a>Dependency Injection</h3><p>I’ve <a href="/dependency-injection-not-di/">talked about Dependency Injection before</a>.  Again, it is another way of delegating control to something other than the code that has main control.  What I want to make special note of here, though, is that Inversion of Control is not Dependency Injection but Dependency Injection is a form of Inversion of Control.  I think this is where most of the confusion about Inversion of Control comes from.  Most of the literature that talks about Inversion of Control talks about it at the same time they are talking about Dependency Injection.  As though the two concepts were the same.</p>
-<h2 id="Why-Inversion-of-Control-Matters"><a href="#Why-Inversion-of-Control-Matters" class="headerlink" title="Why Inversion of Control Matters"></a>Why Inversion of Control Matters</h2><p>Finally, I want to talk for a bit about why Inversion of Control matters.  Because, for me, it is a lot more important that we understand what we are trying to achieve than it is that we’ve given it the right name or that we even know what name to call it.  All of the examples I’ve provided are things you’ve probably done in your code.  Some of them you’ve done without even knowing you were doing them.  But think about the alternative of not doing them. First, your code would be a lot harder to maintain.  Just think of how hard it would be to write a web site and maintain it if you had to write code that handled all of the work that happens for you behind the scenes. Second, it makes the code more loosely coupled.  And by doing that, it makes the code testable AND it makes the code more flexible and easy to change in the future. Maybe instead of calling it Inversion of Control it should have been called Delegation of Control.  Either way, the concept is to remove as much code as possible from our main controlling code and give the implementation responsibility to something else that can be swapped in without having to change the main loop.</p>
-<h4 id="Other-Places-Talking-About-Inversion-of-Control"><a href="#Other-Places-Talking-About-Inversion-of-Control" class="headerlink" title="Other Places Talking About Inversion of Control:"></a>Other Places Talking About Inversion of Control:</h4><ul>
-<li><a href="/pluralsightIoC">Inversion of Control</a></li>
-<li><a href="/pluralsightDesignPatterns">Design Patterns</a></li>
-<li><a href="//martinfowler.com/bliki/InversionOfControl.html">Martin Fowler on IoC</a></li>
-<li><a href="//jonlennartaasenden.wordpress.com/2015/01/13/inversion-of-control-dependency-injection-service-oriented-programming/">Inversion of control, dependency Injection, service oriented programming?</a></li>
-<li><a href="//csharphardcoreprogramming.wordpress.com/2014/03/26/inversion-of-control-and-dependency-injection-advanced-part-1-programming-patterns/">Inversion of Control and Dependency Injection</a></li>
-<li><a href="//jeffreypalermo.com/blog/inversion-of-control-is-not-about-testability/">Inversion of Control is NOT about testability</a></li>
-</ul>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/why-is-it-called-“inversion-of-control”/" data-id="ck7i1uz8t0070wox29yz4zf2n" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-patterns/">design patterns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/inversion-of-control/">inversion of control</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ioc/">ioc</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-specflow-tutorial" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/specflow-tutorial/">SpecFlow Tutorial</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/specflow-tutorial/" class="article-date"><time datetime="2015-06-04T10:00:00.000Z" itemprop="datePublished">2015-06-04</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Testing/">Testing</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2015/05/18Tr.png" alt="SpecFlow Tutorial Session" title="18Tr">A couple of weeks ago, I wrote a post describing <a href="/setting-up-specflow/">how to setup SpecFlow</a> in which I promised to continue with how to actually use it once you have it installed.  What follows is a SpecFlow Tutorial of the tips and tricks I wish I’d known when I was starting out. </p>
-<h2 id="Controlling-Associations-between-Features-and-Steps"><a href="#Controlling-Associations-between-Features-and-Steps" class="headerlink" title="Controlling Associations between Features and Steps"></a>Controlling Associations between Features and Steps</h2><p>With what you’ve learned so far, you might be able to successfully put together a set of tests for a particular page that you want to test. But as soon as you start working on the second page, you will probably discover that you have steps that seem to conflict with each other. It is at this point you will find that the ability to associate features with step files becomes critical. Fortunately, this is relatively easy. In your feature file, you will specify a category using the @category syntax and within your step file, you will use the category attribute within the step file at the class level to tie the two together. In your feature file:</p>
-<p>@stepFileOne<br>Feature: SpecFlowFeature1<br>    In order to avoid silly mistakes<br>    As a math idiot<br>    I want to be told the sum of two numbers</p>
-<p>And in your step file:</p>
-<p>namespace SpecFlowDemos<br>{<br>    [Binding]<br>    [Category(“stepFileOne”)]<br>    public sealed class StepFileOne<br>    { …<br>    }<br>}</p>
-<p>Note, if you put steps in a step file that doesn’t have a category associated with it or you create a feature file that doesn’t have a category assigned to it, you’ll see all of the steps that are available. So you will want to have categories applied to everything. If you need to, you can apply categories to specific scenarios in your feature file and specific steps in your step file to gain even more control.</p>
-<h2 id="Don’t-Repeat-Yourself-DRY"><a href="#Don’t-Repeat-Yourself-DRY" class="headerlink" title="Don’t Repeat Yourself (DRY)"></a>Don’t Repeat Yourself (DRY)</h2><h3 id="Background-section"><a href="#Background-section" class="headerlink" title="Background section"></a>Background section</h3><p>It is common to have a set of steps that repeat for each scenario. Much like a setup section in NUnit or MSTest. One of the ways you can handle this is by creating a background section.</p>
-<p>Background:<br>    Given I have entered 50 into the calculator<br>    And I have entered 70 into the calculator</p>
-<p>Scenario: Add two numbers<br>    When I press add<br>    Then the result should be 120 on the screen</p>
-<p>The background section runs for each scenario in the feature file.</p>
-<h3 id="Running-Steps-from-another-Step"><a href="#Running-Steps-from-another-Step" class="headerlink" title="Running Steps from another Step"></a>Running Steps from another Step</h3><p>You could also create a step that combines all of the common steps together and then have that step run all of the steps.</p>
-<p>Scenario: Add two numbers<br>    Given the calculator has been setup<br>    When I press add<br>    Then the result should be 120 on the screen</p>
-<p>  Then in your Step file, you’ll need to change your Step class to inherit from Step</p>
-<p>public sealed class StepFileOne : Steps<br>{<br> …<br>}</p>
-<p>And then create your step to call the other steps like this:</p>
-<p>[Given(@”the calculator has been setup”)]<br>public void GivenTheCalculatorHasBeenSetup()<br>{<br>    Given(“I have entered 50 into the calculator”);<br>    Given(“I have entered 70 into the calculator”);<br>}</p>
-<p>Yes, you could call the methods directly, but only if the methods are in the same class.  If you have step methods that span multiple classes, you’ll want to use this method so that you can maintain the context of the test you are running.</p>
-<h3 id="Before-After-Attributes"><a href="#Before-After-Attributes" class="headerlink" title="Before/After Attributes"></a>Before/After Attributes</h3><p>Finally, you may have setup steps that really have nothing to do with the actual test. In the case of testing web pages or other applications, you’ll probably have to load the page or start up the application and wait for the page to be ready to use prior to doing anything else. And once you have completed your test, you’ll want to do some clean up. At the very least, you’ll want to close the web page. For this, SpecFlow provides the Before attribute and the After attribute. Just like the step definitions, the methods attributed with Before and After will run based on the categories they are associated with.</p>
-<p>[Before]<br>public void BeforeScenario(“categoryToAssociateWith”)<br>{<br>    //TODO: implement logic that has to<br>    // run before executing each scenario<br>}</p>
-<p>[After]<br>public void AfterScenario(“categoryToAssociateWith”)<br>{<br>    //TODO: implement logic that has to<br>    //run after executing each scenario<br>}</p>
-<p>Other before/after attributes that you can use (from <a href="//www.specflow.org/documentation/Hooks/">//www.specflow.org/documentation/Hooks/</a>)</p>
-<p><strong>Attribute</strong></p>
-<p><strong>Tag filtering</strong></p>
-<p><strong>Description</strong></p>
-<p>[BeforeTestRun] [AfterTestRun]</p>
-<p>-</p>
-<p>automation logic that has to run before/after the entire test run_Note: As the most of the unit test runners do not provide a hook for executing logic after the test execution has been finished, the [AfterTestRun] event is triggered by the test assembly unload event. The exact timing and thread of this execution might be different for each test runner._The method it is applied to must be static.</p>
-<p>[BeforeFeature] [AfterFeature]</p>
-<p>+</p>
-<p>automation logic that has to run before/after executing each featureThe method it is applied to must be static.</p>
-<p>[BeforeScenario] or [Before] [AfterScenario] or [After]</p>
-<p>+</p>
-<p>automation logic that has to run before/after executing each scenario or scenario outline exampleThe short attribute names are available from v1.8.</p>
-<p>[BeforeScenarioBlock] [AfterScenarioBlock]</p>
-<p>+</p>
-<p>automation logic that has to run before/after executing each scenario block (e.g. between the “givens” and the “whens”)</p>
-<p>[BeforeStep] [AfterStep]</p>
-<p>+</p>
-<p>automation logic that has to run before/after executing each scenario step</p>
-<p>You can annotate a single method with multiple attributes.</p>
-<h2 id="Sharing-Data-Between-Step-and-Binding-Files"><a href="#Sharing-Data-Between-Step-and-Binding-Files" class="headerlink" title="Sharing Data Between Step and Binding Files"></a>Sharing Data Between Step and Binding Files</h2><p>Once you’ve setup your tests with the <code>Before</code> and <code>After</code> methods, you will probably need to save the information in a location where you can get to it while you are running the tests. You might be tempted to place this information in a member variable or a property but, if you’ve done as I’ve suggested, and placed your <code>Before</code> and <code>After</code> methods in separate files from your steps, you’ll see that this won’t make a lot of sense. Instead, what I recommend that you do is that you save the information into the <code>ScenarioContext</code> object using this syntax.</p>
-<p>ScenarioContext.Current[“page”] = someValue;</p>
-<p>Then, later on in your testing process, you can retrieve the value using:</p>
-<p>var x = (RealObjectType)ScenarioContext.Current[“page”])</p>
-<p>where “RealObjectType” is a class name that represents the type of the object that you originally stored. I typically use the Before and After scenarios to open and close the page I want to test while using Selenium. Without going into a whole lot of detail about how this works, my Before and After routine looks something like this:</p>
-<p>private ISpmInitial Page<br>{<br>    get { return (ISpmInitial)(ScenarioContext.Current[“page”]); }<br>    set { ScenarioContext.Current[“page”] = value; }<br>}</p>
-<p>[Before]<br>public void Before()<br>{<br>    const string id = “10039219”;<br>    var pages = new ConcurrentStack<ispminitial>();<br>    Parallel.Invoke(<br>        () => pages.Push(SpmPageFactory.GetPageModel(“FireFoxGrid”, id))<br>        ,<br>        () => pages.Push(SpmPageFactory.GetPageModel(“IE11Grid”, id))<br>    );<br>    var pagesArray = pages.ToArray();<br>    Page = new ParallelPage<ispminitial>(pagesArray).Cast();<br>}</ispminitial></ispminitial></p>
-<p>[After]<br>public void After()<br>{<br>    if (Page == null) return;<br>    Page.Dispose();<br>    Page = null;<br>}</p>
-<p>This code is using the Selenium parallelization code I’ve already talked about in my article, <a href="/running-selenium-in-parallel-with-any-net-unit-testing-tool/">Running Selenium In Parallel With Any .NET Unit Testing Tool</a>. The <code>Before</code> method creates my page object for the browsers I’m using. Once I have the page object, I store it into my private <code>Page</code> property which uses the <code>ScenarioContext</code> as the backing store. Then, in the step files that need access to this same page object, I create a similar <code>Page</code> property so that they can access the page object from the steps.</p>
-<h2 id="Parameterized-Tests"><a href="#Parameterized-Tests" class="headerlink" title="Parameterized Tests"></a>Parameterized Tests</h2><p>It is quite common to have tests for multiple scenarios that essentially look the same except for the parameters change. Instead of using copy/paste/modify, you can create parameterized test by using the Scenario Outline directive.</p>
-<p>Scenario Outline: Uses parameters<br>    Given I have entered <n1> into the calculator<br>    And I have entered <n2> into the calculator<br>    When I press <operation><br>    Then the result should be <result> on the screen</result></operation></n2></n1></p>
-<pre><code>Examples: 
-| n1 | n2 | operation | result |
-| 1  | 2  | add       | 3      |
-| 5  | 3  | subtract  | 2      |
-| 5  | -3 | add       | 2      |
-</code></pre><p>Keep in mind that the step that gets run is based on the merged result. So you could have multiple steps that implement any particular line in your scenario outline.</p>
-<h2 id="Alternate-ways-of-structuring-your-test"><a href="#Alternate-ways-of-structuring-your-test" class="headerlink" title="Alternate ways of structuring your test"></a>Alternate ways of structuring your test</h2><h3 id="Data-Tables"><a href="#Data-Tables" class="headerlink" title="Data Tables"></a>Data Tables</h3><p>Scenario: Data Table Example<br>    Given I’ve Entered The Following Information<br>    | Field     | Value                   |<br>    | FirstName | “Dave”                  |<br>    | LastName  | “Bush”                  |<br>    | email     | “<a href="mailto:davembush@dmbcllc.com" target="_blank" rel="noopener">davembush@dmbcllc.com</a>“ |</p>
-<p>  The first column is the names of the fields. The second column is the values. To pull the information out in the step, create, or use an existing class that has the same field names and write code similar to the following in your step.</p>
-<p>class Person<br>{<br>    string FirstName { get; set; }<br>    string LastName { get; set; }<br>    string email { get; set; }<br>}</p>
-<p>[Given(@”I’ve Entered The Following Information”)]<br>public void GivenIVeEnteredTheFollowingInformation(Table table)<br>{<br>    var person = table.CreateInstance<person>();<br>    // Do something with person here<br>}</person></p>
-<p>You can use a horizontal layout like this:</p>
-<p>Scenario: Data Table Example<br>    Given I’ve Entered The Following Information<br>    | FirstName | LastName | email                   |<br>    | “Dave”    | “Bush”   | “<a href="mailto:davembush@dmbcllc.com" target="_blank" rel="noopener">davembush@dmbcllc.com</a>“ |<br>    | “John”    | “Doe”    | “<a href="mailto:jdoe@gmail.com" target="_blank" rel="noopener">jdoe@gmail.com</a>“        |</p>
-<p>In this case you use the <code>CreateSet</code> call to create a list of Person objects.</p>
-<p>[Given(@”I’ve Entered The Following Information”)]<br>public void GivenIVeEnteredTheFollowingInformation<br>    (Table table)<br>{<br>    var people = table.CreateSet<person>();<br>    // Do something with people here<br>}</person></p>
-<p>Finally, you may have the need to enter parameter data that is longer than will reasonably fit on one line or that needs to be on multiple lines. To do that, you delimit the beginning and end of the multi-line section with three double quotes.</p>
-<p>[Given(@”I have lots of text”)]<br>public void GivenIHaveLotsOfText(string multilineText)<br>{<br>    ScenarioContext.Current.Pending();<br>}</p>
-<p>The multi-line text will be passed as the last parameter in your step method. There are probably some features I missed here.  But this is already more than what I use on a day to day basis in my own SpecFlow testing scenarios.</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/specflow-tutorial/" data-id="ck7i1v01e0178wox2u2mofndt" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bdd/">bdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/specflow/">specflow</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/testing/">testing</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
     <article id="post-the-parable-of-the-road-line-painter" class="article article-type-post" itemscope itemprop="blogPost">
 
   <header class="article-header">
@@ -435,7 +136,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/the-parable-of-the-road-line-painter/" data-id="ck7i1uz82005qwox2sq3jzxnk" class="article-share-link">
+      <a data-url="http://davembush.github.com/the-parable-of-the-road-line-painter/" data-id="ck7s4f05u005mmcx2z1sgpvm6" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -497,7 +198,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/setting-up-specflow/" data-id="ck7i1uz7o004zwox2ujprbi96" class="article-share-link">
+      <a data-url="http://davembush.github.com/setting-up-specflow/" data-id="ck7s4f05f004ymcx21sk0vead" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -588,7 +289,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/code-comments-agile-programming/" data-id="ck7i1v00a014gwox291nog346" class="article-share-link">
+      <a data-url="http://davembush.github.com/code-comments-agile-programming/" data-id="ck7s4f0yu013nmcx2qknevg9u" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -663,7 +364,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/cracking-the-programmer-s-interview-code/" data-id="ck7i1v00d014nwox2jry8b1w8" class="article-share-link">
+      <a data-url="http://davembush.github.com/cracking-the-programmer-s-interview-code/" data-id="ck7s4f0z00141mcx203bwxept" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -725,7 +426,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/run-nunit-from-visual-studio/" data-id="ck7i1uz7e004pwox2gcc3di01" class="article-share-link">
+      <a data-url="http://davembush.github.com/run-nunit-from-visual-studio/" data-id="ck7s4f05b004qmcx2vckwtvmn" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -827,7 +528,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/tdd-gamification-turning-test-driven-development-into-a-game/" data-id="ck7i1uz7u005bwox2mja2ibre" class="article-share-link">
+      <a data-url="http://davembush.github.com/tdd-gamification-turning-test-driven-development-into-a-game/" data-id="ck7s4f05n005cmcx2vny85pfm" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -949,12 +650,240 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/how-to-become-a-better-programmer/" data-id="ck7i1v00u015swox2qfggnjtw" class="article-share-link">
+      <a data-url="http://davembush.github.com/how-to-become-a-better-programmer/" data-id="ck7s4f0zb014wmcx2obuzfw1n" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programming/">programming</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-limiting-beliefs-of-programmers" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/limiting-beliefs-of-programmers/">Limiting Beliefs of Programmers</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/limiting-beliefs-of-programmers/" class="article-date"><time datetime="2015-04-09T10:00:00.000Z" itemprop="datePublished">2015-04-09</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming-Best-Practice/">Programming Best Practice</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2015/03/ppl-men-026.jpg" alt="scream" title="scream">At the risk of making half of my audience think I’ve gone off the deep end, I’m going to address a topic that I’ve only recently REALLY begun to understand, in part thanks to <a href="/softSkills">Soft Skills</a>. When I’ve heard the topic of “Limiting Beliefs” come up, it has almost always been in the context of something along the lines of “What the mind can conceive and believe, it can achieve.”  Which is easy to disprove.  At least it is out of context!  I mean really, if I can conceive and believe myself to be a butterfly, it just isn’t going to happen! However, the opposite is pretty easy to both accept and believe.  And that’s what I want to talk about today.  But even then, it probably isn’t what you are expecting. Typically, when people talk about Limiting Beliefs, they are talking about patterns and practices you picked up as a kid that are holding you back now.  And while those may be areas that you need to work on, what I want to talk about today is more micro than that, although they may have roots in our past for various reasons, the Limiting Beliefs I want to talk about today are common across nearly every programmer I talk to.  If you think “Limiting Beliefs” mean something along the lines of, “you are limited because you don’t believe enough,” that is NOT what I have in mind here at all.  In fact, “Limiting Beliefs” are beliefs that we believe TOO strongly and because we hold them too strongly, they limit us.  This is what I mean when I talk about “Limiting Beliefs” even if it is used in another way by someone else. Here are some examples specifically related to the craft of programming.</p>
+<h2 id="You-Can’t-Practice-TDD"><a href="#You-Can’t-Practice-TDD" class="headerlink" title="You Can’t Practice TDD"></a>You Can’t Practice TDD</h2><p>As I’ve mentioned in other articles, most programmers I know don’t practice Test Driven Development because they believe they don’t have permission.  And when they ask, they don’t get permission because you’ve transferred the belief that you don’t think it is important. If instead, you believed you had permission to do whatever it took to legitimately do your job well, you would learn how to do everything it took to practice TDD well.</p>
+<h2 id="Can’t-Create-Branches-in-Version-Control"><a href="#Can’t-Create-Branches-in-Version-Control" class="headerlink" title="Can’t Create Branches in Version Control"></a>Can’t Create Branches in Version Control</h2><p>I recently ran into a comment on a blog that mention this.  In fact I’ve run into this very issue where I am currently working.  But instead of thinking about what I can’t do, or when I am frustrated by what I can’t do, I first think 1) is this important enough to find a way around? And 2) what CAN I do? In this case, I found it critically important.  My productivity was being hampered because I am adding new features to existing code and, while that code is being tested, I’m converting the code to the last version of the library that we use.  Branching allows me to switch between the two projects easily and it allows me to migrate the current code into the upgrade code so that when the conversion is done, I can merge it down into the main branch and keep going. How did I do this?  We use TFS with the old TFVS version control system instead of the Git repository.  But there are at least two projects that exist that allow you to create a bridge between your local code that uses a local GIT repository and the remote TFS repository.  There is at least one project available for subversion that allows you to do the same sort of thing. I get my branches and yet I have not caused any disruption to the rest of my team.</p>
+<h2 id="Can’t-Use-X-Technology"><a href="#Can’t-Use-X-Technology" class="headerlink" title="Can’t Use X Technology"></a>Can’t Use X Technology</h2><p>OK.  So, again, ask yourself the same questions.  Is this hampering your productivity?  What CAN you do?</p>
+<h2 id="You-Have-to-be-Perfect"><a href="#You-Have-to-be-Perfect" class="headerlink" title="You Have to be Perfect"></a>You Have to be Perfect</h2><p>I think many of us realize that we can’t be perfect and yet, how do you react when someone finds a bug in your code? I saw a tweet last week that captures the essence of the bug fixing process.</p>
+<ol>
+<li>That can’t happen</li>
+<li>That doesn’t happen on my machine.</li>
+<li>That shouldn’t happen.</li>
+<li>Why does that happen?</li>
+<li>Oh, I see.</li>
+<li>How did that ever work?</li>
+</ol>
+<p>The question I need to ask is, why do we start with “That can’t happen” unless we feel that we need to be perfect. In the last year, I’ve finally gotten to the point where my first reaction is, “OK, well, put it in the issue tracker.” (Or if you are doing Agile, “put it in the backlog”).</p>
+<h2 id="Can’t-Practice-Agile-Scrum"><a href="#Can’t-Practice-Agile-Scrum" class="headerlink" title="Can’t Practice Agile/Scrum"></a>Can’t Practice Agile/Scrum</h2><p>Speaking of Agile/Scrum.  Are you working at a place that doesn’t practice Agile or Scrum, but you think they should?  What parts of Agile/Scrum can you implement in the sphere of influence you have?  So, you can’t form a Scrum team.  But, do you personally put people over processes?  Do you put people first at all?  Most of the <a href="//agilemanifesto.org/">Agile Manifesto</a> can be implemented at a personal level once you understand what it is really about.  Don’t expect anyone to adopt agile in your organization if they don’t see it in you first.</p>
+<h2 id="You-Are-an-Introvert"><a href="#You-Are-an-Introvert" class="headerlink" title="You Are an Introvert"></a>You Are an Introvert</h2><p>How many of us hide behind this one?  We don’t want to deal with people.  We really don’t value people over much of anything.  In fact, we think, “programming would be a great job if it weren’t for the clients.”  I’m reading some books that talk about the impact of confusing behavior with who we are.  OK, so sure, your behavior is that you prefer to avoid loud noises.  You’d rather talk to one or two people at a time.  You process stuff in your head instead of with your mouth.  That’s behavior.  To say, “I am an Introvert” can have the effect of saying, “I hate people” and can become a limiting belief because it will isolate you from the very people you should be helping.  Sorry, you can’t get far as a programmer if you avoid the people part of it.</p>
+<h2 id="Restrictions"><a href="#Restrictions" class="headerlink" title="Restrictions"></a>Restrictions</h2><p>And then there is the general set of restrictions that come with being part of any organization.  We have a few where I work that, on the face of it, seem ridiculous.  I HAVE to take a lunch break even though my lunch consist of 5 sausage links that can be consumed in about 5 minutes.  I can’t start before 7am.  I can’t leave until 3:30. But what can I do?  Well, no one said WHEN I had to take the lunch break, so I come in and watch a half hour of <a href="/pluralSight">PluralSight</a> courses every morning. I can’t start before 7am.  But I CAN enter the office before then.  I prefer to come earlier because the traffic is lighter if I come in at 6:45.  So, I come in and don’t start working until seven. To get my eight hours in, I can’t leave until 3:30 anyhow.  So that is not an issue.  And if I need to leave early occasionally, no one said I couldn’t do that.</p>
+<h2 id="The-Key-To-Eliminating-Limiting-Beliefs"><a href="#The-Key-To-Eliminating-Limiting-Beliefs" class="headerlink" title="The Key To Eliminating Limiting Beliefs"></a>The Key To Eliminating Limiting Beliefs</h2><p>Do you see what I’ve done here?  At every point where I’ve been told or believed I could not do something, I’ve change the question from “What can’t I do?” to “What can I do?”  Can’t locks you down.  It locks you out.  Can frees you. So, what limiting beliefs do you have and how can you overcome them?  Leave a comment below.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/limiting-beliefs-of-programmers/" data-id="ck7s4f04k003umcx2lvkj22sk" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/agile/">agile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/limiting-beliefs/">limiting beliefs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programming/">programming</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrum/">scrum</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/">tdd</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-node-js-tools-for-visual-studio" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/node-js-tools-for-visual-studio/">Node.js Tools For Visual Studio</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/node-js-tools-for-visual-studio/" class="article-date"><time datetime="2015-04-02T10:00:00.000Z" itemprop="datePublished">2015-04-02</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Node-js/">Node.js</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2015/03/NodeJsInVisualStudioProjectList.png" alt="NodeJsInVisualStudioProjectList" title="NodeJsInVisualStudioProjectList">Several weeks ago now, I started learning <a href="//nodejs.org/">Node.js</a>.  Why?  Well, for a couple of reasons.  First, all the cool kids are using Node.js.  Second, I wanted to use <a href="//gotwarlost.github.io/istanbul/">Istanbul</a> to get an idea of how well my javascript code is covered by test and that runs under Node.js.  Third, <a href="//blogs.msdn.com/b/webdev/archive/2015/03/19/customize-external-web-tools-in-visual-studio-2015.aspx">Node.js is going to show up in the next version of Visual Studio</a>.  And finally, I just like to learn new stuff.</p>
+<h2 id="Node-JS"><a href="#Node-JS" class="headerlink" title="Node.JS"></a>Node.JS</h2><p>So, I started by installing node and just working in Visual Studio as though my node project was a web site.  It works, but it isn’t pretty.  But it did get me familiar with some basic concepts like using the node package manager (npm) to install what I needed to get Istanbul running.  For those of you who aren’t familiar with npm, it is basically NuGet for node.js.</p>
+<h2 id="Istanbul-JavaScript-Code-Coverage"><a href="#Istanbul-JavaScript-Code-Coverage" class="headerlink" title="Istanbul JavaScript Code Coverage"></a>Istanbul JavaScript Code Coverage</h2><p>For those of you who are interested, I used the instructions <a href="//ariya.ofilabs.com/2013/10/code-coverage-of-jasmine-tests-using-istanbul-and-karma.html">here</a> for getting Istanbul working locally.  They should probably be updated because the example there doesn’t have a good configuration example.  I filled in the rest of what I needed to know from the <a href="//karma-runner.github.io/0.12/">Karma site</a>.</p>
+<h2 id="Node-for-Visual-Studio"><a href="#Node-for-Visual-Studio" class="headerlink" title="Node for Visual Studio"></a>Node for Visual Studio</h2><p>So then I had heard that work was being done on a plugin for Visual Studio 2013 that would allow me to work on Node projects from within Visual Studio.  I found out about this first from <a href="//www.hanselman.com/blog/IntroducingNodejsToolsForVisualStudio.aspx">Scott Hanselman’s blog</a>. So I went  to the <a href="//nodejstools.codeplex.com/">plugin site</a> and got the download and installed it.  This is all pretty straight forward.  Don’t forget, you’ll ALSO need to install node.  So, don’t forget that step. OK.  Now that you have the NTVS installed (that’s what they call the plugin) what do you have? Well, you have several new project templates that you can use.  That’s what. <img src="/uploads/2015/03/NodeJsInVisualStudioProjectList1.png" alt="NodeJsInVisualStudioProjectList" title="NodeJsInVisualStudioProjectList"></p>
+<h2 id="Interactive-JavaScript"><a href="#Interactive-JavaScript" class="headerlink" title="Interactive JavaScript"></a>Interactive JavaScript</h2><p>But that’s not all you get, you also get an interactive Node.js window that you can get to from the Tools menu (Tools –&gt; Node.js Tools –&gt; Node.js Interactive window) or by pressing  the keyboard shortcut, Ctrl+K, N.  Inside this window you can execute JavaScript on the fly: <img src="/uploads/2015/03/NodeJsInteractiveWindow.png" alt="NodeJsInteractiveWindow" title="NodeJsInteractiveWindow"></p>
+<h2 id="Node-Package-Manager-in-Visual-Studio"><a href="#Node-Package-Manager-in-Visual-Studio" class="headerlink" title="Node Package Manager in Visual Studio"></a>Node Package Manager in Visual Studio</h2><p>Or install other node packages:</p>
+<p>.npm install yourPackageNameHere</p>
+<p>Don’t forget the leading period.  That’s the indication to the window that it needs to do something different than executing javascript in the window. Even as I’m writing this, I’m seeing that there is a whole lot more here than I’m actually telling you now.</p>
+<h2 id="Starting-a-New-Project"><a href="#Starting-a-New-Project" class="headerlink" title="Starting a New Project"></a>Starting a New Project</h2><p>Now, the best way of learning something is by creating some kind of product.  Even if it is for your own use.  So, the next thing I did was to try to create a project.  I have a specific project in mind that should use MongoDB for the database (I’ve been meaning to learn NoSQL for a while now) and since Express seems to come with NTVS, I guess I’ll use that for my web server.  Oh and Angular for the front end. Since I was creating a web site, I thought, I should create a new web project that uses node.  In fact, it shows up  in the list of web sites types that you can create.  However, I got an error when I did that, and I don’t see anything in the documentation that says I should be able to use those templates or that I need anything extra to use them. However, if you use the project options, you can create a web application.  I decided going with newer is better than older, so I’ve created a “Basic Node.js Express 4 Application”.</p>
+<h2 id="The-Fun-Is-Just-Beginning"><a href="#The-Fun-Is-Just-Beginning" class="headerlink" title="The Fun Is Just Beginning"></a>The Fun Is Just Beginning</h2><p>And now, this is where the fun begins.  Where’s my HTML?  What’s all this “template” stuff?  And how do I install Angular?  Or do I do that manually since it isn’t a server side thing? So much to learn.  But, that’s for another post.</p>
+<h4 id="Other-places-talking-about-Node-JS-Tools-For-Visual-Studio"><a href="#Other-places-talking-about-Node-JS-Tools-For-Visual-Studio" class="headerlink" title="Other places talking about Node.JS Tools For Visual Studio"></a>Other places talking about Node.JS Tools For Visual Studio</h4><ul>
+<li><a href="//www.dotnetcurry.com/showarticle.aspx?ID=1032">Building Node.js Applicatoin in Visual Studio (MEAN stack)</a></li>
+<li><a href="//www.simple-talk.com/blogs/2013/11/22/node-js-development-in-visual-studio-life-after-visual-node-with-node-tools-for-visual-studio/">Node.js Development in Visual Studio</a></li>
+<li><a href="/nodeJsForNetDevelopers">Node.js for .NET Developers (Developer Reference)</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=davmbusnetapp-20&amp;l=as2&amp;o=1&amp;a=0735662983" alt></li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/node-js-tools-for-visual-studio/" data-id="ck7s4f04s0048mcx25nm52ds4" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/express/">express</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node/">node</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-100-code-coverage" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/100-code-coverage-possible/">100% Code Coverage Possible?</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/100-code-coverage-possible/" class="article-date"><time datetime="2015-03-26T10:00:00.000Z" itemprop="datePublished">2015-03-26</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/TDD/">TDD</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2015/03/iStock_000005626017Medium1.jpg" alt="100% code coverage" title="100% Code Coverage"></p>
+<p>In response to my post “<a href="/excuses-for-not-testing/">Excuses For Not Testing</a>” <a href="//disqus.com/by/mayofcherries/">Kris K</a> asked:</p>
+<blockquote>
+<p>There is also another side of <a href="//en.wikipedia.org/wiki/Unit_testing" title="Unit testing">Unit Tests</a>. Some companies are so fixated they aspire to have 100% Unit Tests coverage and they make programmers write Unit Tests for legacy code for no reason. Just for the sake of having Unit Tests. … [I] wonder if you had any similar experiences and what you think about this approach. I guess the 100% extreme is better than no tests at all, but it can make the developers very bored and feeling useless.</p>
+</blockquote>
+<p>And my initial reaction to this was, “WOW!  So much to respond to here.  I think this is worth a blog post.</p>
+<h2 id="Is-100-realistic"><a href="#Is-100-realistic" class="headerlink" title="Is 100% realistic?"></a>Is 100% realistic?</h2><p>So, first, the question of 100% coverage.  Is that a realistic goal?  And the answer of course is, “it depends.”</p>
+<h4 id="The-first-dependency-is-of-course-“what-do-you-mean-by-‘100-code-coverage’-”"><a href="#The-first-dependency-is-of-course-“what-do-you-mean-by-‘100-code-coverage’-”" class="headerlink" title="The first dependency is, of course, “what do you mean by ‘100% code coverage’?”"></a>The first dependency is, of course, “what do you mean by ‘100% <a href="//en.wikipedia.org/wiki/Code_coverage" title="Code coverage">code coverage</a>’?”</h4><p>Do you mean you need tests for not just all of the code you wrote, but all of the code your tools wrote for you and all of your third party libraries?  If 100% is inclusive, I’d lean toward 100% not only being not realistic, but also not necessary. Although, in a highly critical system, you’ll probably want to do some kind of vetting of the tools and libraries you are using.  But by the time you are using them, you should already know that they work, the only thing you won’t know for sure is if you are using them correctly.  In this case, you are looking at integration tests and not unit tests.</p>
+<h4 id="The-second-dependency-is-“Is-the-code-testable-”"><a href="#The-second-dependency-is-“Is-the-code-testable-”" class="headerlink" title="The second dependency is, “Is the code testable?”"></a>The second dependency is, “Is the code testable?”</h4><p>This is a little trickier to evaluate, so let me illustrate.  There is code that isn’t testable that should be.  I’m not talking about that code.  I’m talking about code that just can’t be tested. Let me illustrate. I’m working with <a href="//www.sencha.com/products/extjs/" title="Ext JS">EXTjs</a> which uses their proprietary implementation of MVC.  The part that is particularly interesting is that the View part of the architecture is basically a JSON object that defines what the view looks like.  While you can put in code that performs some action, the fact of the matter is that this code, when coded correctly, doesn’t really DO anything.  So, I would ask, how would you test this?  Sure I could put it in a test harness and run it through  some sort of parse routine or something, but unless you can say, “when I do this, this other thing over here should be true (or false)” you really can’t test the code.  A class that has no methods is basically a structure and structures can’t, by definition, be tested. On the other hand, I wrote some code once in WinForms that I was able to get under test and execute by calling the methods directly in the form.  I would have been better off moving that code into a presenter class so I could test the functionality separate from the presentation (view) and marked the view as untestable.</p>
+<h4 id="Finally-I-have-to-ask-“Is-refactoring-allowed-”"><a href="#Finally-I-have-to-ask-“Is-refactoring-allowed-”" class="headerlink" title="Finally, I have to ask, “Is refactoring allowed?”"></a>Finally, I have to ask, “Is refactoring allowed?”</h4><p>This is legacy code we are talking about.  And legacy code is notoriously hard to unit test.  As I mentioned a <a href="/why-johnny-cant-do-test-driven-development/">couple of weeks ago</a>, in order to write unit test, the code has to be testable in the first place.  So, if the code isn’t in a condition that it can be unit tested, and you aren’t allowed to make the code testable, then either 100% code coverage isn’t possible or you aren’t unit testing.  It’s that simple.</p>
+<h2 id="Testing-is-boring"><a href="#Testing-is-boring" class="headerlink" title="Testing is boring"></a>Testing is boring</h2><p>Next, I’d like to address the issue of testing being boring.  I can understand this.  Most of my day is spent unit testing code I’ve previously written because when I wrote it, I wasn’t as good at unit testing as I am today. But, you know what I’ve found along the way?  That by making sure the code is covered 100% it has made me think about how I’ve structured my code and it has made my code more maintainable. But, mostly I find testing entertaining because I learn just a little more about testing.  I get to prove to myself and my peers that writing unit test really does find bugs we didn’t have any idea were there.  I get to perfect my craft just a little bit more. Here are some things to consider about the statement that “testing is boring.”  You may not like what I have to say, but keep in mind, I don’t know you and I don’t know Kris.  I just know what the research says about the state of being bored.</p>
+<h4 id="Dictionary-Definition"><a href="#Dictionary-Definition" class="headerlink" title="Dictionary Definition"></a><a href="//www.macmillandictionary.com/us/dictionary/american/bored">Dictionary Definition</a></h4><blockquote>
+<p>feeling impatient or dissatisfied, because you are not interested in something or because you have nothing to do.</p>
+</blockquote>
+<h4 id="People-who-get-bored-are-anxious-people"><a href="#People-who-get-bored-are-anxious-people" class="headerlink" title="People who get bored are anxious people"></a><a href="//www.dragosroua.com/how-and-why-we-get-bored/">People who get bored are anxious people</a></h4><blockquote>
+<p>People who get bored easily are usually anxious people. They’re also having quite a low level of self-esteem. If you’re constantly challenging yourself by trying to stop what you’re doing, because you don’t “like” it, you end up considering yourself an inappropriate person.</p>
+</blockquote>
+<h4 id="One-Of-My-Professors-Said"><a href="#One-Of-My-Professors-Said" class="headerlink" title="One Of My Professors Said"></a>One Of My Professors Said</h4><blockquote>
+<p>Boring people get bored</p>
+</blockquote>
+<p>  Personally, I find that I’m most bored when I have something else I’d rather be doing.  It isn’t so much that I don’t want to do what I’m currently doing as I’d rather be doing something that I can’t currently do.  I had this experience on Friday because on Thursday night I had found an article on SEO stuff that I desperately wanted to start putting into practice. What I’m suggesting here is that if you change your perspective from one of, “this is a ridiculous idea” to “this is a challenge to be met” or “this is an opportunity to learn”, or even (to address a specific comment that started this post) “I get to make my this application more bug free.”  you may find that the boredom leaves. Treat it as a game.  Maybe pair up with people on your team and see who can discover the most bugs during the day.  Create a leader board.  Since you have to do this anyhow, make it fun.</p>
+<h5 id="Other-places-talking-about-100-code-coverage"><a href="#Other-places-talking-about-100-code-coverage" class="headerlink" title="Other places talking about 100% code coverage"></a>Other places talking about 100% code coverage</h5><ul>
+<li><p><a href="//binstock.blogspot.com/2007/11/fallacy-of-100-code-coverage.html">The Fallacy of 100% Code Coverage</a></p>
+</li>
+<li><p><a href="//jasonrudolph.com/blog/testing-anti-patterns-how-to-fail-with-100-test-coverage/" title="Testing Anti-Patterns: How to Fail With 100% Test Coverage [jasonrudolph.com]">How to Fail With 100% Test Coverage</a></p>
+</li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/100-code-coverage-possible/" data-id="ck7s4f0190001mcx20x0n78p7" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/code-coverage/">code coverage</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/">tdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unit-test/">unit test</a></li></ul>
 
 
     </footer>
@@ -1008,7 +937,7 @@
   
   <div class="sidebar-module">
     <h4>Archives</h4>
-    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
   </div>
 
 

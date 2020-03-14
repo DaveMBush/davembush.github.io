@@ -76,248 +76,6 @@
         <div class="col-sm-8 blog-main">
           
   
-    <article id="post-c-properties-get-set" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/c-properties-get-and-set/">C# Properties Get and Set</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/c-properties-get-and-set/" class="article-date"><time datetime="2014-11-13T12:00:00.000Z" itemprop="datePublished">2014-11-13</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/c/">c#</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>My son is learning to program.  Last week he asked me to explain C# properties get and set and, as it turns out, it looks like many others are asking for the same.  So, I’ve decided to spend the time on this post, explaining getters and setters in about as much detail as one can expect. So here it goes…</p>
-<h2 id="Member-Variables"><a href="#Member-Variables" class="headerlink" title="Member Variables"></a>Member Variables</h2><p>So, a class has “member variables” that are typically scoped as private, although they could be (but shouldn’t be) scoped as public.</p>
-<p>class SomeClass<br>{<br>    private int _someMemberIntegerVariable;<br>}</p>
-<p>Inside the class definition but not in the methods.  You’ll also sometimes see this referred to as a “field”.  I call them “member variables” because that is what I learned them as back when I was programming C++.</p>
-<h2 id="Local-Variables"><a href="#Local-Variables" class="headerlink" title="Local Variables"></a>Local Variables</h2><p>If the variable is in a method, it is called a “local variable”</p>
-<p>class SomeClass<br>{<br>    public void SomeMethod()<br>    {<br>        int someLocalIntegerVariable;<br>    }<br>}</p>
-<h2 id="Class-“State”"><a href="#Class-“State”" class="headerlink" title="Class “State”"></a>Class “State”</h2><p>Now, the reason we have member variables is because they hold the “state” of the object.  For example, you might have a person class (typical example).  The Person class would have a firstName, lastName, birthDate as member variables so that when the class is created (and becomes an object) they can hold the state of the person. “Dave”, “Bush”, 6/20/61.</p>
-<p>class Person<br>{<br>    private string _firstName;<br>    private string _lastName;<br>    private Date _birthDate;<br>}</p>
-<h2 id="Old-Time-Get-and-Set"><a href="#Old-Time-Get-and-Set" class="headerlink" title="Old Time Get and Set"></a>Old Time Get and Set</h2><p>Now, in the old days (my C++ days) we’d just make those member variables public so that any other class could access them directly.  The problem with that is that any other class could access them directly leaving our class unable to control what exactly came into them.  And so, some gatekeeping was added.  In C++ and Java, that was done with setter methods and getter methods.  In Java that may have changed since the days I programmed in Java, but they started that way at least. That is, setFirstName(string name), setLastName(string name), setBirthDay(date birthday)</p>
-<p>class Person<br>{<br>    private string _firstName;<br>    private string _lastName;<br>    private Date _birthDate;</p>
-<pre><code>public setFirstName(firstName)
-{
-    _firstName = firstName;
-}
-public setLastName(lastName)
-{
-    _lastName = lastName;
-}
-public setFirstName(Date birthDate)
-{
-    _birthDate = birthDate;
-}
-</code></pre><p>}</p>
-<p>  and to retrieve them…. getFirstName(), getLastName(), getBirthDate() the setters and getters are public (or protected, or private as needed) but the member variables are always private so that only the class they are declared in can access them. Inside the setter, we make sure the data is valid before we set the member variable, or possibly do some sort of computation before we store it, or even pass it on to some other location. But as far as anyone using the class is concerned, it is set setting a value and when it calls the getter, it retrieves the value, or something similar.</p>
-<h2 id="C-Properties-Get-and-Set"><a href="#C-Properties-Get-and-Set" class="headerlink" title="C# Properties - Get and Set"></a>C# Properties - Get and Set</h2><p>So along comes C# and that language says, “having a getter method and a setter method is pretty dumb, we should syntactically stich them together.” And so they came up with properties The syntax for that is</p>
-<p>private datatype _propertyName;<br>public datatype PropertyName<br>{<br>    get {return _propertyName;}<br>    set{_propertyName = value;}<br>}</p>
-<p>Which is all declared inside a class.  The member variable doesn’t have to be named the same as the property, but it often is .  It is customary to name member variables with a leading underscore.  Local variables start with a lowercase character. So, properties and member variables are distinct. Although, you may have thought they were essentially the same thing. At the end of the day, once they are compiled, properties are just methods. But syntactically, you access them as though they were variables.  In fact, if you looked at a property in Intermediate Language (IL), the language that all .NET code compiles to, you would see that it is just a method. To access a property from within your code, you would access it as</p>
-<p>someObject.FirstName = “Dave”;</p>
-<p>or</p>
-<p>someVariable = someObject.FirstName;</p>
-<p>the only reason they exist at all is to keep the outside world (outside the class) from stomping on the member variables of the class directly. The compiler does for us what the old timers did (and the Java guys still do) using getMethod and setMethod So, as it turns out, we need all that gatekeeping, but the fact of the matter is, many times we don’t. When I was teaching, I’d have guys say, “if I don’t need the gatekeeper, why even bother with the properties?” Which is kind of a valid point But I always countered, “But what if you eventually do?</p>
-<h2 id="Enhanced-Properties"><a href="#Enhanced-Properties" class="headerlink" title="Enhanced Properties"></a>Enhanced Properties</h2><p>I think Microsoft heard that so they embellished the language so that we don’t have to declare the member variable if all we are going to do is just pass the data on through to it. That syntax is</p>
-<p>public dataType PropertyName {get;set;}</p>
-<p>the compiler generates the member variable for you So if I wanted to actually do something with the member variable, you would need to declare the member variable. It depends on what you were going to do with it. If you just wanted to retrieve the data at some other point in your application, you’d just use the property.  But if you needed to manipulate the data as it was being set or retrieved, you’d have to use the original syntax. And that’s properties up until today.</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/c-properties-get-and-set/" data-id="ck7i1uz4t001bwox2o4s7zk39" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/net/">.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/get/">get</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/properties/">properties</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/set/">set</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-asp-net-server-performance-testing" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/asp-net-server-performance-testing/">ASP.NET Server Performance Testing</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/asp-net-server-performance-testing/" class="article-date"><time datetime="2014-11-06T11:00:00.000Z" itemprop="datePublished">2014-11-06</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Testing/">Testing</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>loading…</p>
-<p>This happened a couple of years ago, but it is still relevant because I know of at least one place where it is still happening even though Microsoft has fixed the issue that initially caused this hack to be put in place in the first place.</p>
-<h2 id="Problem-In-Production-–-Oh-NO"><a href="#Problem-In-Production-–-Oh-NO" class="headerlink" title="Problem In Production – Oh NO!"></a>Problem In Production – Oh NO!</h2><p>Here’s the problem we were seeing.  We had several large PDF files that the client wanted to put up on the site so that their customers could download them.  The problem that we were seeing is that even though the site worked fine under development and QA, the site seemed to consume a lot of memory under load.</p>
-<p>Another symptoms we saw was that the file download took a lot of time to start, or timed out completely.  But the main issue was the memory because when the memory was consumed, the site would restart, and because it was a worker process crash that caused it, the restart took the site down.  This is not something you want to see happen when you are working with a client with world wide exposure.  A client who, if I told you the name, I’m sure you would recognize.</p>
-<p>In fact, it was the site not responding, or crashing, that first alerted us to the problem.  So, as soon as we knew the site wasn’t responding, I’d log onto the server and fire up task manager to see what was going on.</p>
-<h2 id="Server-Management-Tip"><a href="#Server-Management-Tip" class="headerlink" title="Server Management Tip"></a>Server Management Tip</h2><p>One of the things I did early on managing the servers, is that I set up an entirely separate app pool for each of the web sites we are hosting.  This way, we can monitor the memory and CPU activity of each one independently.  For those of you who are interested, the way to make the pool name show up in task manager is to run the pool in ApplicationPoolIdentity, a setting you can get to through “Advanced Settings…”  If you are only hosting one site, you shouldn’t need to do this, but in my case, with multiple sites, this told me a lot about what was going on with the sites and ultimately helped me track down what the problem was.</p>
-<p>By the way, you should always run each of your sites under a separate application pool so that when one site is having trouble, every site on your server doesn’t have trouble.  Imagine having an issue and not even knowing for sure which site was causing the trouble.  It’s bad enough not knowing what page is causing the problem.</p>
-<h2 id="It-Is-a-Memory-Issue-Now-What"><a href="#It-Is-a-Memory-Issue-Now-What" class="headerlink" title="It Is a Memory Issue.  Now What?"></a>It Is a Memory Issue.  Now What?</h2><p>OK.  So, I could see the memory increasing as soon as the site came back up.  So, now to try to track down what was causing memory issues.</p>
-<p>I tried various things along the way, none of them shed any light at all on the problem.  I even got dotMemory from JetBrains to see if I could find anything.  A memory leak maybe?  No, none of my code had even a small leak.</p>
-<h2 id="The-Fix-Discovered"><a href="#The-Fix-Discovered" class="headerlink" title="The Fix Discovered"></a>The Fix Discovered</h2><p>And then I finally stumbled on the issue.  I can’t remember what it was that we installed that needed this, but what it did was change our web.config file so that it had a section in it that looks like this:</p>
-<p><configuration><br>… lots of other configuration stuff …<br>  &lt;system.webServer&gt;<br>    &lt;modules <strong>runAllManagedModulesForAllRequests=”true”</strong>&gt;</configuration></p>
-<p>What that causes IIS to do is to run ALL of your web request through ALL of your .NET modules.  Why is this a problem you ask?  Because it even runs all of your images, css, javascript and other static content.  This isn’t normally a huge problem because most of that stuff is relatively small. But, when you try to run a be PDF through that pipeline, you’ll run out of memory because, and this is the major issue here, because the whole file has to be loaded into memory on the server before it can be sent on to the web browser to download.</p>
-<p>Make sure that runAllManagedModulesForAllRequest is either set to false, or doesn’t exist in your web.config file.  If you need it to be turned on for some valid reason that I am not thinking of, at least put your static files on another site where this can be turned off.</p>
-<h2 id="Moral-Of-The-Story"><a href="#Moral-Of-The-Story" class="headerlink" title="Moral Of The Story"></a>Moral Of The Story</h2><p>Now, the question that we should be asking now that we’ve figured it all out is, why wasn’t this caught earlier?  When a site goes up, isn’t all of the functionality, including all of the links to all of the images, files to download, and other pages on the site and off the site supposed to be tested?</p>
-<p>Yes, of course they are, but if you haven’t at least written down where all of this is, if you don’t have a systematic way of testing EVERYTHING, you WILL end up with these kind of errors once you put the site live.  This is to say nothing of load testing along the way.  This can all be prevented. .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-server-performance-testing/" data-id="ck7i1uz4a000uwox29hg2xbff" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/memory/">memory</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/performance/">performance</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/testing/">testing</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-css-animation-resources" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/css-animation-resources/">CSS Animation Resources</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/css-animation-resources/" class="article-date"><time datetime="2014-10-30T10:00:00.000Z" itemprop="datePublished">2014-10-30</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/CSS/">CSS</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>loading…</p>
-<p>This week I discovered CSS Animations.  Well, I shouldn’t say I discovered it so much as I finally spent some time figuring out what it is and why I would care about it.  This could make so much of what we normally do in JavaScript entirely unnecessary.  So, more for my own benefit than anything else, I thought today I would just create a list of resources that are available. But first, why would you want to use CSS for animation when JavaScript could do it just as well?</p>
-<h2 id="CSS-and-HTML-live-in-the-same-world"><a href="#CSS-and-HTML-live-in-the-same-world" class="headerlink" title="CSS and HTML live in the same world"></a>CSS and HTML live in the same world</h2><p>As I mentioned a few weeks ago when I discussed JavaScript performance, anytime you manipulate the DOM from JavaScript, you have to cross the HTML/JavaScript boundary.  And to do it right, you have to make sure you work in sync with the key frames that the DOM is living in.  If you don’t, at best you will be animating more than you need to if you use JavaScript to do the animation.  On a phone, this can eat up precious battery life.  For me, this is the biggest reason.</p>
-<h2 id="Declarative-Code-Is-Easier-To-Read"><a href="#Declarative-Code-Is-Easier-To-Read" class="headerlink" title="Declarative Code Is Easier To Read"></a>Declarative Code Is Easier To Read</h2><p>I realize that some may disagree with this.  But my feeling is, if I can express in one line what would  take a loop in JavaScript to do, I’ll take the one line of code.  This one of the things that makes Angular attractive.  I can create my own HTML tags.  Why not get the same benefit from my CSS?</p>
-<h2 id="Reasons-Why-You-Might-Not"><a href="#Reasons-Why-You-Might-Not" class="headerlink" title="Reasons Why You Might Not"></a>Reasons Why You Might Not</h2><p>There are a few reasons why you might not use CSS Animations.  First, it is relatively new.  It may not do everything you want it to do.  So, you may have to resort to using JavaScript for at least some of the things you want to do. Second, it may not support all of the browsers you need to support.</p>
-<h2 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h2><p>Here are a brief list of resources that I found</p>
-<h3 id="CSS-Generators"><a href="#CSS-Generators" class="headerlink" title="CSS Generators"></a>CSS Generators</h3><ul>
-<li><a href="//www.cssanimate.com/">CSS Animate</a></li>
-<li><a href="//www.css3maker.com/css3-animation.html#">CSS3 Maker</a></li>
-</ul>
-<h3 id="CSS-Animated-Accordion"><a href="#CSS-Animated-Accordion" class="headerlink" title="CSS Animated Accordion"></a>CSS Animated Accordion</h3><ul>
-<li><a href="//css3.bradshawenterprises.com/accordions/">Bradshaw Enterprises</a></li>
-<li><a href="//www.jamestease.co.uk/blether/accordion-using-css-animations">James Tease</a></li>
-<li><a href="//martinivanov.net/2014/03/19/animated-css3-only-horizontal-accordion/">Martin Ivanov</a> (side ways)</li>
-<li><a href="//www.thecssninja.com/css/accordian-effect-using-css">The CSS Ninja</a></li>
-</ul>
-<h3 id="Menus"><a href="#Menus" class="headerlink" title="Menus"></a>Menus</h3><ul>
-<li><a href="//css3menu.com/">CSS Menu</a> (lots of variations)</li>
-<li><a href="//css3-menu.com/animated-css3-menu.html">Menu Maker</a></li>
-</ul>
-<h3 id="Slide-Show"><a href="#Slide-Show" class="headerlink" title="Slide Show"></a>Slide Show</h3><ul>
-<li><a href="//css-tricks.com/infinite-all-css-scrolling-slideshow/">Infinite Scrolling</a></li>
-<li><a href="//agskryp.wordpress.com/2014/07/20/css3-animation-slideshow/">One at a time</a> (<a href="/oneatatimeslideshow" title="http:/oneatatimeslideshow">http:/oneatatimeslideshow</a>)</li>
-</ul>
-<p>When I first suggested “CSS Animations” to a designer friend of mine, he reacted as though I was suggesting putting a flash animation on a web site.  Obviously, we wouldn’t want to do that. But we use animation is some pretty creative ways.  So the next time you reach for JavaScript to add some sort of animation to your web application, do a search for a CSS Animation instead.</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/css-animation-resources/" data-id="ck7i1uz56001pwox2b8pq5vhz" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/animation/">animation</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/">css</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/html/">html</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
     <article id="post-nunit-unity-dependency-injection-moq-and-private-fields" class="article article-type-post" itemscope itemprop="blogPost">
 
   <header class="article-header">
@@ -372,7 +130,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/nunit-unity-dependency-injection-moq-and-private-fields/" data-id="ck7i1uz73004dwox2g7664lsi" class="article-share-link">
+      <a data-url="http://davembush.github.com/nunit-unity-dependency-injection-moq-and-private-fields/" data-id="ck7s4f04t0049mcx23c70qd6r" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -459,7 +217,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/technical-debt-is-inevitable/" data-id="ck7i1uz7x005fwox28kabzxs5" class="article-share-link">
+      <a data-url="http://davembush.github.com/technical-debt-is-inevitable/" data-id="ck7s4f05p005fmcx2ho9ba6to" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -526,7 +284,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/selenium-performance-improvements/" data-id="ck7i1uz7m004vwox2gbju54hk" class="article-share-link">
+      <a data-url="http://davembush.github.com/selenium-performance-improvements/" data-id="ck7s4f05d004umcx2hxt7t01u" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -611,7 +369,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/webforms-vs-mvc–the-war-is-over/" data-id="ck7i1uz8h006gwox2toc7yqw0" class="article-share-link">
+      <a data-url="http://davembush.github.com/webforms-vs-mvc–the-war-is-over/" data-id="ck7s4f06c006gmcx2hg0rqart" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -683,7 +441,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/my-visual-studio-toolbox/" data-id="ck7i1uz6y0046wox2qpcbqhi5" class="article-share-link">
+      <a data-url="http://davembush.github.com/my-visual-studio-toolbox/" data-id="ck7s4f04p0043mcx2i3lqplpm" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -768,7 +526,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/is-your-architecture-crippling-your-unit-testing/" data-id="ck7i1uz60002rwox2octscful" class="article-share-link">
+      <a data-url="http://davembush.github.com/is-your-architecture-crippling-your-unit-testing/" data-id="ck7s4f03u002pmcx25cfqupk3" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -837,11 +595,243 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/it-is-called-unit-testing-for-a-reason/" data-id="ck7i1uz4t001cwox23r7uhfav" class="article-share-link">
+      <a data-url="http://davembush.github.com/it-is-called-unit-testing-for-a-reason/" data-id="ck7s4f02s001bmcx2ol0n23ca" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
       
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-javascript-performance-tweaks" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/javascript-performance-tweaks/">JavaScript Performance Tweaks</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/javascript-performance-tweaks/" class="article-date"><time datetime="2014-08-21T13:00:00.000Z" itemprop="datePublished">2014-08-21</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Javascript/">Javascript</a> / <a class="article-category-link" href="/categories/Javascript/Programming-Best-Practice/">Programming Best Practice</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="//www.amazon.com/gp/product/059680279X/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=390957&amp;creativeASIN=059680279X&amp;linkCode=as2&amp;tag=davmbusnetapp-20&amp;linkId=JAJ5BQZSEX6VSPFJ"><img src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&amp;ASIN=059680279X&amp;Format=_SL250_&amp;ID=AsinImage&amp;MarketPlace=US&amp;ServiceVersion=20070822&amp;WS=1&amp;tag=davmbusnetapp-20" alt></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=davmbusnetapp-20&amp;l=as2&amp;o=1&amp;a=059680279X" alt> So, I started reading <a href="//www.amazon.com/gp/product/059680279X/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=390957&amp;creativeASIN=059680279X&amp;linkCode=as2&amp;tag=davmbusnetapp-20&amp;linkId=JAJ5BQZSEX6VSPFJ"><strong>High Performance JavaScript</strong></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=davmbusnetapp-20&amp;l=as2&amp;o=1&amp;a=059680279X" alt> recently and I thought now might be a good time to give a summary of what I’ve learned so far. Up until recently, I wasn’t all that concerned about performance.  But last year I started working with EXTjs, which allows you to build desktop like apps in JavaScript using pretty much nothing but JavaScript and now performance is a much bigger concern.  It isn’t like the old days where I was supplementing the page with JavaScript.  Now, HTML is supplementing the JavaScript.  Even if you aren’t working on anything quite as intense as what I’m working on now, you are going to want to learn how to write JavaScript in a performant manner because JavaScript is become the language of choice for so much.  It isn’t just a web thing anymore but it shows up in mobile development and servers. The only thing that might make learning how to optimize your JavaScript irrelevant is if you wait until a really good binary compiler comes out that is available everywhere.  Not something I see happening any time soon, much as I’d like that. OK, so that being said here are the two main optimization tweaks I’ve learned so far.</p>
+<h2 id="Local-Is-Faster-Than-Anything-Else"><a href="#Local-Is-Faster-Than-Anything-Else" class="headerlink" title="Local Is Faster Than Anything Else"></a>Local Is Faster Than Anything Else</h2><p>If I could boil all of chapter two into one rule.  This would be it.  Any time you are accessing a variable, make sure you turn it into a local variable if you are going to use that data more than once in your local scope. Why is this? Because every time you access a variable the JavaScript runtime engine has to do a lookup to find out where it is.  The first place it looks is in the local scope.  From there it works its way out to the various scopes it has access to. And be careful thinking that just because it is a property, you can ignore this rule.  Even properties take more time than going after a local variable.  At a minimum  it has to do a lookup for the variable that represents the object and another lookup for the property or method attached to that object. In a compiled language, this generally isn’t necessary because these references are all figured out when we compile the code.  So you’ll need to get your head out of “compiled language mode” and back into scripting mode.</p>
+<h2 id="Avoid-Accessing-the-DOM"><a href="#Avoid-Accessing-the-DOM" class="headerlink" title="Avoid Accessing the DOM"></a>Avoid Accessing the DOM</h2><p>Yes, I know, this is why we write JavaScript code on the client in the first place.  At least, most of the time it is. But the point of this rule is that we want to avoid accessing the DOM any more than we absolutely have to. Why is this slow? Well, the first reason is the generally the DOM engine and the Scripting engine are in two separate spaces.  So you kind of have to pay a toll every time you access the DOM from JavaScript. Second, manipulating the DOM is slow.  Historically this was not such a huge problem because the DOM was only expected to be rendered once. So what can you do to help your performance? First, once you’ve accessed a DOM element, cache the result on the JavaScript side  of the fence so you don’t need to pay that toll again. Second, don’t do anything in multiple calls that you could do with one. Pretty simple.</p>
+<h2 id="What-Else-Is-In-The-Book"><a href="#What-Else-Is-In-The-Book" class="headerlink" title="What Else Is In The Book?"></a>What Else Is In The Book?</h2><ol>
+<li>Loading and Execution – How to optimize getting the code on the client side to start with.</li>
+<li>Data Access – All about variables</li>
+<li>DOM Scripting – Optimizing access to the DOM</li>
+<li>Algorithms and Flow Control</li>
+<li>Strings and Regular Expressions</li>
+<li>Responsive Interfaces</li>
+<li>Ajax</li>
+<li>Programming Practices</li>
+<li>Building and Deploying High-Performance JavaScript Applications</li>
+<li>Tools – Profilers, etc.</li>
+</ol>
+<p>I’ve learned a lot in a few days and it has changed how I look at my code.  The book is really easy to read and even though it has a 2010 copyright on it, and lacks metrics for current browsers, 99% of the material still applies. Check out <a href="//www.amazon.com/gp/product/059680279X/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=390957&amp;creativeASIN=059680279X&amp;linkCode=as2&amp;tag=davmbusnetapp-20&amp;linkId=JAJ5BQZSEX6VSPFJ"><strong>High Performance JavaScript</strong></a><img src="//ir-na.amazon-adsystem.com/e/ir?t=davmbusnetapp-20&amp;l=as2&amp;o=1&amp;a=059680279X" alt> today!</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/javascript-performance-tweaks/" data-id="ck7s4f049003bmcx27u6m9e9t" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/book/">book</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/performance/">performance</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-yagni-you-arent-going-to-need-it" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/yagni-you-aren’t-going-to-need-it/">YAGNI - You Aren’t Going To Need It</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/yagni-you-aren’t-going-to-need-it/" class="article-date"><time datetime="2014-08-14T17:00:00.000Z" itemprop="datePublished">2014-08-14</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming-Best-Practice/">Programming Best Practice</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>One of the design principles in software development is to only write what you need today.  This has taken on the moniker of YAGNI (You Aren’t Going To Need It).</p>
+<p>The question is, in what ways do we violate this principle?</p>
+<h2 id="Features"><a href="#Features" class="headerlink" title="Features:"></a>Features:</h2><p>The most obvious situation where we tend to violate YAGNI is in feature creep.  We design in a new end user feature that seems really cool to us.  We may even try to sell the end user into believing they need the feature.  Maybe it is just eye candy.  “We can make this screen animate when it opens.”</p>
+<p>Yeah, but is that a requirement or a nice to have?  How much longer will it take to design that?  How many more bugs will it introduce?</p>
+<p>I think most of us get YAGNI at what I would call the “Visible Feature” level.  That is, what the end user will see immediately.</p>
+<p>Where I think most of us get this wrong is at the code design and architecture level.</p>
+<h2 id="Architecture"><a href="#Architecture" class="headerlink" title="Architecture:"></a>Architecture:</h2><h4 id="Do-you-have-a-tendency-to-over-architect-your-code"><a href="#Do-you-have-a-tendency-to-over-architect-your-code" class="headerlink" title="Do you have a tendency to over architect your code?"></a>Do you have a tendency to over architect your code?</h4><p>This is an impossible question to answer because I think all of us think we architect to just the right level.  So what are some signs that you have gone too far?</p>
+<p>Well, one of them might be how you defend your decision to write your code in a particular way.  If your answer is anything remotely like, “We might need it to do…” you are probably over architecting.</p>
+<p>For example, when you write your code, are you thinking about all of the ways it might be used in the future?  That business rule you are writing, it might be used as a web service, or need to be accessed by JSON.  You never know.</p>
+<p>But really, unless you need it to do all of that stuff today, you are probably spending more time on the code you are writing than you need to.  Why?  Because most of the time all of those, “we might need it to…” never happen.  And when they do happen, they happen in entirely unexpected ways that you can not foresee.</p>
+<h4 id="But-it-will-save-time"><a href="#But-it-will-save-time" class="headerlink" title="But it will save time!"></a>But it will save time!</h4><p>Will it?</p>
+<p>If your code is so complex that adding in the “it might need to…” in the future is going to take more time than adding it in now, you probably have a fundamental problem with your code.</p>
+<p>Worse, as mentioned above, you will probably never need it anyhow.  So, you’ve spent extra time now to save time you wouldn’t spend in the future if you were to just wait until you need it.</p>
+<p>Aren’t you busy enough with deadlines as it is?</p>
+<h2 id="Prevention"><a href="#Prevention" class="headerlink" title="Prevention:"></a>Prevention:</h2><p>So, then the next question is, “how do we prevent over architecting?”</p>
+<p>Simple, you write Unit Test for all of the code you are writing.  If you are writing code so that it can be accessed in multiple ways, you’ll need to write test that prove it can be accessed in multiple ways.  Are you willing to do that?</p>
+<p>When the tests need to be updated to reflect new business requirements, are you going to want to update them all?</p>
+<p>So the next time you, or someone you knows says, “It might need to…” maybe you should ask them what the chances of them needing that really are and is it worth spending the extra time on it now.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/yagni-you-aren’t-going-to-need-it/" data-id="ck7s4f0a10072mcx22ybdumrb" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/">tdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xp/">xp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/yagni/">yagni</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-javascript-boolean-confusion" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/javascript-boolean-confusion/">JavaScript Boolean Confusion</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/javascript-boolean-confusion/" class="article-date"><time datetime="2014-08-07T17:00:00.000Z" itemprop="datePublished">2014-08-07</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Javascript/">Javascript</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>What could possibly be confusing about JavaScript Booleans you ask?</p>
+<p>Well, here’s several logical statements written in JavaScript.  Do you know what each does?</p>
+<p>if(“0” == true)</p>
+<p>if(“0”)</p>
+<p>if(“1” === true)</p>
+<p>if(!!”0” == true)</p>
+<p>if(“0” != true)</p>
+<p>if(“0” !== true)</p>
+<p>var someVariable;<br>if(someVariable)</p>
+<p>if(someVariable == true)</p>
+<p>if(!someVariable === true)</p>
+<p>if(!!someVariable === true)</p>
+<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+<h2 id="if-“0”-true"><a href="#if-“0”-true" class="headerlink" title="if(“0” == true)"></a>if(“0” == true)</h2><p>“0” == true</p>
+<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }resolves to false.  Why?  Because both sides of the equal are converted to numerics and then evaluated.  This gives us, 0 == 1 which is in fact false.</p>
+<p>However,</p>
+<h2 id="if-“0”"><a href="#if-“0”" class="headerlink" title="if(“0”) "></a>if(“0”) </h2><p>is true.  This is because there is no conversion needed.  Any string is truthy.</p>
+<p>OK.  So then, what would you expect</p>
+<h2 id="if-“1”-true"><a href="#if-“1”-true" class="headerlink" title="if(“1” === true)"></a>if(“1” === true)</h2><p>to be?  If you said, “true” you would be wrong.  And just when you thought you were getting the hang of this.</p>
+<p>This puzzle illustrates the difference between the double equals (==) and triple equals (===) evaluators in JavaScript.  You see, if you use double equals, JavaScript will always convert both sides to a common type and then do the evaluation.  However, triple equals says that both sides have to be the same type and the same value to be equal.  Since a String is not a Boolean type, “1” === true evaluates to false.</p>
+<p>Do you think you are getting the hang of this yet?  OK.  What does the next statement evaluate to?</p>
+<h2 id="if-”0”-true"><a href="#if-”0”-true" class="headerlink" title="if(!!”0” == true)"></a>if(!!”0” == true)</h2><p>This evaluates to true.  If you thought it would be false, you probably applied the !! after the types were converted.  But the operator precedence on this is to apply the ! operators first.  So ! some valid string is false and ! false is true.  So true == true is true.</p>
+<h2 id="The-operator"><a href="#The-operator" class="headerlink" title="The ! operator"></a>The ! operator</h2><p>The next two examples I gave were to simply point out that != is the opposite of double equal and !== is the opposite of triple equal.  Beyond that, they work the same.</p>
+<p>So, if(“0” != true) would evaluate to true and if(“0” !== true) would also evaluate to true.</p>
+<h2 id="if-someVariable"><a href="#if-someVariable" class="headerlink" title="if(someVariable)"></a>if(someVariable)</h2><p>The last set of examples illustrates what happens if a variable is undefined or null.</p>
+<p>Since we never gave someVariable a value, it is undefined and so if(someVariable) would evaluate to false.  Undefined and null variables evaluate to falsy.</p>
+<p>However, that does not mean that it is a boolean value.</p>
+<p>So, if(someVariable == true) evaluates to false, if(someVariable === false) evaluates to false, if(!someVariable === true) evaluates to true and if(!!someVariable === true) evaluates to false.</p>
+<h2 id="Implications"><a href="#Implications" class="headerlink" title="Implications"></a>Implications</h2><p>The main implication of all of this is that if you are going to compare two variables for equality, you should first convert them to a common type and then compare them using the triple equals operator.</p>
+<p>However, if you are just evaluating a variable for truthiness, using just the variable, as in if(someVariable) is clear enough.  You don’t gain much by using if(!!someVariable) or even if(!!someVariable === true) syntax.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/javascript-boolean-confusion/" data-id="ck7s4f0420030mcx2u6kej01x" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/boolean/">boolean</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
 
     </footer>
   </div>
@@ -894,7 +884,7 @@ public setFirstName(Date birthDate)
   
   <div class="sidebar-module">
     <h4>Archives</h4>
-    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
   </div>
 
 

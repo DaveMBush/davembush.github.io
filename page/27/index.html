@@ -76,244 +76,6 @@
         <div class="col-sm-8 blog-main">
           
   
-    <article id="post-itextsharp-html-to-pdf-positioning-text" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/itextsharp-–-html-to-pdf-–-positioning-text/">iTextSharp – HTML to PDF – Positioning Text</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/itextsharp-–-html-to-pdf-–-positioning-text/" class="article-date"><time datetime="2009-07-08T10:50:15.000Z" itemprop="datePublished">2009-07-08</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/iTextSharp/">iTextSharp</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2009/07/misc_vol1_012.jpg" alt></p>
-<p>The next series of things I’m going to introduce about using iTextSharp are all going to lead toward taking HTML text and placing it on the PDF document.</p>
-<p>There are several items we need to cover before we even get to the part about converting the text from HTML to PDF text.  The first is placing the text on the document where it is supposed to be.</p>
-<p><em>Once again, we are building on previous articles about using iTextSharp.  So if you are just jumping in, you might want to go take a look at the other articles.  You can find a list at the bottom of this post.</em></p>
-<p>To place a block of text on the screen that is going to have multiple formats in it (bold, underline, etc) I use the ColumnText class.  This allows me to specify the rectangle or, if I want, some irregular shape, to place the text in.  I handle determining where this rectangle is on the page in the same way that I determine where an image should go.  I have the designer place a form field on the screen and then I use that to get my coordinates.</p>
-<p>float[] fieldPosition = null;<br>fieldPosition =<br>    fields.GetFieldPositions(“fieldNameInThePDF”);<br>left = fieldPosition[1];<br>right = fieldPosition[3];<br>top = fieldPosition[4];<br>bottom = fieldPosition[2];<br>if (rotation == 90)<br>{<br>    left = fieldPosition[2];<br>    right = fieldPosition[4];<br>    top = pageSize.Right - fieldPosition[1];<br>    bottom = pageSize.Right - fieldPosition[3];<br>}</p>
-<p>Once I have the position, the next thing I need to do is to create my ColumnText object.  This requires the same ContentByte object that we used for the images.</p>
-<p>PdfContentByte over = stamp.GetOverContent(1);<br>ColumnText ct = new ColumnText(over);</p>
-<p>And now I can set the rectangle to print into.</p>
-<p>ct.SetSimpleColumn(left, bottom, right, top,<br>    15, Element.ALIGN_LEFT);</p>
-<p><a href="//11011.net/software/vspaste"></a>The 15 represents the leading you want (space between characters vertically). You may need to adjust that number.</p>
-<p>Once you have your rectangle, you can add paragraphs to it.  Paragraphs are composed of smaller units called chunks that can be formatted.  If you want a paragraph that is all formatted the same you can make a call that looks like this.</p>
-<p>Paragraph p = new Paragraph(<br>    new Chunk(“Some Text here”,<br>        FontFactory.GetFont(<br>          “Arial”, 14, Font.BOLD, Color.RED)));</p>
-<p><a href="//11011.net/software/vspaste"></a>and then add the paragraph to your rectangle</p>
-<p>ct.AddElement(p);</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-positioning-text/" data-id="ck7i1uz61002twox2xqgnokmt" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PDF/">PDF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iTextSharp/">iTextSharp</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-jquery-date-picker" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/jquery-–-date-picker/">jQuery – Date Picker</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/jquery-–-date-picker/" class="article-date"><time datetime="2009-07-02T11:28:00.000Z" itemprop="datePublished">2009-07-02</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/jQuery/">jQuery</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2009/07/tp_vol4_002.jpg" alt="tp_vol4_002" title="tp_vol4_002"></p>
-<p>Today we’ll start taking a look at the final control in the jQuery UI suite.  The Date Picker.</p>
-<p>This control, as with all the other controls we’ve looked at, is relatively simple as long as you keep in mind that you need to use the jQuery UI Styles with it.</p>
-<p>So let’s begin.</p>
-<p>So assuming you’ve set up your project as we’ve specified earlier–that is, an ASPX page that uses a master page with the JavaScript includes for jQuery and jQuery UI as well as placing the jQuery theme information in the ASP.NET theme directory–all you should have left is a bit of HTML and the jQuery call.</p>
-<p>The Date Picker works with a standard input field.  Since this is a .NET based blog, we will use an asp.net control instead.  It ultimately renders as an input field.</p>
-<p>Date: &lt;asp:TextBox ID=”m_textBoxDate” CssClass=”dateField” runat=”server”&gt;&lt;/asp:TextBox&gt; </p>
-<p><a href="//11011.net/software/vspaste"></a>To turn this into a date picker, use the following jQuery code.</p>
-<p>$(function() {<br>    $(“.dateField”).datepicker();<br>});</p>
-<p><a href="//11011.net/software/vspaste"></a></p>
-<p>To render the date picker</p>
-<p><img src="/uploads/2009/07/image2.png" alt="image" title="image"></p>
-<p>By default the button triggers when you set focus into the input field and goes away when the input field loses focus.</p>
-<p>An alternate rendering is to use a button:</p>
-<p><img src="/uploads/2009/07/image3.png" alt="image" title="image"></p>
-<p>You do this by using the showOn specifier</p>
-<p>$(function() {<br>$(“.dateField”)<br>    .datepicker({ <strong>showOn:</strong> <strong>‘button’</strong> });<br>});</p>
-<p><a href="//11011.net/software/vspaste"></a></p>
-<p>You can have the calendar show when either the button is clicked or when the field has focus by using:</p>
-<p>$(function() {<br>$(“.dateField”)<br>    .datepicker({ showOn: ‘both’ });<br>});</p>
-<p>There are other options, events, and methods that you can use to create a rich user experience with your application.  Check out the full documentation at the jQuery UI site.</p>
-<p><a href="//jqueryui.com/demos/datepicker/" title="http://jqueryui.com/demos/datepicker/">http://jqueryui.com/demos/datepicker/</a></p>
-<p>.</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-–-date-picker/" data-id="ck7i1uz6h003hwox2w7pc3fq9" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/datepicker/">datepicker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery/">jQuery</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-itextsharp-adding-images" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/itextsharp-–-adding-images/">iTextSharp – Adding Images</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/itextsharp-–-adding-images/" class="article-date"><time datetime="2009-06-30T11:33:00.000Z" itemprop="datePublished">2009-06-30</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/iTextSharp/">iTextSharp</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2009/06/AutumnLeaves.jpg" alt="Maple leaves in Autumn." title="Maple leaves in Autumn."></p>
-<p>Last week I showed how to use form fields to control placement of dynamic data.</p>
-<p>But what if you want to dynamically place images in your PDF?  You can stuff them into a form field like you can with text.</p>
-<p>However, one of the items you can retrieve from the form field is its location on the screen.  Using this, a little math, and some iTextSharp image code, we can place images in our PDF where the form field was located.  Here’s how I do it.</p>
-<p>First, this code builds on the previous code I’ve already demonstrated in previous articles.  If this is your first time here, you’ll want to scroll to the bottom of this post where it says, “Other Posts in iTextSharp” and read them first.</p>
-<p>To retrieve the position of the form field, you’ll need to call the field’s GetFieldPositions() method.  It is plural because it is going to get the position of every field in the document with the name you specify.  For our purposes, we will assume that the field only exists once and is on the first page.</p>
-<p>float[] topImagePosition = null;<br>topImagePosition =<br>    fields.GetFieldPositions(“m_topPicture”);</p>
-<p><a href="//11011.net/software/vspaste"></a>The float array that is returned has five elements:</p>
-<ul>
-<li>Page Number (starting at 1)</li>
-<li>Left</li>
-<li>Bottom</li>
-<li>Right</li>
-<li>Top</li>
-</ul>
-<p>If the page rotation is 90 degrees, you’ll want to rotate the position information.  You can check the rotation using</p>
-<p>rotation = pdfReader.GetPageRotation(1);</p>
-<p><a href="//11011.net/software/vspaste"></a>Where GetPageRotation() takes a parameter representing the page number, starting at 1.</p>
-<p>You can rotate the positions using this code.</p>
-<p>left = topImagePosition[1];<br>right = topImagePosition[3];<br>top = topImagePosition[4];<br>bottom = topImagePosition[2];<br>if (rotation == 90)<br>{<br>    left = topImagePosition[2];<br>    right = topImagePosition[4];<br>    top = pageSize.Right - topImagePosition[1];<br>    bottom = pageSize.Right - topImagePosition[3];<br>}</p>
-<p><a href="//11011.net/software/vspaste"></a>Next, you’ll want to retrieve the image you want to display on the PDF.  There are APIs for retrieving the image from a web site, but most of the time you’ll be retrieving the image from your hard drive.  Here is the code to do that.</p>
-<p>iTextSharp.text.Image topImage =<br>    iTextSharp.text.Image.GetInstance(<br>    Server.MapPath(imagelocation +<br>    productRow.imagefilename));</p>
-<p><a href="//11011.net/software/vspaste"></a>Before we place the image on the page, the next thing you’ll want to do is scale the image so that it fits in the rectangle</p>
-<p>topImage.ScaleToFit(right - left, top - bottom);</p>
-<p><a href="//11011.net/software/vspaste"></a>And then we position it</p>
-<p>topImage.SetAbsolutePosition(<br>    left + ((right - left) - topImage.ScaledWidth) /<br>    2, top - topImage.ScaledHeight);</p>
-<p><a href="//11011.net/software/vspaste"></a>and then we put it into the PDF</p>
-<p>PdfContentByte contentByte = stamp.GetOverContent(1);<br>contentByte.AddImage(topImage);</p>
-<p><a href="//11011.net/software/vspaste"></a>Notice the contextByte thing.  That’s the critical part of how we get the images into the PDF.</p>
-<p>Finally, you’ll want to remove the field from the form so that it doesn’t show up.</p>
-<p>fields.RemoveField(“m_topPicture”);</p>
-<p><a href="//11011.net/software/vspaste"></a>I’m not sure this is really needed, but it doesn’t hurt to clean up things you no longer need.</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-adding-images/" data-id="ck7i1uz62002uwox2sx967mmw" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PDF/">PDF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iTextSharp/">iTextSharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/images/">images</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
     <article id="post-jquery-dialog-with-validation-controls" class="article article-type-post" itemscope itemprop="blogPost">
 
   <header class="article-header">
@@ -380,7 +142,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-dialog-–-with-validation-controls/" data-id="ck7i1uz6k003kwox23v84qldq" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-dialog-–-with-validation-controls/" data-id="ck7s4f04d003imcx2bt51s83u" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -460,7 +222,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-the-easy-way/" data-id="ck7i1uz670032wox2wt33n0y2" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-the-easy-way/" data-id="ck7s4f041002zmcx2v32bm7ae" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -531,7 +293,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/pdfs-using-itextsharp/" data-id="ck7i1uz74004fwox2cgcdueje" class="article-share-link">
+      <a data-url="http://davembush.github.com/pdfs-using-itextsharp/" data-id="ck7s4f04w004emcx21xjh0fv9" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -604,7 +366,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-progressbar/" data-id="ck7i1uz6m003owox2q84n8pbu" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-progressbar/" data-id="ck7s4f04h003pmcx25jctyn5d" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -680,7 +442,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/net-string-pool-–-not-just-for-the-compiler/" data-id="ck7i1uz700048wox2gnhtws3k" class="article-share-link">
+      <a data-url="http://davembush.github.com/net-string-pool-–-not-just-for-the-compiler/" data-id="ck7s4f04q0044mcx2p7pngirf" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -761,7 +523,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/c-“”-better-than-string-empty/" data-id="ck7i1uz4r0019wox2kc36q2m9" class="article-share-link">
+      <a data-url="http://davembush.github.com/c-“”-better-than-string-empty/" data-id="ck7s4f02t001dmcx2mzba60wp" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -849,12 +611,238 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/just-say-“no-”-to-c-regions-really/" data-id="ck7i1uz6r003uwox2uyv5uile" class="article-share-link">
+      <a data-url="http://davembush.github.com/just-say-“no-”-to-c-regions-really/" data-id="ck7s4f04g003nmcx2oawrq0ax" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/regions/">regions</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-vbnet-char-from-string-with-option-strict" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/vb-net-char-from-string-with-option-strict/">VB.NET - Char from String with Option Strict</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/vb-net-char-from-string-with-option-strict/" class="article-date"><time datetime="2009-04-08T08:35:14.000Z" itemprop="datePublished">2009-04-08</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/VB-NET/">VB.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/04/g04b0079.jpg" alt="G04B0079"> So here’s the question:</p>
+<blockquote>
+<p>I’m using String.Split() and need to pass in a Char or a Char array as the parameter.  If I pass in a string String.Split(“/“) I get an error “Option Strict On disallows implicit conversions from ‘String’ to ‘Char’.”</p>
+<p>Obviously, the easiest way to fix this would be to turn off Option Strict, but I would prefer to keep it on.  So how do I pass in the Char instead of a String in this situation?”</p>
+</blockquote>
+<p>There are actually several ways to accomplish what you are trying to do.</p>
+<p>The first and most general solution would be to call the ToCharArray() method off the string.</p>
+<p>Dim strSplit() As String = myString.Split(“/“.ToCharArray())</p>
+<p>The advantage to this method is that it will work regardless of what size the string is and it will use each character in the string as a delimiter.</p>
+<p>But what if you only have one character in your array?  Surely there is a shorter, cleaner statement we can use.</p>
+<p>As a matter of fact, there are several other options.  You could use Convert.ToChar() or Char.Parse()</p>
+<p>Dim strSplit() As String = _<br>   myString.Split(Convert.ToChar(“/“))</p>
+<p>or</p>
+<p>Dim strSplit() As String = _<br>   myString.Split(Char.Parse(“/“))</p>
+<p><a href="//11011.net/software/vspaste"></a>But the easiest way to convert a single character string to a Char is simply to put a “c” after the closing quote:</p>
+<p>Dim strSplit() As String = myString.Split(“/“c)</p>
+<p><a href="//11011.net/software/vspaste"></a></p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/vb-net-char-from-string-with-option-strict/" data-id="ck7s4f069006bmcx2ab332php" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/char/">char</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/split/">split</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/strict/">strict</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/string/">string</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vb-net/">vb.net</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-jquery-auto-scrolling-the-slider" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/jquery-auto-scrolling-the-slider/">jQuery - Auto Scrolling the Slider</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/jquery-auto-scrolling-the-slider/" class="article-date"><time datetime="2009-03-23T10:50:55.000Z" itemprop="datePublished">2009-03-23</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/jQuery/">jQuery</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/03/b03b0037.jpg" alt="B03B0037"> Question from Yuhsin:</p>
+<blockquote>
+<p>I would like to make the jquery steps slider to do auto-increment when the window loads. Is there an easy way to trigger the slide to move by itself ?</p>
+</blockquote>
+<p>I’m assuming this question is looking for the content to auto scroll as well.  So let’s pull up the <a href="/2009/03/12/jquery-using-slider-as-a-scrollbar/">code from last week</a> and take a look at this issue. There is a timer plugin available for jQuery that will do some of the work for you, but all we really need for this functionality is:</p>
+<ul>
+<li>A function to do the auto incrementing</li>
+<li>A call to the javascript setTimeout() function.</li>
+</ul>
+<p>So first, the auto incrementing function.</p>
+<p>function scrollWindow() {</p>
+<pre><code>var slideValue;
+slideValue = $(&quot;#slider&quot;).slider(&quot;value&quot;);
+if(slideValue &gt; -100)
+{
+    $(&quot;#slider&quot;).slider(&quot;value&quot;, slideValue - 1);
+    setTimeout(scrollWindow, 1000);
+}
+</code></pre><p>}</p>
+<p><a href="//11011.net/software/vspaste"></a>A couple things to note about this function:</p>
+<ul>
+<li>We are retrieving the current position of the slider using the .slider() method of the slider widget.</li>
+<li>We are assuming that the range of our slider is between 0 and -100.</li>
+<li>We call setTimeout at the end to call this function again in a second.</li>
+<li>We only call setTimeout if we have not reached the end of our scrolling.</li>
+</ul>
+<p>The only thing left is that we need to kick this off when the page loads.  To do this we add a call to setTimeout in our jQuery ready method:</p>
+<p>$(function() {<br>    $(“#slider”).slider(<br>    { change: handleChange,<br>        slide: handleSlide,<br>        min: -100,<br>        max: 0<br>    });<br>    <em><strong>setTimeout(scrollWindow, 1000);</strong></em><br>});</p>
+<p>The actual scrolling of the window happens “automatically” with the code we wrote last week.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/jquery-auto-scrolling-the-slider/" data-id="ck7s4f04c003fmcx2raecfkis" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/automatic-scrolling/">automatic scrolling</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery/">jQuery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/slider/">slider</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-unable-to-find-connectionfor-object-webconfig" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/unable-to-find-connection-for-object-web-config/">Unable to find connection...for object web.config</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/unable-to-find-connection-for-object-web-config/" class="article-date"><time datetime="2009-03-18T08:40:09.000Z" itemprop="datePublished">2009-03-18</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/03/j01c0089.jpg" alt="J01C0089"> I’ve seen this error a couple of different times.  Mostly from other people calling me with the problem.  So I still don’t know what ultimately causes the problem.  But if you’re having this problem, here’s how you fix it. First, a bit of background. You’ll open a dataset you’ve been working with for months and see the following error message:</p>
+<blockquote>
+<p>Unable to find connection [connectionName] (web.config)1 for object ‘Web.config’.  The connection string could not be found in application settings, or the data provider associated with the connection string could not be loaded.</p>
+</blockquote>
+<p>What has happened is that the list of connection strings the tables in your dataset use has become corrupt.  In the most recent case of this we ended up with two connection strings with the same name pointing to two different connections. Here’s what you need to do to start trouble-shooting the problem.</p>
+<ul>
+<li>Close the dataset window with the error.</li>
+<li>Right click the dataset in the solution explorer</li>
+<li>Select “Open with…” from the context menu</li>
+<li>Select “Source Code (Text) Editor” from the list and press the “OK” button.</li>
+</ul>
+<p>Your code will now be opened in text mode so you can view the XML.  You want to be careful at this point because if you mess things up too badly, you won’t have anything useful.  As things stand now there is hope of recovery.  A backup would be a good thing to make sure you have right about now. Near the top of the file, you’ll see a <connections> element with several <connection> elements within it.  Most datasets should only have one <connection> element.  If you are having trouble like I’ve described above, you’ll have at least two and one will be incorrect.  Delete it or otherwise fix it, save the file and reopen normally.  If you are lucky, everything will be working correctly again.</connection></connection></connections></p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/unable-to-find-connection-for-object-web-config/" data-id="ck7s4f062005ymcx20jy8woc1" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/connection-string/">connection string</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dataset/">dataset</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/error/">error</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web-config/">web.config</a></li></ul>
 
 
     </footer>
@@ -908,7 +896,7 @@
   
   <div class="sidebar-module">
     <h4>Archives</h4>
-    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
   </div>
 
 
