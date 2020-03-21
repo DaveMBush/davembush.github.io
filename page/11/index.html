@@ -137,7 +137,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/using-node-js-and-gulp-with-asp-net-in-visual-studio-2015/" data-id="ck7s4f0680068mcx2ruibhleu" class="article-share-link">
+      <a data-url="http://davembush.github.com/using-node-js-and-gulp-with-asp-net-in-visual-studio-2015/" data-id="ck81s5qa90066oox25bvewd1p" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -231,7 +231,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/cross-browser-javascript-copy-and-paste/" data-id="ck7s4f0yy013xmcx26zt1mq2a" class="article-share-link">
+      <a data-url="http://davembush.github.com/cross-browser-javascript-copy-and-paste/" data-id="ck81s5qlb0083oox2744v04wk" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -316,7 +316,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/increase-your-excellence-capacity/" data-id="ck7s4f03r002lmcx2n3clcbto" class="article-share-link">
+      <a data-url="http://davembush.github.com/increase-your-excellence-capacity/" data-id="ck81s5q4v002noox2d2lsdf9t" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -404,7 +404,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/javascript-alchemy-with-strings-numbers-and-booleans/" data-id="ck7s4f04a003dmcx29ok0pgjf" class="article-share-link">
+      <a data-url="http://davembush.github.com/javascript-alchemy-with-strings-numbers-and-booleans/" data-id="ck81s5q5u003boox237gc4hlb" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -488,7 +488,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/javascript-truthy-and-falsy-–-pain-and-pleasure/" data-id="ck7s4f0470037mcx2a0nkming" class="article-share-link">
+      <a data-url="http://davembush.github.com/javascript-truthy-and-falsy-–-pain-and-pleasure/" data-id="ck81s5q5q0037oox2arwx3eeq" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -534,13 +534,24 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Every week when I write, I try to think back on the past week and think, “What have I learned that might be useful to others.”  Most weeks that is a pretty easy question to answer because I get most of my pleasure from learning new stuff.  But this week was different. When I sat down to write today, I couldn’t come up with a subject that couldn’t be covered with a sentence.  More of a tweet than a blog post.  It was so bad that I decided to go run the errands that are on my list and come back to it once I got home. Evidently, that was a good move because I think I have something that will be genuinely useful.  Although I will admit that if you’ve been working with Angular for very long at all, you may have already learned what I’m about to explain. <img src="/uploads/2015/11/image2.png" alt="image" title="image"> </p>
-<h2 id="The-Basics"><a href="#The-Basics" class="headerlink" title="The Basics"></a>The Basics</h2><p>To make sure we are all on the same page, I want to cover the basics first.  Every controller has a $scope variable associated with it.  $scopes can be nested within each other, which allows us to either have child scopes add information to parent scopes using prototypical inheritance, or the child $scope can be isolated so that it can’t see the parent $scope up the nesting chain.  In either case, you can gain access to the parent $scope by using the $parent variable. What is important to realize about $scope is that it is attached to the element’s this pointer.  Every controller you create is its own object and $scope is just one of many properties that is part of that object. Now, in normal Angular programming, you may only ever create one controller per element.  But if you’ve ever created a directive that gets used on multiple places, or you’ve done anything with repeaters, you know that controllers can be created “under the hood.”  So that the $scope for the repeater item isn’t the same as the $scope for the element that holds the main collection.</p>
-<h2 id="scope-and-ControllerAs"><a href="#scope-and-ControllerAs" class="headerlink" title="$scope and ControllerAs"></a>$scope and ControllerAs</h2><p>In version 1.2 of Angular, the ControllerAs syntax was added, this can be added in a number of different ways that I won’t describe here.  That’s old news and there are plenty of places to find that information, including the Angular documentation.  But what isn’t clear at first, is what this feature does for us under the hood. Many people, who haven’t dug in deep under the hood assume that somehow this replaces $scope.  But in fact what it does is that it adds a variable onto $scope.  If you were to use ControllerAs redMonkey, what actually happens under the hood is that you end up with a variable named “redMonkey” that is hanging off of the controller’s $scope variable. In fact, what you end up with is this holding a property “$scope” and $scope holding a property “redMonkey” which is actually pointing to the controller’s this pointer.  Further, it is possible to have elements in your view bind to other variables hanging off of $scope while in the same view, other things are bound to variables hanging off of redMonkeys.</p>
-<h2 id="scope-and-Singletons"><a href="#scope-and-Singletons" class="headerlink" title="$scope and Singletons"></a>$scope and Singletons</h2><p>I hope at this point you have a relatively clear picture of how $scope works because this is where things start to get interesting.  You see, just about everything else that you create in Angular is a singleton.  That is, only one instance of it exist in the entire application.  So, what happens if you pass $scope into one of these singletons and you use that singleton multiple times on the same page? Well, there’s no telling for sure.  You might get lucky and everything will seem to work, until one day it doesn’t.  In fact, you may never notice that there is a problem if you only ever call it from one controller or directive at a time. But to use singletons effectively, what you need to do is that you will need to pass the scope to each of the functions you need to have use it, unless you can be sure it will only be able to use one scope at a time.  As a general rule, you should never store state in anything that is a singleton. How do I know? Well, this week, I was working on some code that I thought was overriding the control’s controller.  But, when I finally got it all working I found that it only worked some of the time because what I had really overridden was a method in a directive.  Another time this week, I was doing something similar thinking I was overriding a function in the main control’s $scope only to find out that the function I was overloading was in a nested repeater item.</p>
+        <p>Every week when I write, I try to think back on the past week and think, “What have I learned that might be useful to others.”  Most weeks that is a pretty easy question to answer because I get most of my pleasure from learning new stuff.  But this week was different.</p>
+<p>When I sat down to write today, I couldn’t come up with a subject that couldn’t be covered with a sentence.  More of a tweet than a blog post.  It was so bad that I decided to go run the errands that are on my list and come back to it once I got home.</p>
+<p>Evidently, that was a good move because I think I have something that will be genuinely useful.  Although I will admit that if you’ve been working with AngularJS for very long at all, you may have already learned what I’m about to explain.</p>
+<p><img src="/uploads/2015/11/image2.png" alt="image" title="image"></p>
+<h2 id="The-Basics"><a href="#The-Basics" class="headerlink" title="The Basics"></a>The Basics</h2><p>To make sure we are all on the same page, I want to cover the basics first.  Every controller has a $scope variable associated with it.  $scopes can be nested within each other, which allows us to either have child scopes add information to parent scopes using prototypical inheritance, or the child $scope can be isolated so that it can’t see the parent $scope up the nesting chain.  In either case, you can gain access to the parent $scope by using the $parent variable.</p>
+<p>What is important to realize about $scope is that it is attached to the element’s this pointer.  Every controller you create is its own object and $scope is just one of many properties that is part of that object.</p>
+<p>Now, in normal Angular programming, you may only ever create one controller per element.  But if you’ve ever created a directive that gets used on multiple places, or you’ve done anything with repeaters, you know that controllers can be created “under the hood.”  So that the $scope for the repeater item isn’t the same as the $scope for the element that holds the main collection.</p>
+<h2 id="scope-and-ControllerAs"><a href="#scope-and-ControllerAs" class="headerlink" title="$scope and ControllerAs"></a>$scope and ControllerAs</h2><p>In version 1.2 of Angular, the ControllerAs syntax was added, this can be added in a number of different ways that I won’t describe here.  That’s old news and there are plenty of places to find that information, including the Angular documentation.  But what isn’t clear at first, is what this feature does for us under the hood. Many people, who haven’t dug in deep under the hood assume that somehow this replaces $scope.  But in fact what it does is that it adds a variable onto $scope.  If you were to use ControllerAs redMonkey, what actually happens under the hood is that you end up with a variable named “redMonkey” that is hanging off of the controller’s $scope variable.</p>
+<p>In fact, what you end up with is this holding a property “$scope” and $scope holding a property “redMonkey” which is actually pointing to the controller’s this pointer.  Further, it is possible to have elements in your view bind to other variables hanging off of $scope while in the same view, other things are bound to variables hanging off of redMonkeys.</p>
+<h2 id="scope-and-Singletons"><a href="#scope-and-Singletons" class="headerlink" title="$scope and Singletons"></a>$scope and Singletons</h2><p>I hope at this point you have a relatively clear picture of how $scope works because this is where things start to get interesting.  You see, just about everything else that you create in Angular is a singleton.  That is, only one instance of it exist in the entire application.  So, what happens if you pass $scope into one of these singletons and you use that singleton multiple times on the same page? Well, there’s no telling for sure.  You might get lucky and everything will seem to work, until one day it doesn’t.  In fact, you may never notice that there is a problem if you only ever call it from one controller or directive at a time.</p>
+<p>But to use singletons effectively, what you need to do is that you will need to pass the scope to each of the functions you need to have use it, unless you can be sure it will only be able to use one scope at a time.  As a general rule, you should never store state in anything that is a singleton.</p>
+<p>How do I know? Well, this week, I was working on some code that I thought was overriding the control’s controller.  But, when I finally got it all working I found that it only worked some of the time because what I had really overridden was a method in a directive.  Another time this week, I was doing something similar thinking I was overriding a function in the main control’s $scope only to find out that the function I was overloading was in a nested repeater item.</p>
 <h2 id="Finding-scope-for-an-element"><a href="#Finding-scope-for-an-element" class="headerlink" title="Finding $scope for an element"></a>Finding $scope for an element</h2><p>If you need help figuring out what $scope is bound to what element in your code, you can use the <a href="//chrome.google.com/webstore/detail/angularjs-batarang/ighdmehidhipcmcojjgiloacoafjmpfk?hl=en">Batarang plugin</a>.  You can also use the following JavaScript code using any developer tool you might want to use.</p>
-<p>angular.element(elementSelector).scope()</p>
-<h2 id="scope-and-Repeaters"><a href="#scope-and-Repeaters" class="headerlink" title="$scope and Repeaters"></a>$scope and Repeaters</h2><p>So, back to one of my issues this week.  What I was working with was a tree control.  The tree was a set of repeaters within repeaters.  The original function that was bound to the click event was bound to the item scope so that each item was bound to its own instance of the onClick method. What I was trying to do was to override the function with a function in a directive I had created that wrapped the tree control and added a search box.  Fortunately, the item template could be changed, but how to get it to call MY click handler instead of the one it called by default? To further complicate matters, the $scope in the directives were isolated so I couldn’t add a new function on the scope I had control over and have the child scope see it. Or could I? The directive I was creating does have access to the scope of the tree control.  So, all I really needed to do was to create a new variable hanging off the tree control’s scope that pointed to the scope I wanted it to see and then in my template I could point to that variable and the function hanging off of it as the thing that should get called on click. Sure enough, that worked.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">angular.element(elementSelector).scope()</span><br></pre></td></tr></table></figure>
+<h2 id="scope-and-Repeaters"><a href="#scope-and-Repeaters" class="headerlink" title="$scope and Repeaters"></a>$scope and Repeaters</h2><p>So, back to one of my issues this week.  What I was working with was a tree control.  The tree was a set of repeaters within repeaters.  The original function that was bound to the click event was bound to the item scope so that each item was bound to its own instance of the onClick method.</p>
+<p>What I was trying to do was to override the function with a function in a directive I had created that wrapped the tree control and added a search box.  Fortunately, the item template could be changed, but how to get it to call MY click handler instead of the one it called by default? To further complicate matters, the $scope in the directives were isolated so I couldn’t add a new function on the scope I had control over and have the child scope see it.</p>
+<p>Or could I? The directive I was creating does have access to the scope of the tree control.  So, all I really needed to do was to create a new variable hanging off the tree control’s scope that pointed to the scope I wanted it to see and then in my template I could point to that variable and the function hanging off of it as the thing that should get called on click.</p>
+<p>Sure enough, that worked.</p>
 
       
     </div>
@@ -551,7 +562,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/adventures-working-with-angular’s-scope/" data-id="ck7s4f01s000dmcx2jvdwhcvj" class="article-share-link">
+      <a data-url="http://davembush.github.com/adventures-working-with-angular’s-scope/" data-id="ck81s5q0q000goox2fcwph5xl" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -597,19 +608,38 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>When I first wrote down the idea for this post, I was originally thinking about how we might use agile development practices in a work place that practices Water Fall or worse.  But since then, I’ve expanded my thinking to include the concept of using agile everywhere, including where it “isn’t allowed.” Here’s what I’m talking about.  What does your work environment look like?  Many of the places I end up working either are using no formal process at all, or weakly attempt some form of Scrum or Water Fall.  In fact, my current major gig has a “project manager” (I use the term loosely) that manages our project with MS Project.  There is not even a formal issue tracking system.  And this is at a very LARGE organization that SHOULD know better. <img src="/uploads/2015/11/image1.png" alt="image" title="image"> </p>
-<h2 id="Agile-in-an-Anti-Agile-Environment"><a href="#Agile-in-an-Anti-Agile-Environment" class="headerlink" title="Agile in an Anti-Agile Environment"></a>Agile in an Anti-Agile Environment</h2><h3 id="Kanban-Board"><a href="#Kanban-Board" class="headerlink" title="Kanban Board"></a>Kanban Board</h3><p>Now, I’m not saying I’m the most organized guy on the planet.  In fact, in an environment like this, it would be easy to just go with the flow.  But I know me well enough to know that if I don’t have a place to keep track of the task I need to accomplish, something will fall through the cracks.  So, I got permission to use <a href="/trello">Trello</a> along with the <a href="/plusForTrello">Plus for Trello</a> plugin on Chrome so that I can at least track the task that have been assigned to me. Trello, for those who don’t know, allows you to setup a basic Kanban board and configure it any way you would like.  From the basic, “To do”, “In Progress”, “Done” format to something more in line with your actual work flow.  For this project, I have “Back Log”, “On Hold”, “Up Next”, “In Progress”, “Done This Week” and “Done”.  Yeah, that’s a lot of columns.  But I want to be able to keep track of where my task are at that level.  The beauty of Trello is that you can configure it however you want. Plus For Trello builds on that and allows you to add estimates to each of your Trello Cards.  While they refer to the estimate as “hours” I just translate that to “Effort Points” and track how much effort I think I’ve completed rather than how many hours I’ve actually worked. Between the two, I can track how far along in the project I am, how many effort points I tend to complete each week, and I’m the only one on the team who can give a reasonable guess as to when I will be done with this project I am working on.  And when I need to change the estimates, I can show when they changed and why.</p>
+        <p>When I first wrote down the idea for this post, I was originally thinking about how we might use agile development practices in a work place that practices Water Fall or worse.  But since then, I’ve expanded my thinking to include the concept of using agile everywhere, including where it “isn’t allowed.” Here’s what I’m talking about.  What does your work environment look like?  Many of the places I end up working either are using no formal process at all, or weakly attempt some form of Scrum or Water Fall.  In fact, my current major gig has a “project manager” (I use the term loosely) that manages our project with MS Project.  There is not even a formal issue tracking system.  And this is at a very LARGE organization that SHOULD know better.</p>
+<p><img src="/uploads/2015/11/image1.png" alt="image" title="image"></p>
+<h2 id="Agile-in-an-Anti-Agile-Environment"><a href="#Agile-in-an-Anti-Agile-Environment" class="headerlink" title="Agile in an Anti-Agile Environment"></a>Agile in an Anti-Agile Environment</h2><h3 id="Kanban-Board"><a href="#Kanban-Board" class="headerlink" title="Kanban Board"></a>Kanban Board</h3><p>Now, I’m not saying I’m the most organized guy on the planet.  In fact, in an environment like this, it would be easy to just go with the flow.  But I know me well enough to know that if I don’t have a place to keep track of the task I need to accomplish, something will fall through the cracks.  So, I got permission to use <a href="/trello">Trello</a> along with the <a href="/plusForTrello">Plus for Trello</a> plugin on Chrome so that I can at least track the task that have been assigned to me.</p>
+<p>Trello, for those who don’t know, allows you to setup a basic Kanban board and configure it any way you would like.  From the basic, “To do”, “In Progress”, “Done” format to something more in line with your actual work flow.  For this project, I have “Back Log”, “On Hold”, “Up Next”, “In Progress”, “Done This Week” and “Done”.  Yeah, that’s a lot of columns.  But I want to be able to keep track of where my task are at that level.  The beauty of Trello is that you can configure it however you want.</p>
+<p>Plus For Trello builds on that and allows you to add estimates to each of your Trello Cards.  While they refer to the estimate as “hours” I just translate that to “Effort Points” and track how much effort I think I’ve completed rather than how many hours I’ve actually worked.</p>
+<p>Between the two, I can track how far along in the project I am, how many effort points I tend to complete each week, and I’m the only one on the team who can give a reasonable guess as to when I will be done with this project I am working on.  And when I need to change the estimates, I can show when they changed and why.</p>
 <h3 id="Productivity-Hacks"><a href="#Productivity-Hacks" class="headerlink" title="Productivity Hacks"></a>Productivity Hacks</h3><p>But agile isn’t just about Kanban boards and accurate estimates.  Agile is about becoming better.  So, what are some ways you can become better at work without being any more disruptive than you have to be?  Here are some ways that have been effective for me:</p>
 <ul>
-<li><strong>Use the Pomodoro technique</strong>. The <a href="/pomodoro">Pomodoro</a> technique is a technique that has you highly focused on the task at hand for 25 minutes at a time.  No interruptions for email, social media, coffee.  That’s for the breaks or their own Pomodoro.  After 25 minutes of work, you get a 5 minute break.  Sometimes I just sit in my chair and close my eyes.  Kind of a mini nap.  The routine has you do 4 Pomodoros and then rest for 15 minutes instead of 5.  If you take a lunch, you should take your lunch break during one of the longer Pomodoros.</li>
-<li><strong>Avoid Distractions</strong> I don’t know about you, but the last time I had the luxury of an office was 2.5 years ago when I was working from home.  I miss those days.  But now I close my virtual door by putting on headphones and listening to <a href="//t.co/EgPhHCQqLE">this Pandora station that I created</a> along with using the <a href="/brainwave">BrainWave</a> iPhone app set to “Problem Solving” for 25 minutes.</li>
-<li><strong>Batch E-mail</strong> As I said before, don’t check email while you are working.  I check mine during the Pomodoro breaks.  If you get more than what you can handle during the breaks you should create a Pomodoro for them.</li>
-<li><strong>Schedule Your Day!</strong> OK, this may or may not work for you depending on your environment.  But, it is worth a try.  Personally, I know that my best hours are in the morning and that I start losing my concentration around 1:30.  I start my day at around 7am.  Ideally, if you want me to be productive, you won’t schedule meetings prior to 1:30.  So, I went into outlook and scheduled myself as “Busy” from 7am to 1:30pm.  Now when someone looks to see when I am available, they will see that I am available from 1:30 to 3:30. You might object that this is not being honest.  But I would argue that it is if you honestly believe that keeping appointments with yourself is as important as keeping appointments with other people.  It is just a matter of perspective.</li>
-<li><strong>Turn Off Your Phone</strong>! OK, I’m assuming you are all programmers and not sales people.  But, I would go so far as to say that the only time you should answer your phone is when you have an appointment.  I stopped answering my phone YEARS ago.  Most of the calls that I got were either sales calls or recruiters.  Then I finally got smart and created a silent ring tone for my phone.  That is my default ring tone.  And my default vibrate pattern is no vibration at all.  I don’t even know that my phone rang until I look at my phone and it says I have a missed call. But, I can hear you say, I might miss something important.  Well, yes, there are calls that I don’t want to miss.  For those, I assign real ring tones.  Everyone in my family and some VERY close friends, all get a real ring tone that makes a sound. What about potential clients?  Well, first I schedule the call via email, if I even determine it is necessary, and second I ask for the number they will be calling from so that I can assign a ring tone to that number. I wish I could do something similar with my desk phone at work.  I answered it yesterday only to have it be a sales call.  I should have known better!</li>
+<li><p><strong>Use the Pomodoro technique</strong></p>
+<p>The <a href="/pomodoro">Pomodoro</a> technique is a technique that has you highly focused on the task at hand for 25 minutes at a time.  No interruptions for email, social media, coffee.  That’s for the breaks or their own Pomodoro.  After 25 minutes of work, you get a 5 minute break.  Sometimes I just sit in my chair and close my eyes.  Kind of a mini nap.  The routine has you do 4 Pomodoros and then rest for 15 minutes instead of 5.  If you take a lunch, you should take your lunch break during one of the longer Pomodoros.</p>
+</li>
+<li><p><strong>Avoid Distractions</strong></p>
+<p>I don’t know about you, but the last time I had the luxury of an office was 2.5 years ago when I was working from home.  I miss those days.  But now I close my virtual door by putting on headphones and listening to <a href="//t.co/EgPhHCQqLE">this Pandora station that I created</a>.</p>
+</li>
+<li><p><strong>Batch E-mail</strong></p>
+<p>As I said before, don’t check email while you are working.  I check mine during the Pomodoro breaks.  If you get more than what you can handle during the breaks you should create a Pomodoro for them.</p>
+</li>
+<li><p><strong>Schedule Your Day!</strong></p>
+<p>OK, this may or may not work for you depending on your environment.  But, it is worth a try.  Personally, I know that my best hours are in the morning and that I start losing my concentration around 1:30.  I start my day at around 7am.  Ideally, if you want me to be productive, you won’t schedule meetings prior to 1:30.  So, I went into outlook and scheduled myself as “Busy” from 7am to 1:30pm.  Now when someone looks to see when I am available, they will see that I am available from 1:30 to 3:30.</p>
+<p>You might object that this is not being honest.  But I would argue that it is if you honestly believe that keeping appointments with yourself is as important as keeping appointments with other people.  It is just a matter of perspective.</p>
+</li>
+<li><p><strong>Turn Off Your Phone</strong>!</p>
+<p>OK, I’m assuming you are all programmers and not sales people.  But, I would go so far as to say that the only time you should answer your phone is when you have an appointment.  I stopped answering my phone YEARS ago.  Most of the calls that I got were either sales calls or recruiters.  Then I finally got smart and created a silent ring tone for my phone.  That is my default ring tone.  And my default vibrate pattern is no vibration at all.  I don’t even know that my phone rang until I look at my phone and it says I have a missed call.</p>
+<p>But, I can hear you say, I might miss something important.  Well, yes, there are calls that I don’t want to miss.  For those, I assign real ring tones.  Everyone in my family and some VERY close friends, all get a real ring tone that makes a sound.</p>
+<p>What about potential clients?  Well, first I schedule the call via email, if I even determine it is necessary, and second I ask for the number they will be calling from so that I can assign a ring tone to that number.</p>
+<p>I wish I could do something similar with my desk phone at work.  I answered it yesterday only to have it be a sales call.  I should have known better!</p>
+</li>
 </ul>
-<h2 id="Agile-Home"><a href="#Agile-Home" class="headerlink" title="Agile Home"></a>Agile Home</h2><p>There is a whole course on PluralSight about being an <a href="/agileFamilies">Agile Family</a>.  I’m not talking about that.  I’m talking about being personally Agile at home just like I am suggesting that you can be personally Agile at work, regardless of the environment.</p>
+<h2 id="Agile-Home"><a href="#Agile-Home" class="headerlink" title="Agile Home"></a>Agile Home</h2><p>There is a whole course on PluralSight about being an Agile Family.  I’m not talking about that.  I’m talking about being personally Agile at home just like I am suggesting that you can be personally Agile at work, regardless of the environment.</p>
 <h3 id="Kanban-Again"><a href="#Kanban-Again" class="headerlink" title="Kanban Again"></a>Kanban Again</h3><p>Yep, I use Trello at home too.  But not the Plus for Trello plugin.  At least not yet.  I have a list that keeps track of my exercise rotation.  I have a list for Saturday.  I have a list of chores I need to do.  I have others, but those are the ones that I use regularly.</p>
-<h3 id="Schedules"><a href="#Schedules" class="headerlink" title="Schedules"></a>Schedules</h3><p>I schedule my whole day.  This probably sounds more extreme than it is.  I was finding that not having a schedule, especially after work, was actually preventing me from getting stuff done that I really wanted to get done. Here are tips for scheduling:</p>
+<h3 id="Schedules"><a href="#Schedules" class="headerlink" title="Schedules"></a>Schedules</h3><p>I schedule my whole day.  This probably sounds more extreme than it is.  I was finding that not having a schedule, especially after work, was actually preventing me from getting stuff done that I really wanted to get done.</p>
+<p>Here are tips for scheduling:</p>
 <ul>
 <li><strong>If you really want something to get done, schedule it.</strong></li>
 <li><strong>Don’t schedule every last minute</strong>. For example, I know it generally takes me 45 minutes to get home.  But I also know bad traffic could make that longer.  So I don’t plan the next activity after work until 4:45.</li>
@@ -617,12 +647,7 @@
 <li><strong>Don’t try to do too much</strong>. Once I started scheduling, I realized I was trying to accomplish way more than was physically possible.</li>
 </ul>
 <p>Schedules are a great way for you to determine, ahead of time, what is most important to you.  Once that decision has been made, it is just a matter of execution.  If there are other things you’d like to be able to do, put them on the back log.</p>
-<h2 id="The-Point"><a href="#The-Point" class="headerlink" title="The Point"></a>The Point</h2><p>So what’s the point of all of this?  Don’t wait on someone else.  You can be agile even if/when others aren’t. How are you being agile?</p>
-<h3 id="Other-Places-Talking-About-Productivity"><a href="#Other-Places-Talking-About-Productivity" class="headerlink" title="Other Places Talking About Productivity"></a>Other Places Talking About Productivity</h3><ul>
-<li><a href="//productivityist.com/podcast-64-amber-de-la-garza/">Passionate About Productivity</a></li>
-<li><a href="//mtcb.pwop.com/">Music To Code By</a></li>
-<li><a href="//songza.com/">Music To Do Just About Anything</a></li>
-</ul>
+<h2 id="The-Point"><a href="#The-Point" class="headerlink" title="The Point"></a>The Point</h2><p>So what’s the point of all of this?  Don’t wait on someone else.  You can be agile even if/when others aren’t.</p>
 
       
     </div>
@@ -633,174 +658,12 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/how-to-be-personally-agile/" data-id="ck7s4f0z9014pmcx21igs75wb" class="article-share-link">
+      <a data-url="http://davembush.github.com/how-to-be-personally-agile/" data-id="ck81s5q4e002foox2y3t0sejl" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/agile/">agile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/productivity/">productivity</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-random-computer-freeze-linked-to-unlikely-culprit" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/random-computer-freeze-linked-to-unlikely-culprit/">Random computer freeze linked to unlikely culprit</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/random-computer-freeze-linked-to-unlikely-culprit/" class="article-date"><time datetime="2015-11-12T13:30:00.000Z" itemprop="datePublished">2015-11-12</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Did-you-know/">Did you know</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>For months now I have been suffering from the dreaded random computer freeze.  It has gotten progressively worse.  Everything I’ve tried to do to fix the problem has failed.  I know what you’re thinking too.  “Must be a virus.”  Yeah, except I have run multiple virus checkers and come up empty.  I read someplace else that maybe it was a driver issue.  OK, but which driver?  Memory?  I guess that is possible, but not likely.  I’ll admit that is one thing I didn’t check. The great thing about this issue is that it has caused me to write better code, because the code I’m currently working on would fail as it was writing to the database, even though the database is on the same computer.  So, now I make it try three times, with 2 minutes in between, before giving up.  Fortunately, it isn’t a routine that NEEDS to be fast.  In fact, it is better if it is not. <img src="/uploads/2015/11/image.png" alt="image" title="image"> </p>
-<h2 id="Another-Problem"><a href="#Another-Problem" class="headerlink" title="Another Problem"></a>Another Problem</h2><p>I’ve also noticed, more recently, that the CTRL key on my keyboard doesn’t want to work.  CTRL-C and CTRL-V often result in “c” or “v” being typed out unless I’m really intentional about pressing the keys.  Not the best way to go about programming.  Fortunately, I’m not using this computer to do my regular work (I’m currently working on-site with the client’s computer).  So, for the little bit of usage, I could live with it.  Besides, I’m cheap. Now, when I first got <a href="/backlitKeyboard">this keyboard</a>, I was really impressed.  The backlit keyboard was cool, but what I really liked was the mechanical keys.  So much smoother.  So, I was a little disappointed when I was thinking about replacing it.  And if I did replace it, should I get another of the same kind, or should I get something else? So, I procrastinated.</p>
-<h2 id="Enough-Is-Enough"><a href="#Enough-Is-Enough" class="headerlink" title="Enough Is Enough!"></a>Enough Is Enough!</h2><p>Finally, a couple of weeks ago, I got so tired of not being able to copy and paste correctly, that I broke down and went to Amazon to see what is currently available.  This is when the <a href="/logitechWave">Logitech Wave</a> series caught my eye. I’ve always liked the idea of ergonomic keyboards, but when I’ve tried the split keyboard, I just didn’t like them.  Yes, maybe I could get used to one.  But, I don’t want to have to get used to one.  The Logitech Wave is a nice compromise.  It FEELS mostly like a regular keyboard because the keys aren’t split.  But it has a slight curve or wave (hence the name) that conforms to what your fingers want to do instead of making your fingers comply with a straight row of keys.</p>
-<h2 id="So-What-Is-It-Like"><a href="#So-What-Is-It-Like" class="headerlink" title="So What Is It Like?"></a>So What Is It Like?</h2><p>So far, I like it enough.  I can’t say if it helps with carpal tunnel because I don’t really suffer from that problem.  It is a keyboard, it wasn’t all that expensive. It is wireless, so I was able to get it setup without crawling under my desk (I did have to crawl under my desk to unplug the old keyboard!).  Honestly, the only issue I’ve had was during the setup.  I unpacked the keyboard and the mouse (it comes with a wireless mouse) and realized, I didn’t know where the receiver part was that plugs into a USB port.  I looked back in the box for it, was it in one of the bags I hadn’t opened yet?  No.  Hmm.  Where could it be? Oh, there it is.  Stuck in the cardboard.  Seriously, this thing is SO small, if you don’t pay attention, you could lose it.  And I almost did before I had ever even gotten it installed!</p>
-<h2 id="What’s-This-Got-To-Do-With-Computer-Freezes"><a href="#What’s-This-Got-To-Do-With-Computer-Freezes" class="headerlink" title="What’s This Got To Do With Computer Freezes?"></a>What’s This Got To Do With Computer Freezes?</h2><p>Over the rest of the day, I noticed, my computer isn’t freezing any more.  Maybe I’m just imagining things. But, I’ve been using this, as of this writing, for over a week.  I’ve used it for at least 2 hours every night.  I’m using it now to write this post.  I wrote last week’s post.  Seriously, my computer no longer freezes.  Whoda thunk?</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/random-computer-freeze-linked-to-unlikely-culprit/" data-id="ck7s4f053004jmcx2j0ogck1y" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/computer/">computer</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/freeze/">freeze</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/keyboard/">keyboard</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-are-you-doing-angular-right" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/are-you-doing-angular-right/">Are You Doing Angular Right?</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/are-you-doing-angular-right/" class="article-date"><time datetime="2015-11-05T12:30:00.000Z" itemprop="datePublished">2015-11-05</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Javascript/">Javascript</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>I’ve written that <a href="/tags/angular-js/">I’m using Angular</a> to write a couple applications before.  One at my main contract and a couple side projects.  I know I’m kind of late to the game, but one of my frustrations with the documentation around Angular is that very little of the sample code that you can find on the Internet shows the sample using anything close to a best practice.  That’s the danger of writing about something you are too familiar with. So, in this post, I’d like to cover a few best practices that I’ve discovered, or implemented in my own code, and explain in a bit more detail what is going on inside the controller.  I concentrate on the controller because this is a place that will be used the most.  Once you understand it, the rest of what you need to know will trickle down to services, factories, and directives.</p>
-<h2 id><a href="#" class="headerlink" title></a><img src="/uploads/2015/10/image4.png" alt="image" title="image"></h2><h2 id="IIFEs"><a href="#IIFEs" class="headerlink" title="IIFEs"></a>IIFEs</h2><p>The first thing you’ll almost never see in the demos, but you might pick up on eventually, is that you should always write your angular code inside of and IIFE.  What’s an IIFE you ask?  IIFE stands for Immediately Invoked Function Expression.  The most common looks like this:</p>
-<p>(function(){<br>    // your code goes here<br>})();</p>
-<p>Why do we do this?  So that we can declare variables that are “global” to everything inside of the IIFE without polluting the global namespace.  If you follow the rest of the tips in this article, you shouldn’t end up writing any kind of global variables.  But, there is another good reason for using an IIFE.  You can pass parameters into it.  The most common implementation I use is that I pass any global variables I need for the code inside as parameters.  This keeps JSHint happy without having to specify global variables as comments or putting them in a configuration file.  Since “angular”:</p>
-<p>(function(angular){<br> // your code goes here<br>})(window.angular);</p>
-<h2 id="Single-Responsibility-Applies-to-Files"><a href="#Single-Responsibility-Applies-to-Files" class="headerlink" title="Single Responsibility Applies to Files"></a>Single Responsibility Applies to Files</h2><p>Another big problem I see with a lot of samples, is that they mix controllers and directives and modules declarations all together.  At one level I get it, why separate them when it is just a small demo.  On the other hand, doing inadvertently promotes bad code to the masses. How much code have you seen that looks like:</p>
-<p>var app = angular.module(‘app’, [<br>    // Angular modules<br>    // Custom modules<br>    // 3rd Party Modules<br>    ]);<br>app.config([‘<br>    function () {<br>        // code here<br>    });<br>angular.module(‘Controllers’).controller(‘Controller’,[ function () {<br>   // code here<br>    }]);<br>angular.module(‘Controllers’).controller(‘controllerName’,<br>    [‘$scope’, function ($scope)<br>    {<br>       // Code here<br>    }]);</p>
-<p>When they should specify what should be in a separate file.  Maybe by wrapping them in IIFEs.</p>
-<p>// top level app.js file<br>(function(angular){<br>angular.module(‘app’, [<br>    // Angular modules<br>    // Custom modules<br>    // 3rd Party Modules<br>    ]);<br>})(window.angular);</p>
-<p>// config.js that lives in a file parallel to app.js<br>(function(angular){<br>angular.module(‘app’).config([‘ function () { // code here }); })(window.angular); // controllers holder that lives parallel to app.js (function(angular){ angular.module(‘Controllers’).controller(‘Controller’,[ function () { // code here }]); })(window.angular); // controller that lives parallel to the view it is associated with (function(angular){ angular.module(‘Controllers’).controller(‘controllerName’, [‘$scope’, function ($scope) { // Code here }]); })(window.angular);</p>
-<h2 id="Namespace-Everything"><a href="#Namespace-Everything" class="headerlink" title="Namespace Everything"></a>Namespace Everything</h2><p>As I’ve already hinted at in the code above, I place my controllers and the views they are attached to in separate directories based on the route or state that I will use to get to them.  I use states, so to be clear the state does not necessarily represent the url that I will be using to access the view.  This works out pretty nicely because for every state, there is a directory and for every sub state, there is a sub directory.  Each directory generally has two files.  controller.js and view.html.  When I specify the name of the controller, I use dot notation to represent where it is in the directory structure.  Similarly, when I specify the state in app.config(), I use the same dot notation.  So if my state were ‘edit.contact’ you should expect to see a directory structure of ‘edit/contact’ with the two files inside of it.</p>
-<h2 id="ControllerAs"><a href="#ControllerAs" class="headerlink" title="ControllerAs"></a>ControllerAs</h2><p>I’ve only seen this explained in one place (<a href="/pluralsight">PluralSight of course</a>) where this is explained in a way that I could grasp. Here’s the deal.  What you first need to understand is how the code you write in angular relates to the code you would write in JavaScript without the framework.  (BTW, one complaint I’ve heard from hiring managers is that while they can find people who can write Angular, they can’t find people who can write Angular AND understand JavaScript.  So much is hidden from us by using Angular.  If you want to be awesome at Angular, be awesome at JavaScript.) So, let’s sketch out a basic controller.</p>
-<p>(function ()<br>{<br>    ‘use strict’;<br>    angular.module(‘Controllers’).controller(‘edit.contacts’,<br>        [‘$scope’, function ($scope)<br>    {<br>        // Your controller code here<br>    }]);</p>
-<p>})();</p>
-<p>What is happening here?  Well what you’ve essentially done is create an anonymous constructor for your controller.</p>
-<p>Let’s rearrange some code so that you can see this more clearly.</p>
-<p>(function ()<br>{<br>    ‘use strict’;</p>
-<pre><code>editContacts.$inject = \[&apos;$scope&apos;\];
-function editContacts($scope)
-{
-    // your code here
-};
-
-angular.module(&apos;Controllers&apos;).controller(&apos;edit.contacts&apos;, editContacts);
-</code></pre><p>})();</p>
-<p>So, now the code looks like regular JavaScript.  And if I told you that editContacts was the object constructor, the next thing that you might expect is that you could then write code that looked something like this:</p>
-<p>(function ()<br>{<br>    ‘use strict’;</p>
-<pre><code>editContacts.$inject = \[&apos;$scope&apos;\];
-function editContacts($scope)
-{
-    var self = this;
-    function someMethod(){
-        self.variableName = &apos;foo&apos;;
-    };
-
-    self.someMethod = someMethod;
-    // your code here
-};
-
-angular.module(&apos;Controllers&apos;).controller(&apos;edit.contacts&apos;, editContacts);
-</code></pre><p>})();</p>
-<p>This is the way I like to write JavaScript classes, but you can use any method you prefer.  It is just plain old JavaScript at this point. The other piece that might need some explaining is the ‘editContacts.$inject’ thing.  This is just an alternate way of specifying the services that need to be injected into your constructor.  I haven’t decided if I like using this way, or if I like having them specified in the controller definition at the bottom.  By leaving the injection at the bottom, I am left with code that looks mostly like plain old JavaScript.  By leaving them at the top, I can see that what I’m injecting matches the parameters I am expecting.  Of course, if you are willing to throw some external tools into the mix, you can have that line created for you automatically at build time. So, under the hood, what Angular is doing for you is looking for the controller by the name that you gave it and calling the function associated with it using the ‘new’ keyword.  If you want some of your functions and methods exposed to the view, you need to attach them to the $scope, which is why we need to inject it as a parameter to our constructor.  But, if you use the ControllerAs keyword, it assigns the object to a variable the the name you specified as the ‘As’ and attaches it to $scope.  What this means is that you almost never have to pass in the $scope object to your constructor and all of your public methods and fields are available to the view for free using the syntax ‘asName.variableName’.</p>
-<h2 id="Using-Controllers-in-Directives"><a href="#Using-Controllers-in-Directives" class="headerlink" title="Using Controllers in Directives"></a>Using Controllers in Directives</h2><p>The final piece I want to talk about today gets back to my discussion about demos that don’t use good coding practices.  Most directive demos that use controllers write the controller inline.  But you don’t have to do it this way, and I would recommend that you don’t.  Controllers should be in their own file.  Separation of concerns and Single Responsibility.  You define  your controller just like you would any other controller in the separate file.  I define them using the controller function hanging off the directive object</p>
-<p>directive(‘directiveName’)<br>    .controller(controllerDefinitionHere);</p>
-<p>And then use the name of the directive in the controller property in my directive code.</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/are-you-doing-angular-right/" data-id="ck7s4f0ys013gmcx29ywp4avq" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular-js/">angular.js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/best-practices/">best practices</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
 
 
     </footer>
@@ -867,12 +730,224 @@ angular.module(&apos;Controllers&apos;).controller(&apos;edit.contacts&apos;, ed
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/javascript-crazy-talk-are-you-guilty/" data-id="ck7s4f0450033mcx2kkgqs86m" class="article-share-link">
+      <a data-url="http://davembush.github.com/javascript-crazy-talk-are-you-guilty/" data-id="ck81s5q5k0032oox2nj6z4maz" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/business-rules/">business rules</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-multi-threaded-javascript-not-the-problem-you-think" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/multi-threaded-javascript-not-the-problem-you-think/">Multi-Threaded JavaScript - Not The Problem You Think</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/multi-threaded-javascript-not-the-problem-you-think/" class="article-date"><time datetime="2015-10-22T11:30:00.000Z" itemprop="datePublished">2015-10-22</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Javascript/">Javascript</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>A couple of weeks ago, I posted <a href="/7-reasons-every-programmer-needs-to-learn-javascript/">7 Reasons Every Programmer Needs to Learn JavaScript</a>.  In the comments, Dean tried to refute my arguments first by claiming that my sources for JavaScript’s popularity were “a problem” because JavaScript is used in combination with other languages.  A point I refute in the comments.  But then he goes on to claim that “JavaScript is poorly suited for client side applications” because JavaScript is “Single Threaded”.  At this point, I just sighed and realized that Dean doesn’t want to learn JavaScript and that there MUST be some reason I’m not seeing for why he is so critical of JavaScript. But then Brandon jumped in and offered a very clear defense of JavaScript on the server side.  Nearly making this post unnecessary. And yet, there are things that were not said, and most people will never see the great comments that Brandon supplied.  And so we look at Multi-Threaded JavaScript in depth. <img src="/uploads/2015/10/image2.png" alt="image" title="image"> </p>
+<h2 id="JavaScript-vs-Node-js"><a href="#JavaScript-vs-Node-js" class="headerlink" title="JavaScript vs Node.js"></a>JavaScript vs Node.js</h2><p>In Brandon’s first comment, he accurately points out that it is not fair to equate JavaScript the language to Node.js the environment.  This is because Node.js does actually spin up multiple threads as needed to handle the incoming traffic.  In fact, there have been several performance test comparing Node.js to ASP.NET applications which have all found that Node.js either keeps up with, or out performs ASP.NET.  This is because of the way that traffic is handled.  In ASP.NET the default implementation is for an incoming request to block until the response for that request is sent back to the client, while the default mechanism in Node is for the request to NOT block.  In node, everything that should be none-blocking is none-blocking.  This is a HUGE win, essentially making node “Multi-threaded” in the places that matter without having to think about it.</p>
+<blockquote>
+<p>Speed comparisons:</p>
+<ul>
+<li><a href="//www.haneycodes.net/to-node-js-or-not-to-node-js/">Node.js Compared to ASP.NET without IIS</a></li>
+<li><a href="//mikaelkoskinen.net/post/asp-net-web-api-vs-node-js-benchmark">WEBAPI vs Node.js</a></li>
+<li><a href="//blog.shinetech.com/2013/10/22/performance-comparison-between-node-js-and-java-ee/">Node.js Compared to J2EE</a></li>
+<li><a href="//strongloop.com/strongblog/node-js-is-faster-than-java/">What makes Node.js Faster than Java?</a></li>
+</ul>
+</blockquote>
+<p>Here’s a simple example.  You post data from the web browser to the server that needs to go into a database.  In ASP.NET, the default way of handling this would be to receive the request, send the data to the database, wait for the return value from the database, and return to the server.  All as a blocking call. In Node.js, you would/could see this default behavior.  Information is sent to the server, the server sends to the database asynchronously and immediately returns to the client.  Of course, there are error handling issues that need to be addressed here, but the main point is that you don’t HAVE to wait and you probably shouldn’t.  If you need to send an error message back, that would be handled separately. So, I ask, which is going to appear to be faster?</p>
+<h2 id="Who-Needs-Multi-threading"><a href="#Who-Needs-Multi-threading" class="headerlink" title="Who Needs Multi-threading?"></a>Who Needs Multi-threading?</h2><p>OK.  So, we’ve addressed the environment issue.  But now I have to ask, when is the last time you really needed your application to be multi-threaded?  I can count the number of times that I used multi-threading capabilities in one of my applications (sever side or desktop application) one two hands in the last 28 years of programming.  The need for multi-threading is quite low relative to the number of programs written.  And even if you COULD write a multi-threaded application, the benefit compared to the complexity in your code tends to be relatively minor.</p>
+<h2 id="Multi-threading-If-You-Need-It-–-Client-Side"><a href="#Multi-threading-If-You-Need-It-–-Client-Side" class="headerlink" title="Multi-threading If You Need It – Client Side"></a>Multi-threading If You Need It – Client Side</h2><p>A little known and often under-utilized feature of JavaScript on the client side is Web Workers, which allow us to run a JavaScript file in a separate thread on the client side.  The “disadvantage” of using workers is that 1) they can’t access the DOM and 2) you have to use messaging to have the parent page and the worker talk to each other.  If you absolutely needed multi-threading on the Client Side, this would be the way to make it work today.  If you structure your code correctly, the separation from the DOM shouldn’t be an issue and messaging is a great way of communicating between a View Model and the View, even without the web worker process.</p>
+<h2 id="Multi-threading-If-You-Need-It-–-Server-Side"><a href="#Multi-threading-If-You-Need-It-–-Server-Side" class="headerlink" title="Multi-threading If You Need It – Server Side"></a>Multi-threading If You Need It – Server Side</h2><p>In the response I initially added to the multi-threading issue, I suggested running child processes.  This is the server side equivalent of using a worker process on the client side.  You spawn off some worker processes, wait for them all to return, collect the information they provide, and continue on.  As was pointed out, this is not “true multi-threading” because in a real multi-threaded application, every thread has access to the same memory space.  But you could argue that this is a good thing too.  There are a lot of issues with multiple threads accessing the same shared memory.  I’m not sure I would want the average programmer ABLE to do this.</p>
+<h2 id="Today-is-Not-Tomorrow"><a href="#Today-is-Not-Tomorrow" class="headerlink" title="Today is Not Tomorrow"></a>Today is Not Tomorrow</h2><p>Just because JavaScript doesn’t handle REAL multi-threading today, doesn’t mean this won’t be added in the future.  The language is still evolving.  I could see a point in the next 5 years where this capability is added in, or a framework is created that will make this available, or both.</p>
+<h2 id="Only-Use-Multi-Threading-Where-You-Need-It"><a href="#Only-Use-Multi-Threading-Where-You-Need-It" class="headerlink" title="Only Use Multi-Threading Where You Need It"></a>Only Use Multi-Threading Where You Need It</h2><p>OK.  But what if you REALLY need Multi-threading capabilities? As was pointed out, then JavaScript may not be the right language for the job.  But then, you could easily argue that C#, Java, and many other languages aren’t either.  If you REALLY need that kind of speed, you probably want to drop down to C/C++ or even Assembly Language.  But why not mix and match.  It is rarely the case that your entire application needs to be multi-threaded.  In my experience, it is only some small percentage of the overall application that needs that ability.  So, why not create a node module that does the multi-threaded bit and wire it into your broader JavaScript application?</p>
+<h2 id="Wrapping-It-Up"><a href="#Wrapping-It-Up" class="headerlink" title="Wrapping It Up"></a>Wrapping It Up</h2><p>Clearly, JavaScript is a young language and Node.js is a young environment.  There are still issues that need to be worked out.  But for as young as it is, they have some pretty robust capabilities “out-of-the-box” that will only get better in the future. I’m excited and optimistic.  Excited about the potential and optimistic about the future capabilities for threading in JavaScript. But maybe you aren’t.  You know what, while I think it might be a career mistake, it is your career.  You don’t have to agree with me.  And since neither of us are omniscient, only time will tell which of us made the better choice.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/multi-threaded-javascript-not-the-problem-you-think/" data-id="ck81s5q6s0043oox2jmbt2lnb" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/threading/">threading</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-create-a-desktop-application-using-angular-bootstrap-and-c" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/create-a-desktop-application-using-angular-bootstrap-and-c/">Create A Desktop Application using Angular, Bootstrap and C#</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/create-a-desktop-application-using-angular-bootstrap-and-c/" class="article-date"><time datetime="2015-10-15T11:30:00.000Z" itemprop="datePublished">2015-10-15</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Javascript/">Javascript</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Last week I mentioned that it is possible to <a href="/7-reasons-every-programmer-needs-to-learn-javascript/">create a desktop application using JavaScript</a> and that I had actually started working on an application that used Angular and Bootstrap for the presentation layer.  I actually have enough of that working that I can share the “how-to” with you. <img src="/uploads/2015/10/image1.png" alt="image" title="image"></p>
+<h2 id="Why-Would-You-Do-This"><a href="#Why-Would-You-Do-This" class="headerlink" title="Why Would You Do This?"></a>Why Would You Do This?</h2><p>Well, I don’t know why YOU would do this, but the reason I’m doing this is because the more I do on the web, the less able I am to work with Windows Form, and I haven’t even bothered learning WPF.  I decided several years ago that I would niche down over web technologies.  And yet, I want to write this desktop application.  I tried to use Windows Form, which I am most familiar with, and just got frustrated.  I want to use a grid control.  But what I want to do with the control is something more like what I would do with Angular’s ui-grid than what I can do with the grid control built into Windows Form. I’m sure someone who really knew the desktop side of the fence would be able to do what I want to do.  But I want to leverage what I know.  And eventually, I may move the whole thing to Node.js even though to get the thing up and running, I am going to use C# for the main processing.</p>
+<h2 id="Rendering-HTML"><a href="#Rendering-HTML" class="headerlink" title="Rendering HTML"></a>Rendering HTML</h2><p>The first step toward getting all of this working is to just get HTML to render inside of a Windows Form (or WPF) executable.  I decided to use Windows Forms because I don’t need any of the WPF goodness that WPF would give me.  But you could tweak most of the setup I’m going to give you so that it would work with WPF if that’s your preferred platform. So, let’s start out by creating a Windows Form based application.  Once you have the project loaded, you’ll want to grab the <a href="//www.nuget.org/packages/CefSharp.WinForms/">CefSharp Windows Forms DLL’s and related files</a>.  You can use NuGet to get these installed.  Just search for, “CefSharp.WinForms”. Because chromium uses Win32 or Win64 based C++ DLLs, you’ll need to configure your project to run as one or the other project.  This part was a little tricky.  What I found was that just changing the project settings for the default configuration named “Any CPU” was not enough.  What you need to do is to create a new project named “x64” or “x32” and change the settings there. Try compiling now, before you add any code.  If you’ve configured the project correctly with the CefSharp DLLs it should compile. The next thing you want to do is to insert the Chromium Browser control into the form.  Yes, it is a control like any other control.  No, you won’t find it on your toolbar.  No, it isn’t worth adding to the toolbar.  It is the only control that is going to be on the form so all you need to do is add it to the form using a few lines of code. First, add a private variable to hold the browser control.  It doesn’t need to be a member variable to get the HTML to render, but you’ll want it to be private later on.  So, just make it private to start with. Then, in your Load() method, add the following code:</p>
+<p>private void Form1_Load(object sender, EventArgs e)<br>{<br>    // Initialize CefSharp<br>     Cef.Initialize();</p>
+<pre><code>// Create a new browser window
+_browser = 
+    new ChromiumWebBrowser(&quot;http://www.google.com/&quot;);
+
+// Add the new browser window to the form
+Controls.Add(_browser);
+</code></pre><p>}</p>
+<p>You will also need code in your FormClosing() method.  You can create this in Visual Studio by selecting it from the dropdowns in the upper right corner of the code window.</p>
+<p>private void Form1_FormClosing(object sender, EventArgs e)<br>{<br>    Cef.Shutdown();<br>}</p>
+<p>OK.  Compile and run.  You should be able to load the Google web site and see it in your Windows Form.</p>
+<h2 id="Using-Our-Own-Files"><a href="#Using-Our-Own-Files" class="headerlink" title="Using Our Own Files"></a>Using Our Own Files</h2><p>OK, so we’ve proven that we can render HTML inside of a Windows Form application.  But that won’t do us much good if we want to run code on our own.  Most of the places on the web that talk about loading HTML inside of a desktop application using Chromium suggest that you copy the HTML files over as content and use the file:// protocol to load them.  But there are two problems with doing that.  First, I don’t want the files generally accessible to whoever has this installed.  What if someone decides to change those files? The second problem I have is even worse.  Assuming I could live with the files being available on the file system, Angular doesn’t work from the file system.  It wants to run from <a href="http://somedomain/" target="_blank" rel="noopener">http://somedomain/</a>.  So at the very least, we need for our files to LOOK like they’ve been served from a web server. Fortunately, we can solve both of these problems.</p>
+<h3 id="Make-Our-Files-Resources"><a href="#Make-Our-Files-Resources" class="headerlink" title="Make Our Files Resources"></a>Make Our Files Resources</h3><p>To start with, we’ll just add one file.  Since it will be the beginning of our main application, name the file index.html and place it in a directory called “web” off the root of your project.  Put enough HTML in there that you’ll know the file actually got loaded. Then in the file properties, mark the file as an “Embedded Resource” instead of “Content” To load this file as a resource, you’ll use code that looks something like this:</p>
+<p>var assembly = Assembly.GetExecutingAssembly();<br>var textStream = assembly.GetManifestResourceStream<br>                 (“TopLevelNamespace.web.index.html”);</p>
+<h3 id="Make-it-LOOK-Like-it-Came-From-a-Server"><a href="#Make-it-LOOK-Like-it-Came-From-a-Server" class="headerlink" title="Make it LOOK Like it Came From a Server"></a>Make it LOOK Like it Came From a Server</h3><p>This is where some of the magic starts to happen.  The Chromium APIs have code that will let you register a pre-canned response object with a URL using a dictionary.  So, all we need to do is change the text string that we returned in the code above into a response object and register it with Chromium. The code to do that looks like this:</p>
+<p>var factory = (DefaultResourceHandlerFactory)(browser.ResourceHandlerFactory);<br>if (factory == null) return;<br>var response = ResourceHandler.FromStream(textStream);<br>factory.RegisterHandler(“<a href="http://local/&quot;" target="_blank" rel="noopener">http://local/&quot;</a>, response);</p>
+<p>And now, when we tell Chromium to load “<a href="http://local/”" target="_blank" rel="noopener">http://local/”</a> it  will render the index.html file from our EXE. Cool! Now, loading each file like this is going to get rather tedious pretty fast.  So what we need is a mechanism for loading all of the files in our web directory automatically.  For this we need to be able to iterate over all of our resources in the web namespace and register them with an associated “http://” tag. Since the best that we can do is get a list of all of the resources in our assembly, we will have to do some filtering to only register stuff in the “web” namespace.  But, there is another issue.  All of the resources are going to be listed as “TopLevelNamespace.web.subnamespace.filename.extension” and we want to register them as “<a href="http://local/subnamespace/filename.extension”" target="_blank" rel="noopener">http://local/subnamespace/filename.extension”</a>.  So there is a bit of string manipulation that we need to go through to register everything correctly.</p>
+<p>// Get the list of resources<br>var resourceNames = Assembly.GetExecutingAssembly()<br>    .GetManifestResourceNames();</p>
+<p>// For each resource<br>foreach (var resource in resourceNames)<br>{<br>    // If it isn’t in the “web” namespace, skip it.<br>    if (!resource.StartsWith(“TopLevelNamespace.web”))<br>        continue;</p>
+<pre><code>// Strip out the namespace that we don&apos;t need.
+var url = resource.Replace
+    (&quot;TopLevelNamespace.web.&quot;, &quot;&quot;);
+
+// Function I made that turns the 
+// resource into a textStream
+var r = LoadResource(url);
+
+// Make the namespace look like a path
+url = url.Replace(&quot;.&quot;, &quot;/&quot;);
+var lastSlash = url.LastIndexOf(&quot;/&quot;, 
+    StringComparison.Ordinal);
+url = url.Substring(0, lastSlash) + &quot;.&quot; \+ 
+    url.Substring(lastSlash + 1);
+
+// Register the response with the URL
+factory.RegisterHandler(&quot;http://local/&quot; \+ url, 
+    ResourceHandler.FromStream(r));
+</code></pre><p>}</p>
+<p>Now that I’ve explained all of the code.  The full class for loading the resources looks like this:</p>
+<p>class RegisterWebsite<br>{<br>    public static void Load(ChromiumWebBrowser browser)<br>    {<br>        var factory = (DefaultResourceHandlerFactory)<br>            (browser.ResourceHandlerFactory);<br>        if (factory == null) return;<br>        var response = ResourceHandler<br>            .FromStream(LoadResource(“index.html”));<br>        factory.RegisterHandler(“<a href="http://local/&quot;" target="_blank" rel="noopener">http://local/&quot;</a>, response);</p>
+<pre><code>    var resourceNames = Assembly.GetExecutingAssembly()
+        .GetManifestResourceNames();
+    foreach (var resource in resourceNames)
+    {
+        if (!resource.StartsWith(&quot;TopLevelNamespace.web&quot;))
+            continue;
+        var url = resource.Replace(&quot;TopLevelNamespace.web.&quot;, &quot;&quot;);
+        var r = LoadResource(url);
+        url = url.Replace(&quot;.&quot;, &quot;/&quot;);
+        var lastSlash = url.LastIndexOf(&quot;/&quot;, 
+            StringComparison.Ordinal);
+        url = url.Substring(0, lastSlash) + &quot;.&quot; \+ 
+            url.Substring(lastSlash + 1);
+        factory.RegisterHandler(&quot;http://local/&quot; \+ url,
+             ResourceHandler.FromStream(r));
+    }
+}
+
+static Stream LoadResource(string filename)
+{
+    var assembly = Assembly.GetExecutingAssembly();
+    var textStream = assembly
+        .GetManifestResourceStream(&quot;TopLevelNamespace.&quot; 
+            \+ filename);
+    return textStream;
+}
+</code></pre><p>}</p>
+<p>There is some obvious room for improvement here.  But the basics are there, you can tweak as needed. The main entry point is the Load method where we pass in a pointer to the browser control we created when we started this project.</p>
+<h2 id="Getting-JavaScript-to-talk-to-C"><a href="#Getting-JavaScript-to-talk-to-C" class="headerlink" title="Getting JavaScript to talk to C#"></a>Getting JavaScript to talk to C#</h2><p>Now that we have the basics out of the way, we need to get the two halves of our project talking to each other.  The first half is that we need a way for our JavaScript client side code to retrieve data and send notifications to our server side code.  Fortunately, the mechanisms for doing this are already built into Chromium. Any C# object can be registered with Chromium as a JavaScript object so that any property will become a JavaScript field and any method will become a JavaScript method. The API to make this happen looks like this:</p>
+<p>_browser<br>    .RegisterJsObject(“NameYouWantJavaScriptToSeeThisObjectAs”,<br>        cSharpObjectHere);</p>
+<p>In our JavaScript code, we would find that the window object now has a field named “NameYouWantJavaScriptToSeeThisObjectAs”</p>
+<h2 id="Getting-C-to-talk-to-C"><a href="#Getting-C-to-talk-to-C" class="headerlink" title="Getting C# to talk to C#"></a>Getting C# to talk to C#</h2><p>The reverse is just as easy. _browser.ExecuteScriptAsync(string) takes a string that is the JavaScript that you want to execute.</p>
+<h2 id="Getting-the-Communication-To-Play-Nice-with-Angular"><a href="#Getting-the-Communication-To-Play-Nice-with-Angular" class="headerlink" title="Getting the Communication To Play Nice with Angular"></a>Getting the Communication To Play Nice with Angular</h2><p>But getting this all to play well with <a href="//angularjs.org/">Angular</a> requires just a little bit more. You may find that code on your screen that depends on a field or method that was registered with RegisterJsObject does not update when it should.  In fact, I would guess that this would happen most of the time because our C# object knows nothing of Angular and Angular knows nothing of our C# object.  So to fix this, we will need to make sure we $watch our C# object in our angular code.</p>
+<p>$scope.$watch(function()<br>    {return window.RegisteredObject.property},<br>    function(){<br>    $scope.someField = window.RegisteredObject.property;<br>});</p>
+<p>What this code does is that it tells Angular to check this field when it goes through its $digest cycle.  If it has changed since the last time it looked, it should run the second function that was passed in to $watch(). But this isn’t the only code you will need to add.  Whenever you make a change to something on the C# side that the Angular code needs to reflect, you’ll need to tell Angular to run the $digest() cycle manually.  To do that, you’ll use that ExecuteScriptAsync() method to run some JavaScript. The easiest way to do this is to just run it off the top level $scope object.  The way you find the top level $scope object is to use JavaScript to find the element that you marked as “ng-app” in your HTML.  Once you’ve done that, you will see that it has a scope() method hanging off of it.  So this code will force a $digest cycle on everything from the top level $scope all of the way down.</p>
+<p>_browser<br>    .ExecuteScriptAsync(“angular.element(‘[ng-app]‘).scope().$digest();”);</p>
+<p>Alternatively, you could skip setting the watch and have your ExecuteScriptAsync call set the $scope variables directly using something like this:</p>
+<p>_browser.ExecuteScriptAsync(<br>“angular.element(‘#IdOfViewThatHasAControllerAttached’).”+<br>“scope().status = ‘this is a new status’;angular.” +<br>“element(‘[ng-app]‘).scope().$digest();”);</p>
+<p>Where #IdOfViewThatHasAControllerAttached is an ID of a element in a view that you’ve associated with a controller.  You’ll still want your controller to pull from the C# JavaScript object for the initial load because the DIV may or may not be there when you do the push.  Personally, I prefer the $watch method.  There is less to think about on the C# side. And that’s how you create a desktop application using Angular, Bootstrap and C#.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/create-a-desktop-application-using-angular-bootstrap-and-c/" data-id="ck81s5ql90080oox2inyk8rqx" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular-js/">angular.js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bootstrap/">bootstrap</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li></ul>
 
 
     </footer>
@@ -926,7 +1001,7 @@ angular.module(&apos;Controllers&apos;).controller(&apos;edit.contacts&apos;, ed
   
   <div class="sidebar-module">
     <h4>Archives</h4>
-    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
   </div>
 
 

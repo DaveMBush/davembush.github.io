@@ -76,123 +76,6 @@
         <div class="col-sm-8 blog-main">
           
   
-    <article id="post-tdd-saves-time-a-story" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/tdd-saves-time-–-a-story/">TDD Saves Time – A Story</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/tdd-saves-time-–-a-story/" class="article-date"><time datetime="2014-05-22T16:40:00.000Z" itemprop="datePublished">2014-05-22</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming-Best-Practice/">Programming Best Practice</a> / <a class="article-category-link" href="/categories/Programming-Best-Practice/TDD/">TDD</a> / <a class="article-category-link" href="/categories/Programming-Best-Practice/TDD/Testing/">Testing</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2014/05/TDDSavesTime_AStory.png" alt="TDDSavesTime_AStory" title="TDDSavesTime_AStory">I recently had an experience writing code that proved to me, once again, that using Test Driven Development really is faster than the way I have been working. You will remember a couple of weeks ago I presented <a href="/automated-web-…tional-testing/">a strategy for creating test scenarios where we need to test storing data to a database from a web page</a>.  Well, recently, I had a chance to use that strategy.  In that article, I talked about first testing that the data that we were sending back to the server was actually coming back correctly to the web site.  By doing this, you don’t have to track down where the problem is.  Is it in the database save routine or did it not even get from the client to the server?  This part worked pretty much as expected and my code for that worked right away so I can’t say that I saved a whole lot of time. But the part that did save me a TON of time is the second half.  Saving the data to the database without having to use the web site to create the data I wanted to save. While I was testing the client side, I saved the data to a JSON string which I used to create an object that represented the data that had been sent back.  Then in my unit test, I recreated the object from the stream and sent that into my save routine.  Once the save was done, I reloaded the object from the database.  Now I have the original object and the saved object which I can compare. And the comparison showed me that the save wasn’t quite working the way I had expected.  I actually had to go through several (10? 15? 20?) iterations of fixing and testing before I got to a point where my test was succeeding.  It took about a day to get everything working.  Imagine if I were using a manual method to test this.  Launch the web site, fill out the form (it’s a pretty long form with a lot of data) save the form, reload the form, remember what I had  filled out, verify that everything got saved.  I easily saved half a day using Test Driven Development. If you are  still on the fence as to the value of implementing test prior to writing code, I would encourage you to try it.  Just try it for 30 days.  Yes, it will be hard getting started.  Yes, it will FEEL like it takes more time to write the test first.  But as you make this part of how you develop code, you will start to see for yourself how many benefits you can realize by implementing this best practice.</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/tdd-saves-time-–-a-story/" data-id="ck7s4f05m005amcx2kvk5f8d3" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programming/">programming</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/">tdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/testing/">testing</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-treat-warnings-as-errors" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/treat-warnings-as-errors/">Treat Warnings As Errors</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/treat-warnings-as-errors/" class="article-date"><time datetime="2014-05-15T17:30:00.000Z" itemprop="datePublished">2014-05-15</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/Programming-Best-Practice/">Programming Best Practice</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2014/05/TreatWarningsAsErrors.png" alt="TreatWarningsAsErrors" title="TreatWarningsAsErrors">I used to ignore warnings when I compiled my code.  Most of the time they never caused any problems and I was able to run my code.  But recently I’ve gotten pickier about my code.  One area I’ve gotten more picky about is compiler warnings. Any code that I have direct control over now compiles cleanly.  No errors and no warnings.  This past week I found a perfect example of why.  Given the following code:</p>
-<p>public class Class1<br>{ public virtual int<br>        PropertyOne { get; set; } }</p>
-<p>public class Class2 : Class1<br>{ public int<br>        PropertyOne { get; set; } }</p>
-<p>You will get the following compiler warning: ‘VirtualShadow.Class2.PropertyOne’ hides inherited member ‘VirtualShadow.Class1.PropertyOne’. To make the current member override that implementation, add the override keyword. Otherwise add the new keyword. No big deal.  In fact, if you aren’t looking for it you won’t see it. But here is the problem. If you instantiate an object of Class2 and assign it to a variable of Class1 and then you assign the value 1 to PropertyOne using the variable of type Class1, if you tried to then access the same object from a variable of type Class2, PropertyOne will still be zero.  The default value for a property. The default implementation is to treat Class2.PropertyOne as a shadow of Class1.PropertyOne, not as an override.  The warning message is telling you that it would prefer that you be explicit about what you really want the computer to do, which you have not done. For this reason and others, I have all my projects set to treat warnings as errors in the compiler options.  It saves me from unexpected consequences like this one.</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/treat-warnings-as-errors/" data-id="ck7s4f05z005umcx290x8rg3x" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/compiler/">compiler</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/errror/">errror</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/warning/">warning</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
     <article id="post-ext-databound-checkboxgroup" class="article article-type-post" itemscope itemprop="blogPost">
 
   <header class="article-header">
@@ -274,7 +157,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/ext-databound-checkboxgroup/" data-id="ck7s4f03i0028mcx22x6lz7rf" class="article-share-link">
+      <a data-url="http://davembush.github.com/ext-databound-checkboxgroup/" data-id="ck81s5q48002boox2igf6jt0g" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -334,7 +217,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/the-proper-function-of-qa/" data-id="ck7s4f05x005qmcx2vumie3f7" class="article-share-link">
+      <a data-url="http://davembush.github.com/the-proper-function-of-qa/" data-id="ck81s5q92005poox26tgwee59" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -398,7 +281,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/don’t-comment-out-that-test/" data-id="ck7s4f03d0021mcx2h0ny80pi" class="article-share-link">
+      <a data-url="http://davembush.github.com/don’t-comment-out-that-test/" data-id="ck81s5q3f001yoox2fk09admu" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -463,7 +346,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/make-your-test-work-for-you/" data-id="ck7s4f04m003ymcx2xiky226f" class="article-share-link">
+      <a data-url="http://davembush.github.com/make-your-test-work-for-you/" data-id="ck81s5q6n003xoox2j9a29h1y" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -538,7 +421,7 @@ public void ThenItShouldEndUpWithZState()
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/what-not-to-test/" data-id="ck7s4f06h006omcx2esn6r2ki" class="article-share-link">
+      <a data-url="http://davembush.github.com/what-not-to-test/" data-id="ck81s5qb7006loox2wtqlljmb" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -606,7 +489,7 @@ public void ThenItShouldEndUpWithZState()
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/automated-web-application-functional-testing/" data-id="ck7s4f02l0014mcx2a46k2cqy" class="article-share-link">
+      <a data-url="http://davembush.github.com/automated-web-application-functional-testing/" data-id="ck81s5q1z0015oox2rp7hvhvs" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -669,7 +552,7 @@ public void ThenItShouldEndUpWithZState()
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/tdd-isn’t-all-about-testing/" data-id="ck7s4f05n005dmcx2i6upl21u" class="article-share-link">
+      <a data-url="http://davembush.github.com/tdd-isn’t-all-about-testing/" data-id="ck81s5q8j0058oox29llx766s" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -753,12 +636,230 @@ public void ThenItShouldEndUpWithZState()
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/when-you-really-need-all-of-your-nunit-test-in-one-class/" data-id="ck7s4f06h006nmcx2kuuoxrez" class="article-share-link">
+      <a data-url="http://davembush.github.com/when-you-really-need-all-of-your-nunit-test-in-one-class/" data-id="ck81s5qbc006ooox2hk5haux0" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nunit/">nunit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/">tdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test-driven-development/">test driven development</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/testcasedata/">testcasedata</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/testcasesource/">testcasesource</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-unit-test-structure" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/unit-test-structure/">Unit Test Structure</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/unit-test-structure/" class="article-date"><time datetime="2014-03-11T08:38:00.000Z" itemprop="datePublished">2014-03-11</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/TDD/">TDD</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2014/03/UnitTestingScreen.png" alt="UnitTestingScreen" title="UnitTestingScreen">One of the recurring reasons I hear from people for why they are not implementing unit test in their code is because it takes too long.  On one level I get that.  But, my experience tells me that the real problem is more likely that they just don’t understand enough about how to implement unit testing to be able to do it well.</p>
+<p>This is like knowing you are supposed to “eat right” and “exercise” but not having anyone tell you how to do either in such a way that you can maintain the habit.</p>
+<h2 id="Start-Small"><a href="#Start-Small" class="headerlink" title="Start Small"></a>Start Small</h2><p>So the first rule of unit testing structure, just like the first rule of diet and exercise, is to start small.</p>
+<p>When I first started to take a look at unit testing, the general advice was to create a unit test class for each class.  Then you were suppose to create a test method for each class.  I still see a lot of code as I travel that looks like this as I watch people try to implement the practice.</p>
+<p>But how frustrating.  And how is that suppose to work when I’m modifying existing code?</p>
+<h2 id="Here-is-how-I-write-unit-test…"><a href="#Here-is-how-I-write-unit-test…" class="headerlink" title="Here is how I write unit test…"></a>Here is how I write unit test…</h2><p>I’ve had exposure to UML and the most useful part of UML that I tend to use over and over again is the Use Case document.  I don’t care so much about the diagram.  But the document is really helpful.</p>
+<p>In the document we have three parts.</p>
+<ul>
+<li>Pre conditions</li>
+<li>Actions</li>
+<li>Post conditions</li>
+</ul>
+<p>If you start thinking about your test under this framework, I think you’ll find that writing test become much easier.</p>
+<p>You may be thinking, “But Dave, that’s application level testing, not unit testing.”  And my answer would be, “Yes, it is, but your class is a mini application so it can apply to it as well.</p>
+<h2 id="So-let’s-take-the-classic-Person-class-as-an-example"><a href="#So-let’s-take-the-classic-Person-class-as-an-example" class="headerlink" title="So, let’s take the classic Person class as an example:"></a>So, let’s take the classic Person class as an example:</h2><p>public class Person<br>{<br>    public Person()<br>    {<br>    }</p>
+<pre><code>public string FirstName { get; set; }
+public string LastName { get; set; }
+
+public string FullName
+{
+    get
+    {
+        return FirstName + &quot; &quot; 
+            \+ LastName;
+    }
+}
+</code></pre><p>}</p>
+<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+<p>Our preconditions might be:</p>
+<ul>
+<li>The object has been created</li>
+<li>The FirstName has been set to a known value</li>
+</ul>
+<p>One of our actions is going to be:</p>
+<ul>
+<li>The LastName property is set to another known value</li>
+</ul>
+<p>The post condition will be:</p>
+<ul>
+<li>The FullName should end up being whatever we had in the first name plus a space plus whatever we added to the last name</li>
+</ul>
+<p>So now that we have a use case for our class, how do we model this in our unit test?</p>
+<h2 id="Converting-the-Use-Case-to-a-Test-Case"><a href="#Converting-the-Use-Case-to-a-Test-Case" class="headerlink" title="Converting the Use Case to a Test Case"></a>Converting the Use Case to a Test Case</h2><p>Using NUnit since it is still the most popular, our resulting code might look something like:</p>
+<p>namespace GivenAnObjectOfTypePersonWithFirstNameSetToBob<br>{<br>    class WhenISetTheLastNameToJones<br>    {<br>        private Person _person;</p>
+<pre><code>    \[SetUp\]
+    public void Setup()
+    {
+        // The precondition
+        _person = new Person
+        {
+            FirstName = &quot;Bob&quot;
+        };
+
+        // The action
+        _person.LastName = &quot;Jones&quot;;
+    }
+
+    \[Test\]
+    public void TheFullNameShouldBeBobJones()
+    {
+        Assert.That(_person.FullName,
+            Is.EqualTo(&quot;Bob Jones&quot;));
+    }
+}
+</code></pre><p>}</p>
+<p>Notice how I created a namespace for the given.  This makes the code readable in our test runner.  I put the precondition and the action in the SetUp method because I want to start fresh with each test.  In this case, I only have one test, but in most scenarios, you will have multiple test.  You should plan for multiple test.</p>
+<p>In this particular case, I only have one post condition.  But if I had multiple post conditions, each one would be it’s own Test method with it’s own Assert.</p>
+<p>One of the biggest issues I see is people putting multiple asserts inside of one Test method.    You don’t want to do this.  You want one and only one Assert per Test method.  Otherwise, you never know by looking at your test what exactly failed or if the code were to run, that any of the other Asserts fail. .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; } .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+<p>Because we named our namespace, class, and test methods what we are testing, when a test fails, our test runner will display the names for us.</p>
+<p>If you think it makes the code more readable, you can use underscores to separate the names.  The goal is to make the code read something like your use case.</p>
+<p>One final note before we end.  Your namespace should match up to the directory the class file is in and the class name should match the file name.  This will make the code easy to find.  This is something I shouldn’t have to mention, but once again, I’ve seen people ignore the simplest of organizational strategies.</p>
+<p>This is just one of several patterns I use for testing my code.  What I like about this particular pattern is that it forces my test code to follow the Single responsibility principle.  In the case above, this test class is only responsible for testing what happens when I set the LastName property when I’ve already set the FirstName property.  I can write another class to test what happens when the FirstName property has not yet been set and yet another for what happens when I set the LastName property first and then set the FirstName property.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/unit-test-structure/" data-id="ck81s5q9k005xoox2tdv2vzl6" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/">tdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test-driven-development/">test driven development</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unit-test/">unit test</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-debbie-done" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/“debbie-done”/">“Debbie-Done”</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/“debbie-done”/" class="article-date"><time datetime="2014-03-04T10:38:00.000Z" itemprop="datePublished">2014-03-04</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Testing/">Testing</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2014/02/88Tr.png" alt="88Tr" title="88Tr"></p>
+<p>A long long time ago, in what seems now like another world, I worked for a company as a <a href="//en.wikipedia.org/wiki/Clipper_(programming_language">Clipper programmer</a>).  While I was there I heard this story about a lady named Debbie.</p>
+<p>I was told that Debbie was a programmer who used to work for this company.  Debbie was a lazy programmer.  She worked harder at avoiding work than if she just did the job she was supposed to do.</p>
+<h2 id="The-ultimate-lazy-programmer"><a href="#The-ultimate-lazy-programmer" class="headerlink" title="The ultimate lazy programmer"></a>The ultimate lazy programmer</h2><p>For example.  Once my boss had stopped by her desk to see how she was progressing on a report she was supposed to be writing:</p>
+<p>Debbie: Oh, that’s done.  Here.  Take a look.</p>
+<p>The boss looked it over and found an error.  Some of the numbers didn’t match up.</p>
+<p>Debbie: Oh, I know what that is.  I can get that fixed right away.</p>
+<p>Which she did.  At least that’s what she made everyone believe.</p>
+<p>After she left (shortly after this) they found out that she hadn’t even connected to a database to create that report.  The whole report was hard coded.  Every time you ran it, it gave you the same numbers.</p>
+<h2 id="“Debbie-Done”"><a href="#“Debbie-Done”" class="headerlink" title="“Debbie-Done”"></a>“Debbie-Done”</h2><p>The one thing I was told that sticks in my mind the most is that Debbie considered a project “done” if it compiled in linked.  She almost never ran the code.  Or if she did, she certainly didn’t run enough of it, or run it more than to make sure it didn’t crash.  Anyhow, the perception she left is that she only compiled and linked the code.  Today, we’d say all she did was build the project or solution.</p>
+<p>But recently, I’ve discovered that many programmers work at the “Debbie-Done” level more than we’d like to admit.</p>
+<p>I’ve always thought that programmers wrote code like I do:</p>
+<ul>
+<li>Write a bit of code. </li>
+<li>Build the code.</li>
+<li>Run the code to see if that change works as expected. </li>
+<li>Write a bit more code. </li>
+<li>Build the code.</li>
+<li>Run the code to see if that change works as expected. </li>
+<li>Rinse, lather, repeat.</li>
+</ul>
+<p>But what I’m discovering is that MANY programmers do not program that way at all.  No, many of them look like some version of “Debbie-Done” programming:</p>
+<ul>
+<li>Write some code. </li>
+<li>Build the project to make sure it will build</li>
+<li>Write some more code</li>
+<li>Build the project</li>
+<li>Rinse, lather, repeat</li>
+<li>Run the code and “test” all of the changes at once.</li>
+</ul>
+<p>The problem with this method is that no one can remember all of the changes they make so, in the end, the code I write tends to be more completely tested than the code that was tested in bulk.  The only difference between this method of development and “Debbie-Done” is the degree of completeness with which each developer is able “test” their code.</p>
+<h2 id="Avoid-“Debbie-Done”-with-Test-First-Development"><a href="#Avoid-“Debbie-Done”-with-Test-First-Development" class="headerlink" title="Avoid “Debbie-Done” with Test First Development"></a>Avoid “Debbie-Done” with Test First Development</h2><p>It is no wonder that many programmers I talk to think that test driven development takes too much time.  Compared to how they are programming, it does.</p>
+<p>But think about this.  If you were to code like I do, suddenly writing test for every change you make suddenly makes sense because instead of you running the application and getting to the place that will trigger your code and observing if it will work or not, you can write a test for just the piece of code you are working on and run that each time you want to verify if it is working or not.  Yes, initially, this will take more time.  But over the life of the program, and I would say even over the time span that it takes to initially write the code, writing at least the Unit Test as you are writing the features will actually save you time.  Not only that, you will end up with test you can repeat every time the code is changed.</p>
+<p>Even my method of “code, build, test, code, build, test” is “Debbie-Done” compared to writing test for each change as you make the change.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/“debbie-done”/" data-id="ck81s5q31001poox288l29000" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/agile/">agile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programming/">programming</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/">tdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/testing/">testing</a></li></ul>
 
 
     </footer>
@@ -812,7 +913,7 @@ public void ThenItShouldEndUpWithZState()
   
   <div class="sidebar-module">
     <h4>Archives</h4>
-    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
   </div>
 
 
