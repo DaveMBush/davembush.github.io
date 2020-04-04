@@ -18,6 +18,8 @@ What follows are the lessons I learned from this wildly successful experiment.
 
 ![image](/uploads/2016/03/image-4.png "Test Driven Learning") Photo credit: [twm1340](//www.flickr.com/photos/tom-margie/1538953234/) via [Visualhunt.com](//visualhunt.com) / [CC BY-SA](//creativecommons.org/licenses/by-sa/2.0/)
 
+<!-- more -->
+
 I Learned the Framework Better
 ------------------------------
 

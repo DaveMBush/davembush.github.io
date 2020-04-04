@@ -19,6 +19,8 @@ I’m going to approach this topic as a series of puzzles.  This will show the 
 
 ![JavaScript Variable Gotchas](/uploads/2016/02/image.png "image")
 
+<!-- more -->
+
 Puzzle 1
 --------
 

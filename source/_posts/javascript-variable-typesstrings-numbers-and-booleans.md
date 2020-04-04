@@ -32,6 +32,8 @@ But the reality is that JavaScript includes a very rich typing system with some 
 
 ![image](/uploads/2015/12/image-2.png "image")
 
+<!-- more -->
+
 Strings and String Conversion
 -----------------------------
 

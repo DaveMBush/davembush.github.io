@@ -19,6 +19,8 @@ Evidently, that was a good move because I think I have something that will be ge
 
 ![image](/uploads/2015/11/image2.png "image")
 
+<!-- more -->
+
 The Basics
 ----------
 

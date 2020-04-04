@@ -16,6 +16,8 @@ Anyhow, I thought for this week’s post, I would try to relay some of my impres
 
 ![Angular 2 - First Impressions](/uploads/2016/02/image-3.png "Angular 2 - First Impressions")
 
+<!-- more -->
+
 Why call it Angular 2?
 ----------------------
 

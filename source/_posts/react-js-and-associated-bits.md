@@ -15,6 +15,8 @@ I’ve been learning React JS over the last several weeks.  Currently, I now kn
 
 ![React JS](/uploads/2016/03/image-3.png "React JS") Photo credit: [kristin osier](//www.flickr.com/photos/steffen-fam-pics/5472880836/) via [VisualHunt](//visualhunt.com) / [CC BY](//creativecommons.org/licenses/by/2.0/)
 
+<!-- more -->
+
 What is React JS?
 -----------------
 

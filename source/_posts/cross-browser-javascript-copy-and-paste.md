@@ -19,6 +19,8 @@ While the work I’ve been doing has been using Angular, the solution that I pro
 
 ![image](/uploads/2016/01/image-1.png "image")
 
+<!-- more -->
+
 Demo HTML
 ---------
 

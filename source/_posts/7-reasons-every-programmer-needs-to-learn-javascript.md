@@ -13,7 +13,8 @@ date: 2015-10-08 07:30:00
 In my recent discussions with hiring managers about how hard it is to find good developers, the realization has slowly dawned on me that the programming language to learn today is JavaScript.  This is particularly true if you are a web developer, but I would be inclined to just make a blanket statement.  If you are a programmer, you should learn JavaScript.
 
 ![image](/uploads/2015/10/image.png "image")
--------------------------------------------------------------------------
+
+<!-- more -->
 
 Demand
 ------
@@ -23,17 +24,29 @@ The main reason that I say this, is that as JavaScript matures and things like N
 Better Pay
 ----------
 
-According to SitePoint, [JavaScript pays better than C#](//www.sitepoint.com/best-programming-language-learn-2015-job-demand-salaries/).  Again, Java pays a bit better right now.  But as demand for JavaScript grows, you can expect the pay to increase as well. On Gooroo, [the pay vs demand shows a little different picture](//gooroo.io/GoorooTHINK/Article/16300/Programming-languages--salaries-and-demand-May-2015/18672#.VhARuXpVhBc).  While the demand for JavaScript is evident, it is obvious that several languages that have a smaller demand actually pay better.  I suspect this is because many organizations still think of JavaScript as the language that anyone can use.  It will be a very painful lesson when they find out that “Anyone can program in JavaScript” really means, “Anyone can write crappy code in JavaScript”.  Which is where you and I step in to clean up the mess that was left behind. Over on StackOverflow, we see a [very detailed breakdown of developers for the last three years](//stackoverflow.com/research/developer-survey-2015).  When you finally get down to the “Technologies Used” section what we find is that if you just call yourself a JavaScript programmer (I’m assuming client side here) you get paid better than Java and less than C# but if you say you are a Node.js programmer (which is all JavaScript) you are the second highest paid skill.  The only thing that pays better is Objective-C (and I’m assuming soon, Swift).
+According to SitePoint, [JavaScript pays better than C#](//www.sitepoint.com/best-programming-language-learn-2015-job-demand-salaries/).  Again, Java pays a bit better right now.  But as demand for JavaScript grows, you can expect the pay to increase as well. On Gooroo, [the pay vs demand shows a little different picture](//gooroo.io/GoorooTHINK/Article/16300/Programming-languages--salaries-and-demand-May-2015/18672#.VhARuXpVhBc). 
+
+While the demand for JavaScript is evident, it is obvious that several languages that have a smaller demand actually pay better.  I suspect this is because many organizations still think of JavaScript as the language that anyone can use.  It will be a very painful lesson when they find out that “Anyone can program in JavaScript” really means, “Anyone can write crappy code in JavaScript”.  Which is where you and I step in to clean up the mess that was left behind.
+
+Over on StackOverflow, we see a [very detailed breakdown of developers for the last three years](//stackoverflow.com/research/developer-survey-2015).  When you finally get down to the “Technologies Used” section what we find is that if you just call yourself a JavaScript programmer (I’m assuming client side here) you get paid better than Java and less than C# but if you say you are a Node.js programmer (which is all JavaScript) you are the second highest paid skill.  The only thing that pays better is Objective-C (and I’m assuming soon, Swift).
 
 JavaScript is Maturing
 ----------------------
 
-With the recent commitment of the standards committee to release a new JavaScript standard every year, it is clear that the amount of Syntactic Sugar that will be added on to JavaScript is going to be increasing every year for a while now.  One of the features I’m looking forward to is the ability to use the async and await keywords in my JavaScript code to eliminate callback hell. But, the reason this matters to you is that the sooner you start learning JavaScript, the easier it will be to learn.  All of the changes that happen after you learn it will all be incremental.  The browsers are also continually improving how they handle JavaScript code.  I can see a time in the future when browsers not only cache the JavaScript files, but cache the compiled version of the JavaScript files.  Bringing us closer to near binary speed. It is interesting to me that several years ago, people were debating the future of JavaScript and now, there is active work being done to make JavaScript a first class language.
+With the recent commitment of the standards committee to release a new JavaScript standard every year, it is clear that the amount of Syntactic Sugar that will be added on to JavaScript is going to be increasing every year for a while now.  One of the features I’m looking forward to is the ability to use the async and await keywords in my JavaScript code to eliminate callback hell.
+
+But, the reason this matters to you is that the sooner you start learning JavaScript, the easier it will be to learn.  All of the changes that happen after you learn it will all be incremental.  The browsers are also continually improving how they handle JavaScript code.  I can see a time in the future when browsers not only cache the JavaScript files, but cache the compiled version of the JavaScript files.  Bringing us closer to near binary speed.
+
+It is interesting to me that several years ago, people were debating the future of JavaScript and now, there is active work being done to make JavaScript a first class language.
 
 Some JavaScript Programmers Are More Equal Than Others
 ------------------------------------------------------
 
-I was talking with an old friend about a year ago.  He mentioned that he was the only one in his group of about 20 programmers who wrote JavaScript in such a way as to eliminate polluting the global scope with variables.  That is just the most simple of examples.  Many people who call themselves [JavaScript programmers, don’t know the basics](/7-javascript-interview-questions-to-weed-out-imposters/).  And that is today.  Imagine what this is going to look like three to five years from now. And don’t forget that a lot of the tooling to support profiling and memory leaks is just at its infancy.  If you have those skills today, and you have marketed yourself well, you are already realizing that a lot of what I’m saying here is true. If you are interested in this kind of stuff, there are some courses over on PluralSight.  Just search for “[JavaScript profiling](/pluralsightJSProfiling)”
+I was talking with an old friend about a year ago.  He mentioned that he was the only one in his group of about 20 programmers who wrote JavaScript in such a way as to eliminate polluting the global scope with variables.  That is just the most simple of examples.  Many people who call themselves [JavaScript programmers, don’t know the basics](/7-javascript-interview-questions-to-weed-out-imposters/).  And that is today.  Imagine what this is going to look like three to five years from now.
+
+And don’t forget that a lot of the tooling to support profiling and memory leaks is just at its infancy.  If you have those skills today, and you have marketed yourself well, you are already realizing that a lot of what I’m saying here is true.
+
+If you are interested in this kind of stuff, there are some courses over on PluralSight.  Just search for “JavaScript profiling”
 
 Frameworks Are Maturing
 -----------------------
@@ -43,7 +56,7 @@ With the new version of Angular in the works, Aurelia in the works as an alterna
 JavaScript Runs Everywhere
 --------------------------
 
-JavaScript runs on every major browser on every major platform.  It runs on the server side on every major operating system.  Anyone writing a web site today of any major functionality is going to need someone who knows JavaScript to write the front end.  It doesn’t matter what the back end code was written in be it Java, PHP, .NET, Node.js or something else, the client side is going to need a JavaScript developer.  In fact, I still run into pockets of developers who just don’t know how powerful JavaScript is.  What this means for you is this.  If you become an awesome JavaScript programmer, you will have jobs available to you across all of the various server side platforms.  It will help if you learn a little bit about those platforms.  But I’m talking about niching down in JavaScript so that you become THE go to person.
+JavaScript runs on every major browser on every major platform.  It runs on the server side on every major operating system.  Anyone writing a web site today of any major functionality is going to need someone who knows JavaScript to write the front end.  It doesn’t matter what the back end code was written in be it Java, PHP, .NET, Node.js or something else, the client side is going to need a JavaScript developer.  In fact, I still run into pockets of developers who just don’t know how powerful JavaScript is.  What this means for you is this.  If you become an awesome JavaScript programmer, you will have jobs available to you across all the various server side platforms.  It will help if you learn a little bit about those platforms.  But I’m talking about niching down in JavaScript so that you become THE go to person.
 
 JavaScript is a Compiled Language
 ---------------------------------

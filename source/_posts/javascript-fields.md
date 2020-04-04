@@ -18,6 +18,8 @@ This is an important distinction.
 
 In a strongly typed system, we can say that a member of our object is a property or method simply because it was defined as one or the other when we defined our class. In JavaScript we have neither classes where we can define what something is, nor strong typing.
 
+<!-- more -->
+
 So, how something functions is determined by the type of variable it is pointing to at run time. ![JavaScript Fields](/uploads/2016/03/image.png "image")  As I demonstrated last week, there are several ways that you might add a field to your object.
 
 *   Use object literal notation and create them as you create the object.

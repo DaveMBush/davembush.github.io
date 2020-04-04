@@ -22,6 +22,8 @@ Although, at this point, it isn’t as straightforward as most other things in V
 
 ![image](/uploads/2016/01/image-2.png "image")
 
+<!-- more -->
+
 Installing Node.js
 ------------------
 

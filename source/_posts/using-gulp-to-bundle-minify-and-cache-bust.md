@@ -23,6 +23,8 @@ Since most of the people who read this blog are ASP.NET developers, there may be
 
 ![image](/uploads/2016/01/image-5.png "image")
 
+<!-- more -->
+
 Bundling
 --------
 

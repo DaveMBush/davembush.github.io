@@ -22,6 +22,8 @@ Let’s get started.
 
 ![JavaScript Unit Test Code Coverage Using NodeJS](/uploads/2016/01/image-6.png "JavaScript Unit Test Code Coverage Using NodeJS")
 
+<!-- more -->
+
 Assumptions
 -----------
 

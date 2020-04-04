@@ -18,6 +18,8 @@ So, let’s start with the most basic of JavaScript questions.
 
 ![image](/uploads/2016/02/image-4.png "image")
 
+<!-- more -->
+
 How Do You Create A JavaScript Object?
 --------------------------------------
 

@@ -13,6 +13,8 @@ date: 2015-12-24 13:30:00
 
 If you’ve been working with JavaScript at all for any length of time, you should know by now some of the basic rules of when something is true or false.  And yet, I still see code that messes this up. At the most simple level I see code that often looks like this:
 
+<!-- more -->
+
 ``` javascript
 var trueVariable = true;
 if (trueVariable == true) {

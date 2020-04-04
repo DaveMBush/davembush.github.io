@@ -14,6 +14,8 @@ When I first wrote down the idea for this post, I was originally thinking about 
 
 ![image](/uploads/2015/11/image1.png "image")
 
+<!-- more -->
+
 Agile in an Anti-Agile Environment
 ----------------------------------
 

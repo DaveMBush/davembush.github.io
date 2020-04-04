@@ -26,6 +26,8 @@ var foo = function(){
 
 ![JavaScript Functions -- In-depth](/uploads/2016/02/image-1.png "JavaScript Functions -- In-depth")
 
+<!-- more -->
+
 Declaring JavaScript Functions
 ------------------------------
 

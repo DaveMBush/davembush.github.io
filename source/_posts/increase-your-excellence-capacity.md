@@ -30,6 +30,8 @@ So, what’s this got to do with programming?  You did know this was going to e
 
 ![image](/uploads/2016/01/image.png "image")
 
+<!-- more -->
+
 Most of us program with only 2% of what’s available.  And like those of us who are color blind, we don’t think it is an issue because, somehow, we manage to get the job done.
 
 Just off the top of my head, here are some ways this applies.
