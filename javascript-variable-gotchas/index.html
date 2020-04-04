@@ -14,7 +14,7 @@
 <meta property="og:description" content="If you’ve been programming using JavaScript for any length of time, you’ve probably run into several of the JavaScript variable scope gotchas.  You may have even been able to fix them.  But you could">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2016/02/image.png">
-<meta property="og:updated_time" content="2020-02-29T18:35:40.559Z">
+<meta property="og:updated_time" content="2020-04-04T13:43:43.763Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaScript Variable Gotchas">
 <meta name="twitter:description" content="If you’ve been programming using JavaScript for any length of time, you’ve probably run into several of the JavaScript variable scope gotchas.  You may have even been able to fix them.  But you could">
@@ -115,6 +115,7 @@
 <p>My goal, through a series of blog post on the topic, is to make us all better JavaScript programmers.  JavaScript is no longer a toy.  Those who survive in the new JavaScript eco system will be those who understand why JavaScript works the way it does.</p>
 <p>I’m going to approach this topic as a series of puzzles.  This will show the issue and then we can discuss why the issue exist and what to do about it.</p>
 <p><img src="/uploads/2016/02/image.png" alt="JavaScript Variable Gotchas" title="image"></p>
+<a id="more"></a>
 <h2 id="Puzzle-1"><a href="#Puzzle-1" class="headerlink" title="Puzzle 1"></a>Puzzle 1</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="string">'abc'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a);</span><br><span class="line">  <span class="keyword">var</span> a = <span class="string">'xyz'</span>;</span><br><span class="line">  <span class="built_in">console</span>.log(a);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">foo();</span><br></pre></td></tr></table></figure>
 <p>Given the code above, what is the value of <code>a</code> at line 5 and what is the value of <code>a</code> at line 8? (Play Jeopardy music here) OK.  Times up.  What do you think? If you said that line 5 has the value of ‘abc’, you would be wrong.  But I totally understand why you would think that.  I think everyone would agree that the value at line 8 is now ‘xyz’.  So, we will ignore that.</p>
 <p>Why isn’t the value at line 5 ‘abc’?</p>
@@ -154,7 +155,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/javascript-variable-gotchas/" data-id="ck81s5q5s0039oox2sy0ye25a" class="article-share-link">
+      <a data-url="http://davembush.github.com/javascript-variable-gotchas/" data-id="ck8lohnwg003a6kx2m7692v6n" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

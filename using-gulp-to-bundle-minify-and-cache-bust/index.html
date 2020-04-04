@@ -14,7 +14,7 @@
 <meta property="og:description" content="Last week I discussed how to setup Node.js and Gulp in Visual Studio 2015.  During that discussion, I mentioned that I’m using gulp to bundle, minify and cache-bust my HTML, CSS, and JavaScript files.">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2016/01/image-5.png">
-<meta property="og:updated_time" content="2020-03-07T20:16:33.816Z">
+<meta property="og:updated_time" content="2020-04-04T13:42:42.044Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Using Gulp to Bundle, Minify, and Cache-bust">
 <meta name="twitter:description" content="Last week I discussed how to setup Node.js and Gulp in Visual Studio 2015.  During that discussion, I mentioned that I’m using gulp to bundle, minify and cache-bust my HTML, CSS, and JavaScript files.">
@@ -116,6 +116,7 @@
 <p>So, if you don’t already have Node.js and Gulp installed, you may want to go back and read the article I wrote last week.</p>
 <p>Since most of the people who read this blog are ASP.NET developers, there may be a few .NET specific tips along the way.  But the Gulp file I am going to walk you through is technology agnostic.  So if you are using some other technology, you’ll still benefit from this article.</p>
 <p><img src="/uploads/2016/01/image-5.png" alt="image" title="image"></p>
+<a id="more"></a>
 <h2 id="Bundling"><a href="#Bundling" class="headerlink" title="Bundling"></a>Bundling</h2><p>The first thing we want to do is that we want to combine all of our CSS files and JavaScript files into one file for CSS and one file for JavaScript.  There are several ways that you might do this, but what I wanted was some way that would allow me to work unbundled during development and bundled when I released the code.  Since I’m working with a single page application (SPA), this was a simple matter of configuring my default file to be index.debug.html for development and index.release.html and using web.config transforms to specify which should be used in which environment.  If you are working in some other environment, I’m sure you have some kind of similar way of specifying the default file based on an environment setting.</p>
 <p>So all of my development work will be done in index.debug.html.</p>
 <p>Like I said, there are many ways of bundling JavaScript and CSS code, but the way I’ve found that seems to have the least amount of work involved is by using the <a href="//www.npmjs.com/package/gulp-useref">gulp-useref module</a>.  This module lets us put tokens in our html file that specify which files we want to compress and what the resulting file name should be.</p>
@@ -180,7 +181,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/using-gulp-to-bundle-minify-and-cache-bust/" data-id="ck81s5qmy009noox2iiitiblt" class="article-share-link">
+      <a data-url="http://davembush.github.com/using-gulp-to-bundle-minify-and-cache-bust/" data-id="ck8loho37009n6kx2x426h1uu" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
