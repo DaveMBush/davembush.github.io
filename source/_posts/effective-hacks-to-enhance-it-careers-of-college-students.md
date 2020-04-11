@@ -25,6 +25,8 @@ The advice I am going to provide here is going to be both general in nature and 
 
 ![image](/uploads/2015/09/image.png "image")
 
+<!-- more -->
+
 Get a Job – Any Job
 -------------------
 
