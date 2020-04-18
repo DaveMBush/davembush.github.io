@@ -10,21 +10,37 @@ categories:
 date: 2015-08-06 07:30:00
 ---
 
-![image](/uploads/2015/08/image.png "image") I got a question this last week that I answered very briefly but I felt that to answer it completely would take a blog post.  So here’s the blog post.
+![image](/uploads/2015/08/image.png "image")
+
+I got a question this last week that I answered very briefly but I felt that to answer it completely would take a blog post.  So here’s the blog post.
 
 > Should the author of a piece of code be responsible for more than just unit testing, or does peer review have a play?
 
-Loaded question, right?  Obviously, the guy asking this question believes that an author should both unit test AND have peer review.  And I agree.  But to limit the role of a programmer to even those two things is a very narrow view of programming. Then I got to thinking about it and realized that most of what we’d be trying to accomplish with a code review encompasses everything we’d want to include in a list of things a developer is responsible for.  Further, a code review is mostly a review that ensures that 1) the code does what it is supposed to do, and 2) the code is easy to maintain in the future. In other words, all that the word “Peer review” or “Code review” encompasses is largely about code clarity. Code clarity addresses the issue we all have when we pick up a new piece of code.  Can you understand it easily?  I just listened to a [DotNetRocks episode](//dotnetrocks.com/default.aspx?showNum=1172) that was all about the fact that we spend most of our time reading code and yet no one is talking about how we might do this better.  One way we can read code better is by writing it more clearly in the first place. Here are 15 ways you can make your code easier to read:
+<!-- more -->
+
+Loaded question, right?  Obviously, the guy asking this question believes that an author should both unit test AND have peer review.  And I agree.  But to limit the role of a programmer to even those two things is a very narrow view of programming. Then I got to thinking about it and realized that most of what we’d be trying to accomplish with a code review encompasses everything we’d want to include in a list of things a developer is responsible for.  Further, a code review is mostly a review that ensures that 1) the code does what it is supposed to do, and 2) the code is easy to maintain in the future.
+
+In other words, all that the word “Peer review” or “Code review” encompasses is largely about code clarity.
+
+Code clarity addresses the issue we all have when we pick up a new piece of code.  Can you understand it easily?  I just listened to a [DotNetRocks episode](//dotnetrocks.com/default.aspx?showNum=1172) that was all about the fact that we spend most of our time reading code and yet no one is talking about how we might do this better.  One way we can read code better is by writing it more clearly in the first place.
+
+Here are 15 ways you can make your code easier to read:
 
 Make your code pretty
 ---------------------
 
-I remember back when I was doing Clipper programming, we had one guy who would always show code that was ready to be printed in a text book.  I mean, regardless of what you had to say about what he had actually coded, the visual presentation of the code was a thing of beauty.  He had us believing that all of his code looked like that.  Then he went to work for some other company and we actually looked at the other code he had written.  It looked just like any other code. But it taught me a lesson.  A lesson I, unfortunately still need to be reminded of.  Pretty code is easier to maintain and implies a lot about the quality of the code.  Just like you wouldn’t go to an interview without wearing a suit because how you dress implies something about how you’ll program, your code should imply the quality by what it looks like before you ever start reading it.
+I remember back when I was doing Clipper programming, we had one guy who would always show code that was ready to be printed in a text book.  I mean, regardless of what you had to say about what he had actually coded, the visual presentation of the code was a thing of beauty.  He had us believing that all of his code looked like that.  Then he went to work for some other company and we actually looked at the other code he had written.  It looked just like any other code.
+
+But it taught me a lesson.  A lesson I, unfortunately still need to be reminded of.  Pretty code is easier to maintain and implies a lot about the quality of the code.  Just like you wouldn’t go to an interview without wearing a suit because how you dress implies something about how you’ll program, your code should imply the quality by what it looks like before you ever start reading it.
 
 Establish and obey naming conventions for your code.
 ----------------------------------------------------
 
-I’ve written about this before.  Most notably when .NET first came out in the article about [Hungarian Notation](/hungarian-notation-use-what-works-spit-out-the-bones/).  As I point out in that article, not using Hungarian notation doesn’t mean you don’t have any standards.  Sure, you don’t want to prefix all of your integers with a lower case “I”, because you don’t care what kind of number it is.  But it is valuable to prefix a button with “button” so that it is easier to find in your Intellisense, or if you need to search your code for what you named it, it is much easier to find all of the buttons in your code this way. But there is another reason to establish and obey naming conventions.  Once you’ve done this, it makes it easier for everyone who is using those common conventions to read your code. For example, where I work, we have what I consider a very odd naming convention.  All of our POCO classes (we generate this ourselves because we are using DB2) are all UPPERCASE\_UNDERSCORE\_SEPARATED.  And all our properties of POCO collections are named UPPERCASE\_UNDERSCORE\_SEPARATEDs.  It used to drive me crazy, mostly because I use [ReSharper](/resharper) religiously and the default rules aren’t setup to handle this odd convention.  But, it is a standard and, I can tell you now, you open a file that is using a POCO and you know you are dealing with a POCO.  No question about it! While I still don’t recommend the practice, I tell you that example because it illustrates how much a coding standard can instantly tell you something about the code you are working on before you ever start reading the code.
+I’ve written about this before.  Most notably when .NET first came out in the article about [Hungarian Notation](/hungarian-notation-use-what-works-spit-out-the-bones/).  As I point out in that article, not using Hungarian notation doesn’t mean you don’t have any standards.  Sure, you don’t want to prefix all of your integers with a lower case “I”, because you don’t care what kind of number it is.  But it is valuable to prefix a button with “button” so that it is easier to find in your Intellisense, or if you need to search your code for what you named it, it is much easier to find all of the buttons in your code this way.
+
+But there is another reason to establish and obey naming conventions.  Once you’ve done this, it makes it easier for everyone who is using those common conventions to read your code.
+
+For example, where I work, we have what I consider a very odd naming convention.  All of our POCO classes (we generate this ourselves because we are using DB2) are all UPPERCASE\_UNDERSCORE\_SEPARATED.  And all our properties of POCO collections are named UPPERCASE\_UNDERSCORE\_SEPARATEDs.  It used to drive me crazy, mostly because I use [ReSharper](/resharper) religiously and the default rules aren’t setup to handle this odd convention.  But, it is a standard and, I can tell you now, you open a file that is using a POCO and you know you are dealing with a POCO.  No question about it! While I still don’t recommend the practice, I tell you that example because it illustrates how much a coding standard can instantly tell you something about the code you are working on before you ever start reading the code.
 
 Establish and obey a common architecture.
 -----------------------------------------
@@ -44,13 +60,18 @@ Similarly, stop with the short variable names unless you are using a language th
 Don’t include a noun in your method.
 ------------------------------------
 
-This is different from just saying that method should be verbs.  There are a lot of places where I’ve seen code that has a verb AND a noun as a method name.  If you have a method that has both a noun and a verb in it, your class is probably trying to do too much. Wouldn’t it look funny if you had a Person class that had a method in it called FirstNameToLower()?
+This is different from just saying that method should be verbs.  There are a lot of places where I’ve seen code that has a verb AND a noun as a method name.  If you have a method that has both a noun and a verb in it, your class is probably trying to do too much.
+
+Wouldn’t it look funny if you had a Person class that had a method in it called FirstNameToLower()?
 
 Establish a [cyclomatic complexity](//en.wikipedia.org/wiki/Cyclomatic_complexity) threshold for your methods and obey them religiously.
 ----------------------------------------------------------------------------------------------------------------------------------------
 
-Cyclomatic complexity takes into account how many statements have to be executed and, most importantly, how many conditionals have to be executed in your code.  The easiest way to reduce cyclomatic complexity is to reduce the number of conditions.  But aside from that, you can make your code much more readable by eliminating nesting where ever possible. One of my favorites is instead of writing code that looks something like this:
+Cyclomatic complexity takes into account how many statements have to be executed and, most importantly, how many conditionals have to be executed in your code.  The easiest way to reduce cyclomatic complexity is to reduce the number of conditions.  But aside from that, you can make your code much more readable by eliminating nesting where ever possible.
 
+One of my favorites is instead of writing code that looks something like this:
+
+``` csharp
 void SomeMethod()
 {
    if(x != y)
@@ -58,14 +79,17 @@ void SomeMethod()
       // do stuff here
    }
 }
+```
 
 You can make your code much more readable by writing it like this:
 
+``` csharp
 void SomeMethod()
 {
    if(x == y) return;
    // do stuff here
 }
+```
 
 Similarly, instead of nesting when this doesn’t work, as with while statements that contain other while statements, why not create a method for each while statement?
 
@@ -91,7 +115,7 @@ Is the code [SOLID](/pluralsightSOLID)?
 Is the code testable?
 ---------------------
 
-If you follow all of the rules above, the code should be easy to test.  But, this is something that you should review your code for explicitly.
+If you follow all the rules above, the code should be easy to test.  But, this is something that you should review your code for explicitly.
 
 Will the code fail?
 -------------------
@@ -111,10 +135,4 @@ Assuming you have unit test, do you have 100% code coverage on all of the method
 Learn the vocabulary of your language
 -------------------------------------
 
-John Sonmez wrote a very compelling article in 2013 about [what makes code readable](//simpleprogrammer.com/2013/04/14/what-makes-code-readable-not-what-you-think/).  In it he says that just like when we learn to read.  Code that is readable by a senior level developer may not be readable by an entry level developer simply because the entry level developer doesn’t have a firm grasp of the language.  Like John, I’ve been criticized for using the ternary operator because it is too terse.  Not descriptive enough.  Un-readable.  And I’ve always responded that arguing that the syntax isn’t clear is like arguing that a sentence isn’t clear because it uses a word you aren’t familiar with.  The word may actually be the perfect word for what the author is trying to communicate.  Your understanding of that word does not make the writing bad.  It just means the reader has some more learning to do. What else have you found makes your code more readable?  Leave me a comment below.
-
-### Other Resources
-
-*   [Code Complete](/codecomplete)
-*   [ReSharper](/resharper)
-*   [SOLID Training](/pluralsightSOLID)
+John Sonmez wrote a very compelling article in 2013 about [what makes code readable](//simpleprogrammer.com/2013/04/14/what-makes-code-readable-not-what-you-think/).  In it he says that just like when we learn to read.  Code that is readable by a senior level developer may not be readable by an entry level developer simply because the entry level developer doesn’t have a firm grasp of the language.  Like John, I’ve been criticized for using the ternary operator because it is too terse.  Not descriptive enough.  Un-readable.  And I’ve always responded that arguing that the syntax isn’t clear is like arguing that a sentence isn’t clear because it uses a word you aren’t familiar with.  The word may actually be the perfect word for what the author is trying to communicate.  Your understanding of that word does not make the writing bad.  It just means the reader has some more learning to do.
