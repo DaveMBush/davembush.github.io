@@ -11,25 +11,38 @@ categories:
 date: 2015-07-30 06:00:00
 ---
 
-![image](/uploads/2015/07/image2.png "image") For the last two years, about 99% of the work I’ve been doing has been JavaScript programming using EXTjs.  The problems I’ve encountered along the way are primarily related to testing.  Writing unit test using the “MVC Framework” out of the box is nearly impossible, but I did eventually put together an architecture that allows me to do that.  I may blog about that in the future. Today, what I want to offer is how I overcame various hurdles related to testing EXTjs with Selenium.  The first problem nearly everyone encounters when they first use EXTjs is that the views that are created are created dynamically.  If you use the recommended itemId to uniquely identify the elements on the page, you will be left with IDs that are dynamically generated and inconsistent.  That is, just because the ID has one value today doesn’t mean it will have the same value tomorrow.  And since the controls are dynamically created based on what browser is running, XPATH queries aren’t a good solution either.
+![image](/uploads/2015/07/image2.png "image")
+
+For the last two years, about 99% of the work I’ve been doing has been JavaScript programming using EXTjs.  The problems I’ve encountered along the way are primarily related to testing.  Writing unit test using the “MVC Framework” out of the box is nearly impossible, but I did eventually put together an architecture that allows me to do that.  I may blog about that in the future.
+
+Today, what I want to offer is how I overcame various hurdles related to testing EXTjs with Selenium.  The first problem nearly everyone encounters when they first use EXTjs is that the views that are created are created dynamically.  If you use the recommended itemId to uniquely identify the elements on the page, you will be left with IDs that are dynamically generated and inconsistent.  That is, just because the ID has one value today doesn’t mean it will have the same value tomorrow.  And since the controls are dynamically created based on what browser is running, XPATH queries aren’t a good solution either.
+
+<!-- more -->
 
 Custom FindsBy attribute
 ------------------------
 
 Now, you could solve this problem by creating a different Page Object for each browser and then you’d be able to use XPATH statements to go after the elements.  But, what if you could go after the itemIds directly?  By the Selenium APIs let you create your own selectors.  So, instead of writing your element properties like this:
 
-\[FindsBy(How = How.Id, Using="someId")\]
+``` csharp
+[FindsBy(How = How.Id, Using="someId")]
+private IWebElement SomeId{get; [UsedImplicitly]set;}
+```
+
+You could do something like:
+
+``` csharp
+[FindsBy(How = How.Custom,
+    CustomFinderType = typeof(ExtByComponentQuery),
+    Using = "#someId")]
 private IWebElement SomeId{get; \[UsedImplicitly\]set;}
+```
 
-  You could do something like:
+One of the side effects of using this extension is that you can now find any element using any valid EXTjs selector.
 
-\[FindsBy(How = How.Custom, 
-    CustomFinderType = typeof(ExtByComponentQuery), 
-    Using = "#someId")\]
-private IWebElement SomeId{get; \[UsedImplicitly\]set;}
+So, you are probably wondering what the code looks like to get this all working.  Well here you go:
 
-One of the side effects of using this extension is that you can now find any element using any valid EXTjs selector. So, you are probably wondering what the code looks like to get this all working.  Well here you go:
-
+``` csharp
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -51,7 +64,7 @@ namespace ENT.Supporting
         public static ExtByComponentQuery Query(string locator)
         {
             if (locator == null)
-                throw new ArgumentNullException("locator", 
+                throw new ArgumentNullException("locator",
                     @"Cannot find elements when name locator is null.");
             return new ExtByComponentQuery(locator);
         }
@@ -89,14 +102,20 @@ return rarray;",_locator.Replace("'","\\\'"));
         }
     }
 }
+```
 
-The constructor gets passed the selector string that is passed with the Using parameter in the attribute.  The FindElements() finds all of the elements that match the selector.  The FindElement() returns the first of all that it found. You can either use this code as part of the FindsBy attribute or you can use it stand alone by calling the static Query method. You’ll see that the bulk of the functionality is just the same JavaScript code you would normally write in EXTjs.
+The constructor gets passed the selector string that is passed with the Using parameter in the attribute.  The FindElements() finds all of the elements that match the selector.  The FindElement() returns the first of all that it found.
+
+You can either use this code as part of the FindsBy attribute or you can use it stand alone by calling the static Query method.
+
+You’ll see that the bulk of the functionality is just the same JavaScript code you would normally write in EXTjs.
 
 Get an element’s Value
 ----------------------
 
 One of the other problems you are likely to run into is retrieving the current value of an element.  This is because many of the controls that EXT provides to us do not use the INPUT item’s value to keep track of the value.  So, for this, and other similar scenarios, I wrote an extension method.
 
+``` csharp
 public static string GetExtValue(this IWebElement element)
 {
     IWebElement realElement = null;
@@ -124,8 +143,11 @@ public static string GetExtValue(this IWebElement element)
     }
     return val.ToString();
 }
+```
 
-What you’ll want to pay attention to here is the code at the top. The if(element as IWrapsDriver) stuff is testing to see if we have the real element or if we have a proxy to the element that was created by the FindsBy attribute.  If the element is of type IWrapsDriver, we have the proxy and so need to go grab the real element before we continue.  Once we are sure we are working with a real element, we can use JavaScript to grab the raw value from EXTjs.
+What you’ll want to pay attention to here is the code at the top.
+
+The if(element as IWrapsDriver) stuff is testing to see if we have the real element or if we have a proxy to the element that was created by the FindsBy attribute.  If the element is of type IWrapsDriver, we have the proxy and so need to go grab the real element before we continue.  Once we are sure we are working with a real element, we can use JavaScript to grab the raw value from EXTjs.
 
 Other Modifications
 -------------------
