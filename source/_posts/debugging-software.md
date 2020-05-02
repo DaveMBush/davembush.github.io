@@ -10,7 +10,9 @@ categories:
 date: 2015-06-25 06:00:00
 ---
 
-![spider](/uploads/2015/06/spider.jpg "spider") It amazes me how rare the skill of debugging software is.  It is even more amazing to me that after programming for over 27 years now, I still have trouble with this.  So, as a checklist for myself, and as a possible help to others along the way, I offer you “How to Debug Your Code” 
+![spider](/uploads/2015/06/spider.jpg "spider") It amazes me how rare the skill of debugging software is.  It is even more amazing to me that after programming for over 27 years now, I still have trouble with this.  So, as a checklist for myself, and as a possible help to others along the way, I offer you “How to Debug Your Code”
+
+<!-- more -->
 
 Is It Plugged In?  Is It Turned On?
 -----------------------------------
@@ -56,8 +58,3 @@ Step Away For a While
 ---------------------
 
 I don’t know why it is, but for some reason, we seem to think that if we aren’t coding, we aren’t working.  But you can’t work non-stop as a programmer for 4 – 8 hours without taking a break.  And banging your head against a bug when you’ve already done that for 15 minutes probably isn’t going to produce any better results if you do it for another 4 hours. Yeah, you may try a bunch of stuff.  You may look busy.  But the fact of the matter is, you might be better off finding something else to do for an hour or so and then coming back to the problem once you’re brain has had a rest from it. Well, those are my tips for now.  What tips do you have?  Leave them in the comments.  
-
-### Other Places Talking About Debugging Code
-
-*   [Conditional Breakpoints](//dailydotnettips.com/2015/05/19/use-conditional-breakpoints-with-methods-return-value-in-visual-studio-2015/)
-*   [Debugging – The 9 Indispensable Rules](/debugging9)

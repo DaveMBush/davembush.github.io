@@ -15,7 +15,7 @@ date: 2015-07-16 06:00:00
 
 ![ppl-kid-044](/uploads/2015/07/ppl-kid-044.jpg "ppl-kid-044")
 
-This probably doesn’t happen all that often, but this last week I came across the need to know which browser I was running my selenium test against.  I figured that buried deep in the object structure of Selenium, there MUST be a way of finding out what browser I was currently running.  As it turns out, I was right.  The situation that caused this requirement is that the place where I’m currently writing most of my code is upgrading all of the Firefox browsers.  I was asked to make sure the code we were running still works with the new browser.  When I did, I found that some of my tests broke even though the test itself still succeeds when it is run manually.  In fact, they only broke when running against this new version of Firefox.
+This probably doesn’t happen all that often, but this last week I came across the need to know which browser I was running my selenium test against.  I figured that buried deep in the object structure of Selenium, there MUST be a way of finding out what browser I was currently running.  As it turns out, I was right.  The situation that caused this requirement is that the place where I’m currently writing most of my code is upgrading all the Firefox browsers.  I was asked to make sure the code we were running still works with the new browser.  When I did, I found that some of my tests broke even though the test itself still succeeds when it is run manually.  In fact, they only broke when running against this new version of Firefox.
 
 <!-- more -->
 

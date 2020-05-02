@@ -17,11 +17,14 @@ If you’ve been programming in any other environment than JavaScript for a whil
 
 Just as a test to see how well you know your JavaScript, let’s create a few tests scenarios.
 
+<!-- more -->
+
 Quiz
 ----
 
 ### 1) Given the following code:
 
+``` javascript
 var foo;
 foo = "xyz";
 
@@ -32,6 +35,7 @@ function bar()
 }
 bar();
 console.log(foo);
+```
 
 What is displayed in the console window when console.log(foo) is executed?
 
@@ -39,6 +43,7 @@ Why?
 
 ### 2) Given the following code:
 
+``` javascript
 var i = 20;
 
 for(var i = 0;i < 10;i++){
@@ -46,26 +51,31 @@ for(var i = 0;i < 10;i++){
 }
 
 console.log('final i: ' \+ i);
+```
 
-What is the value of i when console.log(‘final i: ‘ + i) is executed?
+What is the value of i when `console.log(‘final i: ‘ + i)` is executed?
 
 Why?
 
 ### 3) What is wrong with the following code?
 
+``` javascript
 foo();
 
 var foo = function(){
     console.log('foo was called');
 }
+```
 
 ### 4) Why would changing the previous code to this next block of code fix the issue with the previous code?
 
+``` javascript
 foo();
 
 function foo(){
     console.log('foo was called');
 }
+```
 
 Answers
 -------
@@ -88,6 +98,7 @@ How did you do?
 
 The first thing you need to understand about how JavaScript processes code is that it goes through the block of code you are working with and processes the variable declarations first.  That is anything in the global scope (window for browsers, global for server) or anything within a function block.  From the JavaScript compiler’s perspective, the code in example 1 looks like this:
 
+``` javascript
 var foo;
 foo = "xyz";
 
@@ -98,6 +109,7 @@ function bar()
 }
 bar();
 console.log(foo);
+```
 
 So that the foo = “abc” line assigns the string “abc” to the variable foo in the bar function’s local scope.  Not impacting the variable foo in global scope so that the result at the end of the code sample is that the foo variable still has the value “xyz”.
 
@@ -110,6 +122,7 @@ In JavaScript, it is perfectly legal to declare a variable multiple time.  The 
 
 If you really wanted to declare a function within its own scope, you could create the scope with a try/catch block, like this:
 
+``` javascript
 try {throw i;}
 catch(i){
     for(var i = 0;i< 10;i++) {
@@ -118,6 +131,7 @@ catch(i){
 }
 
 console.log('final i: ' \+ i);
+```
 
 Which would give you the behavior you were probably expecting.  The code above will print out ‘final i: 20’ like you were probably expecting above.
 
@@ -134,11 +148,4 @@ Function declarations, on the other hand, behave differently than function assig
 Conclusion
 ----------
 
-So, maybe you thought you knew JavaScript.  Maybe you did.  Maybe you discovered you didn’t know it as well as you thought. I would encourage you to really learn the language.  One of the best resources I’ve found for learning programming stuff is [PluralSight](/pluralsight).  Check them out.  They have a deal where you can get the first 10 days free, up to 200 minutes.
-
-### Other places talking about JavaScript Scoping
-
-*   [Things Every JavaScript Programmer Should Know](//ilikekillnerds.com/2015/03/things-every-javascript-developer-should-know/)
-*   [Hoisting In JavaScript](//debugmode.net/2015/02/03/hoisting-in-javascript-simplified/)
-*   [Three Important JavaScript Concepts](//abdulapopoola.com/2014/03/10/three-important-javascript-concepts/)
-*   [You Don’t Know JS: Object and Closures](/youDontKnowJsObjectsAndClosures)
+So, maybe you thought you knew JavaScript.  Maybe you did.  Maybe you discovered you didn’t know it as well as you thought. I would encourage you to really learn the language.
