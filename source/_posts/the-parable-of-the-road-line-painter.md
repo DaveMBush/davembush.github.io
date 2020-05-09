@@ -11,7 +11,11 @@ categories:
 date: 2015-05-28 06:00:00
 ---
 
-![land-0125](/uploads/2015/05/land-0125.jpg "land-0125")Way back in the day when lines were first being painted on roads.  The early lines were painted by hand.  In those days, a painter was hired and given a stretch of road to paint.  The first day he got on very well.  In fact, he was one of the best line painters they had ever had.  His lines were perfectly aligned, there were no unpainted areas in the space where there should be paint, and he managed to get 500 yards of road painted.  The average line painter normally did 250 yards in the first day.  The managers who had hired him were quite pleased.
+![land-0125](/uploads/2015/05/land-0125.jpg "land-0125")
+
+Way back in the day when lines were first being painted on roads.  The early lines were painted by hand.  In those days, a painter was hired and given a stretch of road to paint.  The first day he got on very well.  In fact, he was one of the best line painters they had ever had.  His lines were perfectly aligned, there were no unpainted areas in the space where there should be paint, and he managed to get 500 yards of road painted.  The average line painter normally did 250 yards in the first day.  The managers who had hired him were quite pleased.
+
+<!-- more -->
 
 Well, the next day, he came to work and set off on his task of painting the road.  He still had another 500 yards of road to paint.  And yet, for as fast as he was, he was only able to get 350 yards painted that day.  Not quite what his managers expected given his performance on the first day.  But still, better than their average painter, and so they reasoned to themselves, “Maybe he hit an extra hilly patch of road or some other unforeseen obstacle got in his way.”
 
@@ -65,6 +69,6 @@ More Frustration
 
 Even with his own team, he couldn’t get the “move the paint” method of painting roads fully implemented, no matter how hard he tried.  Yeah, there were a few pockets of painters who gave it a try, but ultimately, since it felt slower than what they had always done, they fell back to the old method they knew so well.
 
-And then, one day, a new painter came on the team who believed in the move the paint method.  He used  it and found another guy on the team who was willing to pair with him so that one would move the paint and the other would paint.  Wow!  The progress they made!
+And then, one day, a new painter came on the team who believed in the move the paint method.  He used it and found another guy on the team who was willing to pair with him so that one would move the paint and the other would paint.  Wow!  The progress they made!
 
 As they were working, one of them said, “I wonder if we can rig the wheelbarrow to drip the paint out so that we only have to spread it instead of having to dip the brush into the paint…
