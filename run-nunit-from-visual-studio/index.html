@@ -14,7 +14,7 @@
 <meta property="og:description" content="For the purposes of this post, I’m going to assume that you already have the NUnit Test Runner installed.  The question you are looking to get answered is, “How do I run NUnit from Visual Studio” or e">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2015/04/Properties_Debug.png">
-<meta property="og:updated_time" content="2018-06-30T20:06:57.000Z">
+<meta property="og:updated_time" content="2020-05-16T16:30:33.544Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Run NUnit from Visual Studio">
 <meta name="twitter:description" content="For the purposes of this post, I’m going to assume that you already have the NUnit Test Runner installed.  The question you are looking to get answered is, “How do I run NUnit from Visual Studio” or e">
@@ -111,13 +111,29 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>For the purposes of this post, I’m going to assume that you already have the NUnit Test Runner installed.  The question you are looking to get answered is, “How do I run NUnit from Visual Studio” or even more importantly, “How do I DEBUG NUnit test from Visual Studio”.  The following step by step should help you. Right click on the project in Solution Explorer that represents your test project. From the resulting menu, select “Properties.” In the resulting window, selec the “Debug” tab from the left-hand side of the window. <img src="/uploads/2015/04/Properties_Debug.png" alt="Properties_Debug" title="Properties_Debug"> You will want to select “Start external program” and point it to the UNnit runner that got installed when you installed NUnit. Now, whenever you run this project, with or without the debugger, NUnit will start up. Note: there is no reason to pass parameters telling it what DLL you want to run because it will load the last DLL it had up. But, if you wanted to do that, you could pass the location of the DLL as a parameter to the GUI runner. There are other parameters you can us. Check the documentation for the version of NUnit you are using for the specifics. If you are running .NET 4.x, you’ll want to go to the location in your file system where NUnit.exe lives and find the NUnit.exe.config file. Find the startup element (<startup> …. </startup>) and place this line in between the open and close startup tags:</p>
-<supportedruntime version="4.0">
-
+        <p>For the purposes of this post, I’m going to assume that you already have the NUnit Test Runner installed.  The question you are looking to get answered is, “How do I run NUnit from Visual Studio” or even more importantly, “How do I DEBUG NUnit test from Visual Studio”.  The following step by step should help you.</p>
+<p>Right click on the project in Solution Explorer that represents your test project.</p>
+<p>From the resulting menu, select “Properties.” In the resulting window, select the “Debug” tab from the left-hand side of the window.</p>
+<p><img src="/uploads/2015/04/Properties_Debug.png" alt="Properties_Debug" title="Properties_Debug"></p>
+<p>You will want to select “Start external program” and point it to the UNnit runner that got installed when you installed NUnit.</p>
+<p>Now, whenever you run this project, with or without the debugger, NUnit will start up.</p>
+<p>Note: there is no reason to pass parameters telling it what DLL you want to run because it will load the last DLL it had up.</p>
+<p>But, if you wanted to do that, you could pass the location of the DLL as a parameter to the GUI runner.</p>
+<p>There are other parameters you can use.</p>
+<a id="more"></a>
+<p>Check the documentation for the version of NUnit you are using for the specifics.</p>
+<p>If you are running .NET 4.x, you’ll want to go to the location in your file system where NUnit.exe lives and find the NUnit.exe.config file.</p>
+<p>Find the startup element (<code>&lt;startup&gt; .... &lt;/startup&gt;</code>) and place this line in between the open and close startup tags:</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">supportedRuntime</span> <span class="attr">version</span>=<span class="string">"4.0"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
 <p>If you miss this step, you won’t be able to debug your 4.0 code. Alternatively, you can just set your project to use .NET 3.5. So, let’s give it a try. First, put some code in the test method you just created. For our purposes, we’ll just put in a console writeline so we have somplace to put a breakpoint.</p>
-<p>public void MyFirstTestMethod()<br>{<br>    Console.WriteLine(“Inside MyFirstTestMethod”);<br>}</p>
-<p>Next set a breakpoint on the <code>Console.WriteLine</code> method and then run your project with the debugger. Once NUnit loads the DLL, click the “Run” button in NUnit. If everything is setup correctly, you should stop on the breakpoint you set. You may have noticed that we put several <code>Console.WriteLines()</code> in our code but they aren’t displaying anywhere.  So, where did they go?  How can we see them? By default the “Text Output” tab displays all of the <code>Console.WriteLine()</code> messages as well as all of the test results.  If all you care to see is the test results, you should select the “Errors and Failures” tab.  Personally, I prefer to work in the “Text Output” tab and I suggest that you do the same. As an alternative to this, you can just pick up a copy of <a href="/resharper">ReSharper</a>, which has an NUnit Test Runner built into it.  All you need to do to debug a test is selection the test and choose debug from the context menu.  It will save you a ton of time. Another option would be to pick up the MS Test Adapter from nunit.org.  But, I’ve never liked the way MS Test renders the tests results.  So, I don’t recommend it.  Obviously, your mileage may vary.</p>
-</supportedruntime>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">MyFirstTestMethod</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Console.WriteLine(<span class="string">"Inside MyFirstTestMethod"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Next set a breakpoint on the <code>Console.WriteLine</code> method and then run your project with the debugger.</p>
+<p>Once NUnit loads the DLL, click the “Run” button in NUnit.</p>
+<p>If everything is setup correctly, you should stop on the breakpoint you set.</p>
+<p>You may have noticed that we put several <code>Console.WriteLines()</code> in our code but they aren’t displaying anywhere.  So, where did they go?  How can we see them? By default the “Text Output” tab displays all of the <code>Console.WriteLine()</code> messages as well as all of the test results.  If all you care to see is the test results, you should select the “Errors and Failures” tab.  Personally, I prefer to work in the “Text Output” tab and I suggest that you do the same.</p>
+<p>As an alternative to this, you can just pick up a copy of ReSharper, which has an NUnit Test Runner built into it.  All you need to do to debug a test is selection the test and choose debug from the context menu.  It will save you a ton of time.</p>
+<p>Another option would be to pick up the MS Test Adapter from nunit.org.  But, I’ve never liked the way MS Test renders the tests results.  So, I don’t recommend it.  Obviously, your mileage may vary.</p>
+
       
     </div>
 
@@ -127,7 +143,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/run-nunit-from-visual-studio/" data-id="ck9ztn745004ruwx2e3gstrb2" class="article-share-link">
+      <a data-url="http://davembush.github.com/run-nunit-from-visual-studio/" data-id="cka9unsy0004nkcx2uhp0e57m" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

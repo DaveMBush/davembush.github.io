@@ -120,7 +120,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/cracking-the-programmer-s-interview-code/" data-id="ck9ztn7x00145uwx2j75jhnsb" class="article-share-link">
+      <a data-url="http://davembush.github.com/cracking-the-programmer-s-interview-code/" data-id="cka9unu1u0145kcx23ehfixyh" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -166,23 +166,27 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>For the purposes of this post, I’m going to assume that you already have the NUnit Test Runner installed.  The question you are looking to get answered is, “How do I run NUnit from Visual Studio” or even more importantly, “How do I DEBUG NUnit test from Visual Studio”.  The following step by step should help you. Right click on the project in Solution Explorer that represents your test project. From the resulting menu, select “Properties.” In the resulting window, selec the “Debug” tab from the left-hand side of the window. <img src="/uploads/2015/04/Properties_Debug.png" alt="Properties_Debug" title="Properties_Debug"> You will want to select “Start external program” and point it to the UNnit runner that got installed when you installed NUnit. Now, whenever you run this project, with or without the debugger, NUnit will start up. Note: there is no reason to pass parameters telling it what DLL you want to run because it will load the last DLL it had up. But, if you wanted to do that, you could pass the location of the DLL as a parameter to the GUI runner. There are other parameters you can us. Check the documentation for the version of NUnit you are using for the specifics. If you are running .NET 4.x, you’ll want to go to the location in your file system where NUnit.exe lives and find the NUnit.exe.config file. Find the startup element (<startup> …. </startup>) and place this line in between the open and close startup tags:</p>
-<supportedruntime version="4.0">
-
-<p>If you miss this step, you won’t be able to debug your 4.0 code. Alternatively, you can just set your project to use .NET 3.5. So, let’s give it a try. First, put some code in the test method you just created. For our purposes, we’ll just put in a console writeline so we have somplace to put a breakpoint.</p>
-<p>public void MyFirstTestMethod()<br>{<br>    Console.WriteLine(“Inside MyFirstTestMethod”);<br>}</p>
-<p>Next set a breakpoint on the <code>Console.WriteLine</code> method and then run your project with the debugger. Once NUnit loads the DLL, click the “Run” button in NUnit. If everything is setup correctly, you should stop on the breakpoint you set. You may have noticed that we put several <code>Console.WriteLines()</code> in our code but they aren’t displaying anywhere.  So, where did they go?  How can we see them? By default the “Text Output” tab displays all of the <code>Console.WriteLine()</code> messages as well as all of the test results.  If all you care to see is the test results, you should select the “Errors and Failures” tab.  Personally, I prefer to work in the “Text Output” tab and I suggest that you do the same. As an alternative to this, you can just pick up a copy of <a href="/resharper">ReSharper</a>, which has an NUnit Test Runner built into it.  All you need to do to debug a test is selection the test and choose debug from the context menu.  It will save you a ton of time. Another option would be to pick up the MS Test Adapter from nunit.org.  But, I’ve never liked the way MS Test renders the tests results.  So, I don’t recommend it.  Obviously, your mileage may vary.</p>
-</supportedruntime>
+        <p>For the purposes of this post, I’m going to assume that you already have the NUnit Test Runner installed.  The question you are looking to get answered is, “How do I run NUnit from Visual Studio” or even more importantly, “How do I DEBUG NUnit test from Visual Studio”.  The following step by step should help you.</p>
+<p>Right click on the project in Solution Explorer that represents your test project.</p>
+<p>From the resulting menu, select “Properties.” In the resulting window, select the “Debug” tab from the left-hand side of the window.</p>
+<p><img src="/uploads/2015/04/Properties_Debug.png" alt="Properties_Debug" title="Properties_Debug"></p>
+<p>You will want to select “Start external program” and point it to the UNnit runner that got installed when you installed NUnit.</p>
+<p>Now, whenever you run this project, with or without the debugger, NUnit will start up.</p>
+<p>Note: there is no reason to pass parameters telling it what DLL you want to run because it will load the last DLL it had up.</p>
+<p>But, if you wanted to do that, you could pass the location of the DLL as a parameter to the GUI runner.</p>
+<p>There are other parameters you can use.</p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/run-nunit-from-visual-studio/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/run-nunit-from-visual-studio/" data-id="ck9ztn745004ruwx2e3gstrb2" class="article-share-link">
+      <a data-url="http://davembush.github.com/run-nunit-from-visual-studio/" data-id="cka9unsy0004nkcx2uhp0e57m" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -228,7 +232,8 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/uploads/2015/04/ge-gam-018.jpg" alt="ge-gam-018" title="Test Driven Development Gamification">When I was in college, there were some guys I hung out with who played this game called “Questions” which they got from some book.  <a href="//en.wikipedia.org/wiki/Questions_%28game%29">Actually, it was a play</a>. Anyhow, the basic rules are:</p>
+        <p><img src="/uploads/2015/04/ge-gam-018.jpg" alt="ge-gam-018" title="Test Driven Development Gamification"></p>
+<p>When I was in college, there were some guys I hung out with who played this game called “Questions” which they got from some book.  <a href="//en.wikipedia.org/wiki/Questions_%28game%29">Actually, it was a play</a>. Anyhow, the basic rules are:</p>
 <ul>
 <li>You can’t answer a question with a statement</li>
 <li>You can’t hesitate or make a false start</li>
@@ -237,54 +242,18 @@
 <li>You can’t ask an unrelated question.</li>
 </ul>
 <p>There was also <a href="//dotnetrocks.com/default.aspx?showNum=1111">this podcast at DotNetRocks</a> where they were talking about a beer app and how they had added game elements to the app by adding badges for various types of beer to get you out of your comfort zone.  Maybe there is one for “My first beer that I liked” because I’ve yet to find something I like.  But give me a good Merlot! All of this got me to thinking about how we might turn Test Driven Development into something of a game. There are several people who have already addressed the Gamification of TDD</p>
-<h2 id="TDD-and-the-Gamification-of-Testing"><a href="#TDD-and-the-Gamification-of-Testing" class="headerlink" title="TDD and the Gamification of Testing"></a><a href="//effectivesoftwaredesign.com/2011/11/21/tdd-and-the-gamification-of-testing/">TDD and the Gamification of Testing</a></h2><p>This article talks mostly about how TDD has many elements of good gaming inherent in it.</p>
-<ul>
-<li>Because it makes testing more like programming.  Well, what he actually says is that it raises testing to the level of complexity the programmer is familiar with.  But in reality, I think this is because it makes testing something that can be coded.</li>
-<li>Because TDD is measurable.  The test either succeeds or fails.</li>
-<li>Because TDD gives you immediate feedback.  Or at least a well written test gives you immediate feedback.</li>
-</ul>
-<h2 id="TDD-The-Gamification-of-Programming"><a href="#TDD-The-Gamification-of-Programming" class="headerlink" title="TDD: The Gamification of Programming"></a><a href="//benvanik.tumblr.com/post/20702406947/tdd-the-gamification-of-programming">TDD: The Gamification of Programming</a></h2><p>This article provides an interesting perspective of someone trying to program using TDD for the first time.  You get the normal complaints, like “this takes too long” along with acknowledgement of some of the benefits.  But what he realizes is that the process has made programming more like a game than about the creative problem solving most of us got in to programming for in the first place.</p>
-<h2 id="Gamify-TDD"><a href="#Gamify-TDD" class="headerlink" title="Gamify TDD"></a><a href="//www.tdddev.com/2014/09/gamify-tdd.html">Gamify TDD</a></h2><p>This is the first article I found that, instead of saying that TDD is already a game, like the two above, actually ask how we might formally turn TDD into a game because it already has many elements of a game.  But he never actually says HOW he would do that.</p>
-<h2 id="TDD-Gamification"><a href="#TDD-Gamification" class="headerlink" title="TDD Gamification"></a>TDD Gamification</h2><p>Putting this all together.  Here is how I would actually make TDD into a game.</p>
-<h4 id="The-rules"><a href="#The-rules" class="headerlink" title="The rules:"></a>The rules:</h4><ul>
-<li>The game is played in pairs.  (Paired programming)</li>
-<li>Game starts when programmer 1 writes the first test.</li>
-<li>Once a failing test is written, programmer 2 writes JUST ENOUGH to make the test succeed.</li>
-<li>Once a test succeeds, programmer 2 writes another test, and programmer 1 writes just enough to make it succeed.</li>
-<li>Play alternates until no one can think of another test that will force more code to be written.</li>
-<li>Programmer loses points if he is caught writing more code than is necessary to pass the test.</li>
-<li>Programmer loses points if he is caught writing code that has dependencies embedded in it.</li>
-<li>If a dependency is required, the test writer and the code implementer will collaborate in the method of dependency injection to be used.</li>
-<li>All points lost by one programmer go to the programmer who caught the mistake.</li>
-</ul>
-<h4 id="Embellishment"><a href="#Embellishment" class="headerlink" title="Embellishment:"></a>Embellishment:</h4><p>If code is found to have a bug in production, both programmers responsible for the code loose a point, regardless of how many lines of code are impacted.  One point per recorded bug. I’m assuming that most shops have more than 2 programmers.  On any given day, programmers would be paired up for the day of programming.  They are responsible for turning out bug free code.  Because we are tracking the code over the long term, we will be able to see just how effective each programmer is at eliminating bugs. In fact, if you are in an environment that can’t quite stomach having your programmers paired up, I would suggest keeping track of the code that wasn’t done under the game.  This would be the “house score” compared to an individual programmer’s score. The only thing we have left is some way of being able to account for productivity.  I mean, if I write no code, I’ll have no bugs, right?  And all things being equal, the more productive I am, the more bugs I’ll have.  So how do we measure this? Here is what we can’t do:</p>
-<ul>
-<li>Lines of code – you can’t measure based on lines of code because that has been shown to be an inaccurate measure of productivity.  More lines may just mean you are not very efficient.</li>
-<li>Hours worked – <a href="/rapidDevelopment">Rapid Development</a> has statistics in it that show there is a factor of 10 difference between good programmers and bad programmers.</li>
-</ul>
-<h4 id="Just-a-suggestion"><a href="#Just-a-suggestion" class="headerlink" title="Just a suggestion:"></a>Just a suggestion:</h4><p>Since short methods are desirable, what if we measure number of test relative to number of methods relative to number of classes.  This would enforce the single responsibility principle. T = Tests M = Methods C = Classes 1/((T/M)/C) = Productivity Score Therefore,</p>
-<ul>
-<li>If I worked on 3 classes each with 6 methods and each method has 2 tests, I end up with a productivity score of 1.5</li>
-<li>If I had one class with 18 methods each with 2 tests, I end up with a productivity score of .5</li>
-<li>If, on the other hand, I put everything in one method, and one class and had the same 36 tests, my productivity score would be .02</li>
-<li>If you write no code, your productivity score is 0.</li>
-</ul>
-<p>That’s just a simple way to calculate.  You may choose to use cyclomatic complexity in some way if you have that number easily available to you. Well, that’s my rough sketch of how we might be able to turn TDD into something of a game along with being able to prove to ourselves and management that it really does produce better code. How else might you embellish this or change it so it works better?  Let me know in the comments below.</p>
-<h4 id="Other-Test-Driven-Development-Resources"><a href="#Other-Test-Driven-Development-Resources" class="headerlink" title="Other Test Driven Development Resources"></a>Other Test Driven Development Resources</h4><ul>
-<li><a href="/testDrivenDevelopmentByExample">Test Driven Development: by Example</a></li>
-<li><a href="/professionalTestDrivenDevelopmentWithCSharp">Professional Test Driven Development w/ C#</a></li>
-</ul>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/tdd-gamification-turning-test-driven-development-into-a-game/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/tdd-gamification-turning-test-driven-development-into-a-game/" data-id="ck9ztn74j005auwx2gf271qi6" class="article-share-link">
+      <a data-url="http://davembush.github.com/tdd-gamification-turning-test-driven-development-into-a-game/" data-id="cka9unsyj005bkcx26cepdi24" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -330,7 +299,8 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/uploads/2015/04/ppl-men-058.jpg" alt="ppl-men-058" title="Be a better programmer"> As you advance in your career, you will inevitably want to improve as a programmer.  And as you search the Internet and read various web post on the subject you will also inevitably end up with a bunch of task you should perform that will make you better. For example, if you’ve been following this blog lately, you’ll notice that I’m a big proponent of <a href="/?s=tdd">Test Driven Development</a>.  You would naturally expect me to state that to be a better programmer, you should practice Test Driven Development. There has also been a lot of emphasis recently on good basic programming principles like <a href="/dry-programming/">DRY</a> and <a href="//en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29">SOLID</a>. The list could go on.  Here are a few you may be interested in experimenting with:</p>
+        <p><img src="/uploads/2015/04/ppl-men-058.jpg" alt="ppl-men-058" title="Be a better programmer"></p>
+<p>As you advance in your career, you will inevitably want to improve as a programmer.  And as you search the Internet and read various web post on the subject you will also inevitably end up with a bunch of task you should perform that will make you better. For example, if you’ve been following this blog lately, you’ll notice that I’m a big proponent of <a href="/?s=tdd">Test Driven Development</a>.  You would naturally expect me to state that to be a better programmer, you should practice Test Driven Development. There has also been a lot of emphasis recently on good basic programming principles like <a href="/dry-programming/">DRY</a> and <a href="//en.wikipedia.org/wiki/SOLID_%28object-oriented_design%29">SOLID</a>. The list could go on.  Here are a few you may be interested in experimenting with:</p>
 <ul>
 <li>Code Reviews</li>
 <li>Paired Programming</li>
@@ -345,68 +315,18 @@
 </li>
 </ul>
 <p>And while all of these and more are good ideas, none of these ideas will actually MAKE you a better programmer.  Why?  Because becoming a better programmer is mostly about becoming a better person.</p>
-<h2 id="The-Human-Side-of-Programming"><a href="#The-Human-Side-of-Programming" class="headerlink" title="The Human Side of Programming"></a>The Human Side of Programming</h2><p>You see, as much as many of use would like it to be otherwise, programming is a relational occupation.  I think, when I started, I was attracted to programming both because I liked programming and because it seemed like something I could do without too much interaction with people.  I because a consultant because I wanted to be my own boss.  But I quickly found out in both cases that in running away from relationships I was running smack in the middle of them.  We have to talk to clients to get the requirements.  We have to ask good questions.  We have to argue for what we think is right without alienating other people. And that being a consultant thing?  I found out pretty quickly that no matter what you do, there is always someone in charge.  If you have multiple clients, you have multiple bosses.  Being your own boss is a myth.  Fortunately, I like consulting for other reasons.</p>
-<h2 id="Listen"><a href="#Listen" class="headerlink" title="Listen"></a>Listen</h2><p>Because programming is so relational, much of programming requires communication.  So the first thing we all need to work on is our listening skills.  Don’t go into a meeting with any preconceived idea of what the answers should be.  If you have a tendency to talk a lot, be quiet.  I’ve found that if I keep my mouth shut long enough, eventually others will say the same thing I was going to say.</p>
-<h2 id="Killer-Questions"><a href="#Killer-Questions" class="headerlink" title="Killer Questions"></a>Killer Questions</h2><p>When you do talk, ask questions. I have a friend who says, “You’ll never own the answers if you don’t own the questions.”  So, don’t tell anyone anything that you can’t lead them to with questions.  Yes this takes longer but, it does two things for you. First, it makes you sound interested in what the other person thinks.  This only works, of course, if you really are interested.  The questions are just a way of helping you express the interest that you already have.  You can’t make interest a formula.  But, I would say that many people who are interested don’t sound interested because they only know how to state things. Several years ago, I learned about “<a href="//changingminds.org/techniques/questioning/socratic_questions.htm">Socratic Questioning</a>”  These questions are designed to get at the person’s thinking process.  Sometimes, just in asking the question, the person will realize they don’t know why they think what they think. I remember the gist of this by using these four questions:</p>
-<ul>
-<li>What do you mean by…?</li>
-<li>How do you know…?</li>
-<li>What difference does it make?</li>
-<li>What if you’re wrong?</li>
-</ul>
-<p>The danger is in using these questions to win arguments.  I would suggest that instead you use them to understand where the other person is coming from.  Remember, these are questions to help you listen, not to help you win.</p>
-<h2 id="“What-I-think-I-heard-you-say…”"><a href="#“What-I-think-I-heard-you-say…”" class="headerlink" title="“What I think I heard you say…”"></a>“What I think I heard you say…”</h2><p>I just learned this one recently and I’m still learning to incorporate it.  It is the follow up statement to Socratic Questioning.  This is your chance to make sure you’ve understood what the other person said by repeating what they’ve said in your own words. It is a funny thing about language, but people can use the same words and mean two entirely different things.  Have you ever had a situation where you’ve said something with absolutely no malice intended and the other person was offended?  That’s because we hear things based on our past, what happened previously in the day, and the stuff we are worrying about.  People are funny that way.</p>
-<h2 id="The-Golden-Rule"><a href="#The-Golden-Rule" class="headerlink" title="The Golden Rule"></a>The Golden Rule</h2><p>OK, so everyone knows the golden rule, right? “Do unto others what you would have done to you.”  But, I’m going to put this in new terms.  “Everyone wants to be God.  Will it kill you to let them continue to think they are?” Yeah yeah, I know.  They aren’t God.  But, we all want to be.  And all conflict starts because my desire to be God is conflicting with your desire to be God.  To eliminate conflict one of us has to admit that we aren’t.  You can’t control the other person, so the only way to solve this is for you to admit that you aren’t God.  But even better if you go ahead and treat the other person like they are.</p>
-<h2 id="Diet-Exercise-amp-Sleep"><a href="#Diet-Exercise-amp-Sleep" class="headerlink" title="Diet, Exercise &amp; Sleep"></a>Diet, Exercise &amp; Sleep</h2><p>You may wonder what your health has to do with being a better programmer.  Especially if you don’t pay any attention to these things now.  But here are a few things I’ve noticed as I’ve started to pay more attention to my own health.</p>
-<ul>
-<li>I think better.</li>
-<li>I’m not as tired during the day.</li>
-<li>I’m not as tired at night.</li>
-<li>I can get more done.</li>
-</ul>
-<p>I’ll leave exactly what that looks like to you.  But, for the curious, here is what this looks like for me.</p>
-<h3 id="High-fat-low-carb-diet-HFLC"><a href="#High-fat-low-carb-diet-HFLC" class="headerlink" title="High fat, low carb diet (HFLC)."></a>High fat, low carb diet (HFLC).</h3><p>I started HFLC because I wanted to loose weight.  I was able to loose 30 pounds in a year.  But, what I found is that many of the health issues I had been experiencing were ultimately caused by the carbs I was eating.  I used to get headaches periodically that would last all day.  I guess they were migraines?  They were never diagnosed.  All I know is that I didn’t have one the whole year I was on a strict HFLC diet.  I also found out that my lactose intolerance was cured by this diet.</p>
-<h3 id="Strength-Training"><a href="#Strength-Training" class="headerlink" title="Strength Training"></a>Strength Training</h3><p>One of the things I found out when I was dieting was that strength training helps burn calories even when you aren’t exercising.  So I added modest strength exercises into my routine in the morning.  John Sonmez has convinced me to add a cardio element to my routine in his book, <a href="/softSkills">Soft Skills</a>.  Since I know that my resistance to discomfort will keep me from running when it is raining, hot, or cold, I’m looking for a treadmill or an elliptical machine so I can start <a href="//www.c25k.com/">C25K</a>.</p>
-<h3 id="Sleep"><a href="#Sleep" class="headerlink" title="Sleep"></a>Sleep</h3><p>Sleep has never really been an issue for me.  I was once asked, “what keeps you up at night?”  My response, “Nothing!”  Seriously, I can sleep in the middle of the living room with all kinds of stuff going on.  And while I do have particular things I “worry” about, I don’t worry about them when I’m supposed to be sleeping. But, I was finding that I was kind of sleepy during the day a lot of times.  That’s odd because I tend to get a good seven and a half hours of sleep and I’m pretty much done sleeping by the end of the time period. Then I found this app called “<a href="//www.sleepcycle.com/">Sleep Cycle</a>” that wakes you up before you fall back to sleep.  After a couple of weeks using this, along  with getting up at the same time every morning even on weekends, I’m much less likely to be dragging by the end of the day.  I find that people either love this app or hate it.  It has some other features that I don’t find very useful.  Like it tells me I had a N% good sleep.  I’ve never achieved better than 85%.  Last night it gave me a 50% score.  But in both cases, I don’t get tired until an hour before I plan to go to bed.  I’m not sure it is very accurate.  It also checks your heart rate in the morning.  But, that using the flash on the phone which bothered my wife so I’ve stopped using that.</p>
-<h2 id="Don’t-Be-So-Critical"><a href="#Don’t-Be-So-Critical" class="headerlink" title="Don’t Be So Critical"></a>Don’t Be So Critical</h2><p>I think because we spend most of our day programming and naturally like to solve problems, we tend to come off as critical.  We probably are. Ever thought or heard things like, “The boss has no clue what he’s doing.”?  “This place would be better if…”  “If only they’d …” Here’s something to think about.  If you know so much, why don’t you start your own company? Here are a few things I’ve learned over the years.  They’ll seem obvious once I state them, but I think we forget.</p>
-<h3 id="My-Boss-Has-a-Boss"><a href="#My-Boss-Has-a-Boss" class="headerlink" title="My Boss Has a  Boss"></a>My Boss Has a  Boss</h3><p>I can’t tell you how many times when I’ve actually asked my boss to explain something, the answer has been, “that’s what my boss wants”</p>
-<h3 id="Everyone-Is-Doing-The-Best-They-Can"><a href="#Everyone-Is-Doing-The-Best-They-Can" class="headerlink" title="Everyone Is Doing The Best They Can"></a>Everyone Is Doing The Best They Can</h3><p>I know this may come as a shock.  But seriously, most people, while not perfect, aren’t deliberately thinking, “how can I make everyone’s life difficult today?”  Often the thing we look at as a stupid requirement or a stupid rule is because someone in the organization is trying to solve a problem and this is the best solution they could come up with.</p>
-<h3 id="Everyone-Has-a-Life"><a href="#Everyone-Has-a-Life" class="headerlink" title="Everyone Has a Life"></a>Everyone Has a Life</h3><p>I think we forget, while we are at work, that everyone has a life outside of work.  The kids get sick.  Our important relationships are strained or worse.  We were abused as kids and we are trying to deal with the psychological impact that’s had on us AND hold down a job at the same time.  The real sock is that many times the person who we find difficult doesn’t even know they have issues. When ever I find someone who is difficult, I always wonder, “What history got them to be like that?” Not that we use our history as an excuse.  But I think that if we knew what was really going on, we’d be a bit more sympathetic.</p>
-<h2 id="Fail"><a href="#Fail" class="headerlink" title="Fail"></a>Fail</h2><p>One of the tenets of Agile is “Fail Fast” and yet the one thing we hate to do as programmers is to fail. I used to say, “Programmers are either the most well adjusted or the craziest people in the world.  Think about it!  We spend eight hours a day in front of an inanimate object that mostly tells us that we did something wrong.  We can’t even argue about it.” But really, we tend to do what’s safe.  When is the last time you did something really risky?  As I’ve been pushing TDD on those of you who believe you can’t do TDD where you work, what I’ve really been saying is, “Take a risk, do it anyhow.” Or what about starting a blog, or speaking at a users group meeting?  There are multiple ways you can risk. If you aren’t failing, you aren’t learning.</p>
-<h2 id="Smile"><a href="#Smile" class="headerlink" title="Smile"></a>Smile</h2><p>You’ll feel better and people will enjoy being with you more.  Even if you have to fake it, intentionally smile three times a day.</p>
-<h2 id="Daily-Reminders"><a href="#Daily-Reminders" class="headerlink" title="Daily Reminders"></a>Daily Reminders</h2><p>Maybe you’ve heard about daily affirmations.  I’m not a big fan of affirmations.  I’ve tried them, but then my wife pointed out to me, and I’ve had it confirmed by another source, that affirmations essentially make you lie to yourself because you are stating what you want to be true as though they already are true.  This causes tension within you that makes it difficult for this to work. In, I believe it was, the 1800’s they did this thing called “Resolutions” which were statement of what you would put your effort into.  This gets a bit more to the point. But, I just call them daily reminders.  Things I want to remind myself about.  Much like affirmations and resolutions are designed to do without all of the weight. Here are some of mine so you get an example of what they look like:</p>
-<ul>
-<li>You feel better when you exercise</li>
-<li>Exercise will make you more confident</li>
-<li>What do you mean? How do you know? What difference does it make? What if you are wrong? What would you accept as evidence?</li>
-<li>What are you thankful for?</li>
-<li>What I think I heard you say is …</li>
-<li>Carbs will eventually give you a headache and will eventually kill you.</li>
-<li>Just because someone says something is true, doesn’t mean that it is.</li>
-<li>How people interpret what you say and do is influenced by their own experience</li>
-<li>Say “thank you” whenever it is even remotely appropriate</li>
-<li>Find out what people want and give it to them (if at all possible)</li>
-<li>Everyone wants to be God, treat them accordingly</li>
-<li>Don’t let the perfect or the ideal be the enemy of getting started or good enough.</li>
-<li>Improve by just 1%</li>
-<li>Who do you want to be?</li>
-<li>What is holding you back?</li>
-<li>Failure is good. It is how we grow.</li>
-<li>If you aren’t failing, you aren’t growing.</li>
-<li>Worry about success</li>
-</ul>
-<p>I also have reminders on my computer screen.  Pictures or “motivational posters” that remind me of various things.  For example, I have a screen sized smiley face to remind me to smile. So there you go.  This post ended up being a lot longer than I thought it would. In what ways are you attempting to be a better programmer?  Leave me a comment and let me know.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/how-to-become-a-better-programmer/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/how-to-become-a-better-programmer/" data-id="ck9ztn7xd0154uwx2zf5ux43v" class="article-share-link">
+      <a data-url="http://davembush.github.com/how-to-become-a-better-programmer/" data-id="cka9unu24014qkcx2r3xcsqk0" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -452,35 +372,21 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/uploads/2015/03/ppl-men-026.jpg" alt="scream" title="scream">At the risk of making half of my audience think I’ve gone off the deep end, I’m going to address a topic that I’ve only recently REALLY begun to understand, in part thanks to <a href="/softSkills">Soft Skills</a>. When I’ve heard the topic of “Limiting Beliefs” come up, it has almost always been in the context of something along the lines of “What the mind can conceive and believe, it can achieve.”  Which is easy to disprove.  At least it is out of context!  I mean really, if I can conceive and believe myself to be a butterfly, it just isn’t going to happen! However, the opposite is pretty easy to both accept and believe.  And that’s what I want to talk about today.  But even then, it probably isn’t what you are expecting. Typically, when people talk about Limiting Beliefs, they are talking about patterns and practices you picked up as a kid that are holding you back now.  And while those may be areas that you need to work on, what I want to talk about today is more micro than that, although they may have roots in our past for various reasons, the Limiting Beliefs I want to talk about today are common across nearly every programmer I talk to.  If you think “Limiting Beliefs” mean something along the lines of, “you are limited because you don’t believe enough,” that is NOT what I have in mind here at all.  In fact, “Limiting Beliefs” are beliefs that we believe TOO strongly and because we hold them too strongly, they limit us.  This is what I mean when I talk about “Limiting Beliefs” even if it is used in another way by someone else. Here are some examples specifically related to the craft of programming.</p>
-<h2 id="You-Can’t-Practice-TDD"><a href="#You-Can’t-Practice-TDD" class="headerlink" title="You Can’t Practice TDD"></a>You Can’t Practice TDD</h2><p>As I’ve mentioned in other articles, most programmers I know don’t practice Test Driven Development because they believe they don’t have permission.  And when they ask, they don’t get permission because you’ve transferred the belief that you don’t think it is important. If instead, you believed you had permission to do whatever it took to legitimately do your job well, you would learn how to do everything it took to practice TDD well.</p>
-<h2 id="Can’t-Create-Branches-in-Version-Control"><a href="#Can’t-Create-Branches-in-Version-Control" class="headerlink" title="Can’t Create Branches in Version Control"></a>Can’t Create Branches in Version Control</h2><p>I recently ran into a comment on a blog that mention this.  In fact I’ve run into this very issue where I am currently working.  But instead of thinking about what I can’t do, or when I am frustrated by what I can’t do, I first think 1) is this important enough to find a way around? And 2) what CAN I do? In this case, I found it critically important.  My productivity was being hampered because I am adding new features to existing code and, while that code is being tested, I’m converting the code to the last version of the library that we use.  Branching allows me to switch between the two projects easily and it allows me to migrate the current code into the upgrade code so that when the conversion is done, I can merge it down into the main branch and keep going. How did I do this?  We use TFS with the old TFVS version control system instead of the Git repository.  But there are at least two projects that exist that allow you to create a bridge between your local code that uses a local GIT repository and the remote TFS repository.  There is at least one project available for subversion that allows you to do the same sort of thing. I get my branches and yet I have not caused any disruption to the rest of my team.</p>
-<h2 id="Can’t-Use-X-Technology"><a href="#Can’t-Use-X-Technology" class="headerlink" title="Can’t Use X Technology"></a>Can’t Use X Technology</h2><p>OK.  So, again, ask yourself the same questions.  Is this hampering your productivity?  What CAN you do?</p>
-<h2 id="You-Have-to-be-Perfect"><a href="#You-Have-to-be-Perfect" class="headerlink" title="You Have to be Perfect"></a>You Have to be Perfect</h2><p>I think many of us realize that we can’t be perfect and yet, how do you react when someone finds a bug in your code? I saw a tweet last week that captures the essence of the bug fixing process.</p>
-<ol>
-<li>That can’t happen</li>
-<li>That doesn’t happen on my machine.</li>
-<li>That shouldn’t happen.</li>
-<li>Why does that happen?</li>
-<li>Oh, I see.</li>
-<li>How did that ever work?</li>
-</ol>
-<p>The question I need to ask is, why do we start with “That can’t happen” unless we feel that we need to be perfect. In the last year, I’ve finally gotten to the point where my first reaction is, “OK, well, put it in the issue tracker.” (Or if you are doing Agile, “put it in the backlog”).</p>
-<h2 id="Can’t-Practice-Agile-Scrum"><a href="#Can’t-Practice-Agile-Scrum" class="headerlink" title="Can’t Practice Agile/Scrum"></a>Can’t Practice Agile/Scrum</h2><p>Speaking of Agile/Scrum.  Are you working at a place that doesn’t practice Agile or Scrum, but you think they should?  What parts of Agile/Scrum can you implement in the sphere of influence you have?  So, you can’t form a Scrum team.  But, do you personally put people over processes?  Do you put people first at all?  Most of the <a href="//agilemanifesto.org/">Agile Manifesto</a> can be implemented at a personal level once you understand what it is really about.  Don’t expect anyone to adopt agile in your organization if they don’t see it in you first.</p>
-<h2 id="You-Are-an-Introvert"><a href="#You-Are-an-Introvert" class="headerlink" title="You Are an Introvert"></a>You Are an Introvert</h2><p>How many of us hide behind this one?  We don’t want to deal with people.  We really don’t value people over much of anything.  In fact, we think, “programming would be a great job if it weren’t for the clients.”  I’m reading some books that talk about the impact of confusing behavior with who we are.  OK, so sure, your behavior is that you prefer to avoid loud noises.  You’d rather talk to one or two people at a time.  You process stuff in your head instead of with your mouth.  That’s behavior.  To say, “I am an Introvert” can have the effect of saying, “I hate people” and can become a limiting belief because it will isolate you from the very people you should be helping.  Sorry, you can’t get far as a programmer if you avoid the people part of it.</p>
-<h2 id="Restrictions"><a href="#Restrictions" class="headerlink" title="Restrictions"></a>Restrictions</h2><p>And then there is the general set of restrictions that come with being part of any organization.  We have a few where I work that, on the face of it, seem ridiculous.  I HAVE to take a lunch break even though my lunch consist of 5 sausage links that can be consumed in about 5 minutes.  I can’t start before 7am.  I can’t leave until 3:30. But what can I do?  Well, no one said WHEN I had to take the lunch break, so I come in and watch a half hour of <a href="/pluralSight">PluralSight</a> courses every morning. I can’t start before 7am.  But I CAN enter the office before then.  I prefer to come earlier because the traffic is lighter if I come in at 6:45.  So, I come in and don’t start working until seven. To get my eight hours in, I can’t leave until 3:30 anyhow.  So that is not an issue.  And if I need to leave early occasionally, no one said I couldn’t do that.</p>
-<h2 id="The-Key-To-Eliminating-Limiting-Beliefs"><a href="#The-Key-To-Eliminating-Limiting-Beliefs" class="headerlink" title="The Key To Eliminating Limiting Beliefs"></a>The Key To Eliminating Limiting Beliefs</h2><p>Do you see what I’ve done here?  At every point where I’ve been told or believed I could not do something, I’ve change the question from “What can’t I do?” to “What can I do?”  Can’t locks you down.  It locks you out.  Can frees you. So, what limiting beliefs do you have and how can you overcome them?  Leave a comment below.</p>
-
+        <p><img src="/uploads/2015/03/ppl-men-026.jpg" alt="scream" title="scream"></p>
+<p>At the risk of making half of my audience think I’ve gone off the deep end, I’m going to address a topic that I’ve only recently REALLY begun to understand, in part thanks to <a href="/softSkills">Soft Skills</a>.</p>
+<p>When I’ve heard the topic of “Limiting Beliefs” come up, it has almost always been in the context of something along the lines of “What the mind can conceive and believe, it can achieve.”  Which is easy to disprove.  At least it is out of context!  I mean really, if I can conceive and believe myself to be a butterfly, it just isn’t going to happen! However, the opposite is pretty easy to both accept and believe.  And that’s what I want to talk about today.  But even then, it probably isn’t what you are expecting.</p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/limiting-beliefs-of-programmers/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/limiting-beliefs-of-programmers/" data-id="ck9ztn737003xuwx27qdpxsd3" class="article-share-link">
+      <a data-url="http://davembush.github.com/limiting-beliefs-of-programmers/" data-id="cka9unsxd003tkcx2mjh4qgvm" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -526,32 +432,20 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/uploads/2015/03/NodeJsInVisualStudioProjectList.png" alt="NodeJsInVisualStudioProjectList" title="NodeJsInVisualStudioProjectList">Several weeks ago now, I started learning <a href="//nodejs.org/">Node.js</a>.  Why?  Well, for a couple of reasons.  First, all the cool kids are using Node.js.  Second, I wanted to use <a href="//gotwarlost.github.io/istanbul/">Istanbul</a> to get an idea of how well my javascript code is covered by test and that runs under Node.js.  Third, <a href="//blogs.msdn.com/b/webdev/archive/2015/03/19/customize-external-web-tools-in-visual-studio-2015.aspx">Node.js is going to show up in the next version of Visual Studio</a>.  And finally, I just like to learn new stuff.</p>
-<h2 id="Node-JS"><a href="#Node-JS" class="headerlink" title="Node.JS"></a>Node.JS</h2><p>So, I started by installing node and just working in Visual Studio as though my node project was a web site.  It works, but it isn’t pretty.  But it did get me familiar with some basic concepts like using the node package manager (npm) to install what I needed to get Istanbul running.  For those of you who aren’t familiar with npm, it is basically NuGet for node.js.</p>
-<h2 id="Istanbul-JavaScript-Code-Coverage"><a href="#Istanbul-JavaScript-Code-Coverage" class="headerlink" title="Istanbul JavaScript Code Coverage"></a>Istanbul JavaScript Code Coverage</h2><p>For those of you who are interested, I used the instructions <a href="//ariya.ofilabs.com/2013/10/code-coverage-of-jasmine-tests-using-istanbul-and-karma.html">here</a> for getting Istanbul working locally.  They should probably be updated because the example there doesn’t have a good configuration example.  I filled in the rest of what I needed to know from the <a href="//karma-runner.github.io/0.12/">Karma site</a>.</p>
-<h2 id="Node-for-Visual-Studio"><a href="#Node-for-Visual-Studio" class="headerlink" title="Node for Visual Studio"></a>Node for Visual Studio</h2><p>So then I had heard that work was being done on a plugin for Visual Studio 2013 that would allow me to work on Node projects from within Visual Studio.  I found out about this first from <a href="//www.hanselman.com/blog/IntroducingNodejsToolsForVisualStudio.aspx">Scott Hanselman’s blog</a>. So I went  to the <a href="//nodejstools.codeplex.com/">plugin site</a> and got the download and installed it.  This is all pretty straight forward.  Don’t forget, you’ll ALSO need to install node.  So, don’t forget that step. OK.  Now that you have the NTVS installed (that’s what they call the plugin) what do you have? Well, you have several new project templates that you can use.  That’s what. <img src="/uploads/2015/03/NodeJsInVisualStudioProjectList1.png" alt="NodeJsInVisualStudioProjectList" title="NodeJsInVisualStudioProjectList"></p>
-<h2 id="Interactive-JavaScript"><a href="#Interactive-JavaScript" class="headerlink" title="Interactive JavaScript"></a>Interactive JavaScript</h2><p>But that’s not all you get, you also get an interactive Node.js window that you can get to from the Tools menu (Tools –&gt; Node.js Tools –&gt; Node.js Interactive window) or by pressing  the keyboard shortcut, Ctrl+K, N.  Inside this window you can execute JavaScript on the fly: <img src="/uploads/2015/03/NodeJsInteractiveWindow.png" alt="NodeJsInteractiveWindow" title="NodeJsInteractiveWindow"></p>
-<h2 id="Node-Package-Manager-in-Visual-Studio"><a href="#Node-Package-Manager-in-Visual-Studio" class="headerlink" title="Node Package Manager in Visual Studio"></a>Node Package Manager in Visual Studio</h2><p>Or install other node packages:</p>
-<p>.npm install yourPackageNameHere</p>
-<p>Don’t forget the leading period.  That’s the indication to the window that it needs to do something different than executing javascript in the window. Even as I’m writing this, I’m seeing that there is a whole lot more here than I’m actually telling you now.</p>
-<h2 id="Starting-a-New-Project"><a href="#Starting-a-New-Project" class="headerlink" title="Starting a New Project"></a>Starting a New Project</h2><p>Now, the best way of learning something is by creating some kind of product.  Even if it is for your own use.  So, the next thing I did was to try to create a project.  I have a specific project in mind that should use MongoDB for the database (I’ve been meaning to learn NoSQL for a while now) and since Express seems to come with NTVS, I guess I’ll use that for my web server.  Oh and Angular for the front end. Since I was creating a web site, I thought, I should create a new web project that uses node.  In fact, it shows up  in the list of web sites types that you can create.  However, I got an error when I did that, and I don’t see anything in the documentation that says I should be able to use those templates or that I need anything extra to use them. However, if you use the project options, you can create a web application.  I decided going with newer is better than older, so I’ve created a “Basic Node.js Express 4 Application”.</p>
-<h2 id="The-Fun-Is-Just-Beginning"><a href="#The-Fun-Is-Just-Beginning" class="headerlink" title="The Fun Is Just Beginning"></a>The Fun Is Just Beginning</h2><p>And now, this is where the fun begins.  Where’s my HTML?  What’s all this “template” stuff?  And how do I install Angular?  Or do I do that manually since it isn’t a server side thing? So much to learn.  But, that’s for another post.</p>
-<h4 id="Other-places-talking-about-Node-JS-Tools-For-Visual-Studio"><a href="#Other-places-talking-about-Node-JS-Tools-For-Visual-Studio" class="headerlink" title="Other places talking about Node.JS Tools For Visual Studio"></a>Other places talking about Node.JS Tools For Visual Studio</h4><ul>
-<li><a href="//www.dotnetcurry.com/showarticle.aspx?ID=1032">Building Node.js Applicatoin in Visual Studio (MEAN stack)</a></li>
-<li><a href="//www.simple-talk.com/blogs/2013/11/22/node-js-development-in-visual-studio-life-after-visual-node-with-node-tools-for-visual-studio/">Node.js Development in Visual Studio</a></li>
-<li><a href="/nodeJsForNetDevelopers">Node.js for .NET Developers (Developer Reference)</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=davmbusnetapp-20&amp;l=as2&amp;o=1&amp;a=0735662983" alt></li>
-</ul>
-
+        <p><img src="/uploads/2015/03/NodeJsInVisualStudioProjectList.png" alt="NodeJsInVisualStudioProjectList" title="NodeJsInVisualStudioProjectList"></p>
+<p>Several weeks ago now, I started learning <a href="//nodejs.org/">Node.js</a>.  Why?  Well, for a couple of reasons.  First, all the cool kids are using Node.js.  Second, I wanted to use <a href="//gotwarlost.github.io/istanbul/">Istanbul</a> to get an idea of how well my javascript code is covered by test and that runs under Node.js.  Third, <a href="//blogs.msdn.com/b/webdev/archive/2015/03/19/customize-external-web-tools-in-visual-studio-2015.aspx">Node.js is going to show up in the next version of Visual Studio</a>.  And finally, I just like to learn new stuff.</p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/node-js-tools-for-visual-studio/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/node-js-tools-for-visual-studio/" data-id="ck9ztn73k0049uwx2ama3xw8w" class="article-share-link">
+      <a data-url="http://davembush.github.com/node-js-tools-for-visual-studio/" data-id="cka9unsxn0046kcx2imiwtnn3" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -634,7 +528,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/100-code-coverage-possible/" data-id="ck9ztn6z80001uwx2a4l1wp1w" class="article-share-link">
+      <a data-url="http://davembush.github.com/100-code-coverage-possible/" data-id="cka9unsu30003kcx22z4yv6ki" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -725,7 +619,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/changing-habits/" data-id="ck9ztn70o001huwx2v66b149u" class="article-share-link">
+      <a data-url="http://davembush.github.com/changing-habits/" data-id="cka9unsvp001gkcx2iwuv7ax7" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -833,7 +727,7 @@ samlResponse = new SAMLResponse(samlResponseXml);
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/dependency-injection-frameworks-are-not-dependency-injection/" data-id="ck9ztn70x001xuwx2m3cy4ea2" class="article-share-link">
+      <a data-url="http://davembush.github.com/dependency-injection-frameworks-are-not-dependency-injection/" data-id="cka9unsvz001ukcx2wgqknm2n" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -898,7 +792,7 @@ samlResponse = new SAMLResponse(samlResponseXml);
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/why-johnny-can-t-do-test-driven-development/" data-id="ck9ztn762006wuwx2rbfh7es3" class="article-share-link">
+      <a data-url="http://davembush.github.com/why-johnny-can-t-do-test-driven-development/" data-id="cka9unszh006xkcx2ro2f2m2f" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
