@@ -12,7 +12,18 @@ categories:
 date: 2015-03-12 07:00:00
 ---
 
-![land-0148](/uploads/2015/02/land-0148.jpg "land-0148") As you start your journey down the road of Unit Testing you will discover that part of what makes code testable is this concept of [Dependency Injection](//en.wikipedia.org/wiki/Dependency_injection "Dependency injection").  As you explore further, you will see people mentioning various Dependency Injection frameworks. You may naturally assume that to implement Dependency Injection, you will need to select an use a Dependency Injection framework. But, Dependency Injection has nothing to do with using a Dependency Injection framework.  The frameworks are there because: 1.  much of our existing code is code that has too many dependencies and the framework helps us break those dependencies without having to refactor too much of our code and 2. to give us a way to easily swap out one object for another when our code is structured in such a way as to not have dependencies at all. 
+![land-0148](/uploads/2015/02/land-0148.jpg "land-0148")
+
+As you start your journey down the road of Unit Testing you will discover that part of what makes code testable is this concept of [Dependency Injection](//en.wikipedia.org/wiki/Dependency_injection "Dependency injection").  As you explore further, you will see people mentioning various Dependency Injection frameworks.
+
+You may naturally assume that to implement Dependency Injection, you will need to select an use a Dependency Injection framework.
+
+But, Dependency Injection has nothing to do with using a Dependency Injection framework.  The frameworks are there because:
+
+1.  much of our existing code is code that has too many dependencies and the framework helps us break those dependencies without having to refactor too much of our code and
+2. to give us a way to easily swap out one object for another when our code is structured in such a way as to not have dependencies at all.
+
+<!-- more -->
 
 So, what then is Dependency Injection?
 --------------------------------------
@@ -23,19 +34,20 @@ I once heard this maxim that explains it best,
 
 Much of our code looks something like this:
 
+``` csharp
 private static void ReceiveSAMLResponse(
-    out SAMLResponse samlResponse, 
+    out SAMLResponse samlResponse,
     out String relayState)
 {
-    // Receive the [SAML](//en.wikipedia.org/wiki/Security_Assertion_Markup_Language "Security Assertion Markup Language") response over the 
+    // Receive the [SAML](//en.wikipedia.org/wiki/Security_Assertion_Markup_Language "Security Assertion Markup Language") response over the
     //specified binding.
     XmlElement samlResponseXml;
 
     ServiceProvider.ReceiveSAMLResponseByHTTPPost(
-        HttpContext.Current.Request, 
+        HttpContext.Current.Request,
         out samlResponseXml, out relayState);
     SAMLResponse resp = new SAMLResponse(samlResponseXml);
-    XmlElement samlAssertionElement = 
+    XmlElement samlAssertionElement =
         resp.GetSignedAssertions()\[0\];
 
     // Verify the response's signature.
@@ -54,8 +66,15 @@ private static void ReceiveSAMLResponse(
     // Deserialize the XML.
     samlResponse = new SAMLResponse(samlResponseXml);
 }
+```
 
-Yes, this is real code from a system I worked on.  The original code was written three or four years ago and this specific code is code I was given by another company.  I just used copy and paste inheritance to get it working in our code. That’s not to say I haven’t written cod that has just as many problems. There are several things that are wrong with this code, but for now all I want to focus on is the Dependency Injection issue. All this code is trying to do is to deserialize the encrypted samlResponse object that was posted to the login form.  At least this code isn’t in the login form!  It has that much going for it.
+Yes, this is real code from a system I worked on.  The original code was written three or four years ago and this specific code is code I was given by another company.  I just used copy and paste inheritance to get it working in our code.
+
+That’s not to say I haven’t written code that has just as many problems.
+
+There are several things that are wrong with this code, but for now all I want to focus on is the Dependency Injection issue.
+
+All this code is trying to do is to deserialize the encrypted samlResponse object that was posted to the login form.  At least this code isn’t in the login form!  It has that much going for it.
 
 But here are places where it is dependent on too much:
 ------------------------------------------------------
@@ -79,16 +98,11 @@ So, here’s what I’d do to this code.
 Advantages
 ----------
 
-After making all of these changes, I would be able to create a test harness for this code, create fake versions of the objects, and verify that this method does what we intend for it do do. Where this would have been particularly helpful is over this last week when we were trying to get this all working with the new provider.  In that case, I could have faked out the request object with what they were sending us and run it through a debugger to figure out what wasn’t quite right.
+After making all of these changes, I would be able to create a test harness for this code, create fake versions of the objects, and verify that this method does what we intend for it do.
+
+Where this would have been particularly helpful is over this last week when we were trying to get this all working with the new provider.  In that case, I could have faked out the request object with what they were sending us and run it through a debugger to figure out what wasn’t quite right.
 
 No Dependency Injection Framework
 ---------------------------------
 
 Finally, you’ll notice that no where in this code did I have to use a Dependency Injection framework to get this all working.
-
-#### Other Places Talking About Dependency Injection
-
-*   [Design Patterns – Dependency Injection (Microsoft)](//msdn.microsoft.com/en-us/magazine/cc163739.aspx)
-*   [Working Effectively with Legacy Code](//www.amazon.com/gp/product/0131177052/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0131177052&linkCode=as2&tag=davmbusnetapp-20&linkId=JYTE2U7XKFAVH5QA)![](//ir-na.amazon-adsystem.com/e/ir?t=davmbusnetapp-20&l=as2&o=1&a=0131177052)
-
-[CodeProject](//www.codeproject.com/script/Articles/BlogFeedList.aspx?amid=455230)
