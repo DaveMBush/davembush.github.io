@@ -120,7 +120,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/cracking-the-programmer-s-interview-code/" data-id="cka9unu1u0145kcx23ehfixyh" class="article-share-link">
+      <a data-url="http://davembush.github.com/cracking-the-programmer-s-interview-code/" data-id="ckak3pwlc012gzsx2kojgd5am" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -186,7 +186,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/run-nunit-from-visual-studio/" data-id="cka9unsy0004nkcx2uhp0e57m" class="article-share-link">
+      <a data-url="http://davembush.github.com/run-nunit-from-visual-studio/" data-id="ckak3pvko004qzsx2a6quyvm1" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -253,7 +253,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/tdd-gamification-turning-test-driven-development-into-a-game/" data-id="cka9unsyj005bkcx26cepdi24" class="article-share-link">
+      <a data-url="http://davembush.github.com/tdd-gamification-turning-test-driven-development-into-a-game/" data-id="ckak3pvl80058zsx2mxnf1r9k" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -326,7 +326,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/how-to-become-a-better-programmer/" data-id="cka9unu24014qkcx2r3xcsqk0" class="article-share-link">
+      <a data-url="http://davembush.github.com/how-to-become-a-better-programmer/" data-id="ckak3pwm7013nzsx2d2tm1dzu" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -386,7 +386,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/limiting-beliefs-of-programmers/" data-id="cka9unsxd003tkcx2mjh4qgvm" class="article-share-link">
+      <a data-url="http://davembush.github.com/limiting-beliefs-of-programmers/" data-id="ckak3pvjf003vzsx2ydo5l7jo" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -445,7 +445,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/node-js-tools-for-visual-studio/" data-id="cka9unsxn0046kcx2imiwtnn3" class="article-share-link">
+      <a data-url="http://davembush.github.com/node-js-tools-for-visual-studio/" data-id="ckak3pvjz004bzsx20f3lj3sn" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -497,38 +497,18 @@
 <p>There is also another side of <a href="//en.wikipedia.org/wiki/Unit_testing" title="Unit testing">Unit Tests</a>. Some companies are so fixated they aspire to have 100% Unit Tests coverage and they make programmers write Unit Tests for legacy code for no reason. Just for the sake of having Unit Tests. … [I] wonder if you had any similar experiences and what you think about this approach. I guess the 100% extreme is better than no tests at all, but it can make the developers very bored and feeling useless.</p>
 </blockquote>
 <p>And my initial reaction to this was, “WOW!  So much to respond to here.  I think this is worth a blog post.</p>
-<h2 id="Is-100-realistic"><a href="#Is-100-realistic" class="headerlink" title="Is 100% realistic?"></a>Is 100% realistic?</h2><p>So, first, the question of 100% coverage.  Is that a realistic goal?  And the answer of course is, “it depends.”</p>
-<h4 id="The-first-dependency-is-of-course-“what-do-you-mean-by-‘100-code-coverage’-”"><a href="#The-first-dependency-is-of-course-“what-do-you-mean-by-‘100-code-coverage’-”" class="headerlink" title="The first dependency is, of course, “what do you mean by ‘100% code coverage’?”"></a>The first dependency is, of course, “what do you mean by ‘100% <a href="//en.wikipedia.org/wiki/Code_coverage" title="Code coverage">code coverage</a>’?”</h4><p>Do you mean you need tests for not just all of the code you wrote, but all of the code your tools wrote for you and all of your third party libraries?  If 100% is inclusive, I’d lean toward 100% not only being not realistic, but also not necessary. Although, in a highly critical system, you’ll probably want to do some kind of vetting of the tools and libraries you are using.  But by the time you are using them, you should already know that they work, the only thing you won’t know for sure is if you are using them correctly.  In this case, you are looking at integration tests and not unit tests.</p>
-<h4 id="The-second-dependency-is-“Is-the-code-testable-”"><a href="#The-second-dependency-is-“Is-the-code-testable-”" class="headerlink" title="The second dependency is, “Is the code testable?”"></a>The second dependency is, “Is the code testable?”</h4><p>This is a little trickier to evaluate, so let me illustrate.  There is code that isn’t testable that should be.  I’m not talking about that code.  I’m talking about code that just can’t be tested. Let me illustrate. I’m working with <a href="//www.sencha.com/products/extjs/" title="Ext JS">EXTjs</a> which uses their proprietary implementation of MVC.  The part that is particularly interesting is that the View part of the architecture is basically a JSON object that defines what the view looks like.  While you can put in code that performs some action, the fact of the matter is that this code, when coded correctly, doesn’t really DO anything.  So, I would ask, how would you test this?  Sure I could put it in a test harness and run it through  some sort of parse routine or something, but unless you can say, “when I do this, this other thing over here should be true (or false)” you really can’t test the code.  A class that has no methods is basically a structure and structures can’t, by definition, be tested. On the other hand, I wrote some code once in WinForms that I was able to get under test and execute by calling the methods directly in the form.  I would have been better off moving that code into a presenter class so I could test the functionality separate from the presentation (view) and marked the view as untestable.</p>
-<h4 id="Finally-I-have-to-ask-“Is-refactoring-allowed-”"><a href="#Finally-I-have-to-ask-“Is-refactoring-allowed-”" class="headerlink" title="Finally, I have to ask, “Is refactoring allowed?”"></a>Finally, I have to ask, “Is refactoring allowed?”</h4><p>This is legacy code we are talking about.  And legacy code is notoriously hard to unit test.  As I mentioned a <a href="/why-johnny-cant-do-test-driven-development/">couple of weeks ago</a>, in order to write unit test, the code has to be testable in the first place.  So, if the code isn’t in a condition that it can be unit tested, and you aren’t allowed to make the code testable, then either 100% code coverage isn’t possible or you aren’t unit testing.  It’s that simple.</p>
-<h2 id="Testing-is-boring"><a href="#Testing-is-boring" class="headerlink" title="Testing is boring"></a>Testing is boring</h2><p>Next, I’d like to address the issue of testing being boring.  I can understand this.  Most of my day is spent unit testing code I’ve previously written because when I wrote it, I wasn’t as good at unit testing as I am today. But, you know what I’ve found along the way?  That by making sure the code is covered 100% it has made me think about how I’ve structured my code and it has made my code more maintainable. But, mostly I find testing entertaining because I learn just a little more about testing.  I get to prove to myself and my peers that writing unit test really does find bugs we didn’t have any idea were there.  I get to perfect my craft just a little bit more. Here are some things to consider about the statement that “testing is boring.”  You may not like what I have to say, but keep in mind, I don’t know you and I don’t know Kris.  I just know what the research says about the state of being bored.</p>
-<h4 id="Dictionary-Definition"><a href="#Dictionary-Definition" class="headerlink" title="Dictionary Definition"></a><a href="//www.macmillandictionary.com/us/dictionary/american/bored">Dictionary Definition</a></h4><blockquote>
-<p>feeling impatient or dissatisfied, because you are not interested in something or because you have nothing to do.</p>
-</blockquote>
-<h4 id="People-who-get-bored-are-anxious-people"><a href="#People-who-get-bored-are-anxious-people" class="headerlink" title="People who get bored are anxious people"></a><a href="//www.dragosroua.com/how-and-why-we-get-bored/">People who get bored are anxious people</a></h4><blockquote>
-<p>People who get bored easily are usually anxious people. They’re also having quite a low level of self-esteem. If you’re constantly challenging yourself by trying to stop what you’re doing, because you don’t “like” it, you end up considering yourself an inappropriate person.</p>
-</blockquote>
-<h4 id="One-Of-My-Professors-Said"><a href="#One-Of-My-Professors-Said" class="headerlink" title="One Of My Professors Said"></a>One Of My Professors Said</h4><blockquote>
-<p>Boring people get bored</p>
-</blockquote>
-<p>  Personally, I find that I’m most bored when I have something else I’d rather be doing.  It isn’t so much that I don’t want to do what I’m currently doing as I’d rather be doing something that I can’t currently do.  I had this experience on Friday because on Thursday night I had found an article on SEO stuff that I desperately wanted to start putting into practice. What I’m suggesting here is that if you change your perspective from one of, “this is a ridiculous idea” to “this is a challenge to be met” or “this is an opportunity to learn”, or even (to address a specific comment that started this post) “I get to make my this application more bug free.”  you may find that the boredom leaves. Treat it as a game.  Maybe pair up with people on your team and see who can discover the most bugs during the day.  Create a leader board.  Since you have to do this anyhow, make it fun.</p>
-<h5 id="Other-places-talking-about-100-code-coverage"><a href="#Other-places-talking-about-100-code-coverage" class="headerlink" title="Other places talking about 100% code coverage"></a>Other places talking about 100% code coverage</h5><ul>
-<li><p><a href="//binstock.blogspot.com/2007/11/fallacy-of-100-code-coverage.html">The Fallacy of 100% Code Coverage</a></p>
-</li>
-<li><p><a href="//jasonrudolph.com/blog/testing-anti-patterns-how-to-fail-with-100-test-coverage/" title="Testing Anti-Patterns: How to Fail With 100% Test Coverage [jasonrudolph.com]">How to Fail With 100% Test Coverage</a></p>
-</li>
-</ul>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/100-code-coverage-possible/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/100-code-coverage-possible/" data-id="cka9unsu30003kcx22z4yv6ki" class="article-share-link">
+      <a data-url="http://davembush.github.com/100-code-coverage-possible/" data-id="ckak3pved0001zsx26ciwxtk4" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -574,7 +554,8 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/uploads/2015/03/hand-039.jpg" alt="hand-039" title="hand-039">This past week I’ve been thinking a lot about changing habits and how much of our lives habits influence. To be clear, I would define a habit as something we have learned to do as an automated response to some trigger.  Something we no longer think about doing, but we just do because … well … because we’ve always done it that way. I have some bad habits:</p>
+        <p><img src="/uploads/2015/03/hand-039.jpg" alt="hand-039" title="hand-039">This past week I’ve been thinking a lot about changing habits and how much of our lives habits influence. To be clear, I would define a habit as something we have learned to do as an automated response to some trigger.  Something we no longer think about doing, but we just do because … well … because we’ve always done it that way.</p>
+<p>I have some bad habits:</p>
 <ul>
 <li>Eat something sweet when I’m tired or bored.</li>
 <li>How I react to particular situations</li>
@@ -585,7 +566,7 @@
 <li>Wake up before 4:40am</li>
 <li>Go to bed at 9:00pm</li>
 <li>Write a blog post once a week</li>
-<li>Watch <a href="/pluralsight">PluralSight</a> videos for 30 minutes every day.</li>
+<li>Watch PluralSight videos for 30 minutes every day.</li>
 </ul>
 <p>And some habits I’m trying to form:</p>
 <ul>
@@ -593,33 +574,18 @@
 <li>Take my vitamins</li>
 <li>Work on my book for 30 minutes each day</li>
 </ul>
-<h2 id="How-I-Deal-With-Habits"><a href="#How-I-Deal-With-Habits" class="headerlink" title="How I Deal With Habits"></a>How I Deal With Habits</h2><p>Now, I’ve learned that the best way to conquer bad habits is to replace them with good habits.  So, for example, since I believe that fat is better than sugar, I might decide to eat cheese rather than cookies when I’m bored. I’ve also learned that if I can set an alarm, I’m more likely to do something.  In fact, my life is run from my calendar on my phone.  If you want me to do something for you, the best way to make sure I do it is to make sure I’ve scheduled it.  I’m kind of obsessive about keeping appointments, so this works well for me. The other thing that works well for me is doing something at the same time every day, or every week.  So, I write blog post, pay bills, do household chores and prepare for a Bible study that I run on Saturdays.  I watch <a href="/pluralsight">PluralSight</a> videos and work on the book that I’m writing first thing every morning.  I take my vitamins at the same time each day. It is the routine that helps maintain the habit.</p>
-<h2 id="Start-Small"><a href="#Start-Small" class="headerlink" title="Start Small"></a>Start Small</h2><p>I often end up coaching people who want to start some new habit.  Maybe you’ve been reading my blog and you’ve been challenged to start implementing <a href="/categories/TDD/">Test Driven Development</a>.  What I find is that people want to start at the end.  So, let’s say you want to run 3 miles every day.  If you start out the first day and run three miles, I can pretty much assure you that you’ll give up right away.  No, what we need to do is something much smaller. I started exercising a couple of years ago, I realized that if exercising required me to go to a gym, I was never even going to get started.  The question I often ask people is, “What CAN you do?”  So I asked myself that question.  The answer came back, “I can do one exercise every hour and a half during the day. Then I started working outside of the house and the change in routine slowly eroded my ability to exercise.  So once again, I asked myself, “what CAN you do?”  I can do one exercise every morning.  Once I’ve established that habit, I plan on increasing to two exercises. So, if you want to start with TDD, probably the best way to start is to write a test.  One test.  Maybe commit to writing one test a day.  Think about it, if you are afraid that TDD won’t be accepted in your organization, who’s going to complain about one little test?  Or maybe better, just commit to a half hour of writing tests every day.  This allows you to get started without taking the huge time commitment learning TDD properly would take, which is probably what is keeping you from starting in the first place.  Start today.  Start now.  In a year, see if it hasn’t become how you develop code. What I’m still working on are ways that I react to situations.  These are a bit trickier to change because most of my responses are what people would called “learned responses.”  What I need to figure out is, 1) where did I learn these responses, 2) why did I learn them and 3) do the responses still make sense?</p>
-<h2 id="Better-Than-Before"><a href="#Better-Than-Before" class="headerlink" title="Better Than Before"></a>Better Than Before</h2><p>A couple of resources caught my eye this week that I think you might be interested in if you are interested in killing bad habits or starting a new one. The first is a new book by Gretchen Rubin called, <a href="/betterThanBefore">Better Than Before: Mastering the Habits of Our Everyday Lives</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=davmbusnetapp-20&amp;l=as2&amp;o=1&amp;a=0385348614" alt>which will be out by the time this post goes live (I write these blog post well in advance of when you actually see them). What I’ve found particularly interesting is that Gretchen has developed a framework for how to determine how people respond to expectations, and <a href="//www.gretchenrubin.com/happiness_project/2014/03/quiz-are-you-an-upholder-a-questioner-a-rebel-or-an-obliger/">you can take a test to find out how you respond to expectations</a>.</p>
-<ul>
-<li>Upholders: respond readily to outer and inner expectations.</li>
-<li>Questioners: question all expectations; they’ll meet an expectation _if_ they think it makes sense; essentially, they make all expectations into inner expectations</li>
-<li>Obligers: meet outer expectations, but struggle to meet expectations they impose on themselves</li>
-<li>Rebels: resist all expectations</li>
-</ul>
-<p>Gretchen says, if you don’t want to take the test, you are probably a rebel, so don’t worry about it ;). Anyhow, I’m looking forward to reading the book when it comes out. I came out as an upholder, which is no real big surprise.  There are areas of my life that are HEAVILY influenced by what I think people expect of me, and I tend to question new expectations that are imposed on me. And yet, I still have trouble trying to implement new habits in my life.</p>
-<h2 id="Coach-ME"><a href="#Coach-ME" class="headerlink" title="Coach ME"></a>Coach ME</h2><p>This brings me to my second resource.  I’ve known about this one for a while, but I’ve just recently really started using it. <a href="/coachme">Coach.me</a> is an app for iPhone and Android that allows you to use the power of community and accountability to help you establish your habits and achieve your goals.  If you want, or need, there is also  coaching that you can pay for if you want or need a little extra help. Right now, I’m just using the alarm and check-in feature.  Somehow being able to open the app and check the box that says I finished a particular activity is enough encouragement for me to not blow it off.  It probably helps that if I don’t check it off, I’ll forever have a hole in my calendar forever saying, “Yo!  you missed a day.” At some point, I may actually use one of the coaches.  I keep looking, but I haven’t found anyone that looks like someone I can relate to.  Or, maybe I just need to grow out of my 3 year old self that wants to do everything on my own.  That’s another area I’m working on.</p>
-<h4 id="Other-Habit-Changing-Resources"><a href="#Other-Habit-Changing-Resources" class="headerlink" title="Other Habit Changing Resources"></a>Other Habit Changing Resources</h4><ul>
-<li><a href="/triggers">Triggers: Creating Behavior That Lasts–Becoming the Person You Want to Be</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=davmbusnetapp-20&amp;l=as2&amp;o=1&amp;a=0804141231" alt></li>
-<li><a href="//www.hrvoice.org/the-power-of-habit-why-we-do-what-we-do/">The Power Of Habit</a></li>
-<li><a href="//www.moo.com/blog/2015/03/18/habit-journal-interview-chris-kyle/?utm_source=Moosletter&amp;utm_medium=email&amp;utm_campaign=Moosletter_2015-03-23_US" title="The Habit Jornal">The Habit Journal</a></li>
-</ul>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/changing-habits/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/changing-habits/" data-id="cka9unsvp001gkcx2iwuv7ax7" class="article-share-link">
+      <a data-url="http://davembush.github.com/changing-habits/" data-id="ckak3pvg9001ezsx2k15fh3tu" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -665,69 +631,26 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/uploads/2015/02/land-0148.jpg" alt="land-0148" title="land-0148"> As you start your journey down the road of Unit Testing you will discover that part of what makes code testable is this concept of <a href="//en.wikipedia.org/wiki/Dependency_injection" title="Dependency injection">Dependency Injection</a>.  As you explore further, you will see people mentioning various Dependency Injection frameworks. You may naturally assume that to implement Dependency Injection, you will need to select an use a Dependency Injection framework. But, Dependency Injection has nothing to do with using a Dependency Injection framework.  The frameworks are there because: 1.  much of our existing code is code that has too many dependencies and the framework helps us break those dependencies without having to refactor too much of our code and 2. to give us a way to easily swap out one object for another when our code is structured in such a way as to not have dependencies at all. </p>
-<h2 id="So-what-then-is-Dependency-Injection"><a href="#So-what-then-is-Dependency-Injection" class="headerlink" title="So, what then is Dependency Injection?"></a>So, what then is Dependency Injection?</h2><p>I once heard this maxim that explains it best,</p>
-<blockquote>
-<p>Classes should either create stuff, or do stuff, but no one class should do both.</p>
-</blockquote>
-<p>Much of our code looks something like this:</p>
-<p>private static void ReceiveSAMLResponse(<br>    out SAMLResponse samlResponse,<br>    out String relayState)<br>{<br>    // Receive the <a href="//en.wikipedia.org/wiki/Security_Assertion_Markup_Language" title="Security Assertion Markup Language">SAML</a> response over the<br>    //specified binding.<br>    XmlElement samlResponseXml;</p>
-<pre><code>ServiceProvider.ReceiveSAMLResponseByHTTPPost(
-    HttpContext.Current.Request, 
-    out samlResponseXml, out relayState);
-SAMLResponse resp = new SAMLResponse(samlResponseXml);
-XmlElement samlAssertionElement = 
-    resp.GetSignedAssertions()\[0\];
-
-// Verify the response&apos;s signature.
-XmlDocument doc = new XmlDocument();
-//metadata file path (holds the description key).
-doc.Load(HttpContext.Current.Server.MapPath(&quot;~/SAML.xml&quot;));
-XmlElement root = doc.DocumentElement;
-
-if (!SAMLAssertionSignature.Verify(
-    samlAssertionElement, ReadMetadata(root)))
-{
-    samlResponse = null;
-    relayState = null;
-    return;
-}
-// Deserialize the XML.
-samlResponse = new SAMLResponse(samlResponseXml);
-</code></pre><p>}</p>
-<p>Yes, this is real code from a system I worked on.  The original code was written three or four years ago and this specific code is code I was given by another company.  I just used copy and paste inheritance to get it working in our code. That’s not to say I haven’t written cod that has just as many problems. There are several things that are wrong with this code, but for now all I want to focus on is the Dependency Injection issue. All this code is trying to do is to deserialize the encrypted samlResponse object that was posted to the login form.  At least this code isn’t in the login form!  It has that much going for it.</p>
-<h2 id="But-here-are-places-where-it-is-dependent-on-too-much"><a href="#But-here-are-places-where-it-is-dependent-on-too-much" class="headerlink" title="But here are places where it is dependent on too much:"></a>But here are places where it is dependent on too much:</h2><ul>
-<li>ServiceProvider is a static class and called directly.</li>
-<li>ReceiveSAMLResponseByHTTPPost is dependent on the Request object that we retrieve from HttpContext.</li>
-<li>I create a new SAMLResponse object right before I call GetSignedAssertions()</li>
-<li>I create a new XmlDocument object so I can load the SAML.xml file</li>
-<li>SAMLAssertionSignature is static and called directly</li>
-</ul>
-<p>In fact, this method is one huge dependency mess.  And I’m very aware of the mess that it is in because the company we wrote this code for just recently switched providers.  As we tried to get this working, I had no way of testing this code in isolation without adding code directly into this method.  We got it working, but it didn’t have to be that hard.</p>
-<h2 id="So-here’s-what-I’d-do-to-this-code"><a href="#So-here’s-what-I’d-do-to-this-code" class="headerlink" title="So, here’s what I’d do to this code."></a>So, here’s what I’d do to this code.</h2><ul>
-<li>Since ServiceProvider and SAMLAssertionSignature are calls to a third party API, I would wrap them in a none static class that I can instantiate.</li>
-<li>I would have the class that ultimately calls this method either pass in the dependent objects to the constructor, pass them in to the method that calls this, or set properties in the class.  This is what it means to inject dependencies.</li>
-<li>I would look for some way to avoid creating a new SAMLResponse object.  I’m not looking at the API documentation, but it would be great if I could new up the object and call a method, or set a property to give it the samlResponseXml variable.  If I had to, I’d probably wrap SAMLResponse in another class so that I could gain this functionality.</li>
-<li>Finally, I would make each of the dependent object based on an interface so that I could swap them out.  In the case of some of these classes, I may need to wrap them in another class that I have control over so that I can implement an interface.  For example, as things stand, I would not be able to create a fake request object because Request is a system class that does not implement an interface.</li>
-</ul>
-<h2 id="Advantages"><a href="#Advantages" class="headerlink" title="Advantages"></a>Advantages</h2><p>After making all of these changes, I would be able to create a test harness for this code, create fake versions of the objects, and verify that this method does what we intend for it do do. Where this would have been particularly helpful is over this last week when we were trying to get this all working with the new provider.  In that case, I could have faked out the request object with what they were sending us and run it through a debugger to figure out what wasn’t quite right.</p>
-<h2 id="No-Dependency-Injection-Framework"><a href="#No-Dependency-Injection-Framework" class="headerlink" title="No Dependency Injection Framework"></a>No Dependency Injection Framework</h2><p>Finally, you’ll notice that no where in this code did I have to use a Dependency Injection framework to get this all working.</p>
-<h4 id="Other-Places-Talking-About-Dependency-Injection"><a href="#Other-Places-Talking-About-Dependency-Injection" class="headerlink" title="Other Places Talking About Dependency Injection"></a>Other Places Talking About Dependency Injection</h4><ul>
-<li><a href="//msdn.microsoft.com/en-us/magazine/cc163739.aspx">Design Patterns – Dependency Injection (Microsoft)</a></li>
-<li><a href="//www.amazon.com/gp/product/0131177052/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=390957&amp;creativeASIN=0131177052&amp;linkCode=as2&amp;tag=davmbusnetapp-20&amp;linkId=JYTE2U7XKFAVH5QA">Working Effectively with Legacy Code</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=davmbusnetapp-20&amp;l=as2&amp;o=1&amp;a=0131177052" alt></li>
-</ul>
-<p><a href="//www.codeproject.com/script/Articles/BlogFeedList.aspx?amid=455230">CodeProject</a></p>
-
+        <p><img src="/uploads/2015/02/land-0148.jpg" alt="land-0148" title="land-0148"></p>
+<p>As you start your journey down the road of Unit Testing you will discover that part of what makes code testable is this concept of <a href="//en.wikipedia.org/wiki/Dependency_injection" title="Dependency injection">Dependency Injection</a>.  As you explore further, you will see people mentioning various Dependency Injection frameworks.</p>
+<p>You may naturally assume that to implement Dependency Injection, you will need to select an use a Dependency Injection framework.</p>
+<p>But, Dependency Injection has nothing to do with using a Dependency Injection framework.  The frameworks are there because:</p>
+<ol>
+<li>much of our existing code is code that has too many dependencies and the framework helps us break those dependencies without having to refactor too much of our code and</li>
+<li>to give us a way to easily swap out one object for another when our code is structured in such a way as to not have dependencies at all.</li>
+</ol>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/dependency-injection-frameworks-are-not-dependency-injection/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/dependency-injection-frameworks-are-not-dependency-injection/" data-id="cka9unsvz001ukcx2wgqknm2n" class="article-share-link">
+      <a data-url="http://davembush.github.com/dependency-injection-frameworks-are-not-dependency-injection/" data-id="ckak3pvgj001pzsx2cbd9k1jd" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -773,26 +696,20 @@ samlResponse = new SAMLResponse(samlResponseXml);
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/uploads/2015/02/ppl-kid-05.jpg" alt="ppl-kid-05" title="ppl-kid-05">Last week we looked at a few excuses developers give for not testing their code as they develop it (<a href="/excuses-for-not-testing/">Excuses For Not Testing</a>).  We finished that by mentioning that most of the code you write simply isn’t testable.  You can’t practice Test Driven Development on something that isn’t testable in the first place. And there, folks, is why Johnny can’t test.   </p>
-<h2 id="But-it’s-not-Johnny’s-fault"><a href="#But-it’s-not-Johnny’s-fault" class="headerlink" title="But, it’s not Johnny’s fault."></a>But, it’s not Johnny’s fault.</h2><p>Think about what makes code testable.  At it’s core, testable code is loosely coupled.  But what do we mean by “loosely coupled”? Well, let’s start with the large picture.  Assuming you have a multi-layered architecture.  That is, you have your code broken out into View, Business Rules, and Data Access.  Raise your hand if your business rules access your view directly.  Would you be able to test your business rules without your view? At a finer level of detail.  How much of your code creates the objects it needs within the same class, or worse, the same method, that will need it?  Without using a Dependency Injection framework, could you swap out any objects your class uses?  Have you even heard the rule, “Classes should either create things or do things, but never both within the same class?”  If you did that, how much more testable would your code be? If you were to write a test for a method, how much setup work would you have to do?  If it is more than a few lines, your method is probably doing too much, either directly or indirectly.  You’ll need to find a way to make it do less. Maybe in future post, I’ll address some of these issues in code.  But for now, I just want to address the problem. Again, it isn’t Johnny’s fault that he doesn’t know this stuff.  Think about the code samples we tend to look at.</p>
-<h2 id="When-is-the-last-time-you-saw-sample-code-that-was-testable"><a href="#When-is-the-last-time-you-saw-sample-code-that-was-testable" class="headerlink" title="When is the last time you saw sample code that was testable?"></a>When is the last time you saw sample code that was testable?</h2><p>Short rant here, but I’ve been working with EXTjs (version 4.x) for the last year and a half.  Sencha will tell you that this uses a MVC architecture.  But what they mean by “Controller” really functions more like a “ViewController.”  That is, the controller is tightly bound to the view that it handles events for.  The way they have things setup, you access View elements by getters that are automatically generated for you in the view. The problem with this is that you can’t really test the controller logic without bringing along the view. Sencha isn’t the only company who does this.  Most of the sample code for WebForms did the same kind of thing. Now, the reason this is an issue is that sample code is how most of the newer programmers are learning how to program. I heard recently that statistically, because of the growth of the industry, half of the programmers available have 5 years or less of experience.  I don’t know about you, but the first 5 years of my programming career, I was still figuring out how to program.  I wasn’t thinking about architecture issues and I certainly wasn’t thinking about formal testing.  From what I’ve seen of the new recruits, I don’t think they are either.  Shoot.  Some of the ones I’ve interacted with couldn’t code themselves out of a paper bag without help.</p>
-<h2 id="And-so-what’s-the-conclusion-to-all-of-this"><a href="#And-so-what’s-the-conclusion-to-all-of-this" class="headerlink" title="And so, what’s the conclusion to all of this?"></a>And so, what’s the conclusion to all of this?</h2><p>I don’t know.  Maybe the first step is to admit that we have an issue here and that the issue is so much a management or time issue as it is an education and laziness issue.  That the code we generate shouldn’t assume that people will take the code and adapt it into testable code, but that we should write testable code as our sample code.  Maybe colleges should teach basic software architecture and TDD as part of the curriculum.  Maybe those of us who know better should just start testing and figure this all out well enough to explain it to others.</p>
-<h4 id="Other-Places-Talking-About-Testing"><a href="#Other-Places-Talking-About-Testing" class="headerlink" title="Other Places Talking About Testing"></a>Other Places Talking About Testing</h4><ul>
-<li><a href="//www.amazon.com/gp/product/0735683204/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=390957&amp;creativeASIN=0735683204&amp;linkCode=as2&amp;tag=davmbusnetapp-20&amp;linkId=GYE7YSSRF4Z3R7BK">Adaptive Code via C#: Agile coding with design patterns and SOLID principles (Developer Reference)</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=davmbusnetapp-20&amp;l=as2&amp;o=1&amp;a=0735683204" alt></li>
-<li><a href="//misko.hevery.com/code-reviewers-guide/">Writing Testable Code</a></li>
-<li><a href="//www.sitepen.com/blog/2014/07/11/testable-code-best-practices/">Testable Code Best Practices</a></li>
-</ul>
-
+        <p><img src="/uploads/2015/02/ppl-kid-05.jpg" alt="ppl-kid-05" title="ppl-kid-05"></p>
+<p>Last week we looked at a few excuses developers give for not testing their code as they develop it (<a href="/excuses-for-not-testing/">Excuses For Not Testing</a>).  We finished that by mentioning that most of the code you write simply isn’t testable.  You can’t practice Test Driven Development on something that isn’t testable in the first place. And there, folks, is why Johnny can’t test.</p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/why-johnny-can-t-do-test-driven-development/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/why-johnny-can-t-do-test-driven-development/" data-id="cka9unszh006xkcx2ro2f2m2f" class="article-share-link">
+      <a data-url="http://davembush.github.com/why-johnny-can-t-do-test-driven-development/" data-id="ckak3pvmt006mzsx29c1loyak" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
