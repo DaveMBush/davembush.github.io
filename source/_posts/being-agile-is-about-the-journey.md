@@ -13,7 +13,11 @@ date: 2015-02-12 07:00:00
 … Not The Destination
 =====================
 
-![BeingAgile](/uploads/2015/02/BeingAgile.png "BeingAgile")This post first started as I was discussing my post “[You Aren’t Doing Scrum If …](/you-arent-doing-scrum-if/)” with a friend who had read the post and was worried that I might not fit in an organization that wasn’t doing all of Scrum.  I’ve since had other conversations and as I’ve reflected on the topic, I still stand by my original post, because there are some fundamental properties of Scrum that you have to implement in order to follow that methodology.  This is why I called the post “You Aren’t Doing **Scrum** If …” and not “You Aren’t Doing Agile If …”
+![BeingAgile](/uploads/2015/02/BeingAgile.png "BeingAgile")
+
+This post first started as I was discussing my post “[You Aren’t Doing Scrum If …](/you-arent-doing-scrum-if/)” with a friend who had read the post and was worried that I might not fit in an organization that wasn’t doing all of Scrum.  I’ve since had other conversations and as I’ve reflected on the topic, I still stand by my original post, because there are some fundamental properties of Scrum that you have to implement in order to follow that methodology.  This is why I called the post “You Aren’t Doing **Scrum** If …” and not “You Aren’t Doing Agile If …”
+
+<!-- more -->
 
 Agile isn’t Scrum
 -----------------
@@ -23,7 +27,7 @@ But Agile is different.  Agile isn’t a process. Agile is a mindset. So you ca
 Sacred Cows
 -----------
 
-In fact, my experience has been that as I try to move an organization along the sliding scale of  being more productive, I will, eventually, find a point of resistance.  The sacred cow of their process.  You can change whatever else you want, and yes, everything else you’ve suggested that we change has proven itself to be a better, more productive, less error prone way of doing what we do.  But, you can’t change our sacred cow. And so far every organization I’ve been in has some sacred cow that we either have to kill or we don’t progress further into being agile. And so we end up hearing comments from people in the industry like, “I don’t think I’ve been in any organization that has been TOTALLY ‘Agile.’” because every organization eventually runs up against some sacred cow on their road toward being agile.
+In fact, my experience has been that as I try to move an organization along the sliding scale of being more productive, I will, eventually, find a point of resistance.  The sacred cow of their process.  You can change whatever else you want, and yes, everything else you’ve suggested that we change has proven itself to be a better, more productive, less error prone way of doing what we do.  But, you can’t change our sacred cow. And so far every organization I’ve been in has some sacred cow that we either have to kill or we don’t progress further into being agile. And so we end up hearing comments from people in the industry like, “I don’t think I’ve been in any organization that has been TOTALLY ‘Agile.’” because every organization eventually runs up against some sacred cow on their road toward being agile.
 
 Leadership Needs To Be Agile
 ----------------------------
@@ -34,9 +38,3 @@ Individuals Need To Be Agile
 ----------------------------
 
 Finally, while your organization may not be agile at all. It may not do Scrum, or Kanban.  It may resist all attempts to move in that direction.  This is not excuse for you to not be agile. You should ask yourself periodically, “What can I do that might be more productive than what I am currently doing?”  Because an organization can only be as agile as the people working in that organization and sometimes, all it really takes to move an organization closer to being agile is one individual who is willing to do what he or she does just a little more toward agile than they currently are. What sacred cows have you run into?  What are you doing to be more agile as an individual?  Leave a comment below.
-
-##### Links About Being Agile
-
-*   [Being Agile](//www.amazon.com/gp/product/143025839X/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=143025839X&linkCode=as2&tag=davmbusnetapp-20&linkId=36KESFHLM3A6Q3YG)![](//ir-na.amazon-adsystem.com/e/ir?t=davmbusnetapp-20&l=as2&o=1&a=143025839X)
-*   [Managers Don’t Hate Agile](//flowchainsensei.wordpress.com/2015/02/07/managers-dont-hate-agile/)
-*   [5 Ways Agile And Scrum can Help With Change Management](//tolerosolutions.com/5-ways-agile-scrum-can-help-change-management/)
