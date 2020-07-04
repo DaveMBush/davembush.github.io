@@ -107,57 +107,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>Many people starting out with Unit testing get stuck when it comes to using their tools with the Visual Studio environment.  If it isn’t built in, how do we make it work with Visual Studio?  In this article I want to explore the basics of creating a unit test for NUnit and getting it running from Visual Studio.</p>
-<h2 id="Basic-Structure"><a href="#Basic-Structure" class="headerlink" title="Basic Structure"></a>Basic Structure</h2><p>To create a unit test, the first thing you will need to do is to create an assembly with a class file to hold the code. The type of assembly you will need to create for your test to be able to run is an assembly of type “Class Library.” I’m going to assume that you don’t need the details on how to create that type of project using whatever version of Visual Studio you happen to be using.</p>
-<p>Within your new Class Library project, you should find a file named Class1.cs. For the purposes of getting started, you can just leave that file. We’ll talk about how to name your class and test later on. For now, all we want to concentrate on is the basics of what is involved in getting a basic test going and what the components of a test class are that you will repeat over and over again as you create unit test for your applications.</p>
-<p>Before we add our first line of code, though, you will want to add references to NUnit in your code. The easiest way to do that is by using NuGet. Since I use Visual Studio 2013, all of the references for how to do things will be using Visual Studio (Premium) 2013. So, if you are using that version, you can just follow along. If not, you may need to do some translating.</p>
-<p>From the Visual Studio menu, select “Tools” &gt; “NuGet Package Manager” &gt; “Manage NuGet Packages for Solution…”. A window will pop up. Search for NUnit and install the package named “NUnit”. There are other packages available that we will discus later on.</p>
-<p>Alternatively, you could download NUnit directly from the NUnit site (<a href="//nunit.org">http://nunit.org</a>) and add a reference directly to nunit.framework.dll.</p>
-<h2 id="Code"><a href="#Code" class="headerlink" title="Code"></a>Code</h2><p>Now that you have the DLLs installed and referenced in your project, you’ll need to create a test class. For our purposes, we are going to stick with Class1.cs.</p>
-<p>There are several things that make a class a test class. First, the class has to be attributed with the [TestFixture] attribute. Second, the methods you want to have run the test have to be attributed with the [Test] attribute and must be public. So, your minimal test class will look something like:</p>
-<p>[TestFixture]<br>public class Class1<br>{<br>    [Test]<br>    public void MyFirstTestMethod()<br>    {<br>        // test code here<br>    }<br>}</p>
-<h2 id="Running-Tests"><a href="#Running-Tests" class="headerlink" title="Running Tests"></a>Running Tests</h2><p>Now that we have a basic test class, go ahead and compile it. We are going to try running the test next. For that we will need a test runner.</p>
-<p>There are several ways to run NUnit test. For out purposes, we are going to use the runner that comes with NUnit. But you might also be interested in one of the alternatives. You can get a 30 day trial of <a href="//www.jetbrains.com/resharper/">ReSharper by JetBrains</a>. ReSharper has many features, but the one I want to talk about here is the test runner. Any test you create will be immediately runnable from within Visual Studio by right clicking on an icon to the left of your code. You are presented with a menu of options including debugging your test. Believe me, this is the easiest way to debug NUnit test that I know of.</p>
-<p>Another easy way to run NUnit test from within Visual Studio is by installing the MSTest adapter. You can get this from <a href="//www.nuget.org/packages/NUnitTestAdapter/">NuGet</a>.</p>
-<p>For the purposes of this article, we are going to use the test runner that comes with NUnit.</p>
-<p>So the next thing you’ll need to do is go to <a href="//nunit.org">NUnit.org</a> and download and install the latest version of NUnit if you didn’t do that already to get the NUnit DLLs installed. I would suggest using the MSI installer rather than the zip file. All we want to be able to do is to run the test.</p>
-<p>Once you’ve installed NUnit, there should be a menu option “NUnit” that you can click. This should bring up the GUI runner.</p>
-<p><img src="/uploads/2014/11/image.png" alt="image" title="image"></p>
-<p>Use the “File” -&gt; “Open” to navigate to the “bin” directory of your NUnit test DLL project and open the DLL. You should see a screen that looks something like this:</p>
-<p><img src="/uploads/2014/11/image1.png" alt="image" title="image"></p>
-<p>Click the “Run” button to run your test. You should get a green progress bar under the “Run” button and a check box over the icons in the tree on the left indicating that all of the test succeeded.</p>
-<p>“Wait?!”, you say, “I didn’t test anything, how did they succeed?”</p>
-<p>You are right. A test succeeds if it doesn’t fail. Later on this will impact how we structure our test. So keep this in mind.</p>
-<p>One of the nice things about the NUnit GUI runner is that you can keep this up while you work on your tests. By default, the system shadow copies the DLL so that you can compile the DLL in your project. When the NUnit GUI runner sees that the file has changed, it will reload it so that it is always running whatever version you recently compiled. You can change this behavior, if you really feel the need to, by navigating to “Tools” -&gt; “Settings…”</p>
-<h2 id="Debugging-Tests"><a href="#Debugging-Tests" class="headerlink" title="Debugging Tests"></a>Debugging Tests</h2><p>As with all things related to code, eventually you will need to debug your test. To do this using the the tools that come with NUnit, do the following.</p>
-<p>Right click on the project in Solution Explorer that represents your test project. From the resulting menu, select “Properties.” In the resulting window, select the “Debug” tab from the left-hand side of the window.</p>
-<p><img src="/uploads/2014/11/image2.png" alt="image" title="image"></p>
-<p>You will want to select “Start external program” and point it to the UNnit runner that got installed when you installed NUnit.</p>
-<p>Now, whenever you run this project, with or without the debugger, NUnit will start up. Note: there is no reason to pass parameters telling it what DLL you want to run because it will load the last DLL it had up. But, if you wanted to do that, you could pass the location of the DLL as a parameter to the GUI runner. There are other parameters you can us. Check the documentation for the version of NUnit you are using for the specifics.</p>
-<p>If you are running .NET 4.x, you’ll want to go to the location in your file system where NUnit.exe lives and find the NUnit.exe.config file. Find the startup element (<startup> …. </startup>) and place this line in between the open and close startup tags:</p>
-<supportedruntime version="4.0">
-
-<p>If you miss this step, you won’t be able to debug your 4.0 code. Alternatively, you can just set your project to use .NET 3.5.</p>
-<p>So, let’s give it a try.</p>
-<p>First, put some code in the test method you just created. For our purposes, we’ll just put in a console writeline so we have somplace to put a breakpoint.</p>
-<p>public void MyFirstTestMethod()<br>{<br>    Console.WriteLine(“Inside MyFirstTestMethod”);<br>}</p>
-<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
-<p>Next set a breakpoint on the Console.WriteLine method and then run your project with the debugger.</p>
-<p>Once NUnit loads the DLL, click the “Run” button in NUnit. If everything is setup correctly, you should stop on the breakpoint you set.</p>
-<h2 id="Console-WriteLine"><a href="#Console-WriteLine" class="headerlink" title="Console.WriteLine()"></a>Console.WriteLine()</h2><p>You may have noticed that we put several Console.WriteLines() in our code but they aren’t displaying anywhere. So, where did they go? How can we see them?</p>
-<p>By default the “Text Output” tab displays all of the Console.WriteLine() messages as well as all of the test results. If all you care to see is the test results, you should select the “Errors and Failures” tab. Personally, I prefer to work in the “Text Output” tab and I suggest that you do the same.</p>
-<h2 id="Not-The-Only-Way"><a href="#Not-The-Only-Way" class="headerlink" title="Not The Only Way"></a>Not The Only Way</h2><p>This isn’t the only way to get NUnit &amp; Visual Studio working together.  You could also purchase the ReSharper plugin which has many other features.  But one of the ones I use on a regular basis is the NUnit integration.</p>
-<p>You could also use the NUnit test Adapter to make NUnit work with the Visual Studio test engine.  But personally, I don’t like the way the test render using that and I’d much rather use the GUI viewer I’ve discussed in this article.  So, if you want to integrate NUnit &amp; Visual Studio for free, what I’ve outline above is the best way to do it.</p>
-</supportedruntime>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/nunit-visual-studio/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/nunit-visual-studio/" data-id="ckbnqe7lq015qh4x2cfmld1fh" class="article-share-link">
+      <a data-url="http://davembush.github.com/nunit-visual-studio/" data-id="ckc7x3b3a015lasx2lopxysrh" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -243,7 +204,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/value-type-vs-reference-type/" data-id="ckbnqe6ox0069h4x2a5fsx79h" class="article-share-link">
+      <a data-url="http://davembush.github.com/value-type-vs-reference-type/" data-id="ckc7x3a99006aasx2n50t0bnj" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -310,7 +271,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/raking-leaves-and-writing-code/" data-id="ckbnqe6np004fh4x22jrgd6gs" class="article-share-link">
+      <a data-url="http://davembush.github.com/raking-leaves-and-writing-code/" data-id="ckc7x3a8e004kasx259dnn5lk" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -400,7 +361,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/c-properties-get-and-set/" data-id="ckbnqe6kt0018h4x2fscn01iv" class="article-share-link">
+      <a data-url="http://davembush.github.com/c-properties-get-and-set/" data-id="ckc7x3a65001basx20b35az73" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -471,7 +432,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-server-performance-testing/" data-id="ckbnqe6kf000th4x2twkosjht" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-server-performance-testing/" data-id="ckc7x3a5v000uasx2rzgy5m7n" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -552,7 +513,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/css-animation-resources/" data-id="ckbnqe6l6001jh4x2bluql289" class="article-share-link">
+      <a data-url="http://davembush.github.com/css-animation-resources/" data-id="ckc7x3a6d001oasx2csx6rz68" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -622,7 +583,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/nunit-unity-dependency-injection-moq-and-private-fields/" data-id="ckbnqe6nk0048h4x29ff2tnw2" class="article-share-link">
+      <a data-url="http://davembush.github.com/nunit-unity-dependency-injection-moq-and-private-fields/" data-id="ckc7x3a88004aasx24vilmrbt" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -709,7 +670,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/technical-debt-is-inevitable/" data-id="ckbnqe6od005eh4x2sh21j37d" class="article-share-link">
+      <a data-url="http://davembush.github.com/technical-debt-is-inevitable/" data-id="ckc7x3a8u005easx2q421y9r6" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -776,7 +737,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/selenium-performance-improvements/" data-id="ckbnqe6o1004uh4x247uuhu4b" class="article-share-link">
+      <a data-url="http://davembush.github.com/selenium-performance-improvements/" data-id="ckc7x3a8l004wasx202tl1fmr" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -861,7 +822,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/webforms-vs-mvc–the-war-is-over/" data-id="ckbnqe6p2006ih4x29t2j4vq3" class="article-share-link">
+      <a data-url="http://davembush.github.com/webforms-vs-mvc–the-war-is-over/" data-id="ckc7x3a9d006gasx20l4voa8a" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

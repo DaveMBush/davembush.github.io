@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="A couple of weeks ago, we discussed Value types and Reference types where we said that a reference type points to the value it represents and a value type is the value it represents. This has implicat">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2018-06-30T20:06:57.000Z">
+<meta property="og:updated_time" content="2020-07-04T17:24:51.606Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="String and StringBuilder">
 <meta name="twitter:description" content="A couple of weeks ago, we discussed Value types and Reference types where we said that a reference type points to the value it represents and a value type is the value it represents. This has implicat">
@@ -110,21 +110,23 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>A couple of weeks ago, we discussed <a href="/value-type-vs-reference-type/">Value types and Reference types</a> where we said that a reference type points to the value it represents and a value type is the value it represents. This has implications when we work with the assignment operator because when you assign a reference type and change the content of what it is pointing to, both variables get changed because they are both pointing to the same location in memory.  If you do this with a value type, only the one you change sees the change because you are working with a copy.</p>
+<a id="more"></a>
 <h2 id="Is-String-A-Value-or-Reference-Type"><a href="#Is-String-A-Value-or-Reference-Type" class="headerlink" title="Is String A Value or Reference Type?"></a>Is String A Value or Reference Type?</h2><p>So, if you’ve done any work with the String class, you might think it is a value type, because if you write this code:</p>
-<p>string a = “abc”;<br>string b = a;<br>string b = “def”;<br>Console.WriteLine(a);<br>Console.WriteLine(b);</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">string</span> a = <span class="string">"abc"</span>;</span><br><span class="line"><span class="keyword">string</span> b = a;</span><br><span class="line"><span class="keyword">string</span> b = <span class="string">"def"</span>;</span><br><span class="line">Console.WriteLine(a);</span><br><span class="line">Console.WriteLine(b);</span><br></pre></td></tr></table></figure>
 <p>You will quickly discover that the values that get written out are: abc def Which is not what you’d expect if String is a reference type. So, the question we need to ask is, why is String acting like a value type if it is really a reference type?</p>
 <h2 id="Strings-Are-Immutable"><a href="#Strings-Are-Immutable" class="headerlink" title="Strings Are Immutable"></a>Strings Are Immutable</h2><p>The answer is that Strings are immutable.  That is, a string never changes.  And if you are a thinking person I can already hear you saying, “Sure they change, just look at this code…”</p>
-<p>string a = “abc”;<br>a = “def”;<br>Console.WriteLine(a);</p>
-<p>”See, I changed the string variable a from ‘abc’ to ‘def’” And yes, you did change the a variable.  But what did you change?  You didn’t change “abc” to “def” you change what a was pointing to. You see, “abc” is the object of type string and “def” is an object of type string.  All you managed to do was change what a was pointing to. In fact, if you write this code:</p>
-<p>string a = “abc”;<br>string b = “abc”;</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">string</span> a = <span class="string">"abc"</span>;</span><br><span class="line">a = <span class="string">"def"</span>;</span><br><span class="line">Console.WriteLine(a);</span><br></pre></td></tr></table></figure>
+<p>“See, I changed the string variable a from ‘abc’ to ‘def’” And yes, you did change the a variable.  But what did you change?  You didn’t change “abc” to “def” you change what a was pointing to.</p>
+<p>You see, “abc” is the object of type string and “def” is an object of type string.  All you managed to do was change what a was pointing to. In fact, if you write this code:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">string</span> a = <span class="string">"abc"</span>;</span><br><span class="line"><span class="keyword">string</span> b = <span class="string">"abc"</span>;</span><br></pre></td></tr></table></figure>
 <p>The result is exactly the same as if you’d written:</p>
-<p>string a = “abc”;<br>string a = b;</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">string</span> a = <span class="string">"abc"</span>;</span><br><span class="line"><span class="keyword">string</span> a = b;</span><br></pre></td></tr></table></figure>
 <p>Because in .NET, there is only one instance of any given string in the system.  The duplicates get optimized out.</p>
 <h2 id="String-Concatenation"><a href="#String-Concatenation" class="headerlink" title="String Concatenation"></a>String Concatenation</h2><p>Now all of this has implications when it comes to concatenation. Let’s say you write this code:</p>
-<p>string a = “abc”;<br>string b = “def”;<br>string c = a + b;</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">string</span> a = <span class="string">"abc"</span>;</span><br><span class="line"><span class="keyword">string</span> b = <span class="string">"def"</span>;</span><br><span class="line"><span class="keyword">string</span> c = a + b;</span><br></pre></td></tr></table></figure>
 <p>What’s happening here? First we create a string object that contains “abc” and point the a variable to it.  Then we create another string object that contains “def” and point the b variable to it.  And now this is where strings get interesting because the next thing that happens is that a NEW string object is created that contains “abcdef” and we point the c variable to that new value. Now, if you think about this for a minute, you’ll understand that this is incredibly inefficient.  Creating new objects is one of the most expensive operations that anyone can do is just about every object oriented language we have available.  In fact, I can’t think of one where this is not true.  I’m just assuming there must be an exception to the rule. It would be much more efficient if we were to make string so that it wasn’t immutable.  This would mean we could skip the create new object part of the assignment and our concatenation operations would work much faster.</p>
 <h2 id="StringBuilder"><a href="#StringBuilder" class="headerlink" title="StringBuilder"></a>StringBuilder</h2><p>Enter StringBuilder.  StringBuilder is, essentially, the mutable version of the String class.  Now you can write code that looks like this:</p>
-<p>string a = “abc”;<br>string b = “efg”;<br>string c = “hij”;<br>var d = new StringBuilder(a);<br>d.Append(b);<br>d.Append(c);<br>string e = d.ToString();</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">string</span> a = <span class="string">"abc"</span>;</span><br><span class="line"><span class="keyword">string</span> b = <span class="string">"efg"</span>;</span><br><span class="line"><span class="keyword">string</span> c = <span class="string">"hij"</span>;</span><br><span class="line"><span class="keyword">var</span> d = <span class="keyword">new</span> StringBuilder(a);</span><br><span class="line">d.Append(b);</span><br><span class="line">d.Append(c);</span><br><span class="line"><span class="keyword">string</span> e = d.ToString();</span><br></pre></td></tr></table></figure>
 <p>Note, at the end, we still have to convert our StringBuilder object to a String object using ToString().  So, there is a new object creation penalty there.  What this means is that you probably don’t want to use a StringBuilder unless you are appending to a string more than three times. So, there you go.  That’s the difference between String and StringBuilder, why a String looks like a value type, and when you should use StringBuilder instead of String.</p>
 
       
@@ -136,7 +138,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/string-and-stringbuilder/" data-id="ckbnqe6oa0059h4x2412eyt5i" class="article-share-link">
+      <a data-url="http://davembush.github.com/string-and-stringbuilder/" data-id="ckc7x3a8q0056asx210hs5ohg" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
