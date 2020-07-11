@@ -12,9 +12,9 @@ categories:
 date: 2014-11-06 06:00:00
 ---
 
-loading...
-
 This happened a couple of years ago, but it is still relevant because I know of at least one place where it is still happening even though Microsoft has fixed the issue that initially caused this hack to be put in place in the first place.
+
+<!-- more -->
 
 Problem In Production – Oh NO!
 ------------------------------
@@ -44,10 +44,12 @@ The Fix Discovered
 
 And then I finally stumbled on the issue.  I can’t remember what it was that we installed that needed this, but what it did was change our web.config file so that it had a section in it that looks like this:
 
+``` xml
 <configuration>
 ... lots of other configuration stuff ...
   <system.webServer>
     <modules **runAllManagedModulesForAllRequests="true"**>
+```
 
 What that causes IIS to do is to run ALL of your web request through ALL of your .NET modules.  Why is this a problem you ask?  Because it even runs all of your images, css, javascript and other static content.  This isn’t normally a huge problem because most of that stuff is relatively small. But, when you try to run a be PDF through that pipeline, you’ll run out of memory because, and this is the major issue here, because the whole file has to be loaded into memory on the server before it can be sent on to the web browser to download.
 
@@ -58,4 +60,4 @@ Moral Of The Story
 
 Now, the question that we should be asking now that we’ve figured it all out is, why wasn’t this caught earlier?  When a site goes up, isn’t all of the functionality, including all of the links to all of the images, files to download, and other pages on the site and off the site supposed to be tested?
 
-Yes, of course they are, but if you haven’t at least written down where all of this is, if you don’t have a systematic way of testing EVERYTHING, you WILL end up with these kind of errors once you put the site live.  This is to say nothing of load testing along the way.  This can all be prevented. .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, "Courier New", courier, monospace; background-color: #ffffff; /\*white-space: pre;\*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }
+Yes, of course they are, but if you haven’t at least written down where all of this is, if you don’t have a systematic way of testing EVERYTHING, you WILL end up with these kind of errors once you put the site live.  This is to say nothing of load testing along the way.  This can all be prevented.

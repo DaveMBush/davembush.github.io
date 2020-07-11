@@ -19,6 +19,8 @@ But then I realized, I could talk about cleaning up the leaves in my yard AND ta
 
 Think about it.
 
+<!-- more -->
+
 Why Rake Leaves?
 ----------------
 

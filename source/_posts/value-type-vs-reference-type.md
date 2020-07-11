@@ -15,6 +15,8 @@ date: 2014-11-27 07:00:00
 
 It is amazing to me how few programmers understand the fundamentals of how variables work.  Not just in .NET or C# specifically, but in every language they work in.  It amazes me for two reasons.  First, I don’t think I could program if I didn’t understand what was physically happening as a result of the code I was writing.  Not knowing how the variables relate to the memory that they use would be, to me, a major limitation.  But it also amazes me because I don’t think anyone can program intelligently until they do know what is happening. So, I’ll start from the outside and move in to what’s happening in memory.
 
+<!-- more -->
+
 What is A Value Type
 --------------------
 
@@ -35,10 +37,12 @@ Value Example
 
 For example, look at the code below.
 
+``` csharp
 int a = 1;
 int b = 2;
 
 a = b;
+```
 
 When we assign b to a, we are copying the value occupied by b into the memory location occupied by a.
 
@@ -47,6 +51,7 @@ Reference Example
 
 But what happens when we do the same thing with a reference type?
 
+``` csharp
 class Person
 {
     string Name;
@@ -63,6 +68,7 @@ alice.age = 33;
 
 joe = alice;
 joe.age = 50;
+```
 
 What will be the value of alice.age? You should say 50 because once we assigned alice to joe, alice and joe point to the same Person object and the Person object that alice pointed to is no longer available.
 
@@ -71,6 +77,7 @@ How About Structs?
 
 But what happens if we make the Person class a struct instead?
 
+``` csharp
 struct Person
 {
     string Name;
@@ -87,6 +94,7 @@ alice.age = 33;
 
 joe = alice;
 joe.age = 50;
+```
 
 Now, what is the value of alice.age? In this case, you should say that alice is still 33 because when we assigned alice to joe, joe got a copy of everything that alice had. So, joe’s name is “alice” and before we asign 50 to joe.age, joe.age holds the value of 33.  But the assignment has no impact on the value of alice.age.
 
@@ -95,6 +103,7 @@ Stacks And Heaps
 
 Now, no description of value types and reference types would be complete without some discussion of stacks and heaps. The stack is the location in memory that holds value types and reference pointers (remember I said the variable points to the memory being occupied by the value?) in your method. So when you declare a variable inside of a method that memory gets “Pushed” onto the stack. When you pass a variable to another method, that variable gets copied into a temporary variable and placed on the stack. So, doing something like
 
+``` csharp
 void Foo()
 {
     int i = 23;
@@ -105,9 +114,11 @@ void Foo2(int f)
 {
    // do something with f
 }
+```
 
 will copy 23 so that the variable f in Foo2 will not be the variable i in Foo. So if we change the value of f in Foo2 to 32, what will be the value of i when Foo2 returns? Because it is a copy, it will still be 23. The heap, on the other hand, is a location in memory that is outside of the scope of the methods we create.  So the only thing being passed around in our functions that use reference variables is pointers.  But, because they are pointers, any thing we do do a reference object inside of a method will be reflected in the variable located inside of the method that called it.
 
+``` csharp
 void Foo()
 {
     var p = new Person();
@@ -119,14 +130,17 @@ void Foo2(Person person)
 {
     person.age = 44;
 }
+```
 
 So when Foo2 returns, p.age will be 44. However, if we change what person is pointing to…
 
+``` csharp
 void Foo2(Person person)
 {
     person = new Person();
     person.age = 44;
 }
+```
 
 p would remain unchanged and p.age would still be 24.
 
