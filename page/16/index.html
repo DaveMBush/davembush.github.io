@@ -118,7 +118,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/nunit-visual-studio/" data-id="ckc7x3b3a015lasx2lopxysrh" class="article-share-link">
+      <a data-url="http://davembush.github.com/nunit-visual-studio/" data-id="ckchqxjp200cn2gx2l6kusmmt" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -165,46 +165,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>It is amazing to me how few programmers understand the fundamentals of how variables work.  Not just in .NET or C# specifically, but in every language they work in.  It amazes me for two reasons.  First, I don’t think I could program if I didn’t understand what was physically happening as a result of the code I was writing.  Not knowing how the variables relate to the memory that they use would be, to me, a major limitation.  But it also amazes me because I don’t think anyone can program intelligently until they do know what is happening. So, I’ll start from the outside and move in to what’s happening in memory.</p>
-<h2 id="What-is-A-Value-Type"><a href="#What-is-A-Value-Type" class="headerlink" title="What is A Value Type"></a>What is A Value Type</h2><p>The first question we need to qualify is, “What types in .NET are referred to as Value types?  Common value types are int, double, float, decimal, and bool.  What we ypically refer to as “primitives”.  But, there are other types that are also value types.  Enums, structs, and DateTime(because it is a struct) are also value types.</p>
-<h2 id="What-is-a-Reference-Type"><a href="#What-is-a-Reference-Type" class="headerlink" title="What is a Reference Type"></a>What is a Reference Type</h2><p>Reference types are any types in .NET that derive from a Class and require the “new” keyword in order to have an instance of a variable of that type. Why didn’t I just say, “any type that derives from a Class?”  Well, the fact of the matter is that every type in .NET derives from a Class.  The top most class is “Object”.  All of the value types derive from the subclass of Object named, “System.ValueType”.</p>
-<h2 id="What-Happens-In-Memory"><a href="#What-Happens-In-Memory" class="headerlink" title="What Happens In Memory"></a>What Happens In Memory</h2><p>But it is what happens in memory when we use these variable types that is of interest to us. When you declare a variable that is a Value type and then assign a value to it, the memory that variable occupies holds the value you assigned to it.  The variable is just a representation of the actual value. Contrast this to a reference type.  When you new up (instantiate) a variable that is a reference type, the first thing that is happening is that memory is being allocated to hold the variables in the class and then memory is being set aside to hold a pointer to the memory we just allocated. So, with a reference type, we are only pointing to the memory we are actually using.  With a value type the variable IS the value we are using. This has implications to how the memory is used when we do assignments.</p>
-<h2 id="Value-Example"><a href="#Value-Example" class="headerlink" title="Value Example"></a>Value Example</h2><p>For example, look at the code below.</p>
-<p>int a = 1;<br>int b = 2;</p>
-<p>a = b;</p>
-<p>When we assign b to a, we are copying the value occupied by b into the memory location occupied by a.</p>
-<h2 id="Reference-Example"><a href="#Reference-Example" class="headerlink" title="Reference Example"></a>Reference Example</h2><p>But what happens when we do the same thing with a reference type?</p>
-<p>class Person<br>{<br>    string Name;<br>    int age;<br>}</p>
-<p>var joe = new Person();<br>joe.Name = “Joe”;<br>joe.age = 23;</p>
-<p>var alice = new Person();<br>alice.Name = “alice”;<br>alice.age = 33;</p>
-<p>joe = alice;<br>joe.age = 50;</p>
-<p>What will be the value of alice.age? You should say 50 because once we assigned alice to joe, alice and joe point to the same Person object and the Person object that alice pointed to is no longer available.</p>
-<h2 id="How-About-Structs"><a href="#How-About-Structs" class="headerlink" title="How About Structs?"></a>How About Structs?</h2><p>But what happens if we make the Person class a struct instead?</p>
-<p>struct Person<br>{<br>    string Name;<br>    int age;<br>}</p>
-<p>Person joe;<br>joe.Name = “Joe”;<br>joe.age = 23;</p>
-<p>Person alice;<br>alice.Name = “Alice”;<br>alice.age = 33;</p>
-<p>joe = alice;<br>joe.age = 50;</p>
-<p>Now, what is the value of alice.age? In this case, you should say that alice is still 33 because when we assigned alice to joe, joe got a copy of everything that alice had. So, joe’s name is “alice” and before we asign 50 to joe.age, joe.age holds the value of 33.  But the assignment has no impact on the value of alice.age.</p>
-<h2 id="Stacks-And-Heaps"><a href="#Stacks-And-Heaps" class="headerlink" title="Stacks And Heaps"></a>Stacks And Heaps</h2><p>Now, no description of value types and reference types would be complete without some discussion of stacks and heaps. The stack is the location in memory that holds value types and reference pointers (remember I said the variable points to the memory being occupied by the value?) in your method. So when you declare a variable inside of a method that memory gets “Pushed” onto the stack. When you pass a variable to another method, that variable gets copied into a temporary variable and placed on the stack. So, doing something like</p>
-<p>void Foo()<br>{<br>    int i = 23;<br>    Foo2(i);<br>}</p>
-<p>void Foo2(int f)<br>{<br>   // do something with f<br>}</p>
-<p>will copy 23 so that the variable f in Foo2 will not be the variable i in Foo. So if we change the value of f in Foo2 to 32, what will be the value of i when Foo2 returns? Because it is a copy, it will still be 23. The heap, on the other hand, is a location in memory that is outside of the scope of the methods we create.  So the only thing being passed around in our functions that use reference variables is pointers.  But, because they are pointers, any thing we do do a reference object inside of a method will be reflected in the variable located inside of the method that called it.</p>
-<p>void Foo()<br>{<br>    var p = new Person();<br>    p.age = 24;<br>    Foo2(p);<br>}</p>
-<p>void Foo2(Person person)<br>{<br>    person.age = 44;<br>}</p>
-<p>So when Foo2 returns, p.age will be 44. However, if we change what person is pointing to…</p>
-<p>void Foo2(Person person)<br>{<br>    person = new Person();<br>    person.age = 44;<br>}</p>
-<p>p would remain unchanged and p.age would still be 24.</p>
-<h2 id="Values-Inside-of-a-Class"><a href="#Values-Inside-of-a-Class" class="headerlink" title="Values Inside of a Class"></a>Values Inside of a Class</h2><p>The final question that you should be asking at this point is when I declare a value type as a member variable of my class, as I’ve done with the age variable in Person above, where is the age variable located, on the stack or on the heap? The answer to that would be it is located in the heap because it is a member of a class that is located in the heap.  And if we created another person object inside of person, the pointer would also be located in the heap and it would point to another location of the heap.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/value-type-vs-reference-type/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/value-type-vs-reference-type/" data-id="ckc7x3a99006aasx2n50t0bnj" class="article-share-link">
+      <a data-url="http://davembush.github.com/value-type-vs-reference-type/" data-id="ckchqxiv9008g2gx27rie9194" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -254,24 +226,18 @@
 <p>And  as I was running the leaf blower, I was thinking about what I was going to talk about today.  And then it struck me, why not just talk about cleaning up the leaves?  I mean if John Sonmez and Scott Hanselman can talk about stuff that isn’t necessarily programming related, why can’t I?</p>
 <p>But then I realized, I could talk about cleaning up the leaves in my yard AND talk about programming at the same time.</p>
 <p>Think about it.</p>
-<h2 id="Why-Rake-Leaves"><a href="#Why-Rake-Leaves" class="headerlink" title="Why Rake Leaves?"></a>Why Rake Leaves?</h2><p>Why did I clean up the leaves in my yard?  It wasn’t to make my yard look better.  No one can see my yard from the road.  No one would care but my family, and they do care.  But even if they didn’t, we ultimately clean the leaves off our yards because doing that means our grass will grow better next summer by allowing it to see the sun now.  We do it because nasty critters live in leaves.  We remove the leaves from our drive ways and sidewalks so that snow removal will be easier in the winter.  In short, as hard as the work is to take care of our leaves in the fall, the work is worth it because it makes the rest of the fall and winter easier for us  in the long run.</p>
-<p>What’s interesting about the first reason, allowing the grass to get more sun during the fall months, would mean that it would actually be better to clean up the leaves frequently during the fall rather than waiting for them to all fall and then rake them.  By the time I get to them, it is probably too late to do any real good because I wait for them to all fall before I remove them.  By that time, the sun shines less during the day and the frost has already kicked in.</p>
-<h2 id="How-Is-This-Related-to-Code"><a href="#How-Is-This-Related-to-Code" class="headerlink" title="How Is This Related to Code?"></a>How Is This Related to Code?</h2><p>And that brings me to our code.  We all have code that needs “raking”.  You know you have code that is duplicated all over the place, but have you taken any time to collect all of that code into one place as a function?</p>
-<p>How many code smells do you have.  Are your functions long?  Do you have conditional blocks nested more than one deep?  Do you have classes that do more than one thing?  Have you written code that isn’t being used because “we might need it some day”?</p>
-<p>As I work with inexperienced programmers, the one thing I notice is that looking for places to simplify code is a skill that needs to be practiced.  It doesn’t come naturally.  Very few programmers assume that as long as the code does what it should, they are done.</p>
-<p>And yet, leaving these code smells in place means that the next time you go in to work on the system, you will not be able to understand the code as well as you should.  Because you haven’t let the sun shine on your code, when you get to it to maintain it, you’ll be working in mud instead of nice green grass.</p>
-<h2 id="The-Challenge"><a href="#The-Challenge" class="headerlink" title="The Challenge"></a>The Challenge</h2><p>So today, your job is to find one place in your code that could be made better.  Make it less complicated.  Make it fewer lines of code (without making it hard to read).  Find two places that are doing essentially the same thing and turn that code into a function.  Find two classes that are tightly coupled (highly dependent on each other) and remove the dependencies.  Do this once a day for the next thirty days and see if you don’t find your code easier to work with than it  is today.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/raking-leaves-and-writing-code/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/raking-leaves-and-writing-code/" data-id="ckc7x3a8e004kasx259dnn5lk" class="article-share-link">
+      <a data-url="http://davembush.github.com/raking-leaves-and-writing-code/" data-id="ckchqxioa006s2gx28sqzhkip" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -318,50 +284,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>My son is learning to program.  Last week he asked me to explain C# properties get and set and, as it turns out, it looks like many others are asking for the same.  So, I’ve decided to spend the time on this post, explaining getters and setters in about as much detail as one can expect. So here it goes…</p>
-<h2 id="Member-Variables"><a href="#Member-Variables" class="headerlink" title="Member Variables"></a>Member Variables</h2><p>So, a class has “member variables” that are typically scoped as private, although they could be (but shouldn’t be) scoped as public.</p>
-<p>class SomeClass<br>{<br>    private int _someMemberIntegerVariable;<br>}</p>
-<p>Inside the class definition but not in the methods.  You’ll also sometimes see this referred to as a “field”.  I call them “member variables” because that is what I learned them as back when I was programming C++.</p>
-<h2 id="Local-Variables"><a href="#Local-Variables" class="headerlink" title="Local Variables"></a>Local Variables</h2><p>If the variable is in a method, it is called a “local variable”</p>
-<p>class SomeClass<br>{<br>    public void SomeMethod()<br>    {<br>        int someLocalIntegerVariable;<br>    }<br>}</p>
-<h2 id="Class-“State”"><a href="#Class-“State”" class="headerlink" title="Class “State”"></a>Class “State”</h2><p>Now, the reason we have member variables is because they hold the “state” of the object.  For example, you might have a person class (typical example).  The Person class would have a firstName, lastName, birthDate as member variables so that when the class is created (and becomes an object) they can hold the state of the person. “Dave”, “Bush”, 6/20/61.</p>
-<p>class Person<br>{<br>    private string _firstName;<br>    private string _lastName;<br>    private Date _birthDate;<br>}</p>
-<h2 id="Old-Time-Get-and-Set"><a href="#Old-Time-Get-and-Set" class="headerlink" title="Old Time Get and Set"></a>Old Time Get and Set</h2><p>Now, in the old days (my C++ days) we’d just make those member variables public so that any other class could access them directly.  The problem with that is that any other class could access them directly leaving our class unable to control what exactly came into them.  And so, some gatekeeping was added.  In C++ and Java, that was done with setter methods and getter methods.  In Java that may have changed since the days I programmed in Java, but they started that way at least. That is, setFirstName(string name), setLastName(string name), setBirthDay(date birthday)</p>
-<p>class Person<br>{<br>    private string _firstName;<br>    private string _lastName;<br>    private Date _birthDate;</p>
-<pre><code>public setFirstName(firstName)
-{
-    _firstName = firstName;
-}
-public setLastName(lastName)
-{
-    _lastName = lastName;
-}
-public setFirstName(Date birthDate)
-{
-    _birthDate = birthDate;
-}
-</code></pre><p>}</p>
-<p>  and to retrieve them…. getFirstName(), getLastName(), getBirthDate() the setters and getters are public (or protected, or private as needed) but the member variables are always private so that only the class they are declared in can access them. Inside the setter, we make sure the data is valid before we set the member variable, or possibly do some sort of computation before we store it, or even pass it on to some other location. But as far as anyone using the class is concerned, it is set setting a value and when it calls the getter, it retrieves the value, or something similar.</p>
-<h2 id="C-Properties-Get-and-Set"><a href="#C-Properties-Get-and-Set" class="headerlink" title="C# Properties - Get and Set"></a>C# Properties - Get and Set</h2><p>So along comes C# and that language says, “having a getter method and a setter method is pretty dumb, we should syntactically stich them together.” And so they came up with properties The syntax for that is</p>
-<p>private datatype _propertyName;<br>public datatype PropertyName<br>{<br>    get {return _propertyName;}<br>    set{_propertyName = value;}<br>}</p>
-<p>Which is all declared inside a class.  The member variable doesn’t have to be named the same as the property, but it often is .  It is customary to name member variables with a leading underscore.  Local variables start with a lowercase character. So, properties and member variables are distinct. Although, you may have thought they were essentially the same thing. At the end of the day, once they are compiled, properties are just methods. But syntactically, you access them as though they were variables.  In fact, if you looked at a property in Intermediate Language (IL), the language that all .NET code compiles to, you would see that it is just a method. To access a property from within your code, you would access it as</p>
-<p>someObject.FirstName = “Dave”;</p>
-<p>or</p>
-<p>someVariable = someObject.FirstName;</p>
-<p>the only reason they exist at all is to keep the outside world (outside the class) from stomping on the member variables of the class directly. The compiler does for us what the old timers did (and the Java guys still do) using getMethod and setMethod So, as it turns out, we need all that gatekeeping, but the fact of the matter is, many times we don’t. When I was teaching, I’d have guys say, “if I don’t need the gatekeeper, why even bother with the properties?” Which is kind of a valid point But I always countered, “But what if you eventually do?</p>
-<h2 id="Enhanced-Properties"><a href="#Enhanced-Properties" class="headerlink" title="Enhanced Properties"></a>Enhanced Properties</h2><p>I think Microsoft heard that so they embellished the language so that we don’t have to declare the member variable if all we are going to do is just pass the data on through to it. That syntax is</p>
-<p>public dataType PropertyName {get;set;}</p>
-<p>the compiler generates the member variable for you So if I wanted to actually do something with the member variable, you would need to declare the member variable. It depends on what you were going to do with it. If you just wanted to retrieve the data at some other point in your application, you’d just use the property.  But if you needed to manipulate the data as it was being set or retrieved, you’d have to use the original syntax. And that’s properties up until today.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/c-properties-get-and-set/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/c-properties-get-and-set/" data-id="ckc7x3a65001basx20b35az73" class="article-share-link">
+      <a data-url="http://davembush.github.com/c-properties-get-and-set/" data-id="ckchqxi51001o2gx22pxjcy9n" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -407,32 +341,19 @@ public setFirstName(Date birthDate)
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>loading…</p>
-<p>This happened a couple of years ago, but it is still relevant because I know of at least one place where it is still happening even though Microsoft has fixed the issue that initially caused this hack to be put in place in the first place.</p>
-<h2 id="Problem-In-Production-–-Oh-NO"><a href="#Problem-In-Production-–-Oh-NO" class="headerlink" title="Problem In Production – Oh NO!"></a>Problem In Production – Oh NO!</h2><p>Here’s the problem we were seeing.  We had several large PDF files that the client wanted to put up on the site so that their customers could download them.  The problem that we were seeing is that even though the site worked fine under development and QA, the site seemed to consume a lot of memory under load.</p>
-<p>Another symptoms we saw was that the file download took a lot of time to start, or timed out completely.  But the main issue was the memory because when the memory was consumed, the site would restart, and because it was a worker process crash that caused it, the restart took the site down.  This is not something you want to see happen when you are working with a client with world wide exposure.  A client who, if I told you the name, I’m sure you would recognize.</p>
-<p>In fact, it was the site not responding, or crashing, that first alerted us to the problem.  So, as soon as we knew the site wasn’t responding, I’d log onto the server and fire up task manager to see what was going on.</p>
-<h2 id="Server-Management-Tip"><a href="#Server-Management-Tip" class="headerlink" title="Server Management Tip"></a>Server Management Tip</h2><p>One of the things I did early on managing the servers, is that I set up an entirely separate app pool for each of the web sites we are hosting.  This way, we can monitor the memory and CPU activity of each one independently.  For those of you who are interested, the way to make the pool name show up in task manager is to run the pool in ApplicationPoolIdentity, a setting you can get to through “Advanced Settings…”  If you are only hosting one site, you shouldn’t need to do this, but in my case, with multiple sites, this told me a lot about what was going on with the sites and ultimately helped me track down what the problem was.</p>
-<p>By the way, you should always run each of your sites under a separate application pool so that when one site is having trouble, every site on your server doesn’t have trouble.  Imagine having an issue and not even knowing for sure which site was causing the trouble.  It’s bad enough not knowing what page is causing the problem.</p>
-<h2 id="It-Is-a-Memory-Issue-Now-What"><a href="#It-Is-a-Memory-Issue-Now-What" class="headerlink" title="It Is a Memory Issue.  Now What?"></a>It Is a Memory Issue.  Now What?</h2><p>OK.  So, I could see the memory increasing as soon as the site came back up.  So, now to try to track down what was causing memory issues.</p>
-<p>I tried various things along the way, none of them shed any light at all on the problem.  I even got dotMemory from JetBrains to see if I could find anything.  A memory leak maybe?  No, none of my code had even a small leak.</p>
-<h2 id="The-Fix-Discovered"><a href="#The-Fix-Discovered" class="headerlink" title="The Fix Discovered"></a>The Fix Discovered</h2><p>And then I finally stumbled on the issue.  I can’t remember what it was that we installed that needed this, but what it did was change our web.config file so that it had a section in it that looks like this:</p>
-<p><configuration><br>… lots of other configuration stuff …<br>  &lt;system.webServer&gt;<br>    &lt;modules <strong>runAllManagedModulesForAllRequests=”true”</strong>&gt;</configuration></p>
-<p>What that causes IIS to do is to run ALL of your web request through ALL of your .NET modules.  Why is this a problem you ask?  Because it even runs all of your images, css, javascript and other static content.  This isn’t normally a huge problem because most of that stuff is relatively small. But, when you try to run a be PDF through that pipeline, you’ll run out of memory because, and this is the major issue here, because the whole file has to be loaded into memory on the server before it can be sent on to the web browser to download.</p>
-<p>Make sure that runAllManagedModulesForAllRequest is either set to false, or doesn’t exist in your web.config file.  If you need it to be turned on for some valid reason that I am not thinking of, at least put your static files on another site where this can be turned off.</p>
-<h2 id="Moral-Of-The-Story"><a href="#Moral-Of-The-Story" class="headerlink" title="Moral Of The Story"></a>Moral Of The Story</h2><p>Now, the question that we should be asking now that we’ve figured it all out is, why wasn’t this caught earlier?  When a site goes up, isn’t all of the functionality, including all of the links to all of the images, files to download, and other pages on the site and off the site supposed to be tested?</p>
-<p>Yes, of course they are, but if you haven’t at least written down where all of this is, if you don’t have a systematic way of testing EVERYTHING, you WILL end up with these kind of errors once you put the site live.  This is to say nothing of load testing along the way.  This can all be prevented. .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
-
+        <p>This happened a couple of years ago, but it is still relevant because I know of at least one place where it is still happening even though Microsoft has fixed the issue that initially caused this hack to be put in place in the first place.</p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/asp-net-server-performance-testing/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-server-performance-testing/" data-id="ckc7x3a5v000uasx2rzgy5m7n" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-server-performance-testing/" data-id="ckchqxi2w000v2gx2o5mkziva" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -513,7 +434,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/css-animation-resources/" data-id="ckc7x3a6d001oasx2csx6rz68" class="article-share-link">
+      <a data-url="http://davembush.github.com/css-animation-resources/" data-id="ckchqxi6r002d2gx28p5zt8lm" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -583,7 +504,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/nunit-unity-dependency-injection-moq-and-private-fields/" data-id="ckc7x3a88004aasx24vilmrbt" class="article-share-link">
+      <a data-url="http://davembush.github.com/nunit-unity-dependency-injection-moq-and-private-fields/" data-id="ckchqxim0006f2gx2z4l0umcn" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -670,7 +591,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/technical-debt-is-inevitable/" data-id="ckc7x3a8u005easx2q421y9r6" class="article-share-link">
+      <a data-url="http://davembush.github.com/technical-debt-is-inevitable/" data-id="ckchqxisg007o2gx2gqh8vtuh" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -737,7 +658,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/selenium-performance-improvements/" data-id="ckc7x3a8l004wasx202tl1fmr" class="article-share-link">
+      <a data-url="http://davembush.github.com/selenium-performance-improvements/" data-id="ckchqxipy00722gx2yobsxza7" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -822,7 +743,7 @@ public setFirstName(Date birthDate)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/webforms-vs-mvc–the-war-is-over/" data-id="ckc7x3a9d006gasx20l4voa8a" class="article-share-link">
+      <a data-url="http://davembush.github.com/webforms-vs-mvc–the-war-is-over/" data-id="ckchqxiwk008p2gx2id1fkk13" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

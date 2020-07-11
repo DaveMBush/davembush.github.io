@@ -5,18 +5,18 @@
   
   <title>ASP.NET Server Performance Testing | Dave&#39;s Notebook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="loading… This happened a couple of years ago, but it is still relevant because I know of at least one place where it is still happening even though Microsoft has fixed the issue that initially caused">
-<meta name="keywords" content="testing,asp.net,memory,performance">
+  <meta name="description" content="This happened a couple of years ago, but it is still relevant because I know of at least one place where it is still happening even though Microsoft has fixed the issue that initially caused this hack">
+<meta name="keywords" content="asp.net,testing,memory,performance">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ASP.NET Server Performance Testing">
 <meta property="og:url" content="http://davembush.github.com/asp-net-server-performance-testing/index.html">
 <meta property="og:site_name" content="Dave&#39;s Notebook">
-<meta property="og:description" content="loading… This happened a couple of years ago, but it is still relevant because I know of at least one place where it is still happening even though Microsoft has fixed the issue that initially caused">
+<meta property="og:description" content="This happened a couple of years ago, but it is still relevant because I know of at least one place where it is still happening even though Microsoft has fixed the issue that initially caused this hack">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.000Z">
+<meta property="og:updated_time" content="2020-07-11T14:24:01.460Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ASP.NET Server Performance Testing">
-<meta name="twitter:description" content="loading… This happened a couple of years ago, but it is still relevant because I know of at least one place where it is still happening even though Microsoft has fixed the issue that initially caused">
+<meta name="twitter:description" content="This happened a couple of years ago, but it is still relevant because I know of at least one place where it is still happening even though Microsoft has fixed the issue that initially caused this hack">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -109,8 +109,8 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>loading…</p>
-<p>This happened a couple of years ago, but it is still relevant because I know of at least one place where it is still happening even though Microsoft has fixed the issue that initially caused this hack to be put in place in the first place.</p>
+        <p>This happened a couple of years ago, but it is still relevant because I know of at least one place where it is still happening even though Microsoft has fixed the issue that initially caused this hack to be put in place in the first place.</p>
+<a id="more"></a>
 <h2 id="Problem-In-Production-–-Oh-NO"><a href="#Problem-In-Production-–-Oh-NO" class="headerlink" title="Problem In Production – Oh NO!"></a>Problem In Production – Oh NO!</h2><p>Here’s the problem we were seeing.  We had several large PDF files that the client wanted to put up on the site so that their customers could download them.  The problem that we were seeing is that even though the site worked fine under development and QA, the site seemed to consume a lot of memory under load.</p>
 <p>Another symptoms we saw was that the file download took a lot of time to start, or timed out completely.  But the main issue was the memory because when the memory was consumed, the site would restart, and because it was a worker process crash that caused it, the restart took the site down.  This is not something you want to see happen when you are working with a client with world wide exposure.  A client who, if I told you the name, I’m sure you would recognize.</p>
 <p>In fact, it was the site not responding, or crashing, that first alerted us to the problem.  So, as soon as we knew the site wasn’t responding, I’d log onto the server and fire up task manager to see what was going on.</p>
@@ -119,11 +119,11 @@
 <h2 id="It-Is-a-Memory-Issue-Now-What"><a href="#It-Is-a-Memory-Issue-Now-What" class="headerlink" title="It Is a Memory Issue.  Now What?"></a>It Is a Memory Issue.  Now What?</h2><p>OK.  So, I could see the memory increasing as soon as the site came back up.  So, now to try to track down what was causing memory issues.</p>
 <p>I tried various things along the way, none of them shed any light at all on the problem.  I even got dotMemory from JetBrains to see if I could find anything.  A memory leak maybe?  No, none of my code had even a small leak.</p>
 <h2 id="The-Fix-Discovered"><a href="#The-Fix-Discovered" class="headerlink" title="The Fix Discovered"></a>The Fix Discovered</h2><p>And then I finally stumbled on the issue.  I can’t remember what it was that we installed that needed this, but what it did was change our web.config file so that it had a section in it that looks like this:</p>
-<p><configuration><br>… lots of other configuration stuff …<br>  &lt;system.webServer&gt;<br>    &lt;modules <strong>runAllManagedModulesForAllRequests=”true”</strong>&gt;</configuration></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line">... lots of other configuration stuff ...</span><br><span class="line">  <span class="tag">&lt;<span class="name">system.webServer</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">modules</span> **<span class="attr">runAllManagedModulesForAllRequests</span>=<span class="string">"true"</span>**&gt;</span></span><br></pre></td></tr></table></figure>
 <p>What that causes IIS to do is to run ALL of your web request through ALL of your .NET modules.  Why is this a problem you ask?  Because it even runs all of your images, css, javascript and other static content.  This isn’t normally a huge problem because most of that stuff is relatively small. But, when you try to run a be PDF through that pipeline, you’ll run out of memory because, and this is the major issue here, because the whole file has to be loaded into memory on the server before it can be sent on to the web browser to download.</p>
 <p>Make sure that runAllManagedModulesForAllRequest is either set to false, or doesn’t exist in your web.config file.  If you need it to be turned on for some valid reason that I am not thinking of, at least put your static files on another site where this can be turned off.</p>
 <h2 id="Moral-Of-The-Story"><a href="#Moral-Of-The-Story" class="headerlink" title="Moral Of The Story"></a>Moral Of The Story</h2><p>Now, the question that we should be asking now that we’ve figured it all out is, why wasn’t this caught earlier?  When a site goes up, isn’t all of the functionality, including all of the links to all of the images, files to download, and other pages on the site and off the site supposed to be tested?</p>
-<p>Yes, of course they are, but if you haven’t at least written down where all of this is, if you don’t have a systematic way of testing EVERYTHING, you WILL end up with these kind of errors once you put the site live.  This is to say nothing of load testing along the way.  This can all be prevented. .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+<p>Yes, of course they are, but if you haven’t at least written down where all of this is, if you don’t have a systematic way of testing EVERYTHING, you WILL end up with these kind of errors once you put the site live.  This is to say nothing of load testing along the way.  This can all be prevented.</p>
 
       
     </div>
@@ -134,7 +134,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-server-performance-testing/" data-id="ckc7x3a5v000uasx2rzgy5m7n" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-server-performance-testing/" data-id="ckchqxi2w000v2gx2o5mkziva" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
