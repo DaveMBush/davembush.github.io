@@ -13,9 +13,9 @@ categories:
 date: 2014-10-16 06:00:00
 ---
 
-loading...
-
 Whoa there Dave.  What are you talking about?  Have you given up the fight? You who have preached the TDD religion.  You who’ve struggled to get organizations to adopt naming conventions, to use version control systems and to use project management software.  The same guy who has implemented continuous integration on his current project?  What’s this world coming to?
+
+<!-- more -->
 
 No. Relax. I haven’t given up.  In fact it is precisely because technical debt is inevitable that we need to implement all of the above.
 

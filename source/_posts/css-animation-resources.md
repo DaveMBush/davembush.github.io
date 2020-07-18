@@ -11,9 +11,9 @@ categories:
 date: 2014-10-30 06:00:00
 ---
 
-loading...
-
 This week I discovered CSS Animations.  Well, I shouldn’t say I discovered it so much as I finally spent some time figuring out what it is and why I would care about it.  This could make so much of what we normally do in JavaScript entirely unnecessary.  So, more for my own benefit than anything else, I thought today I would just create a list of resources that are available. But first, why would you want to use CSS for animation when JavaScript could do it just as well?
+
+<!-- more -->
 
 CSS and HTML live in the same world
 -----------------------------------
