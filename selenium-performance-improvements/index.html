@@ -5,18 +5,18 @@
   
   <title>Selenium Performance Improvements | Dave&#39;s Notebook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="loading… As many of you know, I’ve been using Selenium to do my website testing.  And, if you’ve done any testing with Selenium yourself, you know that Selenium can be even slower if you are using Sel">
+  <meta name="description" content="As many of you know, I’ve been using Selenium to do my website testing.  And, if you’ve done any testing with Selenium yourself, you know that Selenium can be even slower if you are using Selenium Gri">
 <meta name="keywords" content="tdd,c#,bdd,java,selenium">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Selenium Performance Improvements">
 <meta property="og:url" content="http://davembush.github.com/selenium-performance-improvements/index.html">
 <meta property="og:site_name" content="Dave&#39;s Notebook">
-<meta property="og:description" content="loading… As many of you know, I’ve been using Selenium to do my website testing.  And, if you’ve done any testing with Selenium yourself, you know that Selenium can be even slower if you are using Sel">
+<meta property="og:description" content="As many of you know, I’ve been using Selenium to do my website testing.  And, if you’ve done any testing with Selenium yourself, you know that Selenium can be even slower if you are using Selenium Gri">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.000Z">
+<meta property="og:updated_time" content="2020-07-18T15:23:55.892Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Selenium Performance Improvements">
-<meta name="twitter:description" content="loading… As many of you know, I’ve been using Selenium to do my website testing.  And, if you’ve done any testing with Selenium yourself, you know that Selenium can be even slower if you are using Sel">
+<meta name="twitter:description" content="As many of you know, I’ve been using Selenium to do my website testing.  And, if you’ve done any testing with Selenium yourself, you know that Selenium can be even slower if you are using Selenium Gri">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -109,16 +109,16 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>loading…</p>
-<p>As many of you know, I’ve been using <a href="//www.seleniumhq.org/">Selenium</a> to do my website testing.  And, if you’ve done any testing with Selenium yourself, you know that Selenium can be even slower if you are using Selenium Grid. There are several things you might do today to achieve Selenium Performance improvements in order to increase the speed that your of your test run.</p>
+        <p>As many of you know, I’ve been using <a href="//www.seleniumhq.org/">Selenium</a> to do my website testing.  And, if you’ve done any testing with Selenium yourself, you know that Selenium can be even slower if you are using Selenium Grid. There are several things you might do today to achieve Selenium Performance improvements in order to increase the speed that your of your test run.</p>
+<a id="more"></a>
 <h2 id="CacheLookup-attribute-or-Annotation-if-you-are-using-Java"><a href="#CacheLookup-attribute-or-Annotation-if-you-are-using-Java" class="headerlink" title="CacheLookup attribute (or Annotation if you are using Java)"></a>CacheLookup attribute (or Annotation if you are using Java)</h2><p>This is probably the most obvious place for improvement.  Assuming you are using the Page Model pattern in your testing, your page model should have properties that already look something like:</p>
-<p>[FindsBy(How = How.Id, Using = “radioButton”)]<br>private IWebElement RadioButton{ get; set;};</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">FindsBy(How = How.Id, Using = <span class="meta-string">"radioButton"</span>)</span>]</span><br><span class="line"><span class="keyword">private</span> IWebElement RadioButton&#123; <span class="keyword">get</span>; <span class="keyword">set</span>;&#125;;</span><br></pre></td></tr></table></figure>
 <p>What you may not know is that the way this works is that EVERY time you access the property named RadioButton it will lookup the location of the radio button.  The RadioButton property is actually a proxy for the real IWebElement that it will lookup on the fly. So, if you are using the element more than once in your test, it will perform the lookup each time you access the RadioButton property. By adding the CacheLookup attribute to the RadioButton property,</p>
-<p>[FindsBy(How = How.Id, Using = “radioButton”), CacheLookup]<br>private IWebElement RadioButton{ get; set;};</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">FindsBy(How = How.Id, Using = <span class="meta-string">"radioButton"</span>), CacheLookup</span>]</span><br><span class="line"><span class="keyword">private</span> IWebElement RadioButton&#123; <span class="keyword">get</span>; <span class="keyword">set</span>;&#125;;</span><br></pre></td></tr></table></figure>
 <p>you can force the RadioButton to be resolved once and only once. Most of my test ask for elements once per test, so I didn’t see any major performance gains by adding this.  Your mileage may vary.</p>
 <h2 id="CacheLookup-Warning"><a href="#CacheLookup-Warning" class="headerlink" title="CacheLookup Warning"></a>CacheLookup Warning</h2><p>Be careful when adding CacheLookup to your properties because any time the HTML is recreated, the element will become “stale” and you’ll need to look it up again. For example, in one of the pages I’m testing, I have two modal windows that get created as part of the test.  Each time they are created, they have to be resolved again because the old ones no longer exist. It would be like trying to reference a pointer to an object that no longer exist because something else deleted it.  Actually, that’s exactly what is happening.</p>
 <h2 id="CacheLookup-Only-Solves-One-of-Your-Problems"><a href="#CacheLookup-Only-Solves-One-of-Your-Problems" class="headerlink" title="CacheLookup Only Solves One of Your Problems"></a>CacheLookup Only Solves One of Your Problems</h2><p>But if all you do to your site is add CacheLookup, you are wasting your time.  You have to start thinking like your code. Did you know that every time you access a property on an IWebElement, Selenium has to make a call to the browser to access the current value? Yep. Actually, if you think about it, this is what you hope it does.  It is what makes code like this work:</p>
-<p>Wait.Until(x =&gt; Page.RadioButton.GetAttrinbute(“disabled”));</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Wait.Until(x =&gt; Page.RadioButton.GetAttrinbute(<span class="string">"disabled"</span>));</span><br></pre></td></tr></table></figure>
 <p>But how many times to we write code that goes after a property multiple times when we know the value, or at least we assume the value, hasn’t changed? Or how many of you are doing the same thing multiple times in the same test? For example, in the code I’m testing currently, I have a header and a footer that I need to hide so that when an element is scrolled into view by Selenium, it doesn’t scroll under the header or the footer. I’m currently hiding and showing every time I perform some action on an element.  But now that I’m starting to think about performance, I’m asking myself, “What was I thinking?!” In this case, I would save a lot of time by turning the header off once a the beginning of my test.  I bet my test end up running twice as fast simply by doing that. So, keep in mind that every Selenium call you make is probably going to have to access the server in order to perform the action or retrieve the value you are looking for and try to write your code so that you are only making that call to the server one time per test. I bet you see some performance improvements.</p>
 
       
@@ -130,7 +130,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/selenium-performance-improvements/" data-id="ckchqxipy00722gx2yobsxza7" class="article-share-link">
+      <a data-url="http://davembush.github.com/selenium-performance-improvements/" data-id="ckcrsyjuq004uu0x2ykjk48x6" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

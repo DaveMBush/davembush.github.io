@@ -5,19 +5,19 @@
   
   <title>NUnit, Unity Dependency Injection, MOQ and Private Fields | Dave&#39;s Notebook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="loading… I had an interesting puzzle to solve this week that I thought I would share with you in case someone else is looking for a similar solution. There was some code that I needed to test that ult">
+  <meta name="description" content="I had an interesting puzzle to solve this week that I thought I would share with you in case someone else is looking for a similar solution. There was some code that I needed to test that ultimately c">
 <meta name="keywords" content="dependency injection,nunit,reflection,unity">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NUnit, Unity Dependency Injection, MOQ and Private Fields">
 <meta property="og:url" content="http://davembush.github.com/nunit-unity-dependency-injection-moq-and-private-fields/index.html">
 <meta property="og:site_name" content="Dave&#39;s Notebook">
-<meta property="og:description" content="loading… I had an interesting puzzle to solve this week that I thought I would share with you in case someone else is looking for a similar solution. There was some code that I needed to test that ult">
+<meta property="og:description" content="I had an interesting puzzle to solve this week that I thought I would share with you in case someone else is looking for a similar solution. There was some code that I needed to test that ultimately c">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://ir-na.amazon-adsystem.com/e/ir?t=davmbusnetapp-20&l=as2&o=1&a=0131177052">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.000Z">
+<meta property="og:updated_time" content="2020-07-18T15:22:34.042Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NUnit, Unity Dependency Injection, MOQ and Private Fields">
-<meta name="twitter:description" content="loading… I had an interesting puzzle to solve this week that I thought I would share with you in case someone else is looking for a similar solution. There was some code that I needed to test that ult">
+<meta name="twitter:description" content="I had an interesting puzzle to solve this week that I thought I would share with you in case someone else is looking for a similar solution. There was some code that I needed to test that ultimately c">
 <meta name="twitter:image" content="http://ir-na.amazon-adsystem.com/e/ir?t=davmbusnetapp-20&l=as2&o=1&a=0131177052">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
@@ -111,19 +111,19 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>loading…</p>
-<p>I had an interesting puzzle to solve this week that I thought I would share with you in case someone else is looking for a similar solution. There was some code that I needed to test that ultimately called into the database. Since this is a UNIT test and all I was interested in testing was one specific function and the state of one specific field in another  object, I had neither the need, nor the desire, to let that call to the database happen.  Since MOQ is  my mocking framework of choice, I wanted to mock out the database object the method was using so that it would return whatever was expected without actually calling down into the database. There were several problems.  The first was that the database object is a private field in the class I was testing and it got created by the constructor.  Second, the code that needed to use the database object is passing the object by reference (using the “ref” keyword) so that I could no setup my class that needed that object to just ignore it. There were some other items I needed to inject, but they were pretty straight forward.</p>
+        <p>I had an interesting puzzle to solve this week that I thought I would share with you in case someone else is looking for a similar solution. There was some code that I needed to test that ultimately called into the database. Since this is a UNIT test and all I was interested in testing was one specific function and the state of one specific field in another  object, I had neither the need, nor the desire, to let that call to the database happen.  Since MOQ is  my mocking framework of choice, I wanted to mock out the database object the method was using so that it would return whatever was expected without actually calling down into the database. There were several problems.  The first was that the database object is a private field in the class I was testing and it got created by the constructor.  Second, the code that needed to use the database object is passing the object by reference (using the “ref” keyword) so that I could no setup my class that needed that object to just ignore it. There were some other items I needed to inject, but they were pretty straight forward.</p>
+<a id="more"></a>
 <h2 id="Disclaimer"><a href="#Disclaimer" class="headerlink" title="Disclaimer"></a>Disclaimer</h2><p>But first, I realize that some purist out there is going to leave me a comment that says you shouldn’t use a Dependency Injection container in your unit test.  My answer to that is, yes, ideally, one should not do this.  But, not everything is ideal.  Not every project is a “green field” project (and in fact about 95% of them aren’t).  And in some cases there is so much technical debt involved that the best we can do is a hack.  Read, <a href="//www.amazon.com/gp/product/0131177052/ref=as_li_tl?ie=UTF8&amp;camp=1789&amp;creative=390957&amp;creativeASIN=0131177052&amp;linkCode=as2&amp;tag=davmbusnetapp-20&amp;linkId=2ULNYA2XTSEGDPLA">Working Effectively with Legacy Code</a><img src="//ir-na.amazon-adsystem.com/e/ir?t=davmbusnetapp-20&amp;l=as2&amp;o=1&amp;a=0131177052" alt> for other illustrations of “hacks” to get code under test. So, there’s the problem.  It may not make a lot of sense yet, especially if you are not familiar with the tools.  So let’s walk through some code.</p>
 <h2 id="The-Code"><a href="#The-Code" class="headerlink" title="The Code"></a>The Code</h2><p>The main method I wanted to test was hanging off a POCO class.  It is using what we call a “visitor” pattern (though I’m pretty sure this is not what the pattern is supposed to look like).  So we have an Accept() method hanging off of it that knows how to store the poco into the database. That method has a method it calls that hangs off a crud object called Create() that takes the POCO and a reference to the database. I want to mock the Create() method so that it never actually gets called.  The method should return the POCO as part of a list of the POCO’s type. Mocking out the crud object is pretty straight forward:</p>
-<p>_mockCrud = new Mock<icrud>()</icrud></p>
-<p>  and then registering it with the Unity DI container:</p>
-<p>container.RegisterInstance(_mockCrud);</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_mockCrud = <span class="keyword">new</span> Mock&lt;ICrud&gt;()</span><br></pre></td></tr></table></figure>
+<p>and then registering it with the Unity DI container:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">container.RegisterInstance(_mockCrud);</span><br></pre></td></tr></table></figure>
 <p>The real issue, and the main point of this post, is that when I wanted to call Create() what I needed to do was:</p>
-<p>_mockCrud.Setup(<br>    x =&gt; x.Create(It.IsAny<ipocotype>(),<br>        ref It.IsAny<idatabasetype>())<br>    .Returns(pocoList);</idatabasetype></ipocotype></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">_mockCrud.Setup(</span><br><span class="line">    x =&gt; x.Create(It.IsAny&lt;IPOCOType&gt;(),</span><br><span class="line">        <span class="keyword">ref</span> It.IsAny&lt;IDatabaseType&gt;())</span><br><span class="line">    .Returns(pocoList);</span><br></pre></td></tr></table></figure>
 <p>Which you can’t do. What you have to do instead is:</p>
-<p>_mockCrud.Setup(<br>    x =&gt; x.Create(It.IsAny<ipocotype>(),<br>        ref _database))<br>    .Returns(pocoList);</ipocotype></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">_mockCrud.Setup(</span><br><span class="line">    x =&gt; x.Create(It.IsAny&lt;IPOCOType&gt;(),</span><br><span class="line">        <span class="keyword">ref</span> _database))</span><br><span class="line">    .Returns(pocoList);</span><br></pre></td></tr></table></figure>
 <p>And the only way this will work is if the _database variable is pointing to the same object that will ultimately get called. So, here is the magic that I used to make all that work. Reflection. The database object I needed was created as part of the constructor in yet another object that I pass into the Accept() method.  So, I create that object and then use reflection to get the instance of the database from it.</p>
-<p>var visitor = new DataVisitor();<br>var fieldInfo = visitor.GetType()<br>    .GetField(“_database”,<br>        BindingFlags.NonPublic | BindingFlags.Instance);<br>if(fieldInfo != null)<br>{<br>    _database = (Database)fieldInfo.GetValue(visitor);<br>}</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> visitor = <span class="keyword">new</span> DataVisitor();</span><br><span class="line"><span class="keyword">var</span> fieldInfo = visitor.GetType()</span><br><span class="line">    .GetField(<span class="string">"_database"</span>,</span><br><span class="line">        BindingFlags.NonPublic | BindingFlags.Instance);</span><br><span class="line"><span class="keyword">if</span>(fieldInfo != <span class="literal">null</span>)</span><br><span class="line">&#123;</span><br><span class="line">    _database = (Database)fieldInfo.GetValue(visitor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>And now I can use the Setup code I’ve already specified. Hope that helps someone else.</p>
 
       
@@ -135,7 +135,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/nunit-unity-dependency-injection-moq-and-private-fields/" data-id="ckchqxim0006f2gx2z4l0umcn" class="article-share-link">
+      <a data-url="http://davembush.github.com/nunit-unity-dependency-injection-moq-and-private-fields/" data-id="ckcrsyju9004au0x256d9a9ju" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
