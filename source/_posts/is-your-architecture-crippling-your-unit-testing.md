@@ -17,13 +17,13 @@ Last week I wrote a post that talked about Unit Testing and the need to make sur
 In that post, I said:
 
 > So, one way you might go about separating your code from the data is by using dependency injection.  What I’m talking about here is simple injection.  No frameworks.
-> 
+>
 > So, let’s say you have a class you may have called user role.  Given a user id, it will return a role.  How could we code this so that it doesn’t matter where the code comes from?
-> 
+>
 > By declaring an interface to a user role object maybe and then passing an object of that type to the constructor.
-> 
+>
 > By doing this, you can use a fake object when you are testing and a real object when you are using the system in production, but your code won’t really care which one is being used.
-> 
+>
 > At some point we will need to retrieve data.  But the data is always just a side effect.  If you have a way of getting at the data, and you are confident it works, because that standard mechanism has been tested, then you don’t need to write test for the data access piece, you only need to write test for “given I have good data, this method will do this.”
 
 As I reflected on the post, I realized that this may make sense to you if you are already implementing this in your code.  But, if you are new to dependency injection and the concepts of loose coupling in general, this might be a foreign concept for you.
@@ -31,6 +31,8 @@ As I reflected on the post, I realized that this may make sense to you if you ar
 At the very least, I realize now that it could be flushed out a bit more.
 
 So, here we go.
+
+<!-- more -->
 
 N-Tiered Architectures
 ----------------------
