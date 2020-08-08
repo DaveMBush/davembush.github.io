@@ -15,6 +15,8 @@ One of the design principles in software development is to only write what you n
 
 The question is, in what ways do we violate this principle?
 
+<!-- more -->
+
 Features:
 ---------
 
@@ -35,7 +37,7 @@ This is an impossible question to answer because I think all of us think we arch
 
 Well, one of them might be how you defend your decision to write your code in a particular way.  If your answer is anything remotely like, “We might need it to do…” you are probably over architecting.
 
-For example, when you write your code, are you thinking about all of the ways it might be used in the future?  That business rule you are writing, it might be used as a web service, or need to be accessed by JSON.  You never know.
+For example, when you write your code, are you thinking about all the ways it might be used in the future?  That business rule you are writing, it might be used as a web service, or need to be accessed by JSON.  You never know.
 
 But really, unless you need it to do all of that stuff today, you are probably spending more time on the code you are writing than you need to.  Why?  Because most of the time all of those, “we might need it to…” never happen.  And when they do happen, they happen in entirely unexpected ways that you can not foresee.
 
@@ -54,8 +56,8 @@ Prevention:
 
 So, then the next question is, “how do we prevent over architecting?”
 
-Simple, you write Unit Test for all of the code you are writing.  If you are writing code so that it can be accessed in multiple ways, you’ll need to write test that prove it can be accessed in multiple ways.  Are you willing to do that?
+Simple, you write Unit Test for all the code you are writing.  If you are writing code so that it can be accessed in multiple ways, you’ll need to write test that prove it can be accessed in multiple ways.  Are you willing to do that?
 
 When the tests need to be updated to reflect new business requirements, are you going to want to update them all?
 
-So the next time you, or someone you knows says, “It might need to…” maybe you should ask them what the chances of them needing that really are and is it worth spending the extra time on it now.
+So the next time you, or someone you know says, “It might need to…” maybe you should ask them what the chances of them needing that really are and is it worth spending the extra time on it now.

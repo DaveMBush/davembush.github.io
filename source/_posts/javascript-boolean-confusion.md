@@ -14,6 +14,9 @@ What could possibly be confusing about JavaScript Booleans you ask?
 
 Well, here’s several logical statements written in JavaScript.  Do you know what each does?
 
+<!-- more -->
+
+``` javascript
 if("0" == true)
 
 if("0")
@@ -34,15 +37,12 @@ if(someVariable == true)
 if(!someVariable === true)
 
 if(!!someVariable === true)
-
-.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, "Courier New", courier, monospace; background-color: #ffffff; /\*white-space: pre;\*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }
+```
 
 if(“0” == true)
 ---------------
 
-"0" == true
-
-.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, "Courier New", courier, monospace; background-color: #ffffff; /\*white-space: pre;\*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }resolves to false.  Why?  Because both sides of the equal are converted to numerics and then evaluated.  This gives us, 0 == 1 which is in fact false.
+`"0" == true` resolves to false.  Why?  Because both sides of the equal are converted to numerics and then evaluated.  This gives us, `0 == 1` which is in fact false.
 
 However,
 
