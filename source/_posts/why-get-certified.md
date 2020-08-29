@@ -14,6 +14,8 @@ date: 2014-07-24 13:00:00
 
 Last week I mentioned that I’m working toward getting my MCSD certification.  Several weeks ago I received my [ScrumMaster Certification](//www.scrumalliance.org/community/profile/dbush2).  This raises the question, “Why get certified at all?” What follows is a list of reasons why I am perusing certification.
 
+<!-- more -->
+
 I don’t know what I don’t know
 ------------------------------
 

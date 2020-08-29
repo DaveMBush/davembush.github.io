@@ -22,7 +22,7 @@ Running Selenium in parallel from .NET seems to be a problem because, as of the 
 *   know how to use the Page Model pattern
 *   know how to use your chosen test harness.
 
-OK.  On to the main event.
+<!--- more -->
 
 Here Is The Problem
 -------------------
@@ -37,28 +37,36 @@ Enter the little known class, [DynamicObject](//msdn.microsoft.com/en-us/library
 Using Statements And Constructor
 --------------------------------
 
+``` csharp
 using System;
 using System.Collections.Concurrent;
 using System.Dynamic;
 using System.Reflection;
 using System.Threading.Tasks;
+```
 
 So, let’s get started.  The first thing we will need is a class declaration:
 
+``` csharp
 class ParallelPageModel<TPage>:  DynamicObject
 {
 }
+```
 
 TPage allows us to specify the Interface the real Page Model implements.  Yes, we still need the interface, but we won’t need to create a new wrapper class for every page model we want to wrap.  The class  inherits from DynamicObject so that all of our on the fly goodness will work. Next, we’ll need some place to store an array of PageObjects we want to proxy.  So we add a private variable _page for that purpose.
 
-private readonly TPage\[\] _pages;
+``` csharp
+private readonly TPage[] _pages;
+```
 
 By using TPage\[\], we create a variable that is the same type array as the Page Models we are proxying. Next we need a constructor.
 
-ParallelPageModel(params TPage\[\] pages)
+``` csharp
+ParallelPageModel(params TPage[] pages)
 {
     _pages = pages;
 }
+```
 
 By using the params keyword, we can either  pass in page objects as an array or as individual parameters. The magic happens in three overridden methods that are in DynamicObject:
 
@@ -68,9 +76,10 @@ By using the params keyword, we can either  pass in page objects as an array or
 
 So let’s add those methods next:
 
+``` csharp
 public override bool TryInvokeMember
-    (InvokeMemberBinder binder, 
-      object\[\] args, 
+    (InvokeMemberBinder binder,
+      object[] args,
       out object result)
 {
 }
@@ -84,39 +93,47 @@ public override bool TryGetMember
     (GetMemberBinder binder, out object result)
 {
 }
+```
 
 TryInvokeMember
 ---------------
 
 Inside of the TryInvokeMember method, the first thing we will want to do is to use reflection to call into the real methods.  Since we could have multiple instances of the same method we need to call we will want to do this in a loop. When I first worked this out, I started by just implementing a foreach loop but we are going to jump right to using Parallel.ForEach() Parallel.ForEach() will let us pass in an array and run a lambda expression on each element in the array.  So, our foreach loop will look like this:
 
+``` csharp
 var results = new ConcurrentBag<object>();
 Parallel.ForEach(_pages, page =>
 {
     var thisResult = typeof (TPage)
        .InvokeMember(binder.Name,
-        BindingFlags.InvokeMethod | 
-        BindingFlags.Public | 
-        BindingFlags.Instance, 
+        BindingFlags.InvokeMethod |
+        BindingFlags.Public |
+        BindingFlags.Instance,
         null, page, args);
     results.Add(thisResult);
 });
+```
 
 Note that our lambda expression is not doing anything more than a simple reflection call. The result that is returned is added to our ConcurrentBag collection.  ConcurrentBag is a collection that is specifically made for parallel calls.  We could get into trouble if we added something to a List<> collection unless we added some parallelization gatekeeping around it.  I’m for doing as little work as possible. The second thing we want to do is to process the return results. For this we need to setup a basic foreach loop.
 
+``` csharp
 foreach (var thisResult in results)
 {
 }
+```
 
 Inside the foreach loop we will process the results collection. If the type that got  returned is the same type as the type that the page is proxying for, we just make our result value, the return value the TryInvokeMember is going to return for us to the code that called the proxy, equal to the proxy object.
 
+``` csharp
 if (thisResult is TPage)
 {
     result = this;
 }
+```
 
 If the result is not null, meaning either that a previous result was null or we haven’t processed the loop yet, we want to check to see if the value of the current loop result is the same as the loop results we’ve already processed.  If it isn’t, we throw an exception.
 
+``` csharp
 else if (result != null)
 {
     if (!result.Equals(thisResult)) // not the same value
@@ -125,13 +142,16 @@ else if (result != null)
            ("Call to method returns different values.");
     }
 }
+```
 
 Finally, we just set the result to whatever we have at this point.
 
+``` csharp
 else
 {
     result = thisResult;
 }
+```
 
 And then the last thing we want to do is to return true to tell the system we were able to process the method.
 
@@ -140,22 +160,26 @@ TryGetMember
 
 Since the implementation for TryGetMember looks very similar to TryInvokeMethod we’ll tackle that next. In fact, the only difference between the two methods is the code inside of the Parallel.ForEach parameter block. So, here it is:
 
-Parallel.ForEach(_pages, page => 
+``` csharp
+Parallel.ForEach(_pages, page =>
 {
     var thisResult = typeof(TPage)
         .GetProperty(binder.Name).GetValue(page);
     results.Add(thisResult);
 });
+```
 
 TrySetMember
 ------------
 
 TrySetMember is the easiest implementation of all since there are no results to worry about.
 
+``` csharp
 Parallel.ForEach(_pages,
      page => typeof (TPage)
         .GetProperty(binder.Name).SetValue(page, value));
 return true;
+```
 
 Casting
 -------
@@ -166,14 +190,18 @@ using ImpromptuInterface;
 
 And then you’ll need to add this method to the ParallelPageModel class.
 
+``` csharp
 public TPage Cast()
 {
     return this.ActLike();
 }
+```
 
 You would use this like this:
 
+``` csharp
 IMyPageModel p = pageModelProxy.Cast();
+```
 
 Where IMyPageModel is the interface that specifies what your real PageModel class looks like. Just in case someone is tempted to mention this in the comments, you can’t us operator overloading to achieve the cast because we need it to return TPage, which could be anything and the compiler can’t deal with that.  If you really want to use operator overloading you’ll need to provide your own specific implementation that ends up calling the code above.
 
@@ -182,15 +210,17 @@ Calling The ParallelPageModel
 
 To setup the ParallelPageModel, your code would look something like this, assuming that you have a page model class called MyPageModel with an interface of IMyPageModel.
 
+``` csharp
 var pages = new ConcurrentStack<IMyPageModel>();
 Parallel.Invoke(
-    () =\> 
-        pages.Push(PageFactory.GetPageModel("FireFoxGrid"), 
-    () =\> 
+    () =>
+        pages.Push(PageFactory.GetPageModel("FireFoxGrid"),
+    () =>
         pages.Push(PageFactory.GetPageModel("IE11Grid"));
 var pagesArray = pages.ToArray();
-MyTypedPage = 
+MyTypedPage =
     new ParallelPageModel<IMyPageModel>(pagesArray).Cast();
+```
 
 Considerations
 --------------

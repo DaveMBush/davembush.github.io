@@ -14,13 +14,15 @@ date: 2014-07-10 13:00:00
 
 A couple of weeks ago, I mention [“definition of done”](/are-we-there-yet/) which many of my readers may have never heard of before. The phrase, “definition of done” comes out of the agile movement.  But there is no reason why it needs to stay there.  In fact, I would argue that many of the problems we have in the software industry are because most organizations only have one definition of done, “If we ship this today, can we make money?” When the Agile people talk about “definition of done” what they ultimately mean is, “if we were to ship this product today,and someone were to inspect what we’ve done, would we be embarrassed?” Definition of done, is about the quality of the code. When thinking about the definition of done, here are some items you might consider.
 
+<!-- more -->
+
 #### Does the code meet the requirements of the user story?
 
 This is the most obvious.  Of course for this to work, you have to have a user story that is specific enough for you to answer this question.
 
-#### Has all of the documentation that the organization requires been updated?
+#### Has all the documentation that the organization requires been updated?
 
-This one can fall through the cracks easily because documentation is the least favorite activity of a programmer.  But, it isn’t necessarily a programmer activity.  Remember, an ideal team has all of the skills it needs.  So, if you have a documentation requirement, be it an ISO requirement or simple end user documentation telling them how to use the software, your team should have someone on it that can produce this documentation.
+This one can fall through the cracks easily because documentation is the least favorite activity of a programmer.  But, it isn’t necessarily a programmer activity.  Remember, an ideal team has all the skills it needs.  So, if you have a documentation requirement, be it an ISO requirement or simple end user documentation telling them how to use the software, your team should have someone on it that can produce this documentation.
 
 #### Does the code have a reasonable level of unit tests?
 
@@ -32,9 +34,9 @@ You’d think this one would be obvious.  You have tests, you should be running
 
 #### Is the code covered by system level tests?
 
-Once again, this one should be obvious.  Just because you have unit tests, doesn’t mean the system works.  The main problem with the Federal Health Care web site that went live in the United States recently is because no one made sure all of the parts worked together. And don’t leave this to manual testing.  There are many ways of testing at this level that you can automate.
+Once again, this one should be obvious.  Just because you have unit tests, doesn’t mean the system works.  The main problem with the Federal Health Care web site that went live in the United States recently is because no one made sure all the parts worked together. And don’t leave this to manual testing.  There are many ways of testing at this level that you can automate.
 
-#### Do all of the system tests succeed?
+#### Do all the system tests succeed?
 
 Once again, run your tests.
 
@@ -56,7 +58,7 @@ Again, there are tools for this.  Find one and use it.
 
 #### When you compile, are there warnings?
 
-[Compiling without warnings](/treat-warnings-as-errors/) is something else I’ve already talked about.   
+[Compiling without warnings](/treat-warnings-as-errors/) is something else I’ve already talked about.  
 
 Other Places Talking About “Definition of Done”
 -----------------------------------------------

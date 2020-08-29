@@ -12,6 +12,8 @@ date: 2014-07-17 13:00:00
 
 I’m planning to get my MCSD certification next and the first exam I plan to take is the 70-483 which will test my knowledge of CSharp. To study, I got this free PDF: [MCSD Certification Toolkit (Exam 70-483)](//www.it-ebooks.info/book/2564/) (Which I wouldn’t recommend, but I haven’t found anything yet that I WOULD recommend, so this will have to do.) In this book (Chapter 5) and other places on the web, it makes this statement:
 
+<!-- more -->
+
 *   If a class contains no managed resources and no unmanaged resources, it doesn’t need to implement IDisposable or have a destructor.
 *   If the class has only managed resources, it should implement IDisposable but it doesn’t need a destructor. (When the destructor executes, you can’t be sure managed objects still exist, so you can’t call their Dispose methods anyway.)
 *   If the class has only unmanaged resources, it needs to implement IDisposable and needs a destructor in case the program doesn’t call Dispose.
@@ -43,9 +45,11 @@ One Other Circumstance
 
 There is one other situation where you might want to implement IDisposable on a class that doesn’t reference an object that implements IDisposable.  While this particular case is rare, I think it is probably good to list it here for completeness. If you have a class that will consume a lot of memory either directly or indirectly, you might want to consider implementing IDisposable and the Dispose method so that any class that is calling this method has a way of immediately releasing the memory the class is using by dereferencing the memory it is using, and then calling:
 
-    GC.Collect();
-    GC.WaitForPendingFinalizers();
-    GC.Collect();
+``` csharp
+GC.Collect();
+GC.WaitForPendingFinalizers();
+GC.Collect();
+```
 
 I can already hear some of you saying, “but you shouldn’t have to ever need to do this!” And yes, 99% of the time, you shouldn’t.  But, if you have an issue with this, talk to [the guys over at the Microsoft Virtual Academy](//www.microsoftvirtualacademy.com/training-courses/developer-training-with-programming-in-c) where I learned this.
 

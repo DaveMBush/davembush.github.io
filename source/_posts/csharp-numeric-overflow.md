@@ -22,14 +22,18 @@ No, neither did I.  But then, most of the time I don’t write code where this 
 
 So here are some examples.
 
+<!-- more --->
+
 Integer Types
 -------------
 
 What happens if you write code that looks like this?
 
-    long l = long.MaxValue;
-    int i;
-    i = (int) l;
+``` csharp
+long l = long.MaxValue;
+int i;
+i = (int) l;
+```
 
 Well, if we are working with the compiler set with default settings, you’ll end up with the variable l having the value of 9223372036854775807 and the value of i having the value of -1.
 
@@ -37,19 +41,21 @@ Why is this?  Because, by default, .NET does not check for numeric overflow.
 
 However, if you wanted to add the ability to check for numeric overflow, you would wrap this code in a checked block.
 
-    try
+``` csharp
+try
+{
+    checked
     {
-        checked
-        {
-            long l = long.MaxValue;
-            int i;
-            i = (int)l;
-        }
+        long l = long.MaxValue;
+        int i;
+        i = (int)l;
     }
-    catch (Exception ex)
-    {
-        // handle overflow exception here 
-    }
+}
+catch (Exception ex)
+{
+    // handle overflow exception here
+}
+```
 
 You can force all of your code to be checked by changing your compiler settings.  In Visual Studio 2013, go to Project Properties –> Build.  Click the “Advanced” button (bottom right corner) and then check the “Check for … overflow” checkbox.
 
@@ -64,9 +70,11 @@ Let’s say that instead of a long, we use a float.
 
 First, let’s look at a simple case:
 
-    float l = 3.563f;
-    int i;
-    i = (int) lf
+``` csharp
+float l = 3.563f;
+int i;
+i = (int) lf
+```
 
 In this case, you’ll end up with f holding a floating point number of 3.563 and i holding an integer of 3.  The rule is pretty simple, floats always have the decimal portion stripped off and assigned to the integer, short, or long.
 
@@ -75,9 +83,11 @@ Large Float to Int
 
 But what happens if we use float.MaxValue?
 
-    float f = float.MaxValue;
-    int i;
-    i = (int) f;
+``` csharp
+float f = float.MaxValue;
+int i;
+i = (int) f;
+```
 
 In this case, what you’ll end up with is a very large floating point number and an integer of -2147483648.  Basically it does it’s best to convert a really large integer number into the int and just uses what it can.  Not really what you probably have in mind.
 
@@ -92,11 +102,12 @@ You’d be right, kind of.
 
 If you assign a double that is too large for a float to a float variable, the float variable will end up with infinity.  But, unlike the shorts, ints, and longs, you can’t wrap the code in a checked block to cause it to throw an exception.  No.  In this case you must always check for infinity once you’ve done the assignment.
 
-    double d = double.MaxValue;
-    float f;
-    f = (float)d;
-    if(float.IsInfinity(f))
-        // do something intelligent here
+``` csharp
+double d = double.MaxValue;
+float f;
+f = (float)d;
+if(float.IsInfinity(f))
+    // do something intelligent here
+```
 
-  
 So there you have it.  This is how you really deal with numeric casting in your CSharp code.
