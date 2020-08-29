@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="I’m planning to get my MCSD certification next and the first exam I plan to take is the 70-483 which will test my knowledge of CSharp. To study, I got this free PDF: MCSD Certification Toolkit (Exam 7">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.000Z">
+<meta property="og:updated_time" content="2020-08-29T12:29:45.835Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSharp IDisposable Confusion">
 <meta name="twitter:description" content="I’m planning to get my MCSD certification next and the first exam I plan to take is the 70-483 which will test my knowledge of CSharp. To study, I got this free PDF: MCSD Certification Toolkit (Exam 7">
@@ -110,6 +110,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>I’m planning to get my MCSD certification next and the first exam I plan to take is the 70-483 which will test my knowledge of CSharp. To study, I got this free PDF: <a href="//www.it-ebooks.info/book/2564/">MCSD Certification Toolkit (Exam 70-483)</a> (Which I wouldn’t recommend, but I haven’t found anything yet that I WOULD recommend, so this will have to do.) In this book (Chapter 5) and other places on the web, it makes this statement:</p>
+<a id="more"></a>
 <ul>
 <li>If a class contains no managed resources and no unmanaged resources, it doesn’t need to implement IDisposable or have a destructor.</li>
 <li>If the class has only managed resources, it should implement IDisposable but it doesn’t need a destructor. (When the destructor executes, you can’t be sure managed objects still exist, so you can’t call their Dispose methods anyway.)</li>
@@ -131,10 +132,8 @@
 <li>After freeing resources, the destructor should call GC.SuppressFinalize, so the object can skip the finalization queue.</li>
 </ul>
 <h2 id="One-Other-Circumstance"><a href="#One-Other-Circumstance" class="headerlink" title="One Other Circumstance"></a>One Other Circumstance</h2><p>There is one other situation where you might want to implement IDisposable on a class that doesn’t reference an object that implements IDisposable.  While this particular case is rare, I think it is probably good to list it here for completeness. If you have a class that will consume a lot of memory either directly or indirectly, you might want to consider implementing IDisposable and the Dispose method so that any class that is calling this method has a way of immediately releasing the memory the class is using by dereferencing the memory it is using, and then calling:</p>
-<pre><code>GC.Collect();
-GC.WaitForPendingFinalizers();
-GC.Collect();
-</code></pre><p>I can already hear some of you saying, “but you shouldn’t have to ever need to do this!” And yes, 99% of the time, you shouldn’t.  But, if you have an issue with this, talk to <a href="//www.microsoftvirtualacademy.com/training-courses/developer-training-with-programming-in-c">the guys over at the Microsoft Virtual Academy</a> where I learned this.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">GC.Collect();</span><br><span class="line">GC.WaitForPendingFinalizers();</span><br><span class="line">GC.Collect();</span><br></pre></td></tr></table></figure>
+<p>I can already hear some of you saying, “but you shouldn’t have to ever need to do this!” And yes, 99% of the time, you shouldn’t.  But, if you have an issue with this, talk to <a href="//www.microsoftvirtualacademy.com/training-courses/developer-training-with-programming-in-c">the guys over at the Microsoft Virtual Academy</a> where I learned this.</p>
 <h4 id="Other-Places-Talking-About-IDisposable-and-NET-Memory-Management"><a href="#Other-Places-Talking-About-IDisposable-and-NET-Memory-Management" class="headerlink" title="Other Places Talking About IDisposable and .NET Memory Management"></a>Other Places Talking About IDisposable and .NET Memory Management</h4><ul>
 <li><a href="//coding.abel.nu/2011/12/idisposable-and-using-in-c/">IDisposable and Using in C#</a></li>
 <li><a href="//manski.net/2012/01/idisposable-finalizer-and-suppressfinalize/">IDisposable, Finalizer, and SuppressFinalize in C# and C++</a></li>
@@ -152,7 +151,7 @@ GC.Collect();
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/csharp-idisposable-confusion/" data-id="ckdlzqhe5001ldcx2tqucarwd" class="article-share-link">
+      <a data-url="http://davembush.github.com/csharp-idisposable-confusion/" data-id="ckefnkd0x001xlsx2z5eg3cqg" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

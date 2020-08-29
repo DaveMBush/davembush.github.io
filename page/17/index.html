@@ -118,7 +118,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/it-is-called-unit-testing-for-a-reason/" data-id="ckdlzqhdw001cdcx2720zfhgz" class="article-share-link">
+      <a data-url="http://davembush.github.com/it-is-called-unit-testing-for-a-reason/" data-id="ckefnkd0p001mlsx2zx3mvz4g" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -175,7 +175,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/yagni-you-aren’t-going-to-need-it/" data-id="ckdlzqhj2006vdcx2c4uq8x97" class="article-share-link">
+      <a data-url="http://davembush.github.com/yagni-you-aren’t-going-to-need-it/" data-id="ckefnkd49007blsx2o0fpeoun" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -234,7 +234,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/javascript-boolean-confusion/" data-id="ckdlzqhfr0034dcx2sh0zq5hx" class="article-share-link">
+      <a data-url="http://davembush.github.com/javascript-boolean-confusion/" data-id="ckefnkd22003hlsx2gnqjz85v" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -287,67 +287,18 @@
 <li>know how to use the Page Model pattern</li>
 <li>know how to use your chosen test harness.</li>
 </ul>
-<p>OK.  On to the main event.</p>
-<h2 id="Here-Is-The-Problem"><a href="#Here-Is-The-Problem" class="headerlink" title="Here Is The Problem"></a>Here Is The Problem</h2><p>In order to run multiple browsers at the same time, the easiest way is to provide a wrapper Page Model that calls multiple instances of the page model at the same time. The hard way of doing this would be to create an Interface that represented the real page model and then create a proxy class that would hold a list of all of the real page model objects we needed to call.  Each time a property or method on the proxy gets called, all it would do would be to pass the call down into the real objects in parallel. This would work, but the main draw back is that I really don’t want to have to write a method for each method in my real page model.  So the question is, how can we get around this?</p>
-<h2 id="DynamicObject-To-The-Rescue"><a href="#DynamicObject-To-The-Rescue" class="headerlink" title="DynamicObject To The Rescue"></a>DynamicObject To The Rescue</h2><p>Enter the little known class, <a href="//msdn.microsoft.com/en-us/library/system.dynamic.dynamicobject(v=vs.110">DynamicObject</a>.aspx).   In .NET 4, Microsoft introduced the dynamic keyword.  One of the main uses is for places where  you need to be able to declare a variable in your code that the compiler won’t know how to resolve the type of until runtime.  I could have used this several years ago when I had two assemblies that needed to reference each other.  In that case, I used reflection.  But dynamic would have worked with a lot less work. DynamicObject is a specific class that allows us to resolve property and method calls at runtime using our own logic. We will also use the Task Parallel library to implement our parallel calls. For completeness, and so that no one is confused when they try to implement this code, you’ll need the following using statements at the top of the CS file.</p>
-<h2 id="Using-Statements-And-Constructor"><a href="#Using-Statements-And-Constructor" class="headerlink" title="Using Statements And Constructor"></a>Using Statements And Constructor</h2><p>using System;<br>using System.Collections.Concurrent;<br>using System.Dynamic;<br>using System.Reflection;<br>using System.Threading.Tasks;</p>
-<p>So, let’s get started.  The first thing we will need is a class declaration:</p>
-<p>class ParallelPageModel<tpage>:  DynamicObject<br>{<br>}</tpage></p>
-<p>TPage allows us to specify the Interface the real Page Model implements.  Yes, we still need the interface, but we won’t need to create a new wrapper class for every page model we want to wrap.  The class  inherits from DynamicObject so that all of our on the fly goodness will work. Next, we’ll need some place to store an array of PageObjects we want to proxy.  So we add a private variable _page for that purpose.</p>
-<p>private readonly TPage[] _pages;</p>
-<p>By using TPage[], we create a variable that is the same type array as the Page Models we are proxying. Next we need a constructor.</p>
-<p>ParallelPageModel(params TPage[] pages)<br>{<br>    _pages = pages;<br>}</p>
-<p>By using the params keyword, we can either  pass in page objects as an array or as individual parameters. The magic happens in three overridden methods that are in DynamicObject:</p>
-<ul>
-<li>TryInvokeMember – resolves any method calls.</li>
-<li>TrySetMember – resolves any property setters</li>
-<li>TryGetMember – resolves any property getters</li>
-</ul>
-<p>So let’s add those methods next:</p>
-<p>public override bool TryInvokeMember<br>    (InvokeMemberBinder binder,<br>      object[] args,<br>      out object result)<br>{<br>}</p>
-<p>public override bool TrySetMember<br>    (SetMemberBinder binder, object value)<br>{<br>}</p>
-<p>public override bool TryGetMember<br>    (GetMemberBinder binder, out object result)<br>{<br>}</p>
-<h2 id="TryInvokeMember"><a href="#TryInvokeMember" class="headerlink" title="TryInvokeMember"></a>TryInvokeMember</h2><p>Inside of the TryInvokeMember method, the first thing we will want to do is to use reflection to call into the real methods.  Since we could have multiple instances of the same method we need to call we will want to do this in a loop. When I first worked this out, I started by just implementing a foreach loop but we are going to jump right to using Parallel.ForEach() Parallel.ForEach() will let us pass in an array and run a lambda expression on each element in the array.  So, our foreach loop will look like this:</p>
-<p>var results = new ConcurrentBag<object>();<br>Parallel.ForEach(_pages, page =&gt;<br>{<br>    var thisResult = typeof (TPage)<br>       .InvokeMember(binder.Name,<br>        BindingFlags.InvokeMethod |<br>        BindingFlags.Public |<br>        BindingFlags.Instance,<br>        null, page, args);<br>    results.Add(thisResult);<br>});</object></p>
-<p>Note that our lambda expression is not doing anything more than a simple reflection call. The result that is returned is added to our ConcurrentBag collection.  ConcurrentBag is a collection that is specifically made for parallel calls.  We could get into trouble if we added something to a List&lt;&gt; collection unless we added some parallelization gatekeeping around it.  I’m for doing as little work as possible. The second thing we want to do is to process the return results. For this we need to setup a basic foreach loop.</p>
-<p>foreach (var thisResult in results)<br>{<br>}</p>
-<p>Inside the foreach loop we will process the results collection. If the type that got  returned is the same type as the type that the page is proxying for, we just make our result value, the return value the TryInvokeMember is going to return for us to the code that called the proxy, equal to the proxy object.</p>
-<p>if (thisResult is TPage)<br>{<br>    result = this;<br>}</p>
-<p>If the result is not null, meaning either that a previous result was null or we haven’t processed the loop yet, we want to check to see if the value of the current loop result is the same as the loop results we’ve already processed.  If it isn’t, we throw an exception.</p>
-<p>else if (result != null)<br>{<br>    if (!result.Equals(thisResult)) // not the same value<br>    {<br>        throw new Exception<br>           (“Call to method returns different values.”);<br>    }<br>}</p>
-<p>Finally, we just set the result to whatever we have at this point.</p>
-<p>else<br>{<br>    result = thisResult;<br>}</p>
-<p>And then the last thing we want to do is to return true to tell the system we were able to process the method.</p>
-<h2 id="TryGetMember"><a href="#TryGetMember" class="headerlink" title="TryGetMember"></a>TryGetMember</h2><p>Since the implementation for TryGetMember looks very similar to TryInvokeMethod we’ll tackle that next. In fact, the only difference between the two methods is the code inside of the Parallel.ForEach parameter block. So, here it is:</p>
-<p>Parallel.ForEach(_pages, page =&gt;<br>{<br>    var thisResult = typeof(TPage)<br>        .GetProperty(binder.Name).GetValue(page);<br>    results.Add(thisResult);<br>});</p>
-<h2 id="TrySetMember"><a href="#TrySetMember" class="headerlink" title="TrySetMember"></a>TrySetMember</h2><p>TrySetMember is the easiest implementation of all since there are no results to worry about.</p>
-<p>Parallel.ForEach(_pages,<br>     page =&gt; typeof (TPage)<br>        .GetProperty(binder.Name).SetValue(page, value));<br>return true;</p>
-<h2 id="Casting"><a href="#Casting" class="headerlink" title="Casting"></a>Casting</h2><p>So the code above will work, but you won’t get any intellisense help from Visual Studio if you use this code without tweaking it. What we need is some way of casting the ParallelPageModel object to the TPage type that we pass in. For that we are going to use a cool library I found called <a href="//github.com/ekonbenefits/impromptu-interface">ImpromptuInterface</a>. You’ll need to add a using statement.</p>
-<p>using ImpromptuInterface;</p>
-<p>And then you’ll need to add this method to the ParallelPageModel class.</p>
-<p>public TPage Cast()<br>{<br>    return this.ActLike();<br>}</p>
-<p>You would use this like this:</p>
-<p>IMyPageModel p = pageModelProxy.Cast();</p>
-<p>Where IMyPageModel is the interface that specifies what your real PageModel class looks like. Just in case someone is tempted to mention this in the comments, you can’t us operator overloading to achieve the cast because we need it to return TPage, which could be anything and the compiler can’t deal with that.  If you really want to use operator overloading you’ll need to provide your own specific implementation that ends up calling the code above.</p>
-<h2 id="Calling-The-ParallelPageModel"><a href="#Calling-The-ParallelPageModel" class="headerlink" title="Calling The ParallelPageModel"></a>Calling The ParallelPageModel</h2><p>To setup the ParallelPageModel, your code would look something like this, assuming that you have a page model class called MyPageModel with an interface of IMyPageModel.</p>
-<p>var pages = new ConcurrentStack<imypagemodel>();<br>Parallel.Invoke(<br>    () =><br>        pages.Push(PageFactory.GetPageModel(“FireFoxGrid”),<br>    () =><br>        pages.Push(PageFactory.GetPageModel(“IE11Grid”));<br>var pagesArray = pages.ToArray();<br>MyTypedPage =<br>    new ParallelPageModel<imypagemodel>(pagesArray).Cast();</imypagemodel></imypagemodel></p>
-<h2 id="Considerations"><a href="#Considerations" class="headerlink" title="Considerations"></a>Considerations</h2><p>I only just started using this.  It works for my current implementation.  But you may need to tweak it so that it works for you. For example, my assumption here is that you are only dealing with simple types or the page model type you are a proxy for.  There is no code here that will handle a situation where the call to a method would return a entirely new page model. Since the code I am testing is a collection of Single Page Applications and I am not testing navigation at this point, this is not a consideration for me.  But it would be relatively easy code to implement.  If I did that, I would probably handle it but subclassing this main class that does the bulk of the work and override the Try*Member method that needed to deal with that situation.  The other possible way of dealing with the situation is to pass in a list of types that need to be wrapped in their own parallelization object as parameters in the constructor and add some generic code in the ParallelPageModel class. Finally, I am well aware that this code may have bugs.  If you find one, go ahead and fix it. You can leave a comment so that others will benefit.   There is a <a href="//github.com/DaveMBush/ParallelSeleniumUsingNUnit">demo project on GitHub.</a></p>
-<h4 id="Other-Places-Talking-about-Parallel-Selenium"><a href="#Other-Places-Talking-about-Parallel-Selenium" class="headerlink" title="Other Places Talking about Parallel Selenium"></a>Other Places Talking about Parallel Selenium</h4><ul>
-<li><a href="//slmoloch.blogspot.com/2009/12/design-of-selenium-tests-for-aspnet_19.html">Using MbUnit to achieve parallelization</a></li>
-<li><a href="//www.browserstack.com/automate/c-sharp">Use Browser Stack</a></li>
-</ul>
-<p>And of course a ton of links to people asking how this can be achieved.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/running-selenium-in-parallel-with-any-net-unit-testing-tool/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/running-selenium-in-parallel-with-any-net-unit-testing-tool/" data-id="ckdlzqinz015vdcx28sm390r6" class="article-share-link">
+      <a data-url="http://davembush.github.com/running-selenium-in-parallel-with-any-net-unit-testing-tool/" data-id="ckefnkd7g00aylsx2c2gyw6p8" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -394,25 +345,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>Last week I mentioned that I’m working toward getting my MCSD certification.  Several weeks ago I received my <a href="//www.scrumalliance.org/community/profile/dbush2">ScrumMaster Certification</a>.  This raises the question, “Why get certified at all?” What follows is a list of reasons why I am perusing certification.</p>
-<h2 id="I-don’t-know-what-I-don’t-know"><a href="#I-don’t-know-what-I-don’t-know" class="headerlink" title="I don’t know what I don’t know"></a>I don’t know what I don’t know</h2><p>I know what I know.  And I can figure stuff out pretty fast when I need to know it.  So working without certification has been working for me for a pretty long time.  However, while I was studying for my ScrumMaster Certification, I realized that while I had most of the concepts right, there where a few holes in my thinking.  Studying for the ScrumMaster certification filled in those holes.</p>
-<h2 id="Authority"><a href="#Authority" class="headerlink" title="Authority"></a>Authority</h2><p>The reason I went after ScrumMaster certification was because everywhere I go, everyone has  their own definition of what Scrum looks like.  Most of them only know about Scrum from what they’ve heard about it from very informal sources. Only one that I know of is certified. But when I was talking about Scrum or Agile, it was my opinion against someone else’s opinion.  While I was sure I was right, if I were honest about it I had no more reason to believe I was right than anyone else. Now, with the certification, I have someone else saying I know what I’m talking about.  And since I got 100% of the 30, rather difficult, questions right, I have a higher confidence that my understanding of the subject is correct.</p>
-<h2 id="Fear"><a href="#Fear" class="headerlink" title="Fear"></a>Fear</h2><p>After I passed the test for the ScrumMaster certification, I realized that I am afraid of tests.  I used to say that all a certification did was show that you could pass a test.  But I’ve realized recently that that may have just been a cover because I didn’t want to take the test and fail. So, the reason I’m going after my MCSD is because I’m afraid of the test.  So, I fail.  So what?  At least in the process of studying for the test I’ll learn a few things.  The worse thing that can happen is that I don’t get the certification.  Ironically, from that point of view, not trying to get certified puts me in the same, if not worse, situation.  Not studying means no certification AND I haven’t learned anything in the process of studying for the exams.</p>
-<h2 id="Birds-of-a-feather"><a href="#Birds-of-a-feather" class="headerlink" title="Birds of a feather"></a>Birds of a feather</h2><p>I find it interesting that I personally only know one person who has their  MCSD.  Could that be because I don’t have MY MCSD?  Could it be that the organizations where all of the people who have their MCSD only hire people who have their MCSD?  I know several really good programmers.  Only one has their MCSD.  The others could get it if they wanted to.  But are they stuck in their current position because they aren’t certified?  It’s worth finding out.</p>
-<h2 id="The-test-isn’t-a-joke-anymore"><a href="#The-test-isn’t-a-joke-anymore" class="headerlink" title="The test isn’t a joke anymore"></a>The test isn’t a joke anymore</h2><p>For the longest time, my attitude about the test, as I mentioned above, was that it only showed that you could pass the test.  It didn’t really say you knew how to program or that you knew how to use the APIs.  I’m not the only one who felt this way.  Do a search online and you’ll find statements from years ago that say as much. While I’m sure it might be possible to pass the exams and still know nothing about how to program or how to use the APIs, it does seems that Microsoft is doing a much better job at ensuring that people who pass this certification can actually do the work as well.</p>
-<h4 id="Other-places-talking-about-the-MCSD"><a href="#Other-places-talking-about-the-MCSD" class="headerlink" title="Other places talking about the MCSD"></a>Other places talking about the MCSD</h4><ul>
-<li><a href="/pluralsightMCSDpath" title="MCSD Learning Path">PluralSight Learning Path for MCSD</a></li>
-</ul>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/why-get-certified/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/why-get-certified/" data-id="ckdlzqhj0006sdcx23kicbbsk" class="article-share-link">
+      <a data-url="http://davembush.github.com/why-get-certified/" data-id="ckefnkd440070lsx2d8n6eejf" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -459,49 +403,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>I’m planning to get my MCSD certification next and the first exam I plan to take is the 70-483 which will test my knowledge of CSharp. To study, I got this free PDF: <a href="//www.it-ebooks.info/book/2564/">MCSD Certification Toolkit (Exam 70-483)</a> (Which I wouldn’t recommend, but I haven’t found anything yet that I WOULD recommend, so this will have to do.) In this book (Chapter 5) and other places on the web, it makes this statement:</p>
-<ul>
-<li>If a class contains no managed resources and no unmanaged resources, it doesn’t need to implement IDisposable or have a destructor.</li>
-<li>If the class has only managed resources, it should implement IDisposable but it doesn’t need a destructor. (When the destructor executes, you can’t be sure managed objects still exist, so you can’t call their Dispose methods anyway.)</li>
-<li>If the class has only unmanaged resources, it needs to implement IDisposable and needs a destructor in case the program doesn’t call Dispose.</li>
-<li>The Dispose method must be safe to run more than once.  You can achieve that by using a variable to keep track of whether it has been run before.</li>
-<li>The Dispose method should free both managed and unmanaged resources.</li>
-<li>The destructor should free only unmanaged resources.  (When the destructor executes, you can’t be sure managed objects still exist, so you can’t call their Dispose methods anyway.)</li>
-<li>After freeing resources, the destructor should call GC.SuppressFinalize, so the object can skip the finalization queue.</li>
-</ul>
-<h2 id="Managed-VS-Unmanaged"><a href="#Managed-VS-Unmanaged" class="headerlink" title="Managed VS Unmanaged?"></a>Managed VS Unmanaged?</h2><p>So what is the difference between a managed resource and an unmanaged resource?  An unmanaged resource is something that is not under the direct control of the .NET memory manager.  So, file handles, connections to the database, memory handles, and other OS items fall under the realm of “unmanaged.”  Managed code is everything else. So, if you read the points above and read the statements about managed resources, you would think, or should think, “That’s already under the control of the .NET memory manager, so I shouldn’t have to do ANYTHING!” But with one little tweak, this all becomes clear.  What this block of text is talking about specifically is managed code that is referencing other code that implements IDisposable.</p>
-<h2 id="Corrected-Version"><a href="#Corrected-Version" class="headerlink" title="Corrected Version"></a>Corrected Version</h2><p>So, let’s rephrase the block of text to the following:</p>
-<ul>
-<li>If a class contains no managed resources that implement IDisposable and no unmanaged resources, it doesn’t need to implement IDisposable or have a destructor.</li>
-<li>If the class has only managed resources that reference resources that implement IDisposable, it should implement IDisposable but it doesn’t need a destructor. (When the destructor executes, you can’t be sure managed objects still exist, so you can’t call their Dispose methods anyway.)</li>
-<li>If the class has only unmanaged resources, it needs to implement IDisposable and needs a destructor in case the program doesn’t call Dispose.</li>
-<li>The Dispose method must be safe to run more than once.  You can achieve that by using a variable to keep track of whether it has been run before.</li>
-<li>The Dispose method should free both managed resources that implement IDisposable and unmanaged resources.</li>
-<li>The destructor should free only unmanaged resources.  (When the destructor executes, you can’t be sure managed objects still exist, so you can’t call their Dispose methods anyway.)</li>
-<li>After freeing resources, the destructor should call GC.SuppressFinalize, so the object can skip the finalization queue.</li>
-</ul>
-<h2 id="One-Other-Circumstance"><a href="#One-Other-Circumstance" class="headerlink" title="One Other Circumstance"></a>One Other Circumstance</h2><p>There is one other situation where you might want to implement IDisposable on a class that doesn’t reference an object that implements IDisposable.  While this particular case is rare, I think it is probably good to list it here for completeness. If you have a class that will consume a lot of memory either directly or indirectly, you might want to consider implementing IDisposable and the Dispose method so that any class that is calling this method has a way of immediately releasing the memory the class is using by dereferencing the memory it is using, and then calling:</p>
-<pre><code>GC.Collect();
-GC.WaitForPendingFinalizers();
-GC.Collect();
-</code></pre><p>I can already hear some of you saying, “but you shouldn’t have to ever need to do this!” And yes, 99% of the time, you shouldn’t.  But, if you have an issue with this, talk to <a href="//www.microsoftvirtualacademy.com/training-courses/developer-training-with-programming-in-c">the guys over at the Microsoft Virtual Academy</a> where I learned this.</p>
-<h4 id="Other-Places-Talking-About-IDisposable-and-NET-Memory-Management"><a href="#Other-Places-Talking-About-IDisposable-and-NET-Memory-Management" class="headerlink" title="Other Places Talking About IDisposable and .NET Memory Management"></a>Other Places Talking About IDisposable and .NET Memory Management</h4><ul>
-<li><a href="//coding.abel.nu/2011/12/idisposable-and-using-in-c/">IDisposable and Using in C#</a></li>
-<li><a href="//manski.net/2012/01/idisposable-finalizer-and-suppressfinalize/">IDisposable, Finalizer, and SuppressFinalize in C# and C++</a></li>
-<li><a href="//manski.net/2012/01/idisposable-finalizer-and-suppressfinalize/">Common Pitfalls with IDisposable and Using</a></li>
-<li><a href="//www.technofranchise.com/c-memory-management/">CSharp Memory Management</a></li>
-<li><a href="//www.go4expert.com/articles/disposal-garbage-collection-c-sharp-t30059/">Disposal and Garbage Collection in CSharp</a></li>
-</ul>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/csharp-idisposable-confusion/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/csharp-idisposable-confusion/" data-id="ckdlzqhe5001ldcx2tqucarwd" class="article-share-link">
+      <a data-url="http://davembush.github.com/csharp-idisposable-confusion/" data-id="ckefnkd0x001xlsx2z5eg3cqg" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -548,34 +461,18 @@ GC.Collect();
     <div class="article-entry" itemprop="articleBody">
       
         <p>A couple of weeks ago, I mention <a href="/are-we-there-yet/">“definition of done”</a> which many of my readers may have never heard of before. The phrase, “definition of done” comes out of the agile movement.  But there is no reason why it needs to stay there.  In fact, I would argue that many of the problems we have in the software industry are because most organizations only have one definition of done, “If we ship this today, can we make money?” When the Agile people talk about “definition of done” what they ultimately mean is, “if we were to ship this product today,and someone were to inspect what we’ve done, would we be embarrassed?” Definition of done, is about the quality of the code. When thinking about the definition of done, here are some items you might consider.</p>
-<h4 id="Does-the-code-meet-the-requirements-of-the-user-story"><a href="#Does-the-code-meet-the-requirements-of-the-user-story" class="headerlink" title="Does the code meet the requirements of the user story?"></a>Does the code meet the requirements of the user story?</h4><p>This is the most obvious.  Of course for this to work, you have to have a user story that is specific enough for you to answer this question.</p>
-<h4 id="Has-all-of-the-documentation-that-the-organization-requires-been-updated"><a href="#Has-all-of-the-documentation-that-the-organization-requires-been-updated" class="headerlink" title="Has all of the documentation that the organization requires been updated?"></a>Has all of the documentation that the organization requires been updated?</h4><p>This one can fall through the cracks easily because documentation is the least favorite activity of a programmer.  But, it isn’t necessarily a programmer activity.  Remember, an ideal team has all of the skills it needs.  So, if you have a documentation requirement, be it an ISO requirement or simple end user documentation telling them how to use the software, your team should have someone on it that can produce this documentation.</p>
-<h4 id="Does-the-code-have-a-reasonable-level-of-unit-tests"><a href="#Does-the-code-have-a-reasonable-level-of-unit-tests" class="headerlink" title="Does the code have a reasonable level of unit tests?"></a>Does the code have a reasonable level of unit tests?</h4><p>I say “reasonable” here because the principle is high code coverage where we need it.  To try to aim for some metric will cause us to write tests where we don’t need them.  By combining a “reasonableness” level with code reviews, I think we can hit this target without setting an unrealistic arbitrary limit.</p>
-<h4 id="Do-all-of-the-unit-tests-succeed"><a href="#Do-all-of-the-unit-tests-succeed" class="headerlink" title="Do all of the unit tests succeed?"></a>Do all of the unit tests succeed?</h4><p>You’d think this one would be obvious.  You have tests, you should be running them every time the code changes.  But, I’ve seen situations where tests sit in version control and never get run. Run your tests!</p>
-<h4 id="Is-the-code-covered-by-system-level-tests"><a href="#Is-the-code-covered-by-system-level-tests" class="headerlink" title="Is the code covered by system level tests?"></a>Is the code covered by system level tests?</h4><p>Once again, this one should be obvious.  Just because you have unit tests, doesn’t mean the system works.  The main problem with the Federal Health Care web site that went live in the United States recently is because no one made sure all of the parts worked together. And don’t leave this to manual testing.  There are many ways of testing at this level that you can automate.</p>
-<h4 id="Do-all-of-the-system-tests-succeed"><a href="#Do-all-of-the-system-tests-succeed" class="headerlink" title="Do all of the system tests succeed?"></a>Do all of the system tests succeed?</h4><p>Once again, run your tests.</p>
-<h4 id="Has-the-code-been-reviewed-by-one-other-programmer"><a href="#Has-the-code-been-reviewed-by-one-other-programmer" class="headerlink" title="Has the code been reviewed by one other programmer?"></a>Has the code been reviewed by one other programmer?</h4><p>If there isn’t at least one other programmer on your team that understands what you’ve done, you aren’t done.  I could, and probably will, write a whole post about this sometime.</p>
-<h4 id="Have-coding-conventions-been-observed-throughout-the-code"><a href="#Have-coding-conventions-been-observed-throughout-the-code" class="headerlink" title="Have coding conventions been observed throughout the code?"></a>Have coding conventions been observed throughout the code?</h4><p>There are a number of tools out there  that check for coding conventions.  For CSharp, I like ReSharper.  JsHint is what I prefer for JavaScript.  There is  FxCop built into Visual Studio. Pick a standard, find a way to automatically verify the code meets the standard, and make sure nothing gets put into version control that doesn’t meet the standard!</p>
-<h4 id="Has-the-code-passed-some-level-of-complexity-threshold"><a href="#Has-the-code-passed-some-level-of-complexity-threshold" class="headerlink" title="Has the code passed some level of complexity threshold?"></a>Has the code passed some level of complexity threshold?</h4><p>I’ve talked about <a href="/avoiding-code-complexity/">code complexity</a> before.  Just go read that post.</p>
-<h4 id="Is-there-any-known-code-duplication"><a href="#Is-there-any-known-code-duplication" class="headerlink" title="Is there any known code duplication?"></a>Is there any known code duplication?</h4><p>Again, there are tools for this.  Find one and use it.</p>
-<h4 id="When-you-compile-are-there-warnings"><a href="#When-you-compile-are-there-warnings" class="headerlink" title="When you compile, are there warnings?"></a>When you compile, are there warnings?</h4><p><a href="/treat-warnings-as-errors/">Compiling without warnings</a> is something else I’ve already talked about.   </p>
-<h2 id="Other-Places-Talking-About-“Definition-of-Done”"><a href="#Other-Places-Talking-About-“Definition-of-Done”" class="headerlink" title="Other Places Talking About “Definition of Done”"></a>Other Places Talking About “Definition of Done”</h2><ul>
-<li><a href="//www.scrumalliance.org/community/articles/2008/september/what-is-definition-of-done-(dod">What Is Definition of Done (Scrum Alliance)</a>)</li>
-<li><a href="//www.mountaingoatsoftware.com/blog/clarifying-the-relationship-between-definition-of-done-and-conditions-of-sa">Clarifying Definition of Done (Mountain Goat Software)</a></li>
-<li><a href="//blogs.atlassian.com/2013/10/8-steps-to-a-definition-of-done-in-jira/">8 Steps To Definition of Done in JIRA (Atlassian Blog)</a></li>
-<li><a href="//www.mitchlacey.com/intro-to-agile/scrum/definition-of-done">Definition of Done Creation (Mitch Lacey &amp; Associates)</a></li>
-</ul>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/defining-“done”/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/defining-“done”/" data-id="ckdlzqheb001sdcx26107ppzh" class="article-share-link">
+      <a data-url="http://davembush.github.com/defining-“done”/" data-id="ckefnkd0z0021lsx2pxtc5xgn" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -624,61 +521,18 @@ GC.Collect();
         <p><img src="/uploads/2014/06/NumericOverflow.png" alt="NumericOverflow" title="NumericOverflow">Did you know that when you are dealing with numbers, by default, .NET will do, or try to do exactly what you tell it to do?  If you tell it to do the impossible, it will do the next most logical thing.  It won’t throw any errors in the process.</p>
 <p>No, neither did I.  But then, most of the time I don’t write code where this would matter, and I bet you don’t either.</p>
 <p>So here are some examples.</p>
-<h2 id="Integer-Types"><a href="#Integer-Types" class="headerlink" title="Integer Types"></a>Integer Types</h2><p>What happens if you write code that looks like this?</p>
-<pre><code>long l = long.MaxValue;
-int i;
-i = (int) l;
-</code></pre><p>Well, if we are working with the compiler set with default settings, you’ll end up with the variable l having the value of 9223372036854775807 and the value of i having the value of -1.</p>
-<p>Why is this?  Because, by default, .NET does not check for numeric overflow.</p>
-<p>However, if you wanted to add the ability to check for numeric overflow, you would wrap this code in a checked block.</p>
-<pre><code>try
-{
-    checked
-    {
-        long l = long.MaxValue;
-        int i;
-        i = (int)l;
-    }
-}
-catch (Exception ex)
-{
-    // handle overflow exception here 
-}
-</code></pre><p>You can force all of your code to be checked by changing your compiler settings.  In Visual Studio 2013, go to Project Properties –&gt; Build.  Click the “Advanced” button (bottom right corner) and then check the “Check for … overflow” checkbox.</p>
-<p>Once you’ve done that, all of your code will be checked by default.  If you don’t want to check for overflows while you are working on a block of code, for performance reasons, wrap the code in an unchecked block instead.</p>
-<h2 id="Float-to-Int"><a href="#Float-to-Int" class="headerlink" title="Float to Int"></a>Float to Int</h2><p>Now, what about putting a floating point number in an integer?</p>
-<p>Let’s say that instead of a long, we use a float.</p>
-<p>First, let’s look at a simple case:</p>
-<pre><code>float l = 3.563f;
-int i;
-i = (int) lf
-</code></pre><p>In this case, you’ll end up with f holding a floating point number of 3.563 and i holding an integer of 3.  The rule is pretty simple, floats always have the decimal portion stripped off and assigned to the integer, short, or long.</p>
-<h2 id="Large-Float-to-Int"><a href="#Large-Float-to-Int" class="headerlink" title="Large Float to Int"></a>Large Float to Int</h2><p>But what happens if we use float.MaxValue?</p>
-<pre><code>float f = float.MaxValue;
-int i;
-i = (int) f;
-</code></pre><p>In this case, what you’ll end up with is a very large floating point number and an integer of -2147483648.  Basically it does it’s best to convert a really large integer number into the int and just uses what it can.  Not really what you probably have in mind.</p>
-<p>The solution is the same.  Use a checked block or compile with checked turned on.</p>
-<h2 id="Double-to-Float"><a href="#Double-to-Float" class="headerlink" title="Double to Float"></a>Double to Float</h2><p>Now, you would expect that if I had a really large double and tried to assign that to a float, something similar would happen. </p>
-<p>You’d be right, kind of.</p>
-<p>If you assign a double that is too large for a float to a float variable, the float variable will end up with infinity.  But, unlike the shorts, ints, and longs, you can’t wrap the code in a checked block to cause it to throw an exception.  No.  In this case you must always check for infinity once you’ve done the assignment.</p>
-<pre><code>double d = double.MaxValue;
-float f;
-f = (float)d;
-if(float.IsInfinity(f))
-    // do something intelligent here
-</code></pre><p>So there you have it.  This is how you really deal with numeric casting in your CSharp code.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/csharp-numeric-overflows/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/csharp-numeric-overflows/" data-id="ckdlzqhe8001odcx215obk35o" class="article-share-link">
+      <a data-url="http://davembush.github.com/csharp-numeric-overflows/" data-id="ckefnkd0x001ylsx22dqhsrze" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -752,7 +606,7 @@ if(float.IsInfinity(f))
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/are-we-there-yet/" data-id="ckdlzqhd5000ndcx2cd0zhjm8" class="article-share-link">
+      <a data-url="http://davembush.github.com/are-we-there-yet/" data-id="ckefnkd0f0019lsx2ua9c8ygb" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -815,7 +669,7 @@ if(float.IsInfinity(f))
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/avoiding-code-complexity/" data-id="ckdlzqhe4001jdcx2ily9dh1y" class="article-share-link">
+      <a data-url="http://davembush.github.com/avoiding-code-complexity/" data-id="ckefnkd0n001jlsx27yag06h7" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
