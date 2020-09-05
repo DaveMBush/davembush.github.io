@@ -11,7 +11,9 @@ categories:
 date: 2014-06-05 13:01:00
 ---
 
-![ijk](/uploads/2014/05/ijk.png "ijk")One of the hardest things we do as programmers is naming things.  But the easiest thing to name is counter variables and most of us do it wrong several times a day. Of course, I’m talking about the notorious habit of naming our counter variables I, J, or K depending on how far down we’ve nested our looping. 
+![ijk](/uploads/2014/05/ijk.png "ijk")One of the hardest things we do as programmers is naming things.  But the easiest thing to name is counter variables and most of us do it wrong several times a day. Of course, I’m talking about the notorious habit of naming our counter variables I, J, or K depending on how far down we’ve nested our looping.
+
+<!-- more -->
 
 History
 -------
@@ -23,6 +25,7 @@ Story
 
 But let me tell you a story that illustrates why this is a bad idea. Admittedly, this story is pretty old, but only because in my 28 years of programming, this is still the best story I have to illustrate this issue. You see, one day, back when I was still regularly programming in C++ (for you kids out there, C++ is what Java and CSharp get most of their syntax) my manager came to me with a bug. Now the interesting thing about this bug is that it only occurred with one particular data set.  Most of the time it worked. So, I put on my detective’s hat and went to work.  Now, I try to go for the quick kill first.  So, I set break points at various locations and checked variables and found out …  nothing. That’s right, nothing. After about four hours of trying various methods of the above and trying to step through the code only to find the looping that was taking place was going to cause that to take several weeks, I finally stumbled on to the problem. And I do mean I stumbled, there’s no way I was going to find this problem using any of my standard debugging techniques. Here is what the code looked like:
 
+``` csharp
 for(i = 0;i < someValue;i++)
 {
     // lots of code here
@@ -44,6 +47,7 @@ for(i = 0;i < someValue;i++)
         // more code
     }
 }
+```
 
 Do you see what I see?
 ----------------------
@@ -64,7 +68,3 @@ References
 *   [Wikipedia “Loop Counter” article](//en.wikipedia.org/wiki/Loop_counter)
 *   [Code Complete](//www.amazon.com/gp/product/0735619670/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=0735619670&linkCode=as2&tag=davmbusnetapp-20&linkId=BWBBIYB3LPS5JDEN)![](//ir-na.amazon-adsystem.com/e/ir?t=davmbusnetapp-20&l=as2&o=1&a=0735619670) – The book that first revealed this issue to me.
 
-Another Site Talking About I, J and K
--------------------------------------
-
-[http://www.eonlinegratis.com/2014/why-do-most-of-us-use-i-as-a-loop-counter-variable/#sthash.Wp7McXcC.dpbs](//www.eonlinegratis.com/2014/why-do-most-of-us-use-i-as-a-loop-counter-variable/#sthash.Wp7McXcC.dpbs "http://www.eonlinegratis.com/2014/why-do-most-of-us-use-i-as-a-loop-counter-variable/#sthash.Wp7McXcC.dpbs")

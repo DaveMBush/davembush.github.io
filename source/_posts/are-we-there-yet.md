@@ -13,6 +13,8 @@ date: 2014-06-26 13:00:00
 
 ![StoryPoints](/uploads/2014/06/StoryPoints.png "StoryPoints")When my kids were young, my wife introduced a concept for this question that she got from her family that is so brilliant in its simplicity that I wonder that this isn’t common knowledge with all parents.  Something they should tell you during Lamaze class. When the kids asked, “Are we there yet?” Which they did very infrequently, we would answer, “Just a few more units.” If you think about it, it is just about as helpful as any other answer we could have given them, “Just a few more hours.”, “Just a few more miles.”, “Sure, get out of the car.” (While continuing to drive the car down the road.) Or “Does it look like we are there yet?” What does the child want to know?  Nothing, they are just expressing their displeasure at still being in the car.
 
+<!-- more -->
+
 Story Points
 ------------
 

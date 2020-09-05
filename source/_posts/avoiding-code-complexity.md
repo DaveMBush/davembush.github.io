@@ -13,7 +13,9 @@ categories:
 date: 2014-06-19 13:27:00
 ---
 
-![clip_image001](/uploads/2014/06/clip_image001.png "clip_image001")A couple of weeks ago, I talked a bit about how we name things.  Specifically, I talked about the [very bad habit of using the variables i, j, and k as variables in our for/next loops](/i-j-and-k-should-die/). A few weeks before that, I talked about [DRY Programming](/dry-programming/) and the fact that not repeating ourselves extends much farther than most of us normally think when we are thinking about our code. Today I want to continue on the general theme of code quality by discussing code complexity. 
+![clip_image001](/uploads/2014/06/clip_image001.png "clip_image001")A couple of weeks ago, I talked a bit about how we name things.  Specifically, I talked about the [very bad habit of using the variables i, j, and k as variables in our for/next loops](/i-j-and-k-should-die/). A few weeks before that, I talked about [DRY Programming](/dry-programming/) and the fact that not repeating ourselves extends much farther than most of us normally think when we are thinking about our code. Today I want to continue on the general theme of code quality by discussing code complexity.
+
+<!-- more -->
 
 What is it?
 -----------

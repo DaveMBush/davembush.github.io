@@ -18,6 +18,8 @@ date: 2014-06-12 13:30:00
 
 ![SpecFlow](/uploads/2014/06/SpecFlow.png "SpecFlow")That’s what I kept asking myself every time I saw this product. Well, the last time I looked, something caught my eye enough that I decided to download it and take a look. I'm really glad I did it. So, let me attempt to explain what [SpecFlow](//www.specflow.org/) is.  First, while you can get SpecFlow+ Runner to run your test, this isn’t a completely new testing platform. Instead, it is a testing platform that works with whatever testing platform you are using to test your .NET code. So, it works with NUnit, MSTest, xUnit and MbUnit. This is good for my situation because any test I write with SpecFlow will continue to work with the tools I already have in place. Including my current test runners ([ReSharper](//www.jetbrains.com/resharper/)) and my Continuous Integration system ([TeamCity](//www.jetbrains.com/teamcity/)). I wasn’t interested in adopting a platform that wouldn’t work with these two platforms.
 
+<!-- more -->
+
 Where I got Confused
 --------------------
 
