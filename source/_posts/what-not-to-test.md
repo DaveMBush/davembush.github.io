@@ -22,6 +22,8 @@ In fact, I’ve seen suggestions on places like StackOverflow that suggest as mu
 
 But there is code in your application that you shouldn’t bother to write a test for.
 
+<!-- more -->
+
 Generated Code
 --------------
 
@@ -46,20 +48,22 @@ When you write code, you should be thinking, “What problem am I trying to solv
 
 When you think about the problem this way, what you test becomes that When/Then statement.  The class name for the test becomes When and the test becomes Then
 
+``` csharp
 public class WhenTheCodeIsInStateXAndIPerformActionYOnIt
 {
-    \[SetUp\]
+    [SetUp]
     public void Setup()
     {
         // Setup When
         // Perform Action
     }
 
-    \[Test\]
+    [Test]
     public void ThenItShouldEndUpWithZState()
     {
-         Assert.That(object,Is.InSpecificState());
+         Assert.That(object, Is.InSpecificState());
     }
 }
+```
 
-When you do this, the question no longer is about how much code you have to test, but instead becomes “Have I written a  test for every reasonable condition this class may encounter?” .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, "Courier New", courier, monospace; background-color: #ffffff; /\*white-space: pre;\*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }
+When you do this, the question no longer is about how much code you have to test, but instead becomes “Have I written a  test for every reasonable condition this class may encounter?”
