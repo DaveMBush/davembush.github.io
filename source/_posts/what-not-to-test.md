@@ -66,4 +66,4 @@ public class WhenTheCodeIsInStateXAndIPerformActionYOnIt
 }
 ```
 
-When you do this, the question no longer is about how much code you have to test, but instead becomes “Have I written a  test for every reasonable condition this class may encounter?”
+When you do this, the question no longer is about how much code you have to test, but instead becomes “Have I written a test for every reasonable condition this class may encounter?”

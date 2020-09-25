@@ -15,6 +15,8 @@ date: 2014-03-11 04:38:00
 
 This is like knowing you are supposed to “eat right” and “exercise” but not having anyone tell you how to do either in such a way that you can maintain the habit.
 
+<!-- more -->
+
 Start Small
 -----------
 
@@ -42,6 +44,7 @@ You may be thinking, “But Dave, that’s application level testing, not unit t
 So, let’s take the classic Person class as an example:
 ------------------------------------------------------
 
+``` csharp
 public class Person
 {
     public Person()
@@ -55,13 +58,12 @@ public class Person
     {
         get
         {
-            return FirstName + " " 
-                \+ LastName;
+            return FirstName + " "
+                + LastName;
         }
     }
 }
-
-.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, "Courier New", courier, monospace; background-color: #ffffff; /\*white-space: pre;\*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }
+```
 
 Our preconditions might be:
 
@@ -83,26 +85,27 @@ Converting the Use Case to a Test Case
 
 Using NUnit since it is still the most popular, our resulting code might look something like:
 
+``` csharp
 namespace GivenAnObjectOfTypePersonWithFirstNameSetToBob
 {
     class WhenISetTheLastNameToJones
     {
         private Person _person;
-        
-        \[SetUp\]
+
+        [SetUp]
         public void Setup()
         {
             // The precondition
             _person = new Person
             {
-                FirstName = "Bob"
+                FirstName = "Bob";
             };
 
             // The action
             _person.LastName = "Jones";
         }
 
-        \[Test\]
+        [Test]
         public void TheFullNameShouldBeBobJones()
         {
             Assert.That(_person.FullName,
@@ -110,12 +113,13 @@ namespace GivenAnObjectOfTypePersonWithFirstNameSetToBob
         }
     }
 }
+```
 
 Notice how I created a namespace for the given.  This makes the code readable in our test runner.  I put the precondition and the action in the SetUp method because I want to start fresh with each test.  In this case, I only have one test, but in most scenarios, you will have multiple test.  You should plan for multiple test.
 
 In this particular case, I only have one post condition.  But if I had multiple post conditions, each one would be it’s own Test method with it’s own Assert.
 
-One of the biggest issues I see is people putting multiple asserts inside of one Test method.    You don’t want to do this.  You want one and only one Assert per Test method.  Otherwise, you never know by looking at your test what exactly failed or if the code were to run, that any of the other Asserts fail. .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, "Courier New", courier, monospace; background-color: #ffffff; /\*white-space: pre;\*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; } .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, "Courier New", courier, monospace; background-color: #ffffff; /\*white-space: pre;\*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }
+One of the biggest issues I see is people putting multiple asserts inside of one Test method.    You don’t want to do this.  You want one and only one Assert per Test method.  Otherwise, you never know by looking at your test what exactly failed or if the code were to run, that any of the other Asserts fail.
 
 Because we named our namespace, class, and test methods what we are testing, when a test fails, our test runner will display the names for us.
 

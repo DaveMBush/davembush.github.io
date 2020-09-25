@@ -14,6 +14,8 @@ date: 2014-03-25 13:07:00
 
 ![tran-land-045](/uploads/2014/03/tran-land-045.jpg "tran-land-045")While the artifact of Test Driven Development is test code, what you get out of test driven development far exceeds the test themselves. 
 
+<!-- more -->
+
 Maintainable Code
 -----------------
 

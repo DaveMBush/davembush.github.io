@@ -22,6 +22,8 @@ The result of this structure when applied to a general NUnit class is that we wi
 
 The problem with this is that sometimes this doesn’t always fit what we are trying to do.
 
+<!-- more -->
+
 For example, I’ve been writing selenium test to test web applications I am working on.  Each page I am testing is essentially a form that computes a result at the bottom.  If I were a purest, I would put the page load object and the setup of the state of the page in the setup method.  One for each permutation.  And the assert to verify that it computed correctly.
 
 In this case, however, I vary slightly because what I really want is all of these similar test together where I can see them.
@@ -36,17 +38,20 @@ But what you may not realize when you first look that this documentation is that
 
 So by setting up our Test method to look like this:
 
-\[Test\]
-\[TestCaseSource("DataSource")\]
+``` csharp
+[Test]
+[TestCaseSource("DataSource")]
 public void Test(Action pre,
-                          List<Action> actions,
-                          Action assert)
+    List<Action> actions,
+    Action assert)
 {
     pre();
-    foreach (var action in actions)
+    foreach (var action in actions) {
         action();
+    }
     assert();
 }
+```
 
 What we are doing is saying that we expect to find a property or member variable called “DataSource” that will pass us a function, a list of functions, and another function.
 
@@ -54,42 +59,44 @@ The test body runs the first function to do any pre-condition work.  Then it lo
 
 Here is a sample of what our DataSource property looks like:
 
+``` csharp
 public IEnumerable DataSource
 {
     get
     {
         Action pre = () => Console.WriteLine("given");
-        var actions = new List<Action> 
+        var actions = new List<Action>
         {
-            () =\> Console.WriteLine("when one"),
-            ()=\> Console.WriteLine("when two")
+            () => Console.WriteLine("when one"),
+            () => Console.WriteLine("when two")
         };
-        Action assert = () => 
+        Action assert = () =>
             Assert.That(1, Is.EqualTo(1));
-        yield return new 
-            TestCaseData(pre,actions,assert);
+        yield return new
+            TestCaseData(pre, actions, assert);
     }
 }
-
-.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, "Courier New", courier, monospace; background-color: #ffffff; /\*white-space: pre;\*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }
+```
 
 I’ve broken out the lambda expressions individually so that you can better see what I’m doing.  But in real life, your code will probably look more like this:
 
+``` csharp
 public IEnumerable DataSource
 {
     get
     {
         yield return new TestCaseData(
-            (Action)(() => Console.WriteLine("given")), 
-            new List<Action> 
+            (Action)(() => Console.WriteLine("given")),
+            new List<Action>
             {
-                () =\> Console.WriteLine("when one"),
-                () =\> Console.WriteLine("when two")
-            }, 
+                () => Console.WriteLine("when one"),
+                () => Console.WriteLine("when two")
+            },
             (Action)(() => Assert.That(1, Is.EqualTo(1)))
         );
     }
 }
+```
 
 You will need the (Action) cast to make the compiler understand what you are trying to do.  It isn’t smart enough to know that a lambda express is an Action which is a delegate that take no parameters and returns void.
 
@@ -99,26 +106,26 @@ When you run the code, above, we get this output:
 
 By chaining on the SetName() call, you can make each iteration show up as it’s own unique test so you can see what is occuring in your test runner.
 
+``` csharp
 public IEnumerable DataSource
 {
     get
     {
         yield return new TestCaseData(
-            (Action)(() => Console.WriteLine("given")), 
-            new List<Action> 
+            (Action)(() => Console.WriteLine("given")),
+            new List<Action>
             {
-                () =\> Console.WriteLine("when one"),
-                () =\> Console.WriteLine("when two")
-            }, 
+                () => Console.WriteLine("when one"),
+                () => Console.WriteLine("when two")
+            },
             (Action)(() => Assert.That(1, Is.EqualTo(1)))
         ).SetName("First Test");
     }
 }
-
-.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, "Courier New", courier, monospace; background-color: #ffffff; /\*white-space: pre;\*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }
+```
 
 And this looks like this in the test runner:
 
 ![GivenWhenThen2](/uploads/2014/03/GivenWhenThen2.png "GivenWhenThen2")
 
-Once again, I have to reiterate, this is not something I would do a lot of, but it is a pretty neat trick when you need it. .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, "Courier New", courier, monospace; background-color: #ffffff; /\*white-space: pre;\*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }
+Once again, I have to reiterate, this is not something I would do a lot of, but it is a pretty neat trick when you need it. 

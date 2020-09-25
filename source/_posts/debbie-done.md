@@ -18,6 +18,8 @@ A long long time ago, in what seems now like another world, I worked for a compa
 
 I was told that Debbie was a programmer who used to work for this company.  Debbie was a lazy programmer.  She worked harder at avoiding work than if she just did the job she was supposed to do.
 
+<!-- more -->
+
 The ultimate lazy programmer
 ----------------------------
 
