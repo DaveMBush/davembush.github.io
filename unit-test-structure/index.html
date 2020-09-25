@@ -14,7 +14,7 @@
 <meta property="og:description" content="One of the recurring reasons I hear from people for why they are not implementing unit test in their code is because it takes too long.  On one level I get that.  But, my experience tells me that the">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2014/03/UnitTestingScreen.png">
-<meta property="og:updated_time" content="2018-06-30T18:23:01.000Z">
+<meta property="og:updated_time" content="2020-09-25T11:09:50.484Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Unit Test Structure">
 <meta name="twitter:description" content="One of the recurring reasons I hear from people for why they are not implementing unit test in their code is because it takes too long.  On one level I get that.  But, my experience tells me that the">
@@ -113,6 +113,7 @@
       
         <p><img src="/uploads/2014/03/UnitTestingScreen.png" alt="UnitTestingScreen" title="UnitTestingScreen">One of the recurring reasons I hear from people for why they are not implementing unit test in their code is because it takes too long.  On one level I get that.  But, my experience tells me that the real problem is more likely that they just don’t understand enough about how to implement unit testing to be able to do it well.</p>
 <p>This is like knowing you are supposed to “eat right” and “exercise” but not having anyone tell you how to do either in such a way that you can maintain the habit.</p>
+<a id="more"></a>
 <h2 id="Start-Small"><a href="#Start-Small" class="headerlink" title="Start Small"></a>Start Small</h2><p>So the first rule of unit testing structure, just like the first rule of diet and exercise, is to start small.</p>
 <p>When I first started to take a look at unit testing, the general advice was to create a unit test class for each class.  Then you were suppose to create a test method for each class.  I still see a lot of code as I travel that looks like this as I watch people try to implement the practice.</p>
 <p>But how frustrating.  And how is that suppose to work when I’m modifying existing code?</p>
@@ -125,20 +126,7 @@
 </ul>
 <p>If you start thinking about your test under this framework, I think you’ll find that writing test become much easier.</p>
 <p>You may be thinking, “But Dave, that’s application level testing, not unit testing.”  And my answer would be, “Yes, it is, but your class is a mini application so it can apply to it as well.</p>
-<h2 id="So-let’s-take-the-classic-Person-class-as-an-example"><a href="#So-let’s-take-the-classic-Person-class-as-an-example" class="headerlink" title="So, let’s take the classic Person class as an example:"></a>So, let’s take the classic Person class as an example:</h2><p>public class Person<br>{<br>    public Person()<br>    {<br>    }</p>
-<pre><code>public string FirstName { get; set; }
-public string LastName { get; set; }
-
-public string FullName
-{
-    get
-    {
-        return FirstName + &quot; &quot; 
-            \+ LastName;
-    }
-}
-</code></pre><p>}</p>
-<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+<h2 id="So-let’s-take-the-classic-Person-class-as-an-example"><a href="#So-let’s-take-the-classic-Person-class-as-an-example" class="headerlink" title="So, let’s take the classic Person class as an example:"></a>So, let’s take the classic Person class as an example:</h2><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Person</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Person</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> FirstName &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> LastName &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> FullName</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">get</span></span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">return</span> FirstName + <span class="string">" "</span></span><br><span class="line">                + LastName;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Our preconditions might be:</p>
 <ul>
 <li>The object has been created</li>
@@ -154,31 +142,10 @@ public string FullName
 </ul>
 <p>So now that we have a use case for our class, how do we model this in our unit test?</p>
 <h2 id="Converting-the-Use-Case-to-a-Test-Case"><a href="#Converting-the-Use-Case-to-a-Test-Case" class="headerlink" title="Converting the Use Case to a Test Case"></a>Converting the Use Case to a Test Case</h2><p>Using NUnit since it is still the most popular, our resulting code might look something like:</p>
-<p>namespace GivenAnObjectOfTypePersonWithFirstNameSetToBob<br>{<br>    class WhenISetTheLastNameToJones<br>    {<br>        private Person _person;</p>
-<pre><code>    \[SetUp\]
-    public void Setup()
-    {
-        // The precondition
-        _person = new Person
-        {
-            FirstName = &quot;Bob&quot;
-        };
-
-        // The action
-        _person.LastName = &quot;Jones&quot;;
-    }
-
-    \[Test\]
-    public void TheFullNameShouldBeBobJones()
-    {
-        Assert.That(_person.FullName,
-            Is.EqualTo(&quot;Bob Jones&quot;));
-    }
-}
-</code></pre><p>}</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> <span class="title">GivenAnObjectOfTypePersonWithFirstNameSetToBob</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">class</span> <span class="title">WhenISetTheLastNameToJones</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">private</span> Person _person;</span><br><span class="line"></span><br><span class="line">        [<span class="meta">SetUp</span>]</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">Setup</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            <span class="comment">// The precondition</span></span><br><span class="line">            _person = <span class="keyword">new</span> Person</span><br><span class="line">            &#123;</span><br><span class="line">                FirstName = <span class="string">"Bob"</span>;</span><br><span class="line">            &#125;;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// The action</span></span><br><span class="line">            _person.LastName = <span class="string">"Jones"</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        [<span class="meta">Test</span>]</span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">TheFullNameShouldBeBobJones</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">        </span>&#123;</span><br><span class="line">            Assert.That(_person.FullName,</span><br><span class="line">                Is.EqualTo(<span class="string">"Bob Jones"</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Notice how I created a namespace for the given.  This makes the code readable in our test runner.  I put the precondition and the action in the SetUp method because I want to start fresh with each test.  In this case, I only have one test, but in most scenarios, you will have multiple test.  You should plan for multiple test.</p>
 <p>In this particular case, I only have one post condition.  But if I had multiple post conditions, each one would be it’s own Test method with it’s own Assert.</p>
-<p>One of the biggest issues I see is people putting multiple asserts inside of one Test method.    You don’t want to do this.  You want one and only one Assert per Test method.  Otherwise, you never know by looking at your test what exactly failed or if the code were to run, that any of the other Asserts fail. .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; } .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+<p>One of the biggest issues I see is people putting multiple asserts inside of one Test method.    You don’t want to do this.  You want one and only one Assert per Test method.  Otherwise, you never know by looking at your test what exactly failed or if the code were to run, that any of the other Asserts fail.</p>
 <p>Because we named our namespace, class, and test methods what we are testing, when a test fails, our test runner will display the names for us.</p>
 <p>If you think it makes the code more readable, you can use underscores to separate the names.  The goal is to make the code read something like your use case.</p>
 <p>One final note before we end.  Your namespace should match up to the directory the class file is in and the class name should match the file name.  This will make the code easy to find.  This is something I shouldn’t have to mention, but once again, I’ve seen people ignore the simplest of organizational strategies.</p>
@@ -193,7 +160,7 @@ public string FullName
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/unit-test-structure/" data-id="ckf9vd8rc005xd0x2ce1f9c3c" class="article-share-link">
+      <a data-url="http://davembush.github.com/unit-test-structure/" data-id="ckfi5ejcc005tvsx2gj2rpi6e" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
