@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Optimizing Angular For Speed | Dave&#39;s Notebook</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="I was recently asked how I would optimize an Angular site for speed. Interestingly, I’ve never written about this explicitly even though I’ve actually done quite a bit of work related to this issue. F">
+<meta name="keywords" content="angular,performance,best practice">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Optimizing Angular For Speed">
+<meta property="og:url" content="http://davembush.github.com/optimizing-angular-for-speed/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:description" content="I was recently asked how I would optimize an Angular site for speed. Interestingly, I’ve never written about this explicitly even though I’ve actually done quite a bit of work related to this issue. F">
+<meta property="og:locale" content="English">
+<meta property="og:updated_time" content="2020-09-27T21:01:10.483Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Optimizing Angular For Speed">
+<meta name="twitter:description" content="I was recently asked how I would optimize an Angular site for speed. Interestingly, I’ve never written about this explicitly even though I’ve actually done quite a bit of work related to this issue. F">
+  
+    <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
+  
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" integrity="sha384-XdYbMnZ/QjLh6iI4ogqCTaIjrFk87ip+ekIjefZch0Y+PvJ8CDYtEs1ipDmPorQ+" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="/css/styles.css">
+  
+
+</head>
+</html>
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+      <!--
+      <ul class="nav navbar-nav navbar-right">
+        
+          <li><a href="/atom.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        
+      </ul>
+      -->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-optimizing-angular-for-speed" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      Optimizing Angular For Speed
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/optimizing-angular-for-speed/" class="article-date"><time datetime="2020-09-27T12:34:41.000Z" itemprop="datePublished">2020-09-27</time></a>
+</div>
+
+    
+    
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I was recently asked how I would optimize an Angular site for speed. Interestingly, I’ve never written about this explicitly even though I’ve actually done quite a bit of work related to this issue.</p>
+<p>For the purposes of this article, I’m going to assume you have already implemented most of the things that Angular gives you “for free.” For example, we won’t talk about “Tree Shaking”, that’s a given.</p>
+<p>So, I give you my 20 or so tips on how to optimize an Angular application for speed.</p>
+<a id="more"></a>
+<h2 id="OnPush-Notification"><a href="#OnPush-Notification" class="headerlink" title="OnPush Notification"></a>OnPush Notification</h2><p>Much has been written about how Angular Change Detection works so I’m not going to go into a lot of detail about this other than to reiterate the basics.</p>
+<p>Without OnPush notification, angular will check the component to see if anything changed every time an event occurs.  This means something as simple as a mouse move will cause change detection evaluation.</p>
+<p>With OnPush, change detection on a component will happen only if one of the properties (field marked with @Input() attribute) of the component has changed or if you’ve explicitly told Angular that a change has occurred.</p>
+<p>In my experience, this isn’t going to generate enough of a performance difference that you can measure in seconds.  But it is going to make a difference overall and it is a generally quick win. So, start here.</p>
+<h2 id="Style-the-Host-of-your-Components"><a href="#Style-the-Host-of-your-Components" class="headerlink" title="Style the Host of your Components"></a>Style the Host of your Components</h2><p>Another place you can eak out a bit of performance without a lot of work is by eliminating the wrapping DIV element from your components.</p>
+<p>Most Angular developers are unaware that when the HTML template is rendered, the tag you use to render the component is also rendered.  So if you have a component who’s tag is \&lt;foo> and inside that component you included a DIV element that wraps all your control’s content, what actually renders on the screen is</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">foo</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    html for component here</span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">foo</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Now, it is true that the \&lt;foo> will get ignored by the browser. But it still has to evaluate it and determine that it shouldn’t do anything with it.</p>
+<p>By styling \&lt;foo> to look like a DIV element by using</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-pseudo">:host</span> &#123;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">  ... whatever other styling you</span><br><span class="line">  <span class="selector-tag">might</span> <span class="selector-tag">have</span> <span class="selector-tag">given</span> <span class="selector-tag">your</span> <span class="selector-tag">div</span> <span class="selector-tag">tag</span> <span class="selector-tag">here</span></span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>we can eliminate the inner DIV from our component and gain a bit of performance without going to a lot of trouble. The amount of performance gain you will see will depends on how many child components are being displayed at any one time.</p>
+<h2 id="Use-Pipes"><a href="#Use-Pipes" class="headerlink" title="Use Pipes"></a>Use Pipes</h2><p>This tip is only really valuable in the cases where the Functional programming’s pure functions is relevant.</p>
+<p>The idea behind pure functions, at least as it applies to pipes, is that a function that is pure will always return the same value when given the same parameters. So, for example, the function <code>Add(a, b)</code> will always return 4 given the parameters 2 and 2.</p>
+<p>Why recompute the value when you give it the same parameters as the previous time you called it?</p>
+<p>You can further take advantage of this optimization on functions that take extra time by using memoization. This is the practice of holding onto a computed value and using the parameters as a key to lookup the return value. Thus avoiding the computation completely.</p>
+<p>Use this optimization tip intelligently though.  There are times when values might be “the same” but the content is different.  I’m thinking about times when you would mutate the contents of an object.  Say an array you added a value to instead of creating a new array.  The array object pointer is still the same and so your pure function will not recompute the return value because the pointer didn’t change.</p>
+<p>If OnPush isn’t giving you all the optimization that you are looking for, creating a pure Pipe is the next step along the same lines.</p>
+<p>This is one place where I’d spend the extra time to verify that my “optimization” isn’t actually making the performance worse.</p>
+<h2 id="Upgrade-to-IVY"><a href="#Upgrade-to-IVY" class="headerlink" title="Upgrade to IVY"></a>Upgrade to IVY</h2><p>In general, I would suggest that you always keep your Angular version up to date.</p>
+<p>While we are on the topic of upgrades.  In an enterprise environment, my suggestion is to never fall more than 2 major versions behind and never us the current major version.  I try to keep my team using the latest version of the major version one major version prior to the current version.  This keeps us relatively current but far enough behind that someone else has figured out all the quirks of the version we are using.</p>
+<p>At a minimum, make sure you are using a version that uses the IVY rendering engine to take advantage of the performance gains it introduced.</p>
+<h2 id="Ahead-of-Time-Compile"><a href="#Ahead-of-Time-Compile" class="headerlink" title="Ahead of Time Compile"></a>Ahead of Time Compile</h2><p>One optimization that has been around for a while is Ahead of Time compile. It has been around so long that I almost forget that it is optional. Make sure your code is using it.</p>
+<p>Ahead of Time compile ensures that the templates get compiled into JavaScript prior to being sent to the browser. A little extra time during the build process can save significant time on the client.</p>
+<h2 id="Compile-for-Production"><a href="#Compile-for-Production" class="headerlink" title="Compile for Production"></a>Compile for Production</h2><p>Another place where we really shouldn’t have to mention that it is even an option is the process of compiling for production. In one product I worked on I discovered that we were deploying code using the development environment instead of the production environment.  The only reason I discovered this is because we were getting the change detection after change warning in production.  That’s the most notable difference. But, this check is happening with every change detection cycle and is further slowing down the code.</p>
+<h2 id="Cache-your-code-on-the-browser"><a href="#Cache-your-code-on-the-browser" class="headerlink" title="Cache your code on the browser"></a>Cache your code on the browser</h2><p>If you build your application with an option that attaches a hash code to the file name, you can cache your javascript code on the browser so that the next time that browser tries to access the code it will load it from the cache.</p>
+<p>Do not cache your index.html file as you need to make sure that code always gets download.</p>
+<p>Specifically, the options you want to implement on your server for your static files are:</p>
+<ul>
+<li>immutable</li>
+<li>max-age 365</li>
+</ul>
+<p>This will prevent the browser from even checking the server for new code.</p>
+<h2 id="CDN"><a href="#CDN" class="headerlink" title="CDN"></a>CDN</h2><p>Similarly, putting your files closer to the people who will be retrieving them will go a long way to improving your performance around time to first render.</p>
+<h2 id="Perception-Beats-Reality"><a href="#Perception-Beats-Reality" class="headerlink" title="Perception Beats Reality"></a>Perception Beats Reality</h2><p>One place that gets overlooked when we talk about performance is time to first display.</p>
+<p>We recently ran into a situation where the code was taking so long to load that the client didn’t even see the spinner we had put in place to indicate we were loading data.</p>
+<p>To fix this we added spinner code directly into our html file.  It takes slightly longer to load the index.html file but it displays more quickly than if we also waited for our javascript to load.</p>
+<h2 id="TrackBy-X-in-ngFor"><a href="#TrackBy-X-in-ngFor" class="headerlink" title="TrackBy X in ngFor"></a>TrackBy X in ngFor</h2><p>Another way to eek out a bit more performance is by implementing the TrackBy property in your ngFor loops.</p>
+<p>This is particularly useful when you are displaying a list that updates multiple times from the server.  On every refresh, because it is a brand new object, it will update the whole list.</p>
+<p>By using TrackBy, you can tell Angular to only update the elements in the list that have changed by whatever you specify in TrackBy.</p>
+<p>Be careful with this. If you are retrieving data where the ID stays the same but the content for that ID changes, what you most certainly don’t want to do is to TrackBy ID.</p>
+<p>In this case you would either not use TrackBy or maybe use ID in combination with LastUpdate date.  I’ve seen this implemented incorrectly way too often.</p>
+<h2 id="Lazy-Load-Routes"><a href="#Lazy-Load-Routes" class="headerlink" title="Lazy Load Routes"></a>Lazy Load Routes</h2><p>Most applications have multiple routes that they access. But even if yours doesn’t you should set your code up to use Lazy Loading for three reasons.</p>
+<p>First, small apps grow up.  Eventually you will probably have multiple routes.  If your app is so small that it doesn’t, implementing Lazy Loading of routes isn’t going to hurt anything.</p>
+<p>Second, implementing Lazy Loading will break your code down further into multiple files. Most of the code in those files will never change so that, once they are loaded and cached as instructed above, the only code that will ever need to be downloaded is code in your route when it changes.</p>
+<p>Third, having more files to download could help in the initial load of your application as the client now has more opportunity to download the files in parallel.</p>
+<h2 id="Lazy-Rendering"><a href="#Lazy-Rendering" class="headerlink" title="Lazy Rendering"></a>Lazy Rendering</h2><h3 id="Lazy-Loading-Resources"><a href="#Lazy-Loading-Resources" class="headerlink" title="Lazy Loading Resources"></a>Lazy Loading Resources</h3><p>Angular does most of this for you.  Especially as it concerns CSS.  But, if your application has a lot of images, you should consider lazy loading those images.</p>
+<h3 id="Virtual-Scrolling"><a href="#Virtual-Scrolling" class="headerlink" title="Virtual Scrolling"></a>Virtual Scrolling</h3><p>There are multiple implementations of this. But the idea is to only render what the user can see as the user scrolls rather than rendering everything into the DOM and then letting the browser to the scrolling.</p>
+<p>On one mega app I worked on, I reduced the rendering time from 8 seconds to 1 second by implementing this concept.</p>
+<h2 id="Good-Architecture"><a href="#Good-Architecture" class="headerlink" title="Good Architecture"></a>Good Architecture</h2><p>I’ve worked on the optimization of an application where one of the first things we did was to straighten out the basic architecture.</p>
+<p>I often tell people, “If you had any idea how software gets created, you’d be amazed that anything works as well as it does.”  This application was no different.</p>
+<p>Someone had wanted to implement a feature that was in the next version of NgRX and so, copied code from the next version into the version we were using.</p>
+<p>It sounds harmless. But the result was the NgRX change detection got thrown into a loop that took thousands of cycles to resolve instead of just one or two.  This, in turn, slowed the rendering time down on the application to a point where just switching routes took multiple seconds.  On the order of 5 - 10 seconds.</p>
+<p>Upgrading the application to the version we wanted to use solved the problem.</p>
+<p>There were other similar issues with this code that were solved simply by fixing how the code had been assembled.</p>
+<h2 id="Data-Access"><a href="#Data-Access" class="headerlink" title="Data Access"></a>Data Access</h2><p>So far we’ve talked about what to do once we’ve retrieved the data into our application, but many performance issue can be avoided simply by paying attention to how and when we load our data from the server.</p>
+<h3 id="Only-Load-What-You-Need"><a href="#Only-Load-What-You-Need" class="headerlink" title="Only Load What You Need"></a>Only Load What You Need</h3><p>One guiding principle for data access is that you should only load the data you need from the server at the point you actually need it.</p>
+<p>An example of where you might see this performance issue is that we tend to do a massive join of data on the server and return everything we retrieved even if we don’t need the data for the operation at hand.</p>
+<p>The less data you access, the faster your application will perform.</p>
+<h3 id="Normalization-is-a-Curse"><a href="#Normalization-is-a-Curse" class="headerlink" title="Normalization is a Curse"></a>Normalization is a Curse</h3><p>One way to achieve sending less data back to the server is to send it back in it’s raw form rather than nested and normalized.</p>
+<p>For this, I recommend a product called Normalizr.  This takes the nested data and breaks it into multiple tables. The product was originally written for client side code to make using Redux and NgRX easier.  But there are now server side implementations you can use that structure the data prior to sending it back so that you only send back one instance of the data you need rather than multiple instances because it is used by multiple parent rows.</p>
+<h3 id="Pre-load-Lookup-Tables"><a href="#Pre-load-Lookup-Tables" class="headerlink" title="Pre-load Lookup Tables"></a>Pre-load Lookup Tables</h3><p>Along this same idea. Many times we have nested data that is the result from some lookup table. By using Normalizr, you could load those table up front and then only return the key into those tables and use Normalizr and NgRX Selectors to do the JOIN on the client side further reducing the overall amount of data that you need to retrieve at any one time.</p>
+<h3 id="Virtual-Arrays"><a href="#Virtual-Arrays" class="headerlink" title="Virtual Arrays"></a>Virtual Arrays</h3><p>I mentioned Virtual Scrolling above as one way to reduce the rendering time. By combining this with an concept I like to refer to as Virtual Arrays you can similarly only retrieve the data the user can see further reducing the perceived time to first render.</p>
+<p>A Virtual Array is an object that looks like an array from an API perspective but the implementation is actually using the database as the storage location.  You can either retrieve the data from the database whenever it is requested from the array or you can memoize the data so that it is only retrieved once.</p>
+<h3 id="Service-Workers"><a href="#Service-Workers" class="headerlink" title="Service Workers"></a>Service Workers</h3><p>Similar in concept to the virtual arrays above but a standard API that you can implement globally. You can use service workers to cache data from the server and only ask the server for it again after you consider it stale.</p>
+<p>You can also use this to cache the index.html file locally so you don’t even have to retrieve it until there is a new version.</p>
+<h2 id="Server-Side-Considerations"><a href="#Server-Side-Considerations" class="headerlink" title="Server Side Considerations"></a>Server Side Considerations</h2><h3 id="Normalization-is-a-Curse-Here-Too"><a href="#Normalization-is-a-Curse-Here-Too" class="headerlink" title="Normalization is a Curse Here Too"></a>Normalization is a Curse Here Too</h3><p>I once worked on an application where the data was being retrieved from 20 tables joined together.  When we went to look at what was going on, we realized that most of that data is static during the time the client was using it and that we could dump most of the join results into a flat table and use it instead.  This was another case were we went from an 8 second load time to 1 second.</p>
+<p>I know the performance considerations around JOINs varies depending on what database you are using.  But, it is something to keep in mind all the same.</p>
+<h3 id="Server-Side-Caching"><a href="#Server-Side-Caching" class="headerlink" title="Server Side Caching"></a>Server Side Caching</h3><p>In many systems, similar to the one I mentioned above, most of our calls to the server could be considered Functionally pure enough that we could cache the data.</p>
+<p>I <a href="/what’s-the-truth-about-running-asp-net-webapi-asynchronously/">did some timings on this several years ago</a> and the results, even caching for a second gave some pretty impressive results.</p>
+<p>For example, those lookup tables I discussed earlier don’t need to be retrieved from the database every time we make a call for them.  We should be able to make a call for the data once and then return that data every time it is requested until the data is refreshed.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>There are probably other ways to optimize your application that I’ve forgotten or, more likely, just do out of habit now.</p>
+<p>What I’ve written about above are the ones that stand out as the often overlooked issues.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/optimizing-angular-for-speed/" data-id="ckflks9bc008wq8x2jhey08g0" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angular/">angular</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/best-practice/">best practice</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/performance/">performance</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/you-aren’t-doing-scrum-if…/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">You Aren’t Doing Scrum If…</span>
+    </a>
+  </li>
+  
+  
+</ul>
+
+
+  
+</article>
+
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/optimizing-angular-for-speed/">Optimizing Angular For Speed</a>
+        </li>
+      
+        <li>
+          <a href="/you-aren’t-doing-scrum-if…/">You Aren’t Doing Scrum If…</a>
+        </li>
+      
+        <li>
+          <a href="/an-angular-application-architecture-that-works/">An Angular Application Architecture That Works</a>
+        </li>
+      
+        <li>
+          <a href="/what-if-unit-testing-wasn’t-necessary-notdd/">What If Unit Testing Wasn’t Necessary? #noTDD</a>
+        </li>
+      
+        <li>
+          <a href="/linkedin-tips-for-programmers/">LinkedIn Tips For Programmers</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/09/">September 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/06/">June 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Dave M Bush<br>
+      All opinions are my own and do not reflect any company I have or am currently working at.<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+<script src="/js/script.js"></script>
+
+</body>
+</html>
