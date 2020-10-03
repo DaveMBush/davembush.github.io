@@ -14,17 +14,18 @@ date: 2014-02-25 03:44:00
 
 ![spider](/uploads/2014/02/spider.jpg "spider")Several years ago, long before the community was actively talking about Test Driven Development, I worked for a short time at a company as a “bug fixer.”  That was my role.  They had hired me because they had some software that was “basically done” but “had some issues.”  It should only take a few weeks.
 
-The first thing they needed me to fix was that the web site was supposed to send out email.  It turns out it was a configuration problem.  But they were so impressed (“the last guy we had in here spent two weeks on that problem and still hadn’t solved the problem.”) that they gave me more and more bugs.
+The first thing they needed me to fix was that the website was supposed to send out email.  It turns out it was a configuration problem.  But they were so impressed (“the last guy we had in here spent two weeks on that problem and still hadn’t solved the problem.”) that they gave me more and more bugs.
 
 This Is The Job That Never Ends
 -------------------------------
+<!-- more -->
 
-The gig that was suppose to be a couple of weeks long was quickly turning into a perpetual job.  Soon I learned that what I was working with was a system that had a lot of bugs, but no one was willing to admit that.  Eventually, frustrated by the fact that this system seemed to have a new bug every day, I asked for the specs so that I could create a test plan.  That’s when I found out the worse news of all about this system.
+The gig that was supposed to be a couple of weeks long was quickly turning into a perpetual job.  Soon I learned that what I was working with was a system that had a lot of bugs, but no one was willing to admit that.  Eventually, frustrated by the fact that this system seemed to have a new bug every day, I asked for the specs so that I could create a test plan.  That’s when I found out the worse news of all about this system.
 
 Lost Specifications
 -------------------
 
-They had lost the specs.  Not only had they lost the specs, but they were unwilling to admit this to the client and instead they were relying on the process of fixing the bugs to eventually squash all of the bugs so they could end up with a stable system.
+They had lost the specs.  Not only had they lost the specs, but they were unwilling to admit this to the client and instead they were relying on the process of fixing the bugs to eventually squash all  the bugs so they could end up with a stable system.
 
 Since I was not yet familiar with the concepts of unit testing or Test Driven Development, I accepted this as the best we could do.  Hey!  At least I was getting paid well.
 
