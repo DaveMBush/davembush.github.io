@@ -76,6 +76,88 @@
         <div class="col-sm-8 blog-main">
           
   
+    <article id="post-upload-a-file-via-webrequest-using-csharp" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/upload-a-file-via-webrequest-using-csharp/">Upload a File via WebRequest Using CSharp</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/upload-a-file-via-webrequest-using-csharp/" class="article-date"><time datetime="2009-11-10T14:15:52.000Z" itemprop="datePublished">2009-11-10</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/c/">c#</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/11/G03A0085.jpg" alt="G03A0085" title="G03A0085"></p>
+<p>I got this question a couple of weeks ago but just never had the time to put into answering fully.  But today I have some extra time due to the fact that I’m under-booked with projects.</p>
+<p>The question went something like this:</p>
+<p>“I want to be able to upload a file from a desktop application to a web site that has a form that accepts the file as a post.  How do I do that?”</p>
+<p>And while I’ve done some things in the past that come close, I’ve never had to do this exact task.  But it does look interesting.</p>
+<p>The entire trick to making this work is to make the web server think that the form has been filled out and that the post has been implemented.</p>
+<p>To do this, you’ll need to create a WebRequest object and set some properties on it.  The two that you must set are the Method property (to POST) and the ContentType (to “multipart/form-data; boundary=”+boundary).  If you are sending multiple files, you’ll need multiple boundaries.</p>
+<p>System.Net.WebRequest wr =<br>    System.Net.WebRequest.Create(“url goes here”);<br>wr.ContentType = “multipart/form-data; boundary=xyz”;<br>wr.Method = “POST”;</p>
+<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+<p>To send data, we need to format the data in multipart/form-data mode.  First we retrieve the file into a stream.</p>
+<p>FileStream fs= new FileStream(“your file here”,<br>    System.IO.FileMode.Open, System.IO.FileAccess.Read);<br>byteArray= new byte[loFile.Length];<br>fs.Read(byteArray,0,(int) byteArray.Length);<br>fs.Close();</p>
+<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+<p>Then we setup the multipart boundary header.</p>
+<p>string var = “–” + boundaryID + “\<br>\n”  +<br>     “Content-Disposition: form-data; name=\“” + Key + “\“ filename=\“” +<br>      new FileInfo(“your file here”).Name + “\“\<br>\n\<br>\n”;</p>
+<p>Then we write the boundary header and the content to the output stream .csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+<p>System.IO.MemoryStream ms = new System.IO.MemoryStream();<br>System.IO.BinaryWriter bw = new System.IO.BinaryWriter(ms);<br>bw.Write(Encoding.GetEncoding(1252).GetBytes(var));<br>bw.Write(byteArray);<br>bw.Write(Encoding.GetEncoding(1252).GetBytes(“\<br>\n”));</p>
+<p>System.IO.Stream postStream = wr.GetRequestStream();<br>ms.WriteTo(postStream);<br>postStream.Close();</p>
+<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+<p>Note the last bw.Write() line is telling the server this is the  end of the boundary.</p>
+<p>And then the final bit of code that sends it to the server and gets the resulting HTML.</p>
+<p>System.Net.WebResponse wresponse = wr.GetResponse();<br>System.Text.Encoding enc =<br>    System.Text.Encoding.GetEncoding(1252);<br>System.IO.StreamReader responseStream =<br>    new System.IO.StreamReader<br>        (wresponse.GetResponseStream(), enc);<br>string lcHtml = responseStream.ReadToEnd();<br>wresponse.Close();<br>responseStream.Close();</p>
+<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+<p>That’s all there is to it.  Once you know how to do it, it is rather simple.</p>
+<p><strong>Other places talking about WebRequest using multipart/form-data</strong></p>
+<p><a href="//www.briangrinstead.com/blog/multipart-form-post-in-c">Brian Grinstead » Blog Archive » Multipart Form Post in C#</a> - So, I needed to roll my own form post. Here is the Multipart Form RFC and the W3C Specification for multipart/form data. After reading these links and searching some forums, here is what I came up with. ….. userAgent, contentType, formData) End Function Private Function PostForm(ByVal postUrl As String, _ ByVal userAgent As String, _ ByVal contentType As String, _ ByVal formData As Byte()) _ As HttpWebResponse Try Dim request As HttpWebRequest = WebRequest. …</p>
+<p><a href="//www.west-wind.com/presentations/dotnetWebRequest/dotnetWebRequest.htm">Retrieving HTTP content in .NET with WebRequest/WebResponse</a> - This code finalizes the request for POST data by checking whether we’ve already written something into the POST buffer and if so configuring the POST request by specifying the content type. In the case of multi-part form POST an …</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/upload-a-file-via-webrequest-using-csharp/" data-id="ckfvgolg20063eox2bslxxcq9" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/contenttype/">contenttype</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/file-upload/">file upload</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/multipart-form-data/">multipart/form-data</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/post/">post</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webrequest/">webrequest</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/webresponse/">webresponse</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
     <article id="post-embedding-google-search-appliance-results-in-asp-net" class="article article-type-post" itemscope itemprop="blogPost">
 
   <header class="article-header">
@@ -150,7 +232,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/embedding-google-search-appliance-results-in-asp-net/" data-id="ckfu0er4m0023rcx2u1m9h1kg" class="article-share-link">
+      <a data-url="http://davembush.github.com/embedding-google-search-appliance-results-in-asp-net/" data-id="ckfvgolbj0022eox2fc7trzr1" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -209,7 +291,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/gridview-and-updating-a-row-manually/" data-id="ckfu0er56002ercx2dkvkidj9" class="article-share-link">
+      <a data-url="http://davembush.github.com/gridview-and-updating-a-row-manually/" data-id="ckfvgolc6002heox2swtwvg9v" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -270,7 +352,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/access-a-control-by-id-from-within-a-databound-control/" data-id="ckfu0er2t000brcx2z52sa3oh" class="article-share-link">
+      <a data-url="http://davembush.github.com/access-a-control-by-id-from-within-a-databound-control/" data-id="ckfvgol8r000ceox2methv41y" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -327,7 +409,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/agile-scrum-task-board-for-“real-life”/" data-id="ckfu0er32000grcx2wj4isl44" class="article-share-link">
+      <a data-url="http://davembush.github.com/agile-scrum-task-board-for-“real-life”/" data-id="ckfvgol8y000geox23h39pqh1" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -394,7 +476,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/determine-the-role-of-a-user-in-asp-net/" data-id="ckfu0er4g001wrcx2nuvt176c" class="article-share-link">
+      <a data-url="http://davembush.github.com/determine-the-role-of-a-user-in-asp-net/" data-id="ckfvgolbi0021eox2vc8hntkl" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -461,7 +543,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/httpcontext-items-vs-session/" data-id="ckfu0er59002hrcx2umk5lj5v" class="article-share-link">
+      <a data-url="http://davembush.github.com/httpcontext-items-vs-session/" data-id="ckfvgolc9002jeox2zqabur68" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -527,7 +609,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/forms-authentication-–-manual-authentication/" data-id="ckfu0er4s0027rcx28xksx9f5" class="article-share-link">
+      <a data-url="http://davembush.github.com/forms-authentication-–-manual-authentication/" data-id="ckfvgolby002aeox239ff47f3" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -592,7 +674,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/dynamically-change-class-attribute-from-asp-net/" data-id="ckfu0er4l0022rcx2xw1e1953" class="article-share-link">
+      <a data-url="http://davembush.github.com/dynamically-change-class-attribute-from-asp-net/" data-id="ckfvgolbh0020eox2j8lbyz7p" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -661,89 +743,12 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-tables/" data-id="ckfu0er5x002xrcx2opsdwxbq" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-tables/" data-id="ckfvgolcv0030eox26vrnn5z4" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PDF/">PDF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iTextSharp/">iTextSharp</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tables/">tables</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-setting-up-you-forms-based-authentication-database" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/setting-up-your-forms-based-authentication-database/">Setting Up Your Forms Based Authentication Database</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/setting-up-your-forms-based-authentication-database/" class="article-date"><time datetime="2009-09-14T09:41:24.000Z" itemprop="datePublished">2009-09-14</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/forms-authentication/">forms authentication</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2009/09/B01I0003.jpg" alt="B01I0003" title="B01I0003"></p>
-<p>I was recently asked if I would cover some topics related to Forms Based Authentication.  The person who requested this information has some specific issues that he wants covered that I won’t be covering for a while because I think there are some other issues that need to be covered first.</p>
-<p>One of those is setting up the database.</p>
-<p>When I owned my hosting companies, I saw more confusion in this area than just about any other topic that came up.</p>
-<p>So here’s the step-by-step process you need to go through to set up your database for Forms Based Authentication.</p>
-<p>In your hosting company’s control panel, create the SQL database.  You’ll want to create a database with a size of at least 10 meg with 5 meg allocated to the log file and 5 meg allocated to the database.  You’ll also want to make sure the user you attach to the database has DBO rights.  You may need to contact support to enable this.</p>
-<p>Next, you’ll want to run aspnet_regsql.exe which you can find under c:\windows\Microsoft.NET\Framework\v2.0.50727.  This will provide you a wizard interface and will ultimately create the appropriate tables for you. The wizard is self explanatory, so I won’t repeat it here except to say that you’ll want to enter your connection information to connect to the server you just created your database on, not one of your databases locally.</p>
-<p>Next you’ll need to add the connection information to your web.config file for the application you are setting up Forms Based Authentication for.</p>
-<connectionstrings><br> <remove name="LocalSqlServer"><br> <add name="LocalSqlServer" connectionstring="Data Source=sqlserverGoesHere;
-    Initial Catalog=YourDatabaseName;
-    Persist Security Info=True;
-    User ID=YourSqlUserID;
-    password=YourSqlPassword" providername="System.Data.SqlClient"><br></add></remove></connectionstrings>
-
-<p>The “remove” element is needed because typically the machine.config file on the server has its own entry that you won’t be using.</p>
-<p>Unfortunately, you’ll need to create your own UI for adding users and assigning them to roles.  It isn’t that hard to do and once you’ve done it you can move the administration controls from project to project.  If I were you, I’d create the control set once in a special sub-directory so that I could move it from project to project.</p>
-<p><strong>Other places talking about Forms Based Authentication:</strong></p>
-<p><a href="//geekswithblogs.net/bjackett/archive/2009/09/03/single-sign-on-across-.net-web-apps-using-forms-based-authentication.aspx">Single Sign-On Across .Net Web Apps Using Forms Based Authentication</a> - Achieving single sign-on capabilities using Forms Based Authentication is much easier than I had initially expected, yet it took awhile to find the exact settings required. To get FBA working in SharePoint click here for a good starter …</p>
-<p><a href="//geekswithblogs.net/kjones/archive/2009/07/17/133567.aspx">Forms Based Authentication and Active Directory</a> - I recently had to configure Forms Based Authentication for our website (in my case SharePoint, but the same would apply to a plain ASP.NET website) and I wanted to configure it to use Active Directory for the account storage. …</p>
-<p><a href="//avinashkt.blogspot.com/2009/08/configuring-forms-based-authentication.html">Avinash: Configuring Forms Based Authentication (FBA) in SharePoint</a> - 6) Change Authentication Provider for Forms based site. 7) Change configuration files settings. 8) Change policy for Web Application 9) Add users/roles as site administrator (Primary and Secondary). 10) Check Forms Based Authentication …</p>
-<p><a href="//blog.sharepoint-voodoo.net/?p=6">Easy-Bake Forms Based Authentication</a> - In a hosted environment I often see situations where a customer wants to quickly and easily add Forms Based Authentication to their SharePoint Web Application. Unfortunately, it is neither quick nor easy to add this functionality, …</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/setting-up-your-forms-based-authentication-database/" data-id="ckfu0ervz00qhrcx2qzzy4g68" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/aspnet-regsql/">aspnet_regsql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/forms-based-authentication/">forms based authentication</a></li></ul>
 
 
     </footer>
@@ -771,6 +776,10 @@
     <ul class="sidebar-module-list">
       
         <li>
+          <a href="/fixing-single-responsibility/">Fixing Single Responsibility</a>
+        </li>
+      
+        <li>
           <a href="/optimizing-angular-for-speed/">Optimizing Angular For Speed</a>
         </li>
       
@@ -786,10 +795,6 @@
           <a href="/what-if-unit-testing-wasn’t-necessary-notdd/">What If Unit Testing Wasn’t Necessary? #noTDD</a>
         </li>
       
-        <li>
-          <a href="/linkedin-tips-for-programmers/">LinkedIn Tips For Programmers</a>
-        </li>
-      
     </ul>
   </div>
 
@@ -797,7 +802,7 @@
   
   <div class="sidebar-module">
     <h4>Archives</h4>
-    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/09/">September 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/06/">June 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/10/">October 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/09/">September 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/06/">June 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
   </div>
 
 
