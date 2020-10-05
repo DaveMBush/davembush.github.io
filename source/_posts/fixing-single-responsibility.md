@@ -55,6 +55,8 @@ Unfortunately, there is an easy rule to follow that eliminates most of this.
 
 The only thing your repository should return is an IQueryable of the type represented by the Repository name.  If your repository is for accessing a particular table, it should return an IQueryable of that table's Model and ONLY IQueryables for that Model.  Not some of one Model and some of another.
 
+> Yes, I know, technically speaking, the Repository is both dead and could also return IEnumerable, but I find that adds to the problem of putting Business Logic inside the Repository.  So, I'm going to assert that IF you are going to use the Repository pattern, it really should ONLY return IQueryable.
+
 In a typical Entity Framework application, your goal is to not actually retrieve data until you are in the Business Logic layer.  By returning IQueryable, you prevent any data retrieval from occurring and you also give yourself and your team the added benefit of being able to use multiple methods in your repository from the business logic layer by combining them all into one query.
 
 Code reuse and a possible performance gain.  What could be better?
