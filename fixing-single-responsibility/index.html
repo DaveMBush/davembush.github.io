@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="The Single Responsibility principle is a well-known, Object Oriented principle that states that we should narrow the scope of the code in our Module/Class/Function so that is it only responsible for o">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2020-10-05T11:23:15.231Z">
+<meta property="og:updated_time" content="2020-10-05T11:27:07.362Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Fixing Single Responsibility">
 <meta name="twitter:description" content="The Single Responsibility principle is a well-known, Object Oriented principle that states that we should narrow the scope of the code in our Module/Class/Function so that is it only responsible for o">
@@ -138,7 +138,7 @@
 <p>Unfortunately, there is an easy rule to follow that eliminates most of this.</p>
 <p>The only thing your repository should return is an IQueryable of the type represented by the Repository name.  If your repository is for accessing a particular table, it should return an IQueryable of that table’s Model and ONLY IQueryables for that Model.  Not some of one Model and some of another.</p>
 <blockquote>
-<p>Yes, I know, technically speaking, the Repository is both dead and could also return IEnumeable, but I find that adds to the problem of putting Business Logic inside the Repository.  So, I’m going to assert that IF you are going to use the Repository pattern, it really should ONLY return IQueryable.</p>
+<p>Yes, I know, technically speaking, the Repository is both dead and could also return IEnumerable, but I find that adds to the problem of putting Business Logic inside the Repository.  So, I’m going to assert that IF you are going to use the Repository pattern, it really should ONLY return IQueryable.</p>
 </blockquote>
 <p>In a typical Entity Framework application, your goal is to not actually retrieve data until you are in the Business Logic layer.  By returning IQueryable, you prevent any data retrieval from occurring and you also give yourself and your team the added benefit of being able to use multiple methods in your repository from the business logic layer by combining them all into one query.</p>
 <p>Code reuse and a possible performance gain.  What could be better?</p>
@@ -168,7 +168,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/fixing-single-responsibility/" data-id="ckfwg4ffg002bkox27ix3pasc" class="article-share-link">
+      <a data-url="http://davembush.github.com/fixing-single-responsibility/" data-id="ckfwg99st0029rgx23hqhv7t0" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
