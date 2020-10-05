@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="I was recently asked how I would optimize an Angular site for speed. Interestingly, I’ve never written about this explicitly even though I’ve actually done quite a bit of work related to this issue. F">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2020-09-27T21:01:10.483Z">
+<meta property="og:updated_time" content="2020-10-05T16:05:03.400Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Optimizing Angular For Speed">
 <meta name="twitter:description" content="I was recently asked how I would optimize an Angular site for speed. Interestingly, I’ve never written about this explicitly even though I’ve actually done quite a bit of work related to this issue. F">
@@ -174,6 +174,8 @@
 <p>A Virtual Array is an object that looks like an array from an API perspective but the implementation is actually using the database as the storage location.  You can either retrieve the data from the database whenever it is requested from the array or you can memoize the data so that it is only retrieved once.</p>
 <h3 id="Service-Workers"><a href="#Service-Workers" class="headerlink" title="Service Workers"></a>Service Workers</h3><p>Similar in concept to the virtual arrays above but a standard API that you can implement globally. You can use service workers to cache data from the server and only ask the server for it again after you consider it stale.</p>
 <p>You can also use this to cache the index.html file locally so you don’t even have to retrieve it until there is a new version.</p>
+<h3 id="WebAssembly"><a href="#WebAssembly" class="headerlink" title="WebAssembly"></a>WebAssembly</h3><p>I’ve yet to find my code is so slow that this actually makes sense but it is theoretically possible that you’d find even more performance by creating services using WebAssembly.  This would mean that you’d need to write the code in something other than TypeScript and Angularize it by wrapping it in TypeScript/Angular code.  But I’ve seen at least one article on the web where they did just that.</p>
+<h3 id="WebWorkers"><a href="#WebWorkers" class="headerlink" title="WebWorkers"></a>WebWorkers</h3><p>This is another place where there is at least a theoretical possibility that it would provide additional performance. At the very least, it can provide the appearance of performance.</p>
 <h2 id="Server-Side-Considerations"><a href="#Server-Side-Considerations" class="headerlink" title="Server Side Considerations"></a>Server Side Considerations</h2><h3 id="Normalization-is-a-Curse-Here-Too"><a href="#Normalization-is-a-Curse-Here-Too" class="headerlink" title="Normalization is a Curse Here Too"></a>Normalization is a Curse Here Too</h3><p>I once worked on an application where the data was being retrieved from 20 tables joined together.  When we went to look at what was going on, we realized that most of that data is static during the time the client was using it and that we could dump most of the join results into a flat table and use it instead.  This was another case were we went from an 8 second load time to 1 second.</p>
 <p>I know the performance considerations around JOINs varies depending on what database you are using.  But, it is something to keep in mind all the same.</p>
 <h3 id="Server-Side-Caching"><a href="#Server-Side-Caching" class="headerlink" title="Server Side Caching"></a>Server Side Caching</h3><p>In many systems, similar to the one I mentioned above, most of our calls to the server could be considered Functionally pure enough that we could cache the data.</p>
@@ -191,7 +193,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/optimizing-angular-for-speed/" data-id="ckfwg9aof015frgx2tsvi9fr9" class="article-share-link">
+      <a data-url="http://davembush.github.com/optimizing-angular-for-speed/" data-id="ckfwq6s2n00h14gx2fqa8jmdf" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
