@@ -14,7 +14,7 @@
 <meta property="og:description" content="Several weeks ago I presented jQuery at the DotNet User’s Group in Connecticut.  As part of that presentation, I mentioned that I handle errors from my WebServices in a slightly different way than wh">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2009/06/tp-vol2-004.jpg">
-<meta property="og:updated_time" content="2018-06-30T18:23:01.000Z">
+<meta property="og:updated_time" content="2020-10-17T13:14:32.827Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebServices – Error Handling">
 <meta name="twitter:description" content="Several weeks ago I presented jQuery at the DotNet User’s Group in Connecticut.  As part of that presentation, I mentioned that I handle errors from my WebServices in a slightly different way than wh">
@@ -112,14 +112,13 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><img src="/uploads/2009/06/tp-vol2-004.jpg" alt="tp_vol2_004" title="tp_vol2_004"> Several weeks ago I presented jQuery at the DotNet User’s Group in Connecticut.  As part of that presentation, I mentioned that I handle errors from my WebServices in a slightly different way than what most authors teach.</p>
-<p>I thought this morning would be a good time to cover that method in detail.</p>
+<a id="more"></a>
 <p>As I mentioned in the presentation, I do not make use of the SoapException stuff that is part of the SOAP standard for WebServices.  This is because rolling my own SOAP Exception is a lot of work for not a whole lot of pay back and it doesn’t give me the information I’m really looking for when an exception occurs on the server side.  I also don’t let .NET wrap the exception for me because by the time the error gets back to the client, it has even less information than if I had rolled my own.</p>
 <p>This is not to say that you shouldn’t handle the SOAP Exception on the client side.  There are several reasons why a SOAP Exception might be thrown that have nothing to do with what happened inside the method, but once I’ve successfully made a call into my method, I’m going to handle the exceptions that happen inside the method with my own exception handlers and reporting.</p>
 <p>All I do is simply create a structure that has two elements in it.  The data I want to return from the web service and a variable I name “err” that is a string that holds the error message from the exception that was thrown.  So if my web service returned an Integer, my structure would look something like this:</p>
-<p>public struct RetValue {<br>    public int value;<br>    public string err;<br>}</p>
-<p><a href="//11011.net/software/vspaste"></a>and then I would use it in my code like this</p>
-<p>[WebMethod]<br>public RetValue Add(int a, int b)<br>{<br>    RetValue r;<br>    try {<br>        r.value =  a + b;<br>    }<br>    catch (Exception e)<br>    {<br>        r.err = e.Message;<br>    }<br>    return r;<br>}</p>
-<p><a href="//11011.net/software/vspaste"></a></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">struct</span> RetValue &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="keyword">value</span>;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">string</span> err;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>and then I would use it in my code like this</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">WebMethod</span>]</span><br><span class="line"><span class="function"><span class="keyword">public</span> RetValue <span class="title">Add</span>(<span class="params"><span class="keyword">int</span> a, <span class="keyword">int</span> b</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    RetValue r;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        r.<span class="keyword">value</span> =  a + b;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">        r.err = e.Message;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> r;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Obviously, for a real production system, you’d do more with the error handling.  This is just a demo.</p>
 <p>You might also consider adding the callstack to the structure and returning that so that you can tell where the error came from.  You might do that only in debug mode and leave the err for release mode.</p>
 <p>I’ve been using this method for years.  It might not be the “sanctioned” way of handling errors, but I think it is a lot easier to deal with.</p>
@@ -133,7 +132,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/webservices-–-error-handling/" data-id="ckfwq6rta00a24gx2gp3cjsz1" class="article-share-link">
+      <a data-url="http://davembush.github.com/webservices-–-error-handling/" data-id="ckgdpdza70069d0x2w69z0i42" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

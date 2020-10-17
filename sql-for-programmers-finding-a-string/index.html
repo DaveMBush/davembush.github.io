@@ -14,7 +14,7 @@
 <meta property="og:description" content="Many times in our queries, we aren’t looking for an exact match.  We are looking for one string that exists in another.  There are a couple statements available to us that will allow us to do this. T">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2008/09/tp-vol3-025.jpg">
-<meta property="og:updated_time" content="2018-06-30T18:23:01.000Z">
+<meta property="og:updated_time" content="2020-10-17T13:12:16.679Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SQL For Programmers - Finding a String">
 <meta name="twitter:description" content="Many times in our queries, we aren’t looking for an exact match.  We are looking for one string that exists in another.  There are a couple statements available to us that will allow us to do this. T">
@@ -112,21 +112,22 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><img src="/uploads/2008/09/tp-vol3-025.jpg" alt="tp_vol3_025"> Many times in our queries, we aren’t looking for an exact match.  We are looking for one string that exists in another.  There are a couple statements available to us that will allow us to do this. The first of these is the LIKE statement, and if you are familiar with DOS or the Linux equivalent, this should look familiar to you.  The most common usage of LIKE looks like this:</p>
-<p>SELECT * FROM someTable<br>WHERE fieldName LIKE ‘%stringHere%’</p>
-<p><a href="//11011.net/software/vspaste"></a>Note the % inside the single quote marks. This statement is telling SQL to find all of the rows from someTable where the contents of fieldName has the string ‘stringHere’ in it. You could also do something like:</p>
-<p>SELECT * FROM someTable<br>WHERE fieldName LIKE ‘stringHere%’</p>
-<p><a href="//11011.net/software/vspaste"></a>which would find all the rows where fieldName started with ‘stringHere’ You can also use the following pattern matching characters:</p>
+<a id="more"></a>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> someTable</span><br><span class="line"><span class="keyword">WHERE</span> fieldName <span class="keyword">LIKE</span> <span class="string">'%stringHere%'</span></span><br></pre></td></tr></table></figure>
+<p>Note the % inside the single quote marks. This statement is telling SQL to find all of the rows from someTable where the contents of fieldName has the string ‘stringHere’ in it. You could also do something like:</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> someTable</span><br><span class="line"><span class="keyword">WHERE</span> fieldName <span class="keyword">LIKE</span> <span class="string">'stringHere%'</span></span><br></pre></td></tr></table></figure>
+<p>which would find all the rows where fieldName started with ‘stringHere’ You can also use the following pattern matching characters:</p>
 <p>Symbol</p>
 <p>Descriptions</p>
 <p>_</p>
 <p>Look for any single character</p>
-<p>[]</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[]</span><br></pre></td></tr></table></figure>
 <p>Look for any single character listed in the set fieldName LIKE ‘[abc]%’ Looks for anything that starts with a, b, or c.</p>
-<p>[^]</p>
-<p>Look for any single character not listed in the set fieldName LIKE ‘[^abc]%’ Looks for anything that doesn’t start with a, b or c.</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[^]</span><br></pre></td></tr></table></figure>
+<p>Look for any single character not listed in the set fieldName LIKE <code>&#39;[^abc]%&#39;</code> Looks for anything that doesn’t start with a, b or c.</p>
 <p>If you need to find a string that includes one of these symbols, you’ll need to ESCAPE it and you’ll need to define the escape sequence. So to look for a % in the middle of the string you would use:</p>
-<p>SELECT * FROM someTable<br>WHERE fieldName LIKE ‘%%stringHere%’ ESCAPE ‘%’</p>
-<p><a href="//11011.net/software/vspaste"></a>This will look for all rows where the fieldName starts with the string ‘%stringHere’ because we’ve told it that % is the escape character and we’ve used %% twice in our search string. <strong>A few other posts about SQL that might help you:</strong> <a href="//www.computerbasedtraininginc.com/blog/2008/09/like-matching-to-a-pattern-part-3-of-3/">LIKE (Matching to a Pattern), Part 3 of 3</a> <a href="//exemedia.blogspot.com/2008/08/sql-tutorial.html">SQL Tutorial</a></p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> * <span class="keyword">FROM</span> someTable</span><br><span class="line"><span class="keyword">WHERE</span> fieldName <span class="keyword">LIKE</span> <span class="string">'%%stringHere%'</span> ESCAPE <span class="string">'%'</span></span><br></pre></td></tr></table></figure>
+<p>This will look for all rows where the fieldName starts with the string <code>&#39;%stringHere&#39;</code> because we’ve told it that <code>%</code> is the escape character and we’ve used <code>%%</code> twice in our search string.</p>
 
       
     </div>
@@ -137,7 +138,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/sql-for-programmers-finding-a-string/" data-id="ckfwq6rrh00824gx2j9sz41d7" class="article-share-link">
+      <a data-url="http://davembush.github.com/sql-for-programmers-finding-a-string/" data-id="ckgdpdz9i0052d0x27hm50ecb" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

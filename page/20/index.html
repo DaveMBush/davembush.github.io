@@ -107,22 +107,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>Yesterday, I spent the bulk of the day converting a DataList to a ListView.  I thought I’d spend a little time relating the process for those of you who might be interested in doing the same.</p>
-<p>For the most part, the transition went smoothly.</p>
-<p>The first thing I looked at was the structure of the two sets of tags.  It was pretty quickly apparent that I was not going to be able to just change the tag name.  Not that I expected I could, but it would have been a nice bonus. </p>
-<p>What I did notice as I inspected the structure was that both sets have an ItemTemplate tag.  So I create a new ListView control pointing at the data I want it to display, and then I moved the itemTemplate tag from the DataList into the new ListView.</p>
-<p>Bad move.  But, since I’ve already suffered the pain, it won’t be so bad for you.  The basic problem stems from the fact that the ListView itemTemplate expects to start and end with a pair of TD tags.  In the DataList’s itemTemplate tag, you can put anything you want.  So, what you should do is copy the contents of the itemTemplate tag in the DataList into the the ListView’s itemTemplate tag and then put the TD tags around the content you just pasted, and inside the itemTemplate tags.</p>
-<p>Not so bad once you figure it out, but if you start this process after a full day of programming, this can be just a bit frustrating.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/converting-a-datalist-to-a-listview/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/converting-a-datalist-to-a-listview/" data-id="ckfwq6rhk001h4gx2ml1poczb" class="article-share-link">
+      <a data-url="http://davembush.github.com/converting-a-datalist-to-a-listview/" data-id="ckgdpdz6q001dd0x2x8mt35iv" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -169,28 +165,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><img src="/uploads/2009/06/tp-vol2-004.jpg" alt="tp_vol2_004" title="tp_vol2_004"> Several weeks ago I presented jQuery at the DotNet User’s Group in Connecticut.  As part of that presentation, I mentioned that I handle errors from my WebServices in a slightly different way than what most authors teach.</p>
-<p>I thought this morning would be a good time to cover that method in detail.</p>
-<p>As I mentioned in the presentation, I do not make use of the SoapException stuff that is part of the SOAP standard for WebServices.  This is because rolling my own SOAP Exception is a lot of work for not a whole lot of pay back and it doesn’t give me the information I’m really looking for when an exception occurs on the server side.  I also don’t let .NET wrap the exception for me because by the time the error gets back to the client, it has even less information than if I had rolled my own.</p>
-<p>This is not to say that you shouldn’t handle the SOAP Exception on the client side.  There are several reasons why a SOAP Exception might be thrown that have nothing to do with what happened inside the method, but once I’ve successfully made a call into my method, I’m going to handle the exceptions that happen inside the method with my own exception handlers and reporting.</p>
-<p>All I do is simply create a structure that has two elements in it.  The data I want to return from the web service and a variable I name “err” that is a string that holds the error message from the exception that was thrown.  So if my web service returned an Integer, my structure would look something like this:</p>
-<p>public struct RetValue {<br>    public int value;<br>    public string err;<br>}</p>
-<p><a href="//11011.net/software/vspaste"></a>and then I would use it in my code like this</p>
-<p>[WebMethod]<br>public RetValue Add(int a, int b)<br>{<br>    RetValue r;<br>    try {<br>        r.value =  a + b;<br>    }<br>    catch (Exception e)<br>    {<br>        r.err = e.Message;<br>    }<br>    return r;<br>}</p>
-<p><a href="//11011.net/software/vspaste"></a></p>
-<p>Obviously, for a real production system, you’d do more with the error handling.  This is just a demo.</p>
-<p>You might also consider adding the callstack to the structure and returning that so that you can tell where the error came from.  You might do that only in debug mode and leave the err for release mode.</p>
-<p>I’ve been using this method for years.  It might not be the “sanctioned” way of handling errors, but I think it is a lot easier to deal with.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/webservices-–-error-handling/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/webservices-–-error-handling/" data-id="ckfwq6rta00a24gx2gp3cjsz1" class="article-share-link">
+      <a data-url="http://davembush.github.com/webservices-–-error-handling/" data-id="ckgdpdza70069d0x2w69z0i42" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -237,32 +223,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><img src="/uploads/2008/09/tp-vol3-025.jpg" alt="tp_vol3_025"> Many times in our queries, we aren’t looking for an exact match.  We are looking for one string that exists in another.  There are a couple statements available to us that will allow us to do this. The first of these is the LIKE statement, and if you are familiar with DOS or the Linux equivalent, this should look familiar to you.  The most common usage of LIKE looks like this:</p>
-<p>SELECT * FROM someTable<br>WHERE fieldName LIKE ‘%stringHere%’</p>
-<p><a href="//11011.net/software/vspaste"></a>Note the % inside the single quote marks. This statement is telling SQL to find all of the rows from someTable where the contents of fieldName has the string ‘stringHere’ in it. You could also do something like:</p>
-<p>SELECT * FROM someTable<br>WHERE fieldName LIKE ‘stringHere%’</p>
-<p><a href="//11011.net/software/vspaste"></a>which would find all the rows where fieldName started with ‘stringHere’ You can also use the following pattern matching characters:</p>
-<p>Symbol</p>
-<p>Descriptions</p>
-<p>_</p>
-<p>Look for any single character</p>
-<p>[]</p>
-<p>Look for any single character listed in the set fieldName LIKE ‘[abc]%’ Looks for anything that starts with a, b, or c.</p>
-<p>[^]</p>
-<p>Look for any single character not listed in the set fieldName LIKE ‘[^abc]%’ Looks for anything that doesn’t start with a, b or c.</p>
-<p>If you need to find a string that includes one of these symbols, you’ll need to ESCAPE it and you’ll need to define the escape sequence. So to look for a % in the middle of the string you would use:</p>
-<p>SELECT * FROM someTable<br>WHERE fieldName LIKE ‘%%stringHere%’ ESCAPE ‘%’</p>
-<p><a href="//11011.net/software/vspaste"></a>This will look for all rows where the fieldName starts with the string ‘%stringHere’ because we’ve told it that % is the escape character and we’ve used %% twice in our search string. <strong>A few other posts about SQL that might help you:</strong> <a href="//www.computerbasedtraininginc.com/blog/2008/09/like-matching-to-a-pattern-part-3-of-3/">LIKE (Matching to a Pattern), Part 3 of 3</a> <a href="//exemedia.blogspot.com/2008/08/sql-tutorial.html">SQL Tutorial</a></p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/sql-for-programmers-finding-a-string/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/sql-for-programmers-finding-a-string/" data-id="ckfwq6rrh00824gx2j9sz41d7" class="article-share-link">
+      <a data-url="http://davembush.github.com/sql-for-programmers-finding-a-string/" data-id="ckgdpdz9i0052d0x27hm50ecb" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -323,7 +295,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-retrieving-html-fragments/" data-id="ckfwq6rpn005r4gx2von1z8ee" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-retrieving-html-fragments/" data-id="ckgdpdz8k003od0x2pr8a9chx" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -394,7 +366,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-events/" data-id="ckfwq6rpg005h4gx22vv8aawl" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-events/" data-id="ckgdpdz8i003kd0x2yhdsr9vd" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -471,7 +443,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-mvc-controller-to-view/" data-id="ckfwq6rh100114gx2szch0beq" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-mvc-controller-to-view/" data-id="ckgdpdz6f0010d0x2cskac96u" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -543,7 +515,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/csharp-enum/" data-id="ckfwq6rml001r4gx2g8ceusm3" class="article-share-link">
+      <a data-url="http://davembush.github.com/csharp-enum/" data-id="ckgdpdz72001vd0x2zqtmjeag" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -628,7 +600,7 @@ $(&quot;.HEC .hideAll&quot;).bind(&quot;click&quot;, function() {
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-expand-collapse-using-head-tags/" data-id="ckfwq6rpi005j4gx2lfwau2kz" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-expand-collapse-using-head-tags/" data-id="ckgdpdz8i003ld0x20xa42vy7" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -692,7 +664,7 @@ $(&quot;.HEC .hideAll&quot;).bind(&quot;click&quot;, function() {
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/do-programmers-even-need-a-degree/" data-id="ckfwq6rmz002b4gx2zw0j7n37" class="article-share-link">
+      <a data-url="http://davembush.github.com/do-programmers-even-need-a-degree/" data-id="ckgdpdz74001xd0x23yqb9vk4" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -770,7 +742,7 @@ $(&quot;.HEC .hideAll&quot;).bind(&quot;click&quot;, function() {
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-json-and-asp-net/" data-id="ckfwq6rpl005n4gx23mh36s0e" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-json-and-asp-net/" data-id="ckgdpdz8j003md0x21z3lr1q9" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
