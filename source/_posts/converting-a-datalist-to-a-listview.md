@@ -13,6 +13,8 @@ date: 2013-12-25 20:15:26
 
 Yesterday, I spent the bulk of the day converting a DataList to a ListView.  I thought I'd spend a little time relating the process for those of you who might be interested in doing the same.
 
+<!-- more -->
+
 For the most part, the transition went smoothly.
 
 The first thing I looked at was the structure of the two sets of tags.  It was pretty quickly apparent that I was not going to be able to just change the tag name.  Not that I expected I could, but it would have been a nice bonus. 

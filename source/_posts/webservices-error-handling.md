@@ -14,7 +14,7 @@ date: 2013-12-11 19:20:26
 
 ![tp_vol2_004](/uploads/2009/06/tp-vol2-004.jpg "tp_vol2_004") Several weeks ago I presented jQuery at the DotNet User’s Group in Connecticut.  As part of that presentation, I mentioned that I handle errors from my WebServices in a slightly different way than what most authors teach.
 
-I thought this morning would be a good time to cover that method in detail.
+<!-- more -->
 
 As I mentioned in the presentation, I do not make use of the SoapException stuff that is part of the SOAP standard for WebServices.  This is because rolling my own SOAP Exception is a lot of work for not a whole lot of pay back and it doesn’t give me the information I’m really looking for when an exception occurs on the server side.  I also don’t let .NET wrap the exception for me because by the time the error gets back to the client, it has even less information than if I had rolled my own.
 
@@ -22,28 +22,29 @@ This is not to say that you shouldn’t handle the SOAP Exception on the client 
 
 All I do is simply create a structure that has two elements in it.  The data I want to return from the web service and a variable I name “err” that is a string that holds the error message from the exception that was thrown.  So if my web service returned an Integer, my structure would look something like this:
 
+``` csharp
 public struct RetValue {
     public int value;
     public string err;
 }
+```
 
-[](//11011.net/software/vspaste)and then I would use it in my code like this
+and then I would use it in my code like this
 
-\[WebMethod\]
+``` csharp
+[WebMethod]
 public RetValue Add(int a, int b)
 {
     RetValue r;
     try {
         r.value =  a + b;
     }
-    catch (Exception e)
-    {
+    catch (Exception e) {
         r.err = e.Message;
     }
     return r;
 }
-
-[](//11011.net/software/vspaste)
+```
 
 Obviously, for a real production system, you’d do more with the error handling.  This is just a demo.
 
