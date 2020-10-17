@@ -195,6 +195,14 @@ Similar in concept to the virtual arrays above but a standard API that you can i
 
 You can also use this to cache the index.html file locally so you don't even have to retrieve it until there is a new version.
 
+### WebAssembly
+
+I've yet to find my code is so slow that this actually makes sense but it is theoretically possible that you'd find even more performance by creating services using WebAssembly.  This would mean that you'd need to write the code in something other than TypeScript and Angularize it by wrapping it in TypeScript/Angular code.  But I've seen at least one article on the web where they did just that.
+
+### WebWorkers
+
+This is another place where there is at least a theoretical possibility that it would provide additional performance. At the very least, it can provide the appearance of performance.
+
 ## Server Side Considerations
 
 ### Normalization is a Curse Here Too
