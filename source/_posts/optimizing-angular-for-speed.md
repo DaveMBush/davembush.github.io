@@ -11,11 +11,12 @@ I was recently asked how I would optimize an Angular site for speed. Interesting
 
 For the purposes of this article, I'm going to assume you have already implemented most of the things that Angular gives you "for free." For example, we won't talk about "Tree Shaking", that's a given.
 
-So, I give you my 20 or so tips on how to optimize an Angular application for speed.
+So, I give you my 30 or so tips on how to optimize an Angular application for speed.
 
 <!-- more -->
+## Change Detection
 
-## OnPush Notification
+### OnPush Notification
 
 Much has been written about how Angular Change Detection works so I'm not going to go into a lot of detail about this other than to reiterate the basics.
 
@@ -24,6 +25,59 @@ Without OnPush notification, angular will check the component to see if anything
 With OnPush, change detection on a component will happen only if one of the properties (field marked with @Input() attribute) of the component has changed or if you've explicitly told Angular that a change has occurred.
 
 In my experience, this isn't going to generate enough of a performance difference that you can measure in seconds.  But it is going to make a difference overall and it is a generally quick win. So, start here.
+
+### Run Outside Zones
+
+To optimize Angular change detection, it helps to understand how change detection works in Angular. Part of that equation is that it hooks into the events that are fired.  This is how, for example, Angular knows to update your screen when a click even occurs, or when data is returned from an HttpClient request.
+
+But sometimes we may trigger that event in our code when we know that change detection is not required.
+
+As an example, I have code that runs every 20 seconds to see if we should automatically log the user out. To keep this from running the change detection logic, I run this outside of the Zones logic.
+
+The specific API you are looking for, is `Zones.runOutsideAngular()`
+
+### Turn Off Zones
+
+As I said above, there are multiple ways change detection might get triggered.  And, in fact, your app probably doesn't need all of them.
+
+You can turn things off using `__Zone_ignore_on_properties`.
+
+There is more information on this [here](https://github.com/angular/zone.js/blob/master/STANDARD-APIS.md).
+
+### Use Pipes
+
+This tip is only really valuable in the cases where the Functional programming's pure functions is relevant.
+
+The idea behind pure functions, at least as it applies to pipes, is that a function that is pure will always return the same value when given the same parameters. So, for example, the function `Add(a, b)` will always return 4 given the parameters 2 and 2.
+
+Why recompute the value when you give it the same parameters as the previous time you called it?
+
+You can further take advantage of this optimization on functions that take extra time by using memoization. This is the practice of holding onto a computed value and using the parameters as a key to lookup the return value. Thus avoiding the computation completely.
+
+Use this optimization tip intelligently though.  There are times when values might be "the same" but the content is different.  I'm thinking about times when you would mutate the contents of an object.  Say an array you added a value to instead of creating a new array.  The array object pointer is still the same and so your pure function will not recompute the return value because the pointer didn't change.
+
+If OnPush isn't giving you all the optimization that you are looking for, creating a pure Pipe is the next step along the same lines.
+
+This is one place where I'd spend the extra time to verify that my "optimization" isn't actually making the performance worse.
+
+### Use NgRX Selectors
+
+Many people aren't aware that NgRX has a Selector mechanism that allows for memoization.  This means when you call the Selector, if nothing it depends on has changed then you just get back the same answer you got the previous time you executed the method.
+
+It also looks a lot cleaner than the `() => state.subState` mechanism we started out with.
+
+### NgRX Features
+
+And while we are on the subject of NgRX, instead of creating one monster state to rule them all in the AppModule, make use of the Features so that you are only instantiating the store reducers, effects, etc. as you need them.
+
+### Upgrade to IVY
+
+In general, I would suggest that you always keep your Angular version up to date.
+
+While we are on the topic of upgrades.  In an enterprise environment, my suggestion is to never fall more than 2 major versions behind and never us the current major version.  I try to keep my team using the latest version of the major version one major version prior to the current version.  This keeps us relatively current but far enough behind that someone else has figured out all the quirks of the version we are using.
+
+At a minimum, make sure you are using a version that uses the IVY rendering engine to take advantage of the performance gains it introduced.
+
 
 ## Style the Host of your Components
 
@@ -54,29 +108,6 @@ By styling \<foo\> to look like a DIV element by using
 
 we can eliminate the inner DIV from our component and gain a bit of performance without going to a lot of trouble. The amount of performance gain you will see will depends on how many child components are being displayed at any one time.
 
-## Use Pipes
-
-This tip is only really valuable in the cases where the Functional programming's pure functions is relevant.
-
-The idea behind pure functions, at least as it applies to pipes, is that a function that is pure will always return the same value when given the same parameters. So, for example, the function `Add(a, b)` will always return 4 given the parameters 2 and 2.
-
-Why recompute the value when you give it the same parameters as the previous time you called it?
-
-You can further take advantage of this optimization on functions that take extra time by using memoization. This is the practice of holding onto a computed value and using the parameters as a key to lookup the return value. Thus avoiding the computation completely.
-
-Use this optimization tip intelligently though.  There are times when values might be "the same" but the content is different.  I'm thinking about times when you would mutate the contents of an object.  Say an array you added a value to instead of creating a new array.  The array object pointer is still the same and so your pure function will not recompute the return value because the pointer didn't change.
-
-If OnPush isn't giving you all the optimization that you are looking for, creating a pure Pipe is the next step along the same lines.
-
-This is one place where I'd spend the extra time to verify that my "optimization" isn't actually making the performance worse.
-
-## Upgrade to IVY
-
-In general, I would suggest that you always keep your Angular version up to date.
-
-While we are on the topic of upgrades.  In an enterprise environment, my suggestion is to never fall more than 2 major versions behind and never us the current major version.  I try to keep my team using the latest version of the major version one major version prior to the current version.  This keeps us relatively current but far enough behind that someone else has figured out all the quirks of the version we are using.
-
-At a minimum, make sure you are using a version that uses the IVY rendering engine to take advantage of the performance gains it introduced.
 
 ## Ahead of Time Compile
 
@@ -125,7 +156,9 @@ Be careful with this. If you are retrieving data where the ID stays the same but
 
 In this case you would either not use TrackBy or maybe use ID in combination with LastUpdate date.  I've seen this implemented incorrectly way too often.
 
-## Lazy Load Routes
+## Lazy Loading
+
+### Lazy Load Routes
 
 Most applications have multiple routes that they access. But even if yours doesn't you should set your code up to use Lazy Loading for three reasons.
 
@@ -135,7 +168,13 @@ Second, implementing Lazy Loading will break your code down further into multipl
 
 Third, having more files to download could help in the initial load of your application as the client now has more opportunity to download the files in parallel.
 
-## Lazy Rendering
+### Pre-load Lazy Loaded Routes
+
+Once you've started your app, you should load all the other routes in the background so your customer doesn't have to wait for the next page to render.
+
+This is even more important when your application is on a mobile device that doesn't have an Internet connection at times.
+
+You can also be selective about which routes you pre-load.  But I don't recommend it.
 
 ### Lazy Loading Resources
 
@@ -175,7 +214,7 @@ The less data you access, the faster your application will perform.
 
 ### Normalization is a Curse
 
-One way to achieve sending less data back to the server is to send it back in it's raw form rather than nested and normalized.
+One way to send less data back to the server is to send it back in its raw form rather than nested and normalized.
 
 For this, I recommend a product called Normalizr.  This takes the nested data and breaks it into multiple tables. The product was originally written for client side code to make using Redux and NgRX easier.  But there are now server side implementations you can use that structure the data prior to sending it back so that you only send back one instance of the data you need rather than multiple instances because it is used by multiple parent rows.
 
@@ -188,6 +227,8 @@ Along this same idea. Many times we have nested data that is the result from som
 I mentioned Virtual Scrolling above as one way to reduce the rendering time. By combining this with an concept I like to refer to as Virtual Arrays you can similarly only retrieve the data the user can see further reducing the perceived time to first render.
 
 A Virtual Array is an object that looks like an array from an API perspective but the implementation is actually using the database as the storage location.  You can either retrieve the data from the database whenever it is requested from the array or you can memoize the data so that it is only retrieved once.
+
+## Micro Tweaks
 
 ### Service Workers
 
