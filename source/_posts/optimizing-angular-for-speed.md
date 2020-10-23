@@ -26,6 +26,10 @@ With OnPush, change detection on a component will happen only if one of the prop
 
 In my experience, this isn't going to generate enough of a performance difference that you can measure in seconds.  But it is going to make a difference overall and it is a generally quick win. So, start here.
 
+One quick way to make sure all of your future components use OnPush when using the CLI to generate components is to make sure you add in the OnPush configuration in your Angular.json file.
+
+You can find a good article about this [here](https://indepth.dev/overriding-angular-schematics/).
+
 ### Run Outside Zones
 
 To optimize Angular change detection, it helps to understand how change detection works in Angular. Part of that equation is that it hooks into the events that are fired.  This is how, for example, Angular knows to update your screen when a click even occurs, or when data is returned from an HttpClient request.
@@ -65,6 +69,16 @@ This is one place where I'd spend the extra time to verify that my "optimization
 Many people aren't aware that NgRX has a Selector mechanism that allows for memoization.  This means when you call the Selector, if nothing it depends on has changed then you just get back the same answer you got the previous time you executed the method.
 
 It also looks a lot cleaner than the `() => state.subState` mechanism we started out with.
+
+### Don't Bind to Computed Values
+
+If your value is computed, Angular can't easily determine if the value has changed, unless it calculates it.
+
+There are two ways to solve this issue.
+
+The first, and most popular is to use a pipe, as described above.
+
+The second, and my preferred way, is to do ALL the calculations in my Selectors so that, by the time I'm binding, the data I already need, is available and is easy to detect.
 
 ### NgRX Features
 
