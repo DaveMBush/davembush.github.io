@@ -118,7 +118,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/converting-a-datalist-to-a-listview/" data-id="ckgjw5uva001fdkx2x70e9ddp" class="article-share-link">
+      <a data-url="http://davembush.github.com/converting-a-datalist-to-a-listview/" data-id="ckgmbbo4p001jqcx23j1k5vom" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -176,7 +176,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/webservices-–-error-handling/" data-id="ckgjw5v2z006cdkx2gyk280r8" class="article-share-link">
+      <a data-url="http://davembush.github.com/webservices-–-error-handling/" data-id="ckgmbboa3006eqcx2xb0e7mb3" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -234,7 +234,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/sql-for-programmers-finding-a-string/" data-id="ckgjw5v0s004ydkx2knw7678o" class="article-share-link">
+      <a data-url="http://davembush.github.com/sql-for-programmers-finding-a-string/" data-id="ckgmbbo8s004zqcx2s9hzmuf4" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -281,21 +281,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><img src="/uploads/2009/01/sunset-bird.jpg" alt="sunset-bird"> A couple of weeks ago I mentioned that I had built a <a href="/2009/01/06/jquery-positioning-elements/">tooltip using jQuery</a>.  We focused mostly on the positioning of the tooltip at the time because, historically, that’s where most of the work has been. But there are other time-saving features that also make the tooltip code I wrote a lot more flexible.  For example, in the past, the javascript code we wrote for tooltips often required us to place the HTML for the tooltip in the HTML page we wanted the tooltip on.  This has two drawbacks. First, if you need the tooltip on multiple pages, you need to include the HTML on multiple pages.  You could, of course, use master pages in ASP.NET or includes of some sort in other web development languages to get around this, but the fact remains that you still need to do this. Second, the HTML is not as modular as it might be.  This isn’t as big of an issue, since we could argue that most of our HTML is not as modular as it might be, but when I show you how you can overcome this with jQuery, I think you will recognize the improvement. When I sat down to develop this tooltip, I created an HTML page that has the HTML for the tooltip, and nothing else, in it.  This allowed me to concentrate on the HTML and forget about all the javascript issues.  Once I had the tooltip looking the way I wanted, I copied out the HTML fragment that represented the tooltip, leaving out the HTML that had the head tag, body tag, and other code I needed to make the HTML page an HTML page.  I pasted this code into another HTML file, but this time the HTML file ONLY has the fragment. The other thing you’ll want to do is to dynamically create the positional DIV that you will use to hold the tooltip.  This is another place where we typically had to put the content in our HTML page.  Instead we will put this information in the jQuery script.  While I could have included this in the fragment, doing it this way actually makes coding the tooltip easier:</p>
-<p>$(‘<div id="tooltip"></div>‘).appendTo(‘body’);<br>$(‘#tooltip’).hide().load(‘js/ToolTip.htm’);</p>
-<p><a href="//11011.net/software/vspaste"></a>Two lines of code to get our shell of a tooltip in the page. The first line creates the HTML fragment and appends it to the end of the elements inside the body tag. The second line retrieves the DIV element we just inserted, hides it, and then loads the HTML fragment that represents our tooltip. Finally, to get content into the tooltip, we use the HTML property.  I created a class called toolTipCenter that is the location where the tooltip content will go.  To insert content for the tooltip, all you need to do is:</p>
-<p>$(‘#tooltip .toolTipCenter’).html(‘Tooltip Content Here.’);</p>
-<p><a href="//11011.net/software/vspaste"></a></p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/jquery-retrieving-html-fragments/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-retrieving-html-fragments/" data-id="ckgjw5uyy003mdkx29nkbwegz" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-retrieving-html-fragments/" data-id="ckgmbbo7d003oqcx27kxnngqe" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -342,31 +339,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>As well as being able to change the class associated with an element or a set of elements on a screen, jQuery also allows you to fire events.  You might want to do this, for example, if you want to simulate the clicking of a button. Of course, if you are going to fire an event, you’ll probably need some sort of event listener setup to handle that. We will address firing events first since it has the least amount of code needed. All you need to do is select the element or elements using the selectors we’ve already discussed and then call the method trigger(‘eventname’). So, to click a button, your code might look something like this:</p>
-<p>$(“#main”).trigger(‘click’);</p>
-<p>Since the click method is so common, jQuery has a shortcut method, click(), that does the same thing, so we can rewrite our code as:</p>
-<p>$(“#main”).click();</p>
-<p>But if we click a button, we probably want some JavaScript to execute because of it.  This is where jQuery makes life much easier for the JavaScript programmer. If you are familiar with JavaScript you are probably most familiar with attaching code to your HTML elements by using the on____ attributes.  To attach a method to the click event of the anchor tag you might write something like:</p>
-<p><a href="#" onclick="method();">text</a></p>
-<p><a href="//11011.net/software/vspaste"></a>If you were particularly clever, you might do some sort of event binding using code:</p>
-<p>document.getElementById(‘anchorId’).onclick = functionName;</p>
-<p>But even doing that we are left with the ugly potential of having already assigned a function to the element, in which case this code would overwrite it. In fact, if you’ve been coding JavaScript for a while, you are probably quite familiar with the problem of needing to add an event handler to the onload event of the document only to find out that doing so wiped out some critical JavaScript code that was already assigned to that event. You’ll be happy to know that assigning code to an event in jQuery is both simple and non-destructive.</p>
-<p>$(‘#anchorId’).bind(‘click’,function()<br>{ //code goes here })</p>
-<p>This code would normally be placed inside the ready handler that you’ve seen in previous posts so that your code would ultimately look something like this:</p>
-<p>$(function() {<br>    $(‘#anchorId’).bind(‘click’, function()<br>    { //code goes here })<br>});</p>
-<p><a href="//11011.net/software/vspaste"></a>And since the click event is so common, we can replace bind(‘click’,function…) with click(function()….)</p>
-<p>$(function() {<br>    $(‘#anchorId’).click( function()<br>    { //code goes here })<br>});</p>
-<p><a href="//11011.net/software/vspaste"></a>And if someone decides to attach another method to the same click event, both methods will run.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/jquery-events/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-events/" data-id="ckgjw5uys003hdkx2skihro4k" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-events/" data-id="ckgmbbo7d003nqcx2pv4na2t6" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -443,7 +427,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-mvc-controller-to-view/" data-id="ckgjw5uuh000udkx2mr7yge5q" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-mvc-controller-to-view/" data-id="ckgmbbo3x000yqcx2c9ut7g0l" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -490,32 +474,19 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><img src="/uploads/2008/11/tp-vol4-002.jpg" alt="tp_vol4_002"> It is often tempting when working with your code to test against static values in your system.  For example:</p>
-<p>if (i == 1)<br>{<br>    // do something }<br>else if (i == 2)<br>{<br>    // do something }</p>
-<p>Or, if you are a bit more clever, you use a switch statement instead.  But neither of these methods tell you what 1 and 2 actually represent. Now, you could use constants:</p>
-<p>const int Thing1 = 1;<br>const int Thing2 = 2;</p>
-<p>var i = 1;<br>if (i == Thing1)<br>{<br>    // do something }<br>else if (i == Thing2)<br>{<br>    // do something }</p>
-<p>Which goes a bit further.  But if I need to use Thing1 and Thing2 in other sections of my code, I’m kind of stuck.  Oh, I guess one could use a class with properties and evaluate against them, but there is a better way. Enums. When you have a set of items that are all related to each other, you can create an enumeration (enum) to represent them as a set.  There are several of these built into the .NET Framework.  One of the most common is the DialogResult enum that holds all of the return values for a DialogBox. We can create our own by either placing code similar to the following in an existing file or in a new code file:</p>
-<p>enum Thing {<br>    One,<br>    Two<br>}</p>
-<p>Which can then be used in our code as:</p>
-<p>switch (i)<br>{<br>    case Thing.One:<br>        // do something break;<br>    case Thing.Two:<br>        // do something break;<br>}</p>
-<p>In the example above One represents zero and Two represents the value of one.  But it really doesn’t matter because we are always going to reference the value by name. You are not stuck with having to have Thing.One be one.  You can assign a value to it or any of the other values.</p>
-<p>enum Thing {<br>    One =2,<br>    Two<br>}</p>
-<p>In the code above, One equals the value 2 and Two equals 3.  Each item in the list is automatically incremented by one unless it is overwritten with a value. In the case of items that need to be bit representations you can do something like:</p>
-<p>enum Thing {<br>    BitOne = 1,<br>    BitTwo = 2,<br>    BitThree = 4<br>}</p>
-<p>And then your code can evaluate them using bit wise and statements:</p>
-<p>if ((i &amp; Thing.BitTwo) &gt; 0)<br>{<br>}</p>
-<p>  This will be true if i is equal to 2, 3, 6, or 7.  The expression above is a lot easier to evaluate than “if i is equal to 2, 3, 6 or 7.” Aside from the practical ease of coding that enums provide, it also makes the code much clearer.  Which would you rather do?  Lookup what the return value for OK is or just have intellisense provide it to you from the DialogResult enum?  Obviously, having it provided by its name is much easier.  You should provide the same benefit to any future developer who works on YOUR code.</p>
-
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (i == <span class="number">1</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span> (i == <span class="number">2</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/csharp-enum/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/csharp-enum/" data-id="ckgjw5uvc001hdkx26fyiqvw4" class="article-share-link">
+      <a data-url="http://davembush.github.com/csharp-enum/" data-id="ckgmbbo5q002fqcx2tl9qfcp5" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -600,7 +571,7 @@ $(&quot;.HEC .hideAll&quot;).bind(&quot;click&quot;, function() {
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-expand-collapse-using-head-tags/" data-id="ckgjw5uyv003jdkx23zijei1c" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-expand-collapse-using-head-tags/" data-id="ckgmbbo79003kqcx23l6crcfs" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -664,7 +635,7 @@ $(&quot;.HEC .hideAll&quot;).bind(&quot;click&quot;, function() {
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/do-programmers-even-need-a-degree/" data-id="ckgjw5uvq001tdkx2p5lp39tp" class="article-share-link">
+      <a data-url="http://davembush.github.com/do-programmers-even-need-a-degree/" data-id="ckgmbbo52001vqcx22n8yuegh" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -742,7 +713,7 @@ $(&quot;.HEC .hideAll&quot;).bind(&quot;click&quot;, function() {
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-json-and-asp-net/" data-id="ckgjw5uyt003idkx2u5lakvji" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-json-and-asp-net/" data-id="ckgmbbo7l003vqcx2dzn1teoo" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

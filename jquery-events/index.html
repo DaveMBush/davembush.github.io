@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="As well as being able to change the class associated with an element or a set of elements on a screen, jQuery also allows you to fire events.  You might want to do this, for example, if you want to si">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.000Z">
+<meta property="og:updated_time" content="2020-10-23T13:47:42.562Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jQuery - Events">
 <meta name="twitter:description" content="As well as being able to change the class associated with an element or a set of elements on a screen, jQuery also allows you to fire events.  You might want to do this, for example, if you want to si">
@@ -110,20 +110,21 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>As well as being able to change the class associated with an element or a set of elements on a screen, jQuery also allows you to fire events.  You might want to do this, for example, if you want to simulate the clicking of a button. Of course, if you are going to fire an event, you’ll probably need some sort of event listener setup to handle that. We will address firing events first since it has the least amount of code needed. All you need to do is select the element or elements using the selectors we’ve already discussed and then call the method trigger(‘eventname’). So, to click a button, your code might look something like this:</p>
-<p>$(“#main”).trigger(‘click’);</p>
+<a id="more"></a>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"#main"</span>).trigger(<span class="string">'click'</span>);</span><br></pre></td></tr></table></figure>
 <p>Since the click method is so common, jQuery has a shortcut method, click(), that does the same thing, so we can rewrite our code as:</p>
-<p>$(“#main”).click();</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">"#main"</span>).click();</span><br></pre></td></tr></table></figure>
 <p>But if we click a button, we probably want some JavaScript to execute because of it.  This is where jQuery makes life much easier for the JavaScript programmer. If you are familiar with JavaScript you are probably most familiar with attaching code to your HTML elements by using the on____ attributes.  To attach a method to the click event of the anchor tag you might write something like:</p>
-<p><a href="#" onclick="method();">text</a></p>
-<p><a href="//11011.net/software/vspaste"></a>If you were particularly clever, you might do some sort of event binding using code:</p>
-<p>document.getElementById(‘anchorId’).onclick = functionName;</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"#"</span> <span class="attr">onclick</span>=<span class="string">"method();"</span> &gt;</span>text<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>If you were particularly clever, you might do some sort of event binding using code:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">document</span>.getElementById(<span class="string">'anchorId'</span>).onclick = functionName;</span><br></pre></td></tr></table></figure>
 <p>But even doing that we are left with the ugly potential of having already assigned a function to the element, in which case this code would overwrite it. In fact, if you’ve been coding JavaScript for a while, you are probably quite familiar with the problem of needing to add an event handler to the onload event of the document only to find out that doing so wiped out some critical JavaScript code that was already assigned to that event. You’ll be happy to know that assigning code to an event in jQuery is both simple and non-destructive.</p>
-<p>$(‘#anchorId’).bind(‘click’,function()<br>{ //code goes here })</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="string">'#anchorId'</span>).bind(<span class="string">'click'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123; <span class="comment">//code goes here &#125;)</span></span><br></pre></td></tr></table></figure>
 <p>This code would normally be placed inside the ready handler that you’ve seen in previous posts so that your code would ultimately look something like this:</p>
-<p>$(function() {<br>    $(‘#anchorId’).bind(‘click’, function()<br>    { //code goes here })<br>});</p>
-<p><a href="//11011.net/software/vspaste"></a>And since the click event is so common, we can replace bind(‘click’,function…) with click(function()….)</p>
-<p>$(function() {<br>    $(‘#anchorId’).click( function()<br>    { //code goes here })<br>});</p>
-<p><a href="//11011.net/software/vspaste"></a>And if someone decides to attach another method to the same click event, both methods will run.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    $(<span class="string">'#anchorId'</span>).bind(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123; <span class="comment">//code goes here &#125;)</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>And since the click event is so common, we can replace <code>bind(&#39;click&#39;,function...)</code> with <code>click(function()....)</code></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    $(<span class="string">'#anchorId'</span>).click( <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">    </span>&#123; <span class="comment">//code goes here &#125;)</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>And if someone decides to attach another method to the same click event, both methods will run.</p>
 
       
     </div>
@@ -134,7 +135,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-events/" data-id="ckgjw5uys003hdkx2skihro4k" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-events/" data-id="ckgmbbo7d003nqcx2pv4na2t6" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
