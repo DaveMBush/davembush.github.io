@@ -118,7 +118,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/converting-a-datalist-to-a-listview/" data-id="ckgmc1ac3001jtsx29lmyb7mh" class="article-share-link">
+      <a data-url="http://davembush.github.com/converting-a-datalist-to-a-listview/" data-id="ckgxt25gi001ipwx2lfrxiys3" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -176,7 +176,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/webservices-–-error-handling/" data-id="ckgmc1ahp006etsx24c09q2h7" class="article-share-link">
+      <a data-url="http://davembush.github.com/webservices-–-error-handling/" data-id="ckgxt25l6006gpwx2i89xb730" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -234,7 +234,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/sql-for-programmers-finding-a-string/" data-id="ckgmc1agd0054tsx24ydx43fl" class="article-share-link">
+      <a data-url="http://davembush.github.com/sql-for-programmers-finding-a-string/" data-id="ckgxt25k40053pwx2pwb3svqf" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -292,7 +292,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-retrieving-html-fragments/" data-id="ckgmc1aei003ktsx2qu8ucxn4" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-retrieving-html-fragments/" data-id="ckgxt25iv003rpwx2bip8oay1" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -350,7 +350,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-events/" data-id="ckgmc1aeg003itsx2zvre4ivo" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-events/" data-id="ckgxt25iq003kpwx2jbs6q6af" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -427,7 +427,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-mvc-controller-to-view/" data-id="ckgmc1abe000ytsx2579oyslu" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-mvc-controller-to-view/" data-id="ckgxt25g1000ypwx21yn8hm9q" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -486,7 +486,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/csharp-enum/" data-id="ckgmc1ac4001ktsx26ek78yqy" class="article-share-link">
+      <a data-url="http://davembush.github.com/csharp-enum/" data-id="ckgxt25gj001jpwx2r1iwy9be" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -533,45 +533,18 @@
         <p><img src="/uploads/2009/10/animal010.jpg" alt="animal-010" title="animal-010"></p>
 <p>I’ve spent a good chunk of the last two days working on an interesting project for one of my clients that I think the rest of the jQuery community could benefit from.</p>
 <p>The task started when my client came to me with an existing script that was being used in a DotNetNuke system to expand and collapse content under head tags that was produced by an article editing system similar to the Text/HTML module.</p>
-<p>The problem with the way the author had created the system is that the content author would have had to add DIV tags to the content and if any additional sections were added to the content the jQuery and CSS code would have to be modified.</p>
-<p>The question that was posed to me was, “Is there any way of protecting the code that is relevant to the jQuery so that the content authors can’t mess it up?”  My response was basically, No, but if the jQuery was written correctly, that shouldn’t be an issue.  You should be able to have the jQuery add the additional DIV tags for you so that the content authors can just concentrate on writing the article.</p>
-<p>Of course, he got all excited about that possibility along with the fact that he’d be able to re-use the code.</p>
-<p>One final note.  We decided to use H4, H5, and H6 tags so that if the user didn’t want the expand collapse functionality for a particular section they could use H1, H2, and H3 for that purpose.</p>
-<p>The first thing we needed to do was place a DIV tag around the content we want to have impacted by our code.  I’m using the class HEC to indicate this.</p>
-<p>In DotNetNuke, there are a bunch of DIV tags that are ultimately surrounding the first tag I want to impact and some other extraneous DIV tags at the bottom that got in the way of the presentation, so rather than creating a selector that looked for the content within the HEC class, I’m looking for the content that is within the parent of the H4 element that is within the HEC class.</p>
-<p>Since the page may have  multiple sections of HEC classes, I iterate through each parent that is found and start a search and replace to add additional DIV tags to the markup.  This allows me to place a DIV around the content that is between each H4 tag and another DIV around the group of H4 and DIV tags that go together.</p>
-<p>I also place open DIV tags at the top of the HTML and closing DIV tags at the end so that we end up with HTML that is as valid as what we started out with.</p>
-<p>For subsections, I grab the first sibling of each H4 tag (and ultimately H5 tag) and change its HTML as well, similar to how I changed the parent elements.</p>
-<p>You’ll notice by looking at the code below that the DIV tags are classed so that you can apply a stylesheet to them.</p>
-<p>The last bit of information is that I insert instructional information and an expand-all and collapse-all button/link prior to the first H4 tag.</p>
-<p>All of this work allows the content authors to write using a regular WYSIWYG HTML editor without having to worry about adding none visible markup to make it display correctly.</p>
-<p>Here’s a snippet of the source:</p>
-<p>$(function() {<br>    var strHeader = “<div class="showHideControls"><span class="showAll showHide">Expand All</span> <span class="hideAll showHide">Collapse All</span></div>“ +<br>        “<div class="instructions-arrow">Click arrow to view step details</div>“;<br>    var strHtml;<br>    $(“.HEC h4”).parent().each(function() {<br>        strHtml = $(this).html();<br>        strHtml = strHtml.replace(/&lt;\/h4&gt;/gi, “<div class="content">“);<br>        strHtml = strHtml.replace(/&lt;h4/gi, “</div><div class="accordian">&lt;h4”);<br>        strHtml = “<div><div>“ + strHtml + “</div></div>“;<br>        $(this).html(strHtml);<br>        $(“h4”).bind(“click”, function(event) {<br>            $(this).next().slideToggle(“slow”);<br>            return false;<br>        });<br>    });</div></p>
-<p>// to implement the sub sections, you would select the<br>// div that is next() to the header and apply similar<br>// search and replace logic</p>
-<p>// start in collapsed mode<br> $(“.HEC .content”).hide();</p>
-<pre><code>$(&quot;.HEC .accordian:first&quot;).before(strHeader);
-$(&quot;.HEC .showAll&quot;).bind(&quot;click&quot;, function() {
-    $(&quot;.HEC .content&quot;).show();
-    // other .show()s go here for the subsections
-});
-$(&quot;.HEC .hideAll&quot;).bind(&quot;click&quot;, function() {
-    $(&quot;.HEC .content&quot;).hide();
-    // other hide()s go here for the subsections
-
-});
-</code></pre><p>});</p>
-<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/jquery-expand-collapse-using-head-tags/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-expand-collapse-using-head-tags/" data-id="ckgmc1aeh003jtsx2efg38402" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-expand-collapse-using-head-tags/" data-id="ckgxt25ir003lpwx2nmvlnwnz" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -617,25 +590,20 @@ $(&quot;.HEC .hideAll&quot;).bind(&quot;click&quot;, function() {
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Well, a post that is no longer available really got  things going in blog-o-sphere.  Shoot!  Even <a href="//www.joelonsoftware.com/items/2008/01/08.html">Joel Spolsky</a> got involved.  I saw another post, but I’m sorry to say, I can’t find it right now. The original article put forth the idea that we are teaching the right stuff in our undergraduate Computer science degree programs. Joel’s article suggested that what we really need is a bachelor of fine arts program for programmers.  That programming, and computer science are really two entirely different disciplines. I think Joel’s onto something and his solution is probably the closest to what our current educational system can handle.  But, I have another solution to the problem that goes further. Why get a degree at all.  Most of you reading this post know as well as I do that a good 80% of what most programmers learn, they didn’t learn from college.  Let’s face reality here.  First, any degree program is, at best, 20 years behind.  It’s just a fact.  Ours is not the only industry facing this reality.  Second, the really good programmers are already doing what these schools are trying to teach. Joel suggest that we have people from the industry come in and teach this BA course work he’s suggesting.  There are several major problem with this.  First, most (not all) of the really good programmers can’t teach.  Some could with some training, but the school isn’t going to train them.  And those who can teach, probably don’t know the recent material.  There ARE exceptions.  My point here is that the exceptions won’t fill the need. But, what would happen if we went back to a really old way of doing things?  It worked.  We are almost doing some form of this already, mostly after graduation.  What if we just skipped the programming degree completely. I’ve been in this field long enough (20+ years) to know that most of the really good programmers got into our field through some back door.  I was a camp and recreation major that converted to programming via DePaul’s career change program.  A hoop I jumped through simply so I could get the first job.  At least 80% of what I was taught I was already doing as I had experimented with Basic, Pascal, and C. I know another guy who dropped out of school his sophomore year because he already had the job he was going to school to get. And don’t even get me started on certifications.  Let’s say we stop testing knowledge and start testing aptitude.  The aptitude test I took nearly knocked me out of the DuPaul program.  At the end of the program, the main prof told me i was the best natural talent he’d seen come through the program.  Wonder if he knows he almost never saw me? Let’s face it, what we as programmers need to know to do our jobs effectively can’t be taught.  And most of what can be taught could be taught on the job. So, here’s my recommendation.  Why don’t we go back to using the apprentice system?  This allows a good senior programmer to get a feel for what kind of programmer the new guy is going to be.  It would help the new programmer find out really quickly if this is what he really wants to do with his life.  He give the formal training the new programmer needs. Unless you’re just starting out, you know that most of what you learn, you learn from experience.  Why not just admit that and stop trying to fit programming into a degreed program that largely doesn’t work for our industry? See also:</p>
-<ul>
-<li><a href="//www.cus-productions.com/index.php/2008/01/08/computer-science-education-where-are-the-software-engineers-of-tomorrow/">http://www.cus-productions.com/index.php/2008/01/08/computer-science-education-where-are-the-software-engineers-of-tomorrow/</a></li>
-<li><a href="//blogs.msdn.com/alfredth/archive/2008/01/09/a-fine-arts-degree-in-computer-programming.aspx">http://blogs.msdn.com/alfredth/archive/2008/01/09/a-fine-arts-degree-in-computer-programming.aspx</a></li>
-<li><a href="//blogs.msdn.com/steverowe/archive/2008/01/09/do-we-need-a-new-kind-of-cs-degree.aspx">http://blogs.msdn.com/steverowe/archive/2008/01/09/do-we-need-a-new-kind-of-cs-degree.aspx</a></li>
-<li><a href="//benramsey.com/archives/php-programmer-need-computer-science-degree/">http://benramsey.com/archives/php-programmer-need-computer-science-degree/</a></li>
-<li><a href="//codebetter.com/blogs/jeremy.miller/archive/2006/07/19/147495.aspx">http://codebetter.com/blogs/jeremy.miller/archive/2006/07/19/147495.aspx</a></li>
-</ul>
-
+        <p>Well, a post that is no longer available really got  things going in blog-o-sphere.  Shoot!  Even <a href="//www.joelonsoftware.com/items/2008/01/08.html">Joel Spolsky</a> got involved.  I saw another post, but I’m sorry to say, I can’t find it right now.</p>
+<p>The original article put forth the idea that we are teaching the right stuff in our undergraduate Computer science degree programs.</p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/do-programmers-even-need-a-degree/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/do-programmers-even-need-a-degree/" data-id="ckgmc1aci001xtsx236dx7a8v" class="article-share-link">
+      <a data-url="http://davembush.github.com/do-programmers-even-need-a-degree/" data-id="ckgxt25gw001xpwx2gyesjsin" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -681,39 +649,20 @@ $(&quot;.HEC .hideAll&quot;).bind(&quot;click&quot;, function() {
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/uploads/2009/01/g03a0003.jpg" alt="G03A0003"> A few months ago, I demonstrated <a href="/2008/08/04/aspnet-ajax-using-json-heres-how/">how to use ASP.NET’s JSON capabilities</a>.  Lately, I’ve been demonstrating how to use jQuery.  Both use a considerable amount of JavaScript so if there is some way we could eliminate or reduce the amount of code we had to load, performance would naturally increase. Fortunately, there is.  <strong>What stays the same</strong> You are still going to create a JSON enabled web service just like you did in the earlier article by giving the web service class the attribute, “ScriptService.”  You remember, this is what enables the web service to return JSON. <strong>What is different</strong> You will not, however, be including this block in your ASPX file:</p>
-<pre><code>&lt;asp:ScriptManager ID=&quot;ScriptManager1&quot; runat=&quot;server&quot;&gt;
-  &lt;Services&gt;
-    &lt;asp:ServiceReference path=&quot;~/WebService.asmx&quot; /&gt;
-  &lt;/Services&gt;
-&lt;/asp:ScriptManager&gt; 
-</code></pre><p><a href="//11011.net/software/vspaste"></a>You might still need the ScriptManager if you are using MS-AJAX on your page, but if you don’t have any other MS-AJAX on your page, you can remove the entire block of code. In the jQuery for your page, your code will look something like this:</p>
-<p>$.ajax({<br>    type: “POST”,<br>    url: “WebService.asmx/Add”,<br>    data: “{a:1,b:4}”,<br>    contentType: “application/json; charset=utf-8”,<br>    dataType: “json”,<br>    success: function(result) {<br>        alert(result.d);<br>    }<br>});</p>
-<p>You can get the full documentation for the $.ajax() global method here: <a href="//docs.jquery.com/Ajax/jQuery.ajax" title="http://docs.jquery.com/Ajax/jQuery.ajax">http://docs.jquery.com/Ajax/jQuery.ajax</a> A few things that need to be pointed out here:</p>
-<ol>
-<li>For this to work, type must be “POST.”</li>
-<li>url: is the name of the asmx file followed by a slash followed by the name of the web service method you want to call.</li>
-<li>data: is a JSON name/value pair list of all the parameters in the form of {parametername: parameterValue[,…]} if there are no parameter just use “{}”.  Don’t use “” or your code will not work.</li>
-<li>contentType and dataType tell jQuery we are working with JSON.</li>
-<li>The function pointed to by success will be called when the request has finished successfully, it will pass in a variable of type json.  The d property holds the return value.</li>
-<li><p>If the return value is a structure or class d will have properties hanging off of it specifying</p>
-</li>
-<li><p>type information of the structure or class</p>
-</li>
-<li>property for each property/variable in the structure or class.</li>
-</ol>
-<p>You could take most of that AJAX call and turn it into some sort of helper function, but even if you don’t the amount of code you will end up loading using this method is significantly less than what you would load using both together.</p>
-
+        <p><img src="/uploads/2009/01/g03a0003.jpg" alt="G03A0003"> A few months ago, I demonstrated <a href="/2008/08/04/aspnet-ajax-using-json-heres-how/">how to use ASP.NET’s JSON capabilities</a>.  Lately, I’ve been demonstrating how to use jQuery.  Both use a considerable amount of JavaScript so if there is some way we could eliminate or reduce the amount of code we had to load, performance would naturally increase.</p>
+<p>Fortunately, there is.</p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/jquery-json-and-asp-net/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-json-and-asp-net/" data-id="ckgmc1ael003ntsx2rb83il1q" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-json-and-asp-net/" data-id="ckgxt25is003mpwx24yv32a5t" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

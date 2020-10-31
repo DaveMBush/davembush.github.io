@@ -14,7 +14,7 @@
 <meta property="og:description" content="A few months ago, I demonstrated how to use ASP.NET’s JSON capabilities.  Lately, I’ve been demonstrating how to use jQuery.  Both use a considerable amount of JavaScript so if there is some way we c">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2009/01/g03a0003.jpg">
-<meta property="og:updated_time" content="2018-06-30T20:06:57.000Z">
+<meta property="og:updated_time" content="2020-10-31T14:43:23.621Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jQuery, JSON, and ASP.NET">
 <meta name="twitter:description" content="A few months ago, I demonstrated how to use ASP.NET’s JSON capabilities.  Lately, I’ve been demonstrating how to use jQuery.  Both use a considerable amount of JavaScript so if there is some way we c">
@@ -111,14 +111,15 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/uploads/2009/01/g03a0003.jpg" alt="G03A0003"> A few months ago, I demonstrated <a href="/2008/08/04/aspnet-ajax-using-json-heres-how/">how to use ASP.NET’s JSON capabilities</a>.  Lately, I’ve been demonstrating how to use jQuery.  Both use a considerable amount of JavaScript so if there is some way we could eliminate or reduce the amount of code we had to load, performance would naturally increase. Fortunately, there is.  <strong>What stays the same</strong> You are still going to create a JSON enabled web service just like you did in the earlier article by giving the web service class the attribute, “ScriptService.”  You remember, this is what enables the web service to return JSON. <strong>What is different</strong> You will not, however, be including this block in your ASPX file:</p>
-<pre><code>&lt;asp:ScriptManager ID=&quot;ScriptManager1&quot; runat=&quot;server&quot;&gt;
-  &lt;Services&gt;
-    &lt;asp:ServiceReference path=&quot;~/WebService.asmx&quot; /&gt;
-  &lt;/Services&gt;
-&lt;/asp:ScriptManager&gt; 
-</code></pre><p><a href="//11011.net/software/vspaste"></a>You might still need the ScriptManager if you are using MS-AJAX on your page, but if you don’t have any other MS-AJAX on your page, you can remove the entire block of code. In the jQuery for your page, your code will look something like this:</p>
-<p>$.ajax({<br>    type: “POST”,<br>    url: “WebService.asmx/Add”,<br>    data: “{a:1,b:4}”,<br>    contentType: “application/json; charset=utf-8”,<br>    dataType: “json”,<br>    success: function(result) {<br>        alert(result.d);<br>    }<br>});</p>
+        <p><img src="/uploads/2009/01/g03a0003.jpg" alt="G03A0003"> A few months ago, I demonstrated <a href="/2008/08/04/aspnet-ajax-using-json-heres-how/">how to use ASP.NET’s JSON capabilities</a>.  Lately, I’ve been demonstrating how to use jQuery.  Both use a considerable amount of JavaScript so if there is some way we could eliminate or reduce the amount of code we had to load, performance would naturally increase.</p>
+<p>Fortunately, there is.</p>
+<a id="more"></a>
+<h2 id="What-stays-the-same"><a href="#What-stays-the-same" class="headerlink" title="What stays the same"></a>What stays the same</h2><p>You are still going to create a JSON enabled web service just like you did in the earlier article by giving the web service class the attribute, “ScriptService.”  You remember, this is what enables the web service to return JSON.</p>
+<h2 id="What-is-different"><a href="#What-is-different" class="headerlink" title="What is different"></a>What is different</h2><p>You will not, however, be including this block in your ASPX file:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">asp:ScriptManager</span> <span class="attr">ID</span>=<span class="string">"ScriptManager1"</span> <span class="attr">runat</span>=<span class="string">"server"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Services</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">asp:ServiceReference</span> <span class="attr">path</span>=<span class="string">"~/WebService.asmx"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Services</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">asp:ScriptManager</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>You might still need the ScriptManager if you are using MS-AJAX on your page, but if you don’t have any other MS-AJAX on your page, you can remove the entire block of code.</p>
+<p>In the jQuery for your page, your code will look something like this:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">$.ajax(&#123;</span><br><span class="line">    type: <span class="string">"POST"</span>,</span><br><span class="line">    url: <span class="string">"WebService.asmx/Add"</span>,</span><br><span class="line">    data: <span class="string">"&#123;a:1,b:4&#125;"</span>,</span><br><span class="line">    contentType: <span class="string">"application/json; charset=utf-8"</span>,</span><br><span class="line">    dataType: <span class="string">"json"</span>,</span><br><span class="line">    success: <span class="function"><span class="keyword">function</span>(<span class="params">result</span>) </span>&#123;</span><br><span class="line">        alert(result.d);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 <p>You can get the full documentation for the $.ajax() global method here: <a href="//docs.jquery.com/Ajax/jQuery.ajax" title="http://docs.jquery.com/Ajax/jQuery.ajax">http://docs.jquery.com/Ajax/jQuery.ajax</a> A few things that need to be pointed out here:</p>
 <ol>
 <li>For this to work, type must be “POST.”</li>
@@ -143,7 +144,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-json-and-asp-net/" data-id="ckgmc1ael003ntsx2rb83il1q" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-json-and-asp-net/" data-id="ckgxt25is003mpwx24yv32a5t" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

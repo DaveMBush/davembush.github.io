@@ -108,23 +108,18 @@
       
         <p><img src="/uploads/2009/06/misc_vol3_064.jpg" alt="misc_vol3_064" title="misc_vol3_064"> Here’s a quick tip for those of you still using modules in your VB.NET applications.</p>
 <p>If you create a module and don’t want to see the module name in your intellisense, you can hide it with an attribute.  This can be extremely useful when you have a lot of modules that would show up in your intellisense code and they don’t have names that conflict with each other.</p>
-<p><strong><em>&lt;HideModuleName()&gt;</em></strong> _<br>Module Module1<br>    Sub NewFunction()<br>        Return<br>    End Sub</p>
-<p>End Module </p>
-<p><a href="//11011.net/software/vspaste"></a></p>
-<p>You can still reference NewFunction() via Module1</p>
-<p>Module1.NewFunction()</p>
-<p><a href="//11011.net/software/vspaste"></a>But Module1 will no longer show in intellisense.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/vb-net-hide-module-name/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/vb-net-hide-module-name/" data-id="ckgmc1ahi0065tsx2sb6hhgxo" class="article-share-link">
+      <a data-url="http://davembush.github.com/vb-net-hide-module-name/" data-id="ckgxt25kx0065pwx2bzps1ah1" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -173,83 +168,18 @@
         <p><img src="/uploads/2009/04/trav064.jpg" alt="trav-064" title="trav-064"> This post has been percolating in my brain for several weeks now and I think it’s finally at the point where it’s “done.”  Well, see…</p>
 <p>The problem area is this.  At what point and under what conditions would you write the code yourself vs. using a content management system?  And if you were to use a content management system, which one should you use and why?</p>
 <p>Along the way I’ll tell you what my current choices are, but more importantly, I’ll tell you what my thought process is.  So even if you decide to use different tools than I do, you can ask the same questions to select the tools you have decided to use.</p>
-<p><strong>My Primary Tools</strong></p>
-<p>I think in order to give the rest of this post some context, it makes the most sense to tell you what my current tools are.</p>
-<ol>
-<li>WordPress<ol>
-<li>Linux/Apache</li>
-<li>Windows/Apache</li>
-<li>Windows/IIS</li>
-</ol>
-</li>
-<li>DotNetNuke</li>
-<li>Write it myself.</li>
-</ol>
-<p><strong>Advantages of WordPress</strong></p>
-<p>I’ve actually had people ask me why I use WordPress for my .NET blog instead of some .NET blog engine.  The primary reason is, it has been around longer so it has more plug-ins and more themes available than anything I can find for .NET.</p>
-<p>What this means to me is that I can achieve a lot of goals by simply searching for an appropriate plug-in.</p>
-<p>Just by way of example, here are some of the plug-ins I’ve used.</p>
-<ul>
-<li>Plug-in to allow me to change the Title tag for each page from the “standard” title.</li>
-<li>Plug-in to create a forum on my site</li>
-<li>Plug-in to allow pages to redirect to other pages.</li>
-<li>Plug-in to automatically cross-link my post</li>
-<li>Plug-in to automatically cross-link my site with other sites (not using that here… yet)</li>
-<li>Plug-in to run a slide show</li>
-<li>Plug-in to keep out spam</li>
-<li>Plug-in for forms creation.</li>
-<li>Plug-in for podcasting.</li>
-<li>Plug-in for increased role-based access to just about every imaginable module in WordPress.</li>
-</ul>
-<p>So you have the ability to easily create anything from a blog to a brochure site to e-commerce (yes, there are e-commerce-related plugins) without having to write any code.</p>
-<p>While there are several themes that you can pay for, there are so many themes that are free that I’ve never had to buy one of the “premium” themes for any of my sites.  It does help that I can tweak the themes.  But they generally work out of the box.</p>
-<p>Finally, I find that my clients find WordPress sites easier to manage than DotNetNuke.</p>
-<p><strong>Disadvantages of WordPress</strong></p>
-<p>You are limited in how flexible your UI is compared to my other two options.  But I rarely find this to be a problem.</p>
-<p>I don’t consider myself a PHP programmer, so I can’t create any new plug-ins I might need.  I can hack the PHP, and anyone who’s familiar with ASP.NET probably could at least hack PHP as well, so don’t let the fact that you don’t know PHP keep you from a PHP solution.</p>
-<p>It also doesn’t run as well under Windows as it does under Linux.  If all you know is Windows, this might be an issue for you.</p>
-<p><strong>Advantages of DotNetNuke</strong></p>
-<p>There are two main advantages of DotNetNuke over WordPress that would make me choose it over WordPress in most situations.  First, I know .NET, so if I need to write my own module, I can do that.  Second, it allows much greater freedom in HOW things are presented on the page.</p>
-<p>There are also quite a few skins available for DotNetNuke, however most of them you have to pay for and I’ve never put up a site yet that I didn’t buy a theme for.</p>
-<p><strong>Disadvantages of DotNetNuke</strong></p>
-<p>There are two huge disadvantages to DotNetNuke as well.  The first is that it is harder for my clients to manage.  In fact, while managing a DotNetNuke site is easier than having to change code, I would suggest that you not even tell the end user that they can manage the site.  You might expose specific pages to them, but leave the overall administration to people who understand DNN.</p>
-<p>Second, the level of granularity of role based permissions is less than the plug-in for WordPress gives me, and I’ve yet to find a module for DotNetNuke that gives me the same level of granularity.</p>
-<p>Finally, because you can mix and match skins and containers in such a way that it is difficult for the skin designers to test every possible mix, I find that every skin I’ve used has needed to be tweaked.  Unlike the WordPress themes that just work.</p>
-<p><strong>Write it Yourself</strong></p>
-<p>Of course, the advantage to writing all the code yourself is that you have complete control.  The disadvantage is that you have to write everything yourself, including the skin.</p>
-<p><strong>A Word about Skins and Themes</strong></p>
-<p>As recent as 3 years ago, I used to have the presentation layer designed for me by a designer.  This process typically cost between $5,000 and $10,000 depending on how many iterations we went through.</p>
-<p>However, I’ve come to the realization that design matters very little.  Yes, the site has to look good.  Yes, it has to be usable.  But it doesn’t have to be unique from every other design.  In fact, with the number of sites available today, I doubt that even a unique design is really that unique.</p>
-<p>So save yourself a lot of time and money and just go grab a design from one of the many sites that specialize in skins or themes for sites.  Even if you have to modify it a bit, you’ll be much further ahead of the game.</p>
-<p>The flexibility that DotNetNuke gives you comes at a pretty high cost both in terms of finding Skins that work reliably right out of the box and in terms of training users to use the site.  So just because DNN is more flexible does not necessarily mean it is “better.”</p>
-<p><strong>The Questions I Ask</strong></p>
-<p>What are the requirements of the site?</p>
-<p>If I have a requirement that can only be met by one of the platforms, that pretty much ends the list of questions.  If I can meet all the requirements with WordPress, that will probably be my choice of platform unless a future question indicates other wise.  My second choice would be DotNetNuke.</p>
-<p>Is there any possibility of a future requirement that would lead me to another platform?</p>
-<p>We want to try our best not to lock ourselves out of expansion.  At the same time we don’t want to provide more room for growth than will ever be needed.</p>
-<p>Will the requirements for this project require me to write special code?</p>
-<p>If I can’t find a plug-in or module that does what I need it to do, then I’m going to automatically be left with two choices.  Write it myself or use DotNetNuke and write a module.</p>
-<p>Does the client want to be able to maintain the site himself?</p>
-<p>If the answer to this is “yes” I’m going to lean very heavily toward WordPress as my first choice and DotNetNuke as my second.</p>
-<p>What servers are available to install this on?</p>
-<p>If you don’t have a Linux server, you are kind of stuck.  This isn’t true in my case, but for some of my clients, it is a factor.  It doesn’t completely rule out using WordPress but it does discourage from going in that direction.</p>
-<p>Is Search Engine Optimization a Factor?</p>
-<p>For most people it is.  Again, this favors WordPress.</p>
-<p><strong>When Would You Just Write It Yourself?</strong></p>
-<p>At this point, hardly ever.  Sometimes the choice is made for you. “I want you to write this from scratch using ASP.NET.”  Well, OK, if you’re willing to pay for it…</p>
-<p>But it really seems silly to have to write code I know I can get for next to nothing.</p>
-<p>You may not have the same selection of tools that I do.  I wish I had some time to look at a few others.  But you should be asking similar questions about the project at hand as you decide how you are going to achieve the goals of the project.  “If all you have is a hammer, everything looks like a nail.”</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/cms-vs-code-it-yourself/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/cms-vs-code-it-yourself/" data-id="ckgmc1aby001ftsx2c4dg8r5h" class="article-share-link">
+      <a data-url="http://davembush.github.com/cms-vs-code-it-yourself/" data-id="ckgxt25gc001bpwx2ga65ceu3" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -311,7 +241,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/unrecognized-tag-prefix-or-device-filter-‘asp’/" data-id="ckgmc1ahe0060tsx22mswv0xu" class="article-share-link">
+      <a data-url="http://davembush.github.com/unrecognized-tag-prefix-or-device-filter-‘asp’/" data-id="ckgxt25ks005zpwx2onbi27sv" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -368,7 +298,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/sql-for-net-programmers–the-book/" data-id="ckgmc1agb0052tsx28wp4mjwt" class="article-share-link">
+      <a data-url="http://davembush.github.com/sql-for-net-programmers–the-book/" data-id="ckgxt25k20050pwx26guggdlt" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -444,7 +374,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/tracking-down-performance-issues-in-asp-net/" data-id="ckgmc1ah6005ttsx27e957kiv" class="article-share-link">
+      <a data-url="http://davembush.github.com/tracking-down-performance-issues-in-asp-net/" data-id="ckgxt25kl005rpwx2jcyw915l" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -511,7 +441,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/dispose-finalize-and-suppressfinalize/" data-id="ckgmc1ach001wtsx2rng0lmzq" class="article-share-link">
+      <a data-url="http://davembush.github.com/dispose-finalize-and-suppressfinalize/" data-id="ckgxt25gu001wpwx28c6rs9u1" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -581,7 +511,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/test-sending-email-without-a-server-in-asp-net/" data-id="ckgmc1ago005ftsx2xu3ymz78" class="article-share-link">
+      <a data-url="http://davembush.github.com/test-sending-email-without-a-server-in-asp-net/" data-id="ckgxt25kd005fpwx23o4n4fju" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -673,7 +603,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-web-design-software/" data-id="ckgmc1abi0011tsx2r6pftu9n" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-web-design-software/" data-id="ckgxt25g2000zpwx2rlge54nv" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -738,7 +668,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/multi-step-processing-in-asp-net/" data-id="ckgmc1af00041tsx2h7osccg2" class="article-share-link">
+      <a data-url="http://davembush.github.com/multi-step-processing-in-asp-net/" data-id="ckgxt25j30042pwx2gh5d8gcl" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -795,7 +725,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/sorting-the-listview-in-asp-net/" data-id="ckgmc1ag3004vtsx2g4n152cp" class="article-share-link">
+      <a data-url="http://davembush.github.com/sorting-the-listview-in-asp-net/" data-id="ckgxt25k0004xpwx2y03hw9f4" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

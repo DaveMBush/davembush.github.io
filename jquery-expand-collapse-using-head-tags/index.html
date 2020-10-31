@@ -14,7 +14,7 @@
 <meta property="og:description" content="I’ve spent a good chunk of the last two days working on an interesting project for one of my clients that I think the rest of the jQuery community could benefit from. The task started when my client">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2009/10/animal010.jpg">
-<meta property="og:updated_time" content="2018-06-30T18:23:01.000Z">
+<meta property="og:updated_time" content="2020-10-31T14:37:32.049Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="jQuery Expand&#x2F;Collapse Using Head Tags">
 <meta name="twitter:description" content="I’ve spent a good chunk of the last two days working on an interesting project for one of my clients that I think the rest of the jQuery community could benefit from. The task started when my client">
@@ -114,6 +114,7 @@
         <p><img src="/uploads/2009/10/animal010.jpg" alt="animal-010" title="animal-010"></p>
 <p>I’ve spent a good chunk of the last two days working on an interesting project for one of my clients that I think the rest of the jQuery community could benefit from.</p>
 <p>The task started when my client came to me with an existing script that was being used in a DotNetNuke system to expand and collapse content under head tags that was produced by an article editing system similar to the Text/HTML module.</p>
+<a id="more"></a>
 <p>The problem with the way the author had created the system is that the content author would have had to add DIV tags to the content and if any additional sections were added to the content the jQuery and CSS code would have to be modified.</p>
 <p>The question that was posed to me was, “Is there any way of protecting the code that is relevant to the jQuery so that the content authors can’t mess it up?”  My response was basically, No, but if the jQuery was written correctly, that shouldn’t be an issue.  You should be able to have the jQuery add the additional DIV tags for you so that the content authors can just concentrate on writing the article.</p>
 <p>Of course, he got all excited about that possibility along with the fact that he’d be able to re-use the code.</p>
@@ -127,21 +128,7 @@
 <p>The last bit of information is that I insert instructional information and an expand-all and collapse-all button/link prior to the first H4 tag.</p>
 <p>All of this work allows the content authors to write using a regular WYSIWYG HTML editor without having to worry about adding none visible markup to make it display correctly.</p>
 <p>Here’s a snippet of the source:</p>
-<p>$(function() {<br>    var strHeader = “<div class="showHideControls"><span class="showAll showHide">Expand All</span> <span class="hideAll showHide">Collapse All</span></div>“ +<br>        “<div class="instructions-arrow">Click arrow to view step details</div>“;<br>    var strHtml;<br>    $(“.HEC h4”).parent().each(function() {<br>        strHtml = $(this).html();<br>        strHtml = strHtml.replace(/&lt;\/h4&gt;/gi, “<div class="content">“);<br>        strHtml = strHtml.replace(/&lt;h4/gi, “</div><div class="accordian">&lt;h4”);<br>        strHtml = “<div><div>“ + strHtml + “</div></div>“;<br>        $(this).html(strHtml);<br>        $(“h4”).bind(“click”, function(event) {<br>            $(this).next().slideToggle(“slow”);<br>            return false;<br>        });<br>    });</div></p>
-<p>// to implement the sub sections, you would select the<br>// div that is next() to the header and apply similar<br>// search and replace logic</p>
-<p>// start in collapsed mode<br> $(“.HEC .content”).hide();</p>
-<pre><code>$(&quot;.HEC .accordian:first&quot;).before(strHeader);
-$(&quot;.HEC .showAll&quot;).bind(&quot;click&quot;, function() {
-    $(&quot;.HEC .content&quot;).show();
-    // other .show()s go here for the subsections
-});
-$(&quot;.HEC .hideAll&quot;).bind(&quot;click&quot;, function() {
-    $(&quot;.HEC .content&quot;).hide();
-    // other hide()s go here for the subsections
-
-});
-</code></pre><p>});</p>
-<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">$(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> strHeader = <span class="string">"&lt;div class='showHideControls'&gt;&lt;span class='showAll showHide'&gt;Expand All&lt;/span&gt; &lt;span class='hideAll showHide'&gt;Collapse All&lt;/span&gt;&lt;/div&gt;"</span> +</span><br><span class="line">        <span class="string">"&lt;div class='instructions-arrow'&gt;Click arrow to view step details&lt;/div&gt;"</span>;</span><br><span class="line">    <span class="keyword">var</span> strHtml;</span><br><span class="line">    $(<span class="string">".HEC h4"</span>).parent().each(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">        strHtml = $(<span class="keyword">this</span>).html();</span><br><span class="line">        strHtml = strHtml.replace(<span class="regexp">/&lt;\\/</span>h4&gt;<span class="regexp">/gi, "&lt;/</span>h4&gt;<span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">'content'</span>&gt;</span>");</span></span><br><span class="line"><span class="xml">        strHtml = strHtml.replace(/<span class="tag">&lt;<span class="name">h4</span>/<span class="attr">gi</span>, "&lt;/<span class="attr">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>&lt;div class='accordian'&gt;&lt;h4");</span><br><span class="line">        strHtml = "&lt;div&gt;&lt;div&gt;" \+ strHtml + "&lt;/div&gt;&lt;/div&gt;";</span><br><span class="line">        $(this).html(strHtml);</span><br><span class="line">        $("h4").bind("click", function(event) &#123;</span><br><span class="line">            $(this).next().slideToggle("slow");</span><br><span class="line">            return false;</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">// to implement the sub sections, you would select the</span><br><span class="line">// div that is next() to the header and apply similar</span><br><span class="line">// search and replace logic</span><br><span class="line"></span><br><span class="line">// start in collapsed mode</span><br><span class="line"> $(".HEC .content").hide();</span><br><span class="line"></span><br><span class="line">    $(".HEC .accordian:first").before(strHeader);</span><br><span class="line">    $(".HEC .showAll").bind("click", function() &#123;</span><br><span class="line">        $(".HEC .content").show();</span><br><span class="line">        // other .show()s go here for the subsections</span><br><span class="line">    &#125;);</span><br><span class="line">    $(".HEC .hideAll").bind("click", function() &#123;</span><br><span class="line">        $(".HEC .content").hide();</span><br><span class="line">        // other hide()s go here for the subsections</span><br><span class="line"></span><br><span class="line">    &#125;);</span><br><span class="line"></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -152,7 +139,7 @@ $(&quot;.HEC .hideAll&quot;).bind(&quot;click&quot;, function() {
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-expand-collapse-using-head-tags/" data-id="ckgmc1aeh003jtsx2efg38402" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-expand-collapse-using-head-tags/" data-id="ckgxt25ir003lpwx2nmvlnwnz" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
