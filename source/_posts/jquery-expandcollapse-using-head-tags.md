@@ -20,6 +20,8 @@ I’ve spent a good chunk of the last two days working on an interesting project
 
 The task started when my client came to me with an existing script that was being used in a DotNetNuke system to expand and collapse content under head tags that was produced by an article editing system similar to the Text/HTML module.
 
+<!-- more -->
+
 The problem with the way the author had created the system is that the content author would have had to add DIV tags to the content and if any additional sections were added to the content the jQuery and CSS code would have to be modified.
 
 The question that was posed to me was, “Is there any way of protecting the code that is relevant to the jQuery so that the content authors can’t mess it up?”  My response was basically, No, but if the jQuery was written correctly, that shouldn’t be an issue.  You should be able to have the jQuery add the additional DIV tags for you so that the content authors can just concentrate on writing the article.
@@ -46,6 +48,7 @@ All of this work allows the content authors to write using a regular WYSIWYG HTM
 
 Here’s a snippet of the source:
 
+``` javascript
 $(function() {
     var strHeader = "<div class='showHideControls'><span class='showAll showHide'>Expand All</span> <span class='hideAll showHide'>Collapse All</span></div>" +
         "<div class='instructions-arrow'>Click arrow to view step details</div>";
@@ -66,7 +69,7 @@ $(function() {
 // div that is next() to the header and apply similar
 // search and replace logic
 
-// start in collapsed mode 
+// start in collapsed mode
  $(".HEC .content").hide();
 
     $(".HEC .accordian:first").before(strHeader);
@@ -81,5 +84,4 @@ $(function() {
     });
 
 });
-
-.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, "Courier New", courier, monospace; background-color: #ffffff; /\*white-space: pre;\*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }
+```

@@ -11,16 +11,33 @@ categories:
 date: 2013-09-04 10:42:49
 ---
 
-![G03A0003](/uploads/2009/01/g03a0003.jpg) A few months ago, I demonstrated [how to use ASP.NET's JSON capabilities](/2008/08/04/aspnet-ajax-using-json-heres-how/).  Lately, I've been demonstrating how to use jQuery.  Both use a considerable amount of JavaScript so if there is some way we could eliminate or reduce the amount of code we had to load, performance would naturally increase. Fortunately, there is.  **What stays the same** You are still going to create a JSON enabled web service just like you did in the earlier article by giving the web service class the attribute, "ScriptService."  You remember, this is what enables the web service to return JSON. **What is different** You will not, however, be including this block in your ASPX file:
+![G03A0003](/uploads/2009/01/g03a0003.jpg) A few months ago, I demonstrated [how to use ASP.NET's JSON capabilities](/2008/08/04/aspnet-ajax-using-json-heres-how/).  Lately, I've been demonstrating how to use jQuery.  Both use a considerable amount of JavaScript so if there is some way we could eliminate or reduce the amount of code we had to load, performance would naturally increase.
 
-      <asp:ScriptManager ID="ScriptManager1" runat="server">
-        <Services>
-          <asp:ServiceReference path="~/WebService.asmx" />
-        </Services>
-      </asp:ScriptManager> 
+Fortunately, there is.
 
-[](//11011.net/software/vspaste)You might still need the ScriptManager if you are using MS-AJAX on your page, but if you don't have any other MS-AJAX on your page, you can remove the entire block of code. In the jQuery for your page, your code will look something like this:
+<!-- more -->
 
+## What stays the same
+
+You are still going to create a JSON enabled web service just like you did in the earlier article by giving the web service class the attribute, "ScriptService."  You remember, this is what enables the web service to return JSON.
+
+## What is different
+
+You will not, however, be including this block in your ASPX file:
+
+``` html
+<asp:ScriptManager ID="ScriptManager1" runat="server">
+  <Services>
+    <asp:ServiceReference path="~/WebService.asmx" />
+  </Services>
+</asp:ScriptManager>
+```
+
+You might still need the ScriptManager if you are using MS-AJAX on your page, but if you don't have any other MS-AJAX on your page, you can remove the entire block of code.
+
+In the jQuery for your page, your code will look something like this:
+
+``` javascript
 $.ajax({
     type: "POST",
     url: "WebService.asmx/Add",
@@ -31,6 +48,7 @@ $.ajax({
         alert(result.d);
     }
 });
+```
 
 You can get the full documentation for the $.ajax() global method here: [http://docs.jquery.com/Ajax/jQuery.ajax](//docs.jquery.com/Ajax/jQuery.ajax "http://docs.jquery.com/Ajax/jQuery.ajax") A few things that need to be pointed out here:
 

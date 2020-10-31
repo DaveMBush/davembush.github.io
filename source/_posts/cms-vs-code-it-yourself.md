@@ -18,7 +18,9 @@ The problem area is this.  At what point and under what conditions would you wr
 
 Along the way I’ll tell you what my current choices are, but more importantly, I’ll tell you what my thought process is.  So even if you decide to use different tools than I do, you can ask the same questions to select the tools you have decided to use.
 
-**My Primary Tools**
+<!-- more -->
+
+## My Primary Tools
 
 I think in order to give the rest of this post some context, it makes the most sense to tell you what my current tools are.
 
@@ -29,13 +31,13 @@ I think in order to give the rest of this post some context, it makes the most s
 2.  DotNetNuke
 3.  Write it myself.
 
-**Advantages of WordPress**
+## Advantages of WordPress
 
 I’ve actually had people ask me why I use WordPress for my .NET blog instead of some .NET blog engine.  The primary reason is, it has been around longer so it has more plug-ins and more themes available than anything I can find for .NET.
 
 What this means to me is that I can achieve a lot of goals by simply searching for an appropriate plug-in.
 
-Just by way of example, here are some of the plug-ins I’ve used.
+Just by way of example, here are some plug-ins I’ve used.
 
 *   Plug-in to allow me to change the Title tag for each page from the “standard” title.
 *   Plug-in to create a forum on my site
@@ -54,7 +56,7 @@ While there are several themes that you can pay for, there are so many themes th
 
 Finally, I find that my clients find WordPress sites easier to manage than DotNetNuke.
 
-**Disadvantages of WordPress**
+## Disadvantages of WordPress
 
 You are limited in how flexible your UI is compared to my other two options.  But I rarely find this to be a problem.
 
@@ -62,13 +64,13 @@ I don’t consider myself a PHP programmer, so I can’t create any new plug-ins
 
 It also doesn’t run as well under Windows as it does under Linux.  If all you know is Windows, this might be an issue for you.
 
-**Advantages of DotNetNuke**
+## Advantages of DotNetNuke
 
 There are two main advantages of DotNetNuke over WordPress that would make me choose it over WordPress in most situations.  First, I know .NET, so if I need to write my own module, I can do that.  Second, it allows much greater freedom in HOW things are presented on the page.
 
 There are also quite a few skins available for DotNetNuke, however most of them you have to pay for and I’ve never put up a site yet that I didn’t buy a theme for.
 
-**Disadvantages of DotNetNuke**
+## Disadvantages of DotNetNuke
 
 There are two huge disadvantages to DotNetNuke as well.  The first is that it is harder for my clients to manage.  In fact, while managing a DotNetNuke site is easier than having to change code, I would suggest that you not even tell the end user that they can manage the site.  You might expose specific pages to them, but leave the overall administration to people who understand DNN.
 
@@ -76,11 +78,11 @@ Second, the level of granularity of role based permissions is less than the plug
 
 Finally, because you can mix and match skins and containers in such a way that it is difficult for the skin designers to test every possible mix, I find that every skin I’ve used has needed to be tweaked.  Unlike the WordPress themes that just work.
 
-**Write it Yourself**
+## Write it Yourself
 
 Of course, the advantage to writing all the code yourself is that you have complete control.  The disadvantage is that you have to write everything yourself, including the skin.
 
-**A Word about Skins and Themes**
+## A Word about Skins and Themes
 
 As recent as 3 years ago, I used to have the presentation layer designed for me by a designer.  This process typically cost between $5,000 and $10,000 depending on how many iterations we went through.
 
@@ -90,7 +92,7 @@ So save yourself a lot of time and money and just go grab a design from one of t
 
 The flexibility that DotNetNuke gives you comes at a pretty high cost both in terms of finding Skins that work reliably right out of the box and in terms of training users to use the site.  So just because DNN is more flexible does not necessarily mean it is “better.”
 
-**The Questions I Ask**
+## The Questions I Ask
 
 What are the requirements of the site?
 
@@ -116,7 +118,7 @@ Is Search Engine Optimization a Factor?
 
 For most people it is.  Again, this favors WordPress.
 
-**When Would You Just Write It Yourself?**
+## When Would You Just Write It Yourself?
 
 At this point, hardly ever.  Sometimes the choice is made for you. “I want you to write this from scratch using ASP.NET.”  Well, OK, if you're willing to pay for it…
 
