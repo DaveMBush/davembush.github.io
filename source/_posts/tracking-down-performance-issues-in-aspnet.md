@@ -13,6 +13,8 @@ date: 2013-07-24 06:36:13
 
 Last night, one of my clients assigned me a problem that I thought was going to require one solution, and in the end it was just poor programming. But the process reminded me of the need for good debugging skills. Just how do you know where the performance problem is? Too many programmers I know approach performance issues from the front end. "I know there is going to be a performance problem if I do it this way, so I'm going to do it that way instead." But unless your theory was correct, you are very likely to spend extra time doing something you may not need to do. While solving problems is what makes programming fun for a lot of us, solving problems that don't exist is a waste of time for the organizations we work for. My motto is:
 
+<!-- more -->
+
 *   Get the app working
 *   Get the app working right
 *   Get the app working fast
@@ -46,4 +48,4 @@ HttpContext.Current.Trace
   .Write("message");
 ```
 
-To access the trace output, run http://domaainstuff/applicationdirectory/trace.axd and select the round trip you want to examine. 
+To access the trace output, run http://domaainstuff/applicationdirectory/trace.axd and select the round trip you want to examine.

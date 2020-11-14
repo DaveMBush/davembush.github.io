@@ -16,7 +16,15 @@ date: 2013-05-08 01:32:51
 
 I received the following question a few days ago but I’ve been so busy with billable work that I just haven’t had a chance to answer it until now.  Actually, I’m still busy, but I hate letting these questions go for too long.
 
-“Right now I am working on a project where I have to screen a user.  This is a multi-step process.  At the end of the process I store the data back to the system. Currently, I am storing all the options a user will select in a session variable and then finally using them at the last step. Can you please suggest a better way to store this temporary data that does not require using a session? This type of situation comes up a lot.  We’ve used multiview to get it working. But this does not seem to be viable in all situations.”
+“Right now I am working on a project where I have to screen a user.  This is a multi-step process.  At the end of the process I store the data back to the system.
+
+Currently, I am storing all the options a user will select in a session variable and then finally using them at the last step.
+
+Can you please suggest a better way to store this temporary data that does not require using a session? This type of situation comes up a lot.  We’ve used multiview to get it working.
+
+<!-- more -->
+
+But this does not seem to be viable in all situations.”
 
 If I had a multi-step process that I needed to complete, I’d probably use the ASP.NET Wizard Control, which is a lot like the MultiView control you mention.  The main difference is that it handles the navigation between the views for you.
 
