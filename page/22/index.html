@@ -76,287 +76,6 @@
         <div class="col-sm-8 blog-main">
           
   
-    <article id="post-jquery-loading-partial-content" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/jquery-loading-partial-content/">jQuery - Loading Partial Content</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/jquery-loading-partial-content/" class="article-date"><time datetime="2013-01-29T20:37:54.000Z" itemprop="datePublished">2013-01-29</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/jQuery/">jQuery</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2008/12/misc-vol1-087.jpg" alt="misc_vol1_087"> In previous posts, I’ve covered the core architecture of jQuery.  How it works.  How you call methods.  A brief overview of what’s available.</p>
-<p>From here on out, we will focus more on specific solutions that jQuery can provide.  One of those is the ability to load partial content from the server and display it back in a section of our web page.</p>
-<p>There are several reasons why you might want to do this.  Remember back in the days of frames when we thought a good modular web site meant trying to code the content in frames for the different sections of the web site?  How quickly we found out that didn’t work!  To start with, the back button didn’t behave correctly, but there were other major problems with this approach as well.</p>
-<p>Using jQuery and some DIV tags, you can load content as you need it into the DIV tags using some pretty simple syntax.  </p>
-<p>$(‘#elementId’).load(‘path/to/Content.htm’);</p>
-<p>That simple line of code will replace whatever is between the open and closing html tags represented by “#elementId with whatever content is in the file represented by ‘path/to/Content.htm’.</p>
-<p>If you want to, you can filter the data that is returned from the call to load by also specifying a selector:</p>
-<p>$(‘#elementId’).load(‘path/to/Content.htm .OnlyMatchThisClass’);</p>
-<p>And of course, if the URL is an ASPX page (or other dynamic content) you could pass in parameters on the query string to tell the server what data to retrieve.</p>
-<p>You can also send parameters to the server using a post by specifying a second parameter, data, that a set of name/value pairs that will be sent to the server.  You can use this in combination with the serialize() method to pass the contents of form elements in with your request.  This is a step above what the MS-AJAX stuff does.  When you use the default AJAX that comes with ASP.NET, all of the form elements get posted to the server.  With this method, we are able to select exactly which form elements we are sending back and even what ASPX page we might be calling.</p>
-<p>Finally, we can pass a third parameter which is a call-back function that will be called by load when it completes.  Note, this is not to say it completed successfully, but only that it did complete.  It will be passed three parameters: the response text, the status, and the XMLHttpRequest object.</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-loading-partial-content/" data-id="ckhhwyhq9003qz0x20tyv0ls1" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery/">jQuery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/load/">load</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/partial-content/">partial content</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-winforms-change-the-active-tab" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/winforms-change-the-active-tab/">WinForms - Change The Active Tab</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/winforms-change-the-active-tab/" class="article-date"><time datetime="2013-01-15T19:47:30.000Z" itemprop="datePublished">2013-01-15</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/winforms/">winforms</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2009/03/misc-vol2-056.jpg" alt="misc_vol2_056"> This question came in last Friday:</p>
-<blockquote>
-<p>I’m trying to code a windows form in vb.net 2005. In my form I have 2 TabControls and a command button. The button is in the first TabControl, so what I want to do, is that when I click the button, in the first TabControl, the second TabControl gets opened.</p>
-</blockquote>
-<p>I’m assuming here that what is really being asked is, “How do I change the active tab in a TabControl from some other event, like a button click in a tab?”</p>
-<p>Given a form that looks like this:</p>
-<p><img src="/uploads/2009/03/image2.png" alt="image"></p>
-<p>Create a Button Click event handler for “Button1” and set the SelectedIndex property of the TabControl to 1 to activate, “TabPage2”</p>
-<pre><code>Private Sub Button1\_Click( \_
-   ByVal sender As System.Object, _
-    ByVal e As System.EventArgs) _
-    Handles Button1.Click
-    TabControl1.SelectedIndex = 1
-End Sub 
-</code></pre><p><a href="//11011.net/software/vspaste"></a>If you don’t know the index of the tab you want to activate, you can use the tab object instead:</p>
-<pre><code>Private Sub Button1\_Click( \_
-   ByVal sender As System.Object, _
-    ByVal e As System.EventArgs) _
-    Handles Button1.Click
-    TabControl1.SelectedTab = TabPage2
-End Sub 
-</code></pre><p><a href="//11011.net/software/vspaste"></a></p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/winforms-change-the-active-tab/" data-id="ckhhwyht7006wz0x2iv1atzdy" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/active-tab/">active tab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/selectedindex/">selectedindex</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/selectedtab/">selectedtab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tabcontrol/">tabcontrol</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/winforms/">winforms</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-panel-defaultbutton-does-not-work" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/panel-defaultbutton-does-not-work/">Panel DefaultButton does not work</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/panel-defaultbutton-does-not-work/" class="article-date"><time datetime="2012-12-25T18:16:36.000Z" itemprop="datePublished">2012-12-25</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2008/09/misc-vol2-051.jpg" alt="misc_vol2_051"> Or, at least, it didn’t. Here’s what happened: Yesterday a client asked me to help track down a problem he was having with setting the default button for a text box. As you should already know, you can make ASP.NET automatically click a specific button on the page (Button, ImageButton, or LinkButton) by grouping everything in a Panel and setting the DefaultButton property to the ID of the button you want to have automatically clicked.  Of course, in situations like these, you can pull your hair out trying to find the problem. There was nothing obviously wrong with the code. Everything was grouped into a panel. All of the Panels had their DefaultButton properties set to the correct button. Maybe it’s because it is an ImageButton? No, not only are ImageButtons supported, but creating a quick demo verified that they did in fact work. But what’s this? When I put the ASCX file into design view, it does not render the panel with more than a 1px high rectangle. That’s odd… wonder why it’s doing that. Let’s try resizing it. Nope. That doesn’t work. And then I looked closer. All of the code basically looked something like this:  </p>
-<tr><br>  &lt;asp:Panel DefaultButton=”m_ibKeyIngredient” ID=”m_pKeyIngredient” runat=”server” Width=”370px”&gt;<br>    <td valign="top"><br>      &lt;asp:TextBox ID=”m_tbKeyIngredient” runat=”server” Width=”244px”&gt;&lt;/asp:TextBox&gt;<br>      &lt;asp:ImageButton ID=”m_ibKeyIngredient” runat=”server” OnClick=”m_ibKeyIngredient_Click” ImageUrl=”images/gobutton.gif” ImageAlign=”AbsBottom” /&gt;<br>    </td><br>  &lt;/asp:Panel&gt;<br></tr> 
-
-<p>If you casually read over this code, you completely miss the fact that the TD elements are INSIDE of the Panel. You see the TR element and the panel and if you aren’t thinking clearly, you think the TR element is the cell when in fact, it is the row. The TD elements that represent the cell are further in and easy to miss. You need to keep in mind that the Panel renders itself as a DIV and you can’t have a DIV tag inside a TR tag. It turns out that swapping the Panel tag with the TD element solved the whole problem. Unfortunately, this took us several hours of frustration to figure out. So, what did we learn?</p>
-<ol>
-<li>If your ASP.NET client side code isn’t working as you’d expect, validate your HTML.</li>
-<li>When working on a problem, if you see another problem that is part of the same code, it is not always inappropriate to take a detour to try to fix that problem. It may in fact fix the problem you are working on. If nothing else, it will give your mind a break.</li>
-</ol>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/panel-defaultbutton-does-not-work/" data-id="ckhhwyhr8004iz0x2vpccc66z" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Button/">Button</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DefaultButton/">DefaultButton</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ImageButton/">ImageButton</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LinkButton/">LinkButton</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Panel/">Panel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-host-jquery-at-google-with-intellisense-support" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/host-jquery-at-google-with-intellisense-support/">Host jQuery at Google (with Intellisense support)</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/host-jquery-at-google-with-intellisense-support/" class="article-date"><time datetime="2012-12-04T16:03:02.000Z" itemprop="datePublished">2012-12-04</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/jQuery/">jQuery</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2008/12/tp-vol3-007.jpg" alt="tp_vol3_007"> While reviewing my RSS feed this morning, I found this article: <a href="//encosia.com/2008/12/10/3-reasons-why-you-should-let-google-host-jquery-for-you/">3 reasons why you should let Google host jQuery for you | Encosia</a> I had no idea! The three reasons are:</p>
-<ol>
-<li>Decreased Latency Google will serve the data from the closest server</li>
-<li>Increased Parallelism More threads are available to download content specific to your application instead of downloading this common library.</li>
-<li>Better caching They may already have the library on their computer.</li>
-</ol>
-<p>Here is the code you should be using to include jQuery in your application to use the Content Delivery Network at Google:</p>
-<pre><code>&lt;script type=&quot;text/javascript&quot; src=&quot;http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js&quot;&gt;
-&lt;/script&gt; 
-</code></pre><p><a href="//11011.net/software/vspaste"></a>The one issue you may have to deal with is that if you are using the intellisense files for Visual Studio, you will need to find some alternate method.  Here’s one: First, place the reference to your local jquery files like we’ve been doing:</p>
-<script src="js/jquery-1.2.6.min.js" type="text/javascript"></script> 
-
-<p><a href="//11011.net/software/vspaste"></a>But then in the onload event, put in code to replace the src attribute so that it will get the js file from google:</p>
-<p>protected void Page_Load(object sender, EventArgs e)<br>{<br> foreach (Control c in Page.Header.Controls)<br> {<br>  if (c.GetType() == typeof(LiteralControl))<br>   ((LiteralControl)c).Text =<br>    ((LiteralControl)c).Text.Replace(<br>    “src=\“js/jquery-1.2.6.min.js\“”,<br>    “src=\“<a href="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js\\&quot;&quot;)" target="_blank" rel="noopener">http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js\\&quot;&quot;)</a>;<br> }</p>
-<p>}</p>
-<p><a href="//11011.net/software/vspaste"></a>This code might be optimized a bit better.  For example, by making sure the js reference is the first element in your header, you could skip the foreach loop and just grab the first element out of the controls collection.</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/host-jquery-at-google-with-intellisense-support/" data-id="ckhhwyhok002lz0x2tfznm03r" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/google/">google</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/intellisense/">intellisense</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery/">jQuery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/">visual studio</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
     <article id="post-aspnet-json-and-viewstate" class="article article-type-post" itemscope itemprop="blogPost">
 
   <header class="article-header">
@@ -402,7 +121,7 @@ End Sub
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-json-and-viewstate/" data-id="ckhhwyhn80012z0x20ggqnb4z" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-json-and-viewstate/" data-id="cki0hdaqy000ym4x2dhn1lz9n" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -478,7 +197,7 @@ End Sub
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/decimal-vs-float-single-or-double/" data-id="ckhhwyhnu001vz0x24vij4i2w" class="article-share-link">
+      <a data-url="http://davembush.github.com/decimal-vs-float-single-or-double/" data-id="cki0hdarh001rm4x2swwb5rjh" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -553,7 +272,7 @@ if(s != null &amp; s.Length &gt; 0)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/vs-and-vs-what-s-the-difference/" data-id="ckhhwyhsn006gz0x2j78adyc5" class="article-share-link">
+      <a data-url="http://davembush.github.com/vs-and-vs-what-s-the-difference/" data-id="cki0hdauh006bm4x2dzeftjqs" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -610,7 +329,7 @@ if(s != null &amp; s.Length &gt; 0)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/infinite-dotnetnuke-skin-sets-for-one-low-price/" data-id="ckhhwyhoz002wz0x2e67qonct" class="article-share-link">
+      <a data-url="http://davembush.github.com/infinite-dotnetnuke-skin-sets-for-one-low-price/" data-id="cki0hdasf002tm4x20epamu16" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -675,7 +394,7 @@ if(s != null &amp; s.Length &gt; 0)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/azure-cdn-blob-storage-case-sensitive-issue/" data-id="ckhhwyhnc0018z0x2xmropnvg" class="article-share-link">
+      <a data-url="http://davembush.github.com/azure-cdn-blob-storage-case-sensitive-issue/" data-id="cki0hdar30015m4x23kth0o2h" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -737,12 +456,274 @@ if(s != null &amp; s.Length &gt; 0)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/prevent-postback-on-buttons/" data-id="ckhhwyhr9004jz0x2bg3chbly" class="article-share-link">
+      <a data-url="http://davembush.github.com/prevent-postback-on-buttons/" data-id="cki0hdatg004em4x2ibojotny" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net-postback-button/">asp.net postback button</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-the-google-appliance-and-forms-authentication" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/the-google-appliance-and-forms-authentication/">The Google Appliance and Forms Authentication</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/the-google-appliance-and-forms-authentication/" class="article-date"><time datetime="2010-08-04T11:37:57.000Z" itemprop="datePublished">2010-08-04</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2010/08/iStock_000003551835Medium.jpg" alt="iStock_000003551835Medium" title="iStock_000003551835Medium"> I’ve been working with a client to implement the Google Appliance on one of their sites that has forms authentication enabled. For those of you who aren’t aware, Google provides a box that you can install to index your own site using essentially the same logic that Google uses to index the Internet.  The advantage is that you have a lot more control over what gets indexed and when it gets indexed than if you just use what Google provides from its public index of the Internet.  The problem we had was that Google is not particularly fond of ASP.NET Forms Based authentication.  We had a contact at Google who was supposed to help us get this working, but it just doesn’t. What made our implementation even trickier, and worth pursuing the Google way, was that depending on who you are you shouldn’t be able to see some of the content.  So it wasn’t just a matter of getting the site indexed, the results had to be different depending on who was logged in.  We got past this by just indexing the site into a different database for each type of user.  We switch which database we look at based on the role of the user. But there was still the matter of getting the index built in the first place.  We had tried providing an alternate form that Google could use, but for whatever reason, that didn’t seem to work. What we ended up doing was setting a cookie at the Google Appliance that the the site would look at during the request process, specifically during the Application_AuthenticateRequest event.  I put the code in Global.asax file, but you can create a handler for it if you want. Here’s the code:</p>
+<p>void Application_AuthenticateRequest(object sender, EventArgs e)<br>{<br>    HttpCookie  o =<br>       HttpContext.Current.Request.Cookies[“secretName”];<br>    if (o != null)<br>    {<br>        System.Security.Principal.GenericIdentity id =<br>            new System.Security.Principal<br>               .GenericIdentity(o.Value);<br>        Context.User =<br>            new System.Security.Principal<br>                .GenericPrincipal(id, null);<br>    }<br>}</p>
+<p>All this does is look for the cookie and set the current user name to the value that is in the cookie.  This is enough for .NET forms authentication to think the user is logged in. Our role information is retrieved using a property in a class so in the code that looks to see what role the user is a part of, we look at the username and hard wire the role based on that user. Hope this helps someone else save some time implementing this. <strong>Other places talking about Forms Authentication and the Google Appliance</strong> <a href="//blogs.perficient.com/ecm/blog/2009/12/21/google-search-appliance-benefits-for-enterprise-content/">Google Search Appliance: Benefits for enterprise content …</a> - Integrate with LDAP, NTLM, Windows Integrated Authentication, forms-based single sign-on security systems, including Oracle Access Manager and CA SiteMinder, to enable seamless secure searching. Perficient has been a Google Enterprise …</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/the-google-appliance-and-forms-authentication/" data-id="cki0hdau3005im4x2eaapxi4h" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/forms-authentication/">forms authentication</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ga/">ga</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/google/">google</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/search/">search</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-gitextension-putty-alternate-port" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/gitextension-putty-alternate-port/">GitExtension, Putty, Alternate Port</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/gitextension-putty-alternate-port/" class="article-date"><time datetime="2010-04-26T10:01:00.000Z" itemprop="datePublished">2010-04-26</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Git/">Git</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2010/04/image8.png" alt="image" title="image">Last week I showed you how to <a href="/2010/04/22/git-gitosis-putty-and-windows/">install GitExtensions to access Gitosis</a> and promised that I’d show you how to get this all working when Gitosis is running SSH on an alternate port.</p>
+<p>There are several reasons why you might want to run SSH on an alternate port.  In my case it is because my ISP blocks incoming traffic on the lower ports and I want to be able to access my computers using SSH’s tunneling feature when I’m on the road.</p>
+<p>The trick lies in a feature of Putty.  If you want to do this, you’ll need to <a href="//www.chiark.greenend.org.uk/~sgtatham/putty/download.html">install the Putty.exe</a> </p>
+<p>Actually, “install” is probably not the right word.  All you really need to do is download the putty.exe and put it in the GitExtension directory in your program files directory.</p>
+<p>What we are going to do now is create a session to connect to our Gitosis server.  So fire up the putty.exe.</p>
+<p><img src="/uploads/2010/04/image9.png" alt="image" title="image"></p>
+<p>Type in the host name or the IP address to the SSH/Gitosis server as well as the alternate port number you need to connect to.  Also, now would be a good time to give the configuration a “session name”</p>
+<p><img src="/uploads/2010/04/image10.png" alt="image" title="image"></p>
+<p>The advantage of using a session like this is that we can also specify the login name and the private key file here, rather than in GitExtensions.  You can do both if you want, as long as they match.</p>
+<p><img src="/uploads/2010/04/image11.png" alt="image" title="image"></p>
+<h6 id="Note-The-Auto-login-username-you-put-in-here-will-be-the-username-of-the-account-that-is-running-Gitosis-NOT-the-account-associated-with-your-public-private-keys"><a href="#Note-The-Auto-login-username-you-put-in-here-will-be-the-username-of-the-account-that-is-running-Gitosis-NOT-the-account-associated-with-your-public-private-keys" class="headerlink" title="Note:  The Auto-login username you put in here will be the username of the account that is running Gitosis, NOT the account associated with your public/private keys."></a>Note:  The Auto-login username you put in here will be the username of the account that is running Gitosis, NOT the account associated with your public/private keys.</h6><p><img src="/uploads/2010/04/image12.png" alt="image" title="image"></p>
+<p>Navigate back to the main screen and save the session.</p>
+<p><img src="/uploads/2010/04/image13.png" alt="image" title="image"></p>
+<p>You’ll see we saved the session as “Gitosis.”</p>
+<p>You should test this to make sure you can connect.  What will happen is that it will briefly “connect” but then you’ll get kicked out because the server is not allowing this type of connection.  This isn’t an issue because we won’t be using putty to connect.</p>
+<p>Now in GitExtensions when you specify the Git URL, instead of specifying the server name between the “@” and the “:”, you’ll specify the name of the session you just created:</p>
+<p>Administrator@<strong>Gitosis</strong>:repositoryName.git</p>
+<p>When you do that, the session named Gitosis will be used to make the connection instead of looking for a server named Gitosis.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/gitextension-putty-alternate-port/" data-id="cki0hdarz002em4x295fazccy" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gitextensions/">gitextensions</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gitosis/">gitosis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/putty/">putty</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/">ssh</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-git-gitosis-putty-and-windows" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/git-gitosis-putty-and-windows/">Git, Gitosis, Putty and Windows</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/git-gitosis-putty-and-windows/" class="article-date"><time datetime="2010-04-22T11:32:08.000Z" itemprop="datePublished">2010-04-22</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Git/">Git</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2010/04/image.png" alt="GIT" title="GIT">I was recently sold on the idea of replacing SubVersion as my version control of choice and moving to GIT, or at least installing GIT and seeing for myself if it is that much better than SubVersion.  The first step was to install GIT on my computers so that I could play with it. Installing GIT on my 2008 server was relatively painless since everything on the server runs under Cygwin.  I followed the well written instructions here:</p>
+<ul>
+<li><a href="#">Installing Git on Windows 2008</a> (broken link)</li>
+<li><a href="#">Installing Gitosis on Windows 2008</a> (broken link)</li>
+</ul>
+<p>Where I got stuck was on the client side. First, I tried installing msysgit, which I think I must have installed from the wrong exe because I eventually had trouble using it outside of a bash script.  But don’t worry about that because I’m going to show you a much easier way. Then I tried installing <a href="//code.google.com/p/tortoisegit/">TortoiseGit</a>.  Had I installed msysgit correctly, I probably would have stuck with making that work.  But I’m glad I couldn’t get it working because it caused me to dig deeper into TortoiseGit and discover that it really isn’t at a point where I can recommend it to anyone. I might have quit there, but I had also seen that there was another project for Windows Git called <a href="//code.google.com/p/gitextensions/">Git Extensions</a>, which is really easy to set up and includes the installation for Git, so you don’t have to go and figure out which is the correct installation for msysgit. When you install Git Extensions, you will come to a screen where you’ll be given the option to install Git and KDiff.  Do so. <img src="/uploads/2010/04/image1.png" alt="image" title="image"> <img src="/uploads/2010/04/image2.png" alt="image" title="image"> When you install MsysGit, select the options to add “Git Bash Here” and  “Git GUI Here”     You’ll also want to select the option to run Git from the Windows command prompt. <img src="/uploads/2010/04/image3.png" alt="image" title="image"> The KDiff install is pretty straight forward.  I’ve been using KDiff for a while with SubVersion and it does a great job handling merges that SubVersion doesn’t do well on its own. Finally, install the extensions.  When you get to the screen that asks if you want to use OpenSSH or Putty, select Putty. <img src="/uploads/2010/04/image4.png" alt="image" title="image"> Next, run the GitExtensions to set some of the configurations, like your email address. Next, you’ll want to generate an SSH key <img src="/uploads/2010/04/image5.png" alt="image" title="image"> Select “Generate or import key” from the menu. <img src="/uploads/2010/04/image6.png" alt="image" title="image"> Click the “Generate” button and move your mouse over the designated area. Since the server is using OpenSSHd for the SSH server, you’ll need to copy the text out of the top area and paste it into a text file so that you can put the public key on the server as described in the server articles I linked to above. <img src="/uploads/2010/04/image7.png" alt="image" title="image"> You can make the key comment whatever you want.  Do NOT use the “Save public key” button to save the public key.  That will not save in the correct format. Once you’ve set a password, save the private key some place on your system that you can load later. If you’re using a standard port for the SSH server, you should be all set.  My problem is that I’m not, and that’s where the trouble began for me.  My next post will discuss how this configuration gets us around that issue.                   <strong>Other places talking about Git, Gitosis and Putty</strong> <a href="//www.geekgumbo.com/2010/04/15/git-in-windows-getting-started-with-the-git-gui/">Geek Gumbo » Git in Windows – Getting Started with the Git GUI</a> - You should have Git Bash icon on your desktop. Click it and up pops a linux command window. Don’t panic. This is like the Windows command window, only it runs Linux. There is a neat little GUI that will make the command window go away. … <a href="//sweux.com/blogs/laranjeira/index.php/git/how-to-configure-git-on-windows/">Eduardo Laranjeira » How to configure Git on Windows</a> - In the previous article, I’ve shown how to install Git on Windows 7, but before you can start using it, there’s some basic configuration that needs to be done. In this article I’ll show how to setup your user name and email address, … <a href="//www.jeremyskinner.co.uk/2010/03/07/using-git-with-windows-powershell/">Technical Jargon » Using Git with Windows Powershell</a> - Whenever I’m working with a Git repository I tend to do so from a Windows Powershell command line running inside Console. I prefer this to the UNIX-like “git bash” that comes with msysgit and it’s fairly straightforward to extend …</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/git-gitosis-putty-and-windows/" data-id="cki0hdary002cm4x2xjv6xstk" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Git/">Git</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Version-Control/">Version Control</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gitosis/">gitosis</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/putty/">putty</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ssh/">ssh</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/windows/">windows</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-why-programmers-cant-program" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/why-programmers-can’t-program/">Why Programmers Can’t Program</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/why-programmers-can’t-program/" class="article-date"><time datetime="2010-03-11T12:53:24.000Z" itemprop="datePublished">2010-03-11</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Interview/">Interview</a> / <a class="article-category-link" href="/categories/Interview/Opinion/">Opinion</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2010/03/WEST0241.png" alt="WEST0241" title="WEST0241"> Jeff Atwood of <a href="//www.codinghorror.com/blog/2010/02/the-nonprogramming-programmer.html">Coding Horror</a> writes:</p>
+<p>“I find it difficult to believe, but the reports keep pouring in via Twitter and email: <strong>many candidates who show up for programming job interviews can’t program. At all.</strong>”</p>
+<p>Jeff, you must not have visited a college campus recently.  The reason most that most “programmers” can’t program is because their instructors led them to believe they could program.</p>
+<p>I have two stories that illustrate the point.</p>
+<p>I do work for a local community college.  The college hired one of their students to work on an ASP.NET project because he was recommended by the professor and because he got all A’s in his programming classes.  The professor told the manager, “this is one of the best students I’ve ever had.”</p>
+<p>Maybe he was the best if you evaluate by his grades, but he sure couldn’t program.  And even if he were to read this, or one of his buddies were to read this and show it to him, I think he’d agree.  He eventually quit and went back to doing what he used to do before he learned how to be a programmer.</p>
+<p>To the school’s credit, they did actually teach current languages.  But that’s where the education stopped.  They taught various programming languages like most of us learned math.  Here’s the formula.  Here’s an exercise that uses the formula.  Nothing in the classes require the student to solve a real-life problem, or even to solve any of the interview problems.</p>
+<p>At the school my daughter goes to, I found the situation even worse.  They have a computer science program but as I was talking to a recent graduate I found out there was no way I’d hire this kid.  I found out because the kid knew he’d been cheated and was freely telling me about it.  So just to find out how bad things were I asked a few questions.</p>
+<p>Turns out, he’d been educated in Java, but he couldn’t tell me what polymorphism was, or when I asked it as, “what is inheritance and how would you use it practically?”  he couldn’t tell me.</p>
+<p>He’d never seen JSP, HTML, or JavaScript either.  What school teaches Java and doesn’t teach those subjects with it?</p>
+<p>One of the commenters suggests that we need government-regulated tests (like that would work any better than any other government-regulated test?)  to help weed out those who can’t program.  While I’m sure there are some great examples of teachers who can program, can teach programming, and care about the quality of programmers they are graduating, I’d suggest changing the education system to weed out the professors who can’t teach, can’t program, and don’t care.  Maybe the certification tests need to go higher than the students we end up interviewing.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/why-programmers-can’t-program/" data-id="cki0hdaup006nm4x254mickk6" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/college/">college</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/education/">education</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programming/">programming</a></li></ul>
 
 
     </footer>
@@ -796,7 +777,7 @@ if(s != null &amp; s.Length &gt; 0)
   
   <div class="sidebar-module">
     <h4>Archives</h4>
-    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/11/">November 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/10/">October 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/09/">September 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/06/">June 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/03/">March 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/02/">February 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/11/">November 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/10/">October 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/09/">September 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/06/">June 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/12/">December 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/04/">April 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/08/">August 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/04/">April 2010</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
   </div>
 
 
