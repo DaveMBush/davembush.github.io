@@ -7,6 +7,8 @@ tags:
 
 The temptation, when using RxJS is to include conditional logic inside your map, tap, or subscribe blocks.  But there is a much better way to deal with conditional logic that will make your code much easier to read and reason about. It also should make your code easier to test. But of course, once you have code that is easy to test, you probably no longer need to test it.
 
+<!-- more -->
+
 ## Filter
 
 The easiest, most straight forward way to handle conditional logic is by using the `filter()` operator.
