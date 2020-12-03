@@ -15,17 +15,23 @@ date: 2013-01-29 15:37:54
 
 From here on out, we will focus more on specific solutions that jQuery can provide.  One of those is the ability to load partial content from the server and display it back in a section of our web page.
 
-There are several reasons why you might want to do this.  Remember back in the days of frames when we thought a good modular web site meant trying to code the content in frames for the different sections of the web site?  How quickly we found out that didn't work!  To start with, the back button didn't behave correctly, but there were other major problems with this approach as well.
+<!-- more -->
 
-Using jQuery and some DIV tags, you can load content as you need it into the DIV tags using some pretty simple syntax.  
+There are several reasons why you might want to do this.  Remember back in the days of frames when we thought a good modular website meant trying to code the content in frames for the different sections of the website?  How quickly we found out that didn't work!  To start with, the back button didn't behave correctly, but there were other major problems with this approach as well.
 
+Using jQuery and some DIV tags, you can load content as you need it into the DIV tags using some pretty simple syntax.
+
+``` javascript
 $('#elementId').load('path/to/Content.htm');
+```
 
 That simple line of code will replace whatever is between the open and closing html tags represented by "#elementId with whatever content is in the file represented by 'path/to/Content.htm'.
 
 If you want to, you can filter the data that is returned from the call to load by also specifying a selector:
 
+``` javascript
 $('#elementId').load('path/to/Content.htm .OnlyMatchThisClass');
+```
 
 And of course, if the URL is an ASPX page (or other dynamic content) you could pass in parameters on the query string to tell the server what data to retrieve.
 
