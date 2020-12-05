@@ -119,7 +119,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-json-and-asp-net/" data-id="cki8u0pb6003k1kx2dnov8x7i" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-json-and-asp-net/" data-id="ckibs6p96003ensx2f1p2if99" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -178,7 +178,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/vb-net-hide-module-name/" data-id="cki8u0pdv005z1kx257jakeyh" class="article-share-link">
+      <a data-url="http://davembush.github.com/vb-net-hide-module-name/" data-id="ckibs6paw0061nsx280m4zx8x" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -238,7 +238,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/cms-vs-code-it-yourself/" data-id="cki8u0p8j001c1kx22gz1o1s5" class="article-share-link">
+      <a data-url="http://davembush.github.com/cms-vs-code-it-yourself/" data-id="ckibs6p7f001ensx2mr00uby3" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -296,7 +296,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/tracking-down-performance-issues-in-asp-net/" data-id="cki8u0pdm005n1kx20ptj3wlq" class="article-share-link">
+      <a data-url="http://davembush.github.com/tracking-down-performance-issues-in-asp-net/" data-id="ckibs6pao005onsx2vie92877" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -361,7 +361,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/dispose-finalize-and-suppressfinalize/" data-id="cki8u0p8w001r1kx2val5i4oi" class="article-share-link">
+      <a data-url="http://davembush.github.com/dispose-finalize-and-suppressfinalize/" data-id="ckibs6p7t001xnsx2fcawxwtj" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -420,7 +420,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/test-sending-email-without-a-server-in-asp-net/" data-id="cki8u0pdb00571kx2phrsc0jk" class="article-share-link">
+      <a data-url="http://davembush.github.com/test-sending-email-without-a-server-in-asp-net/" data-id="ckibs6paf0058nsx2rdnjwr27" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -482,7 +482,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/multi-step-processing-in-asp-net/" data-id="cki8u0pbr003z1kx2rcqrv4j9" class="article-share-link">
+      <a data-url="http://davembush.github.com/multi-step-processing-in-asp-net/" data-id="ckibs6p9o0044nsx2y3g3vug3" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -541,7 +541,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-loading-partial-content/" data-id="cki8u0pb7003l1kx21zb8xral" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-loading-partial-content/" data-id="ckibs6p98003gnsx2ck85pz1u" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -591,18 +591,18 @@
 <blockquote>
 <p>If we update the value of a textbox or label via a JSON web service call - will the value of that textbox/label be written to the viewstate or whatever so that the server side code can see the new values that came from the JSON request?</p>
 </blockquote>
-<p>The short answer is, “no, it will not update viewstate.”  But I think it would be helpful to understand when this is important rather than just giving you a blanket answer. First, let’s take a look at exactly how view state is handled in ASP.NET. <img src="/uploads/2009/01/image5.png" alt="image"> <strong>Normal Processing of an ASP.NET page</strong> When the browser first requests the ASPX page, the page is instantiated.  Since this is the first time it is being requested, there is no viewstate, so the deserialize step is skipped and the form elements step is skipped, and our page creation code is run. The magic happens right before the page is rendered and sent back to the client.  At this point, the state of all of the runat=”server” elements we have on the page are serialized (stored) into the viewstate object which typically is stored in the hidden field on the form.  There are providers, however, that allow you to store this same information on the server someplace.  Then the HTML for the page is rendered and sent back to the browser. The next request from the browser using the same page is a POST form request.  The first thing that happens after the page is instantiated and all of the runat=”server” objects are instantiated, is that the viewstate is deserialized (retrieved from the viewstate object) so that by the time we get to the parsing of the form elements, all of our objects are back to exactly the same state that they were when we first sent the page back to the browser. Once the elements have been restored, the form elements are parsed and the appropriate properties on our form elements are set (Textbox.Text for example) and any events where we might need the change event fired are determined based on the difference between the view state and the current state of the form element. In the case of JSON calls, either using ASP.NET or jQuery, all we are updating is the element.  The question really becomes, “Does it matter?” <strong>Does it matter?</strong> By default, all elements on the page are serialized and deserialized into and out of viewstate.  But in the case of things like a Textbox, most of the time we don’t care.  The fact of the matter is that most of our applications would work perfectly fine with viewstate turned off. Let’s take a look at what happens with a text box. When the text box is initially rendered on the page, it may have the current content from the database.  The person at the browser may change the form element and then submit the page.  Assuming we don’t need to fire the changed event on the server, the page is instantiated, the text box object is created, the text box object is restored to its original state and then immediately set to the content that was in the text box when the page was submitted. By the time we get to our event handling code, we don’t care, nor do we know, what the content of the field was the last time the page was sent back to the browser.  The code would work just as well with the viewstate for that element turned off.  This is mostly true of all of the elements on the screen and since not all elements use viewstate to determine what events get fired it is more a matter of experimenting by turning viewstate off and seeing if the code still works than any hard and fast rule that determines if we need viewstate turned on for the element. The case of a label is different.  Since it is not a form element, but is rendered as a div, it’s content will not be sent back to the server with the post.  The only way of avoiding having to compute the value of the label is either by storing it in viewstate, or by storing it in viewstate or someplace on the server. <strong>So why is viewstate turned on for everything by default?</strong> Microsoft has a tendency to make the default behavior idiot proof.  They know that no one will read the documentation on how viewstate works or when it should be used.  So they set it up so that it will work for everyone out of the box. I’ve seen enough “wrong” code and heard enough complaints about how this new model works to know that had Microsoft set it up so that turning viewstate on was an option and not the default, most programmers would still be using ASP at this point and ASP.NET would have been a dismal failure… and for those of you who think it is, it would have been an even bigger disaster. In the case of using JSON with your ASP.NET code, your best bet would be to turn viewstate off for the page and assume that it isn’t going to do anything for you.  The point of JSON is to make your page more lightweight.  Turning viewstate on adds extra baggage to your HTML that you probably won’t need anyhow.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/asp-net-json-and-viewstate/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-json-and-viewstate/" data-id="cki8u0p85000v1kx2zujbu1hy" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-json-and-viewstate/" data-id="ckibs6p6t000rnsx2axb2kyqq" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -651,34 +651,18 @@
         <p><img src="/uploads/2008/10/money-016.jpg" alt="money-016"> When you need to deal with a number that is a fraction, what do you specify for its type?  If you are like most programmers I know, you’ll reach for Float (Single if you are using VB) or Double.</p>
 <p>If you are working with currency, though, this could get you into a lot of trouble.</p>
 <p>Here’s why.</p>
-<p>When you store a number into a float, you are not storing an exact number.  This is because the number you are storing is an approximation of the number you entered.  When you store a number, the integer portion of the number gets priority and the fractional part gets entered as close as is possible given the size of the type you are storing it as.</p>
-<p>That is, a Double will be able to save the information more accurately than the Float, but neither of them will store the information precisely.</p>
-<p>And that’s just storing a number we enter directly.  What happens if we need to multiply or divide that number?</p>
-<p>For simplicity, let’s just say we need to divide a dollar by three.  How would that get stored accurately into a float or a double?  The answer is that it won’t.  It will store as many threes on the right side of the decimal as possible.</p>
-<p>This is what the Decimal data type was created for.  A decimal data type deals with the data more like we would if we were dealing with the problem with paper and pencil.  In effect, a decimal data type is similar to an integer that has a decimal point.</p>
-<p>Let me illustrate.  Let’s imagine that we have an integer that holds our value and another that holds how many decimal places the value has.</p>
-<p>int mainValue;<br>int decmialPlaces;</p>
-<p><a href="//11011.net/software/vspaste"></a>To represent a dollar we would say:  </p>
-<p>mainValue = 100;<br>decimalPlaces = 2;</p>
-<p>Now, we want to divide our dollar by three:  </p>
-<p>mainValue = mainValue / 3;</p>
-<p><a href="//11011.net/software/vspaste"></a>obviously, mainValue will end up with 33 as a value, which means our result is .33, exactly what we would expect if we did this computation by hand.</p>
-<p>If we multiplied the result by 3, we’d get .99, which is what we’d expect.  We still have to account for that lost penny, but we would deal with the lost penny using standard accounting practices.</p>
-<p>Fortunately, we don’t have to go to all that trouble because this is exactly why the decimal type was created for us.</p>
-<p>decimal money = 1.00M;<br>money = money / 3;</p>
-<p><a href="//11011.net/software/vspaste"></a></p>
-<p>I once went to consult in a project that was entirely currency based.  It was basically an accounting package.  This application was not only dealing with money, but it also had to deal with conversion rates between countries.  They wanted to know why they were losing pennies when they converted from one currency to another when the entire application was using floats (not even doubles) instead of decimal values.  That handled most of the problem for them.  The second recommendation I had was to choose a base currency type and always convert from that currency to all of the other countries rather than converting from country A to country B and then back to country A.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/decimal-vs-float-single-or-double/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/decimal-vs-float-single-or-double/" data-id="cki8u0p8v001q1kx2s1cai032" class="article-share-link">
+      <a data-url="http://davembush.github.com/decimal-vs-float-single-or-double/" data-id="ckibs6p7p001snsx2bv5xnzju" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
