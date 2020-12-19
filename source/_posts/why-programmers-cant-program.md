@@ -16,6 +16,8 @@ date: 2010-03-11 07:53:24
 
 “I find it difficult to believe, but the reports keep pouring in via Twitter and email: **many candidates who show up for programming job interviews can't program. At all.**”
 
+<!-- more -->
+
 Jeff, you must not have visited a college campus recently.  The reason most that most “programmers” can’t program is because their instructors led them to believe they could program.
 
 I have two stories that illustrate the point.
