@@ -76,462 +76,6 @@
         <div class="col-sm-8 blog-main">
           
   
-    <article id="post-jquery-using-slider-as-a-scrollbar" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/jquery-using-slider-as-a-scrollbar/">jQuery - Using Slider as a Scrollbar</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/jquery-using-slider-as-a-scrollbar/" class="article-date"><time datetime="2009-03-12T12:23:18.000Z" itemprop="datePublished">2009-03-12</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/jQuery/">jQuery</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2009/03/misc-vol3-074.jpg" alt="misc_vol3_074"> Last week I introduced the jQuery UI element known as a slider and indicated that this control could easily be used as a custom scrollbar. Today I’m going to show you exactly how that’s done. First we need to adjust our HTML.  We need to add a content area to the HTML we had last week.  I’m going to put this content area to the right of the scrollbar, but you could put it to the left by simply changing the CSS.</p>
-<pre><code>&lt;div id=&quot;slider&quot;&gt;&lt;/div&gt;
-&lt;div id=&quot;scroller&quot;&gt;&lt;div id=&quot;content&quot;&gt; here is lots of text&lt;br /&gt;
-&lt;/div&gt;&lt;/div&gt; 
-</code></pre><p>The CSS to position this all correctly looks like this:</p>
-<p>#slider {<br>    height: 242px;<br>    width: 13px;<br>    margin:0px 10px 0px 10px;<br>    float:left;<br>}</p>
-<p>#scroller {<br>    width: 1159px;<br>    height: 243px;<br>    overflow:hidden;<br>}</p>
-<p>#content {<br>    width: 215px;<br>}</p>
-<p>Not much exciting here.  Slider is basically the same as last week.  The area we want to scroll is composed of two elements, a div we’ve given the ID “content” that is nested inside another div we’ve named “scroller.”  The scroller is a fixed height and set so that if the content is longer than the scroller, it will not be displayed. The rest is simple jQuery magic:</p>
-<p>$(function() {<br>$(“#slider”).slider(<br>    { change: handleChange,<br>        slide: handleSlide,<br>        min: -100,<br>    max: 0 });<br>});</p>
-<p>function handleChange(e, ui) {<br>    var maxScroll = $(“#scroller”)<br>      .attr(“scrollHeight”) -<br>      $(“#scroller”).height();<br>    $(“#scroller”)<br>      .animate({ scrollTop: -ui.value *<br>     (maxScroll / 100)<br>    }, 1000);</p>
-<p>}</p>
-<p>function handleSlide(e, ui) {<br>    var maxScroll = $(“#scroller”)<br>      .attr(“scrollHeight”) -<br>      $(“#scroller”).height();<br>    $(“#scroller”)<br>      .attr({ scrollTop: -ui.value<br>        * (maxScroll / 100)   });</p>
-<p>}</p>
-<p>At the top of our Javascript, we are simply wiring up our slider control.  The most notable thing you’ll want to pay attention to here is that I’ve set the minimum height and maximum height so that zero is at the top of the slider.  If you don’t do this, the slider will start with the thumb at the bottom.  Not exactly what we have in mind. We need to wire up two event handlers, slide and change, so that the content area will scroll as we move the thumb.  We’ve done that in the document-ready function. The two event handlers first determine the maximum scroll height and then position the content area within the scroller area.  Again, to make this work correctly, we needed to negate the value that was passed in in the ui parameter. Obviously, it would not take a whole lot of work to package this all up as a plugin that does all the work for you, but it helps to know how to do it if you need to.</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-using-slider-as-a-scrollbar/" data-id="ckivrrzdh003m74x21x61gr9s" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery/">jQuery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrollbar/">scrollbar</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrolling-content/">scrolling content</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/slider/">slider</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ui/">ui</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-infinite-302-loop-how-would-you-even-know" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/infinite-302-loop-how-would-you-even-know/">Infinite 302 Loop - How would you even know?</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/infinite-302-loop-how-would-you-even-know/" class="article-date"><time datetime="2009-03-11T11:08:36.000Z" itemprop="datePublished">2009-03-11</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a> / <a class="article-category-link" href="/categories/ASP-NET/ASP-NET-MVC/">ASP.NET MVC</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2009/03/trav-053.jpg" alt="trav-053"> It happens eventually to all web developers.  It’s happened to me twice in the last week.  You make one simple change to your web site and then you can no longer access it.  When you browse to it in IE you get some completely useless “We can’t access the page you are looking for” error.  In FireFox, it at least tells you that you have a “Redirect Loop” and in IE6, if you are fortunate enough to still be writing for that browser, you can see that it is blinking at you as it tries to retrieve the page(s) multiple times.  But how do you know what’s redirecting to what?  For that matter, other than running a browser that told you, how would you even know it was a 302 error? I know I’ve mentioned this before but it’s definitely worth repeating.  Get yourself a copy of <a href="//www.fiddler2.com">Fiddler</a>.  Fiddler is a proxy that runs on local host.  By default when you run it, it automatically installs itself as a proxy in IE so you really don’t have to know much more than how to install software to get up and running with it. When you access a web site with it, it will tell you everything that is going on.  What headers are being sent.  What headers are coming back from the server.  Files that are being requested.  Status codes that are coming back. Any time I have a client-side problem with my web sites, or any time I have a problem with my web sites that I can’t explain from the server side, I reach for Fiddler.  More often than not, it tells me or at least guides me to what the real problem is. For example, last week I was given the task of creating a 301 redirect from one domain to another.  I thought I had the code written correctly to do this, but when we went to access the domain it went into an infinite loop.  Obviously something was wrong, but what? When I ran similar code on other domains it worked correctly. When I ran Fiddler, I found that the page was redirecting to itself multiple times.  Odd.  What would make it do that? So back to my code, where I quickly discovered that I had left out a character in my replace function so that domain A was never being rewritten to domain B so domain A was constantly redirecting to itself. This morning’s error was a little more fun.  My designer was trying to install a module into DotNetNuke last night when the site suddenly “stopped working.” Same deal.  Only this time it is because there is some module that is redirecting from the home page to another page and then that other page is redirecting back to the home page. Again, I would have never been able to track this down if I hadn’t had Fiddler to help me. I’ve also used this to verify that javascript tracking codes are working correctly.  If you need to see traffic that is going between the browser and the server, Fiddler is the tool you are looking for.</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/infinite-302-loop-how-would-you-even-know/" data-id="ckivrrzcg002i74x2ry9yq4jk" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/301/">301</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/302/">302</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fiddler/">fiddler</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/infinite-loop/">infinite loop</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-windows-forms-passing-parameters-at-runtime" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/windows-forms-passing-parameters-at-runtime/">Windows Forms - Passing Parameters at Runtime</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/windows-forms-passing-parameters-at-runtime/" class="article-date"><time datetime="2009-03-09T11:37:11.000Z" itemprop="datePublished">2009-03-09</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/winforms/">winforms</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2009/03/misc-vol4-028.jpg" alt="misc_vol4_028"> I received the following question over the weekend:</p>
-<blockquote>
-<p>I’ve made a C# form application and I need to send a report name at runtime. How do I add an incoming parameter to the command line? Such as “crFORM.exe Shipform.rpt”</p>
-</blockquote>
-<p>I have to assume the question relates more to how to retrieve the parameter in the code than how to pass it because the example shows how we’d pass it. All WinForms CSharp programs have a static method called Main() that looks something like this:</p>
-<p>[STAThread]<br>static void Main()<br>{<br>    Application.EnableVisualStyles();<br>    Application.SetCompatibleTextRenderingDefault(false);<br>    Application.Run(new Form1());<br>}</p>
-<p><a href="//11011.net/software/vspaste"></a>If you are using Visual Studio 2008 to build your applications, this code can be found in Program.cs. To accept parameters you will need to modify this method so that it accepts a string array as a parameter.  Most people name this parameter “args.”</p>
-<p>[STAThread]<br>static void Main(String[] args)<br>{<br>    …<br>}</p>
-<p>If a parameter was passed, args will have a length greater than zero.  To retrieve the command line arguments all you need to do is retrieve the parameters out of args.</p>
-<p>[STAThread]<br>static void Main(String[] args)<br>{</p>
-<pre><code>if (args.Length &gt; 0)
-{
-    string arg1 = args\[0\];
-    // do something appropriate with
-    // arg1 here. }
-Application.EnableVisualStyles();
-Application.SetCompatibleTextRenderingDefault(false);
-Application.Run(new Form1());
-</code></pre><p>}</p>
-<p><a href="//11011.net/software/vspaste"></a></p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/windows-forms-passing-parameters-at-runtime/" data-id="ckivrrzfj006f74x23121so0k" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/arguements/">arguements</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/command-line/">command line</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/main/">main</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/winforms/">winforms</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-aspnet-application-error-detecting-404s" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/asp-net-application-error-detecting-404-s/">ASP.NET Application_Error Detecting 404&#39;s</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/asp-net-application-error-detecting-404-s/" class="article-date"><time datetime="2009-03-02T10:56:18.000Z" itemprop="datePublished">2009-03-02</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2009/02/misc-vol3-046.jpg" alt="misc_vol3_046"> For many of you, this is going to be a “Duh!” kind of post.  But while working on this today, I found so many people asking this question and so many others giving the wrong answer, I’m compelled to post anyhow. If you know the answer, then you are welcome to stop reading now.  I didn’t write this for you.  I wrote this for the hundreds of people who will search for this information and won’t be able to find the answer.  The fact of the matter is, that’s why I write most of what I write–so people searching for the information can find it.  So here’s the question: I’ve set up an Application_Error event handler in my Global.asax file and I have implemented a server transfer for errors.  Now I want to set up a specific page to handle 404 errors.  How do I detect a 404 error and call the 404-specific page? The main answer to this question involves retrieving the exception that triggered the event in the first place.  To do that, we call Server.GetLastError():</p>
-<p>Exception ex = Server.GetLastError();</p>
-<p>What we need to do next is determine if the exception is an HttpException or something else.  Once we have determined that it is an HttpException we will have access to Http-specific properties and methods that will give us the rest of the information we are looking for.  In our case we want to call the GetHttpCode() method, which will return the Http status code and compare it to the number 404. Our resulting code looks like this:</p>
-<p>void Application_Error(object sender, EventArgs e)<br>{<br>    Exception ex = Server.GetLastError();<br>    if (ex is HttpException)<br>    {<br>        if (((HttpException)(ex)).GetHttpCode() == 404)<br>            Server.Transfer(“~/Error404.aspx”);<br>    }<br>    // Code that runs when an unhandled error occurs Server.Transfer(“~/DefaultError.aspx”);</p>
-<p>}</p>
-<p>That’s all there is to it.</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-application-error-detecting-404-s/" data-id="ckivrrzb0000x74x2guxwrore" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/404/">404</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/application-error/">application_error</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/exceptions/">exceptions</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-tab-control-activetabindex-lost-on-postback" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/tab-control-activetabindex-lost-on-postback/">Tab Control ActiveTabIndex Lost on Postback</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/tab-control-activetabindex-lost-on-postback/" class="article-date"><time datetime="2009-02-25T10:26:36.000Z" itemprop="datePublished">2009-02-25</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2009/02/tran-land-01.jpg" alt="tran-land-01"> I just got off the phone with a client who is using the MS-AJAX TabControl in one of his applications and any time he causes a postback, the tab resets to the first tab. If you’ve never seen the problem, you’re lucky.  There are a couple of ways around the problem.  The first and easiest if it works in your situation is to put the tab in an update panel so that you never actually do a full postback. However, there are times when this won’t work.  In this particular case it is because one of the tabs holds the file upload control, which can’t be used inside an update panel.  (Another problem we had to find a way around last week.) What do you do then? Turns out this is a bug in the way that the tab works.  This problem turns up in various situations.  If you are fighting the bug, the solution is actually pretty simple. First, put the following  javascript in your aspx or ascx file:</p>
-<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
-    function TabChanged(sender, args)
-    {
-        sender.get_clientStateField().value =
-            sender.saveClientState();
-    }
-&lt;/script&gt; 
-</code></pre><p>And then wire up the TabChanged function to your tab control:</p>
-<p>&lt;ajaxControlToolkit:TabContainer ID=”TabContainer1” runat=”server” OnClientActiveTabChanged=”TabChanged” &gt;<br>&lt;/ajaxControlToolkit:TabContainer> /&gt;</p>
-<p>  This will fix the problem.</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/tab-control-activetabindex-lost-on-postback/" data-id="ckivrrzen005174x25t1pse13" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/activetabindex/">activetabindex</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ajax/">ajax</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/postback/">postback</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tab-control/">tab control</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tabcontrol/">tabcontrol</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-jquery-bgiframe-and-ie6-z-order-hacks" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/jquery-bgiframe-and-ie6-z-order-hacks/">jQuery, bgiframe and IE6 z-order hacks</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/jquery-bgiframe-and-ie6-z-order-hacks/" class="article-date"><time datetime="2009-02-19T10:19:38.000Z" itemprop="datePublished">2009-02-19</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/jQuery/">jQuery</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2009/02/tp-vol3-006.jpg" alt="tp_vol3_006"> Well, it probably looks like an odd title.  But let’s face it: we still have to support IE6 for some of our clients no matter how much we don’t like it or it shouldn’t be.  And one of the most frustrating items that we ever had to support in IE6 is the fact that certain controls and plug-ins don’t obey z-order. What this means in a practical sense is that if we have a menu layer that drops over one of these misbehaving bad boys, we have to find some hack around it.  The problem I had to solve is that the code for this project is done.  There isn’t a lot of room for tweaking.  The menu we are using is something that is not going to be modified easily.  So, any solution I came up with had to “plug in” to what we already had. Sounds like a job for jQuery to me. I did find a solution that claimed it would do the trick: <a href="//plugins.jquery.com/bgiframe/">bgiframe</a>.  But of course you notice that qualifier, “claimed.”  Yes folks, I had trouble getting it to work. What exactly does bgiframe do?  It scripts the <a href="//weblogs.asp.net/bleroy/archive/2005/08/09/how-to-put-a-div-over-a-select-in-ie.aspx">iframe hack</a> into your popover layer. You see, our menu system is based on a styled, unordered list.  When I told bgiframe to grab the UL and put the iframe in it, it just didn’t work.  Oh, it put the iframe in.  But the select windows still showed through. What was odd was that even the iframe was transparent.  Odd, I thought.  It isn’t supposed to be transparent. So after half a day of searching, looking at the source for bgiframe, and generally pulling my hair out, I finally remembered seeing this little “hack” for the src property of the iframe.  It’s actually noted in the link to the iframe hack I have above. The iframe code should look like:</p>
-<p>&lt;iframe src=”BLOCKED SCRIPT’&lt;html&gt;&lt;/html&gt;’;” scrolling=”no” frameborder=”0” …</p>
-<p>But the script that bgiframe produces looks like:</p>
-<p>&lt;iframe src=”javascript:false;” scrolling=”no” frameborder=”0” …</p>
-<p>the src=”javascript” thing works most of the time.  In fact, I kind of got everything working by putting the iframe arount the LI tags instead of around the UL tag.  Only I had some other issues when I did that, and it is a sub-optimal way of getting this all working.  Hack of a hack. Now, I fixed this by changing the bgiframe source.  But if you don’t want to be that intrusive, you can just call bgiframe using the src parameter.</p>
-<p>$(“ul”).bgiframe({ src: “BLOCKED SCRIPT’&lt;html&gt;&lt;/html&gt;’;” });</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-bgiframe-and-ie6-z-order-hacks/" data-id="ckivrrzd4003c74x2nmnqqeqw" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bgiframe/">bgiframe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hack/">hack</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ie6/">ie6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iframe/">iframe</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery/">jQuery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/select/">select</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-aspnet-mvc-model-bll-or-dal" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/asp-net-mvc-model-bll-or-dal/">ASP.NET MVC - Model != BLL or DAL</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/asp-net-mvc-model-bll-or-dal/" class="article-date"><time datetime="2009-02-11T10:36:37.000Z" itemprop="datePublished">2009-02-11</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/ASP-NET-MVC/">ASP.NET MVC</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Last week I introduced the ASP.NET MVC framework by talking a bit about what the model, view and controller are. In the comments, John Meyer said,</p>
-<blockquote>
-<p>I respectfully disagree with your claim that the model is you BLL. MVC is a UI layer pattern, and as such all models, views, and controllers are strictly in the UI level.</p>
-</blockquote>
-<p>While historically, MVC has been described in the way I stated–while the ASP.NET MVC guys have also portrayed the Model as BLL or below–I have to agree with John.  Here’s why: At least as far as ASP.NET is concerned, the model is inherited from a specific class.  This means that any implementation code you place in the class will be forever tied to the class it inherits from. So if in some point in the future you decide that a WebForms implementation would work out better for you, or you wanted to put a Windows Forms implementation on top of it, you’d have to do quite a bit of refactoring of your code just so you could. If instead you treat the Model as a “View Model” as John suggests, and have the View Model call the Business Logic Layer, you end up with two major benefits. First, your Business Logic Layer is completely decoupled from the View implementation.  You are no longer forever tied to MVC as an architecture or ASP.NET MVC as the primary architecture.  You can use whatever view implementation you want. Second, you are not forced to put View specific data code in your Business Logic Layer.  Doing so would cloud the actual implementation of your BLL and actually further couple your view layer to your BLL, something that third tier is specifically designed to avoid. Based on the feedback from John and my own thinking on the subject, I recommend a three-tiered approach that places the MVC as the view entity calling the BLL from the Model of the MVC set, which would in turn call the Data Access layer.</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-mvc-model-bll-or-dal/" data-id="ckivrrzb3001174x2i0cu5ns0" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/MVC/">MVC</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Three-Tiered/">Three Tiered</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/archietcture/">archietcture</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/bll/">bll</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dal/">dal</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/view/">view</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
     <article id="post-responseredirect-and-javascript" class="article article-type-post" itemscope itemprop="blogPost">
 
   <header class="article-header">
@@ -584,7 +128,7 @@ Application.Run(new Form1());
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-response-redirect-and-javascript/" data-id="ckivrrze9004f74x2ptr53x2l" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-response-redirect-and-javascript/" data-id="ckj5ybi83004bwsx2r0wubrky" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -654,7 +198,7 @@ Application.Run(new Form1());
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/response-redirect-executes-too-soon-on-the-server/" data-id="ckivrrze9004g74x2m2rz853h" class="article-share-link">
+      <a data-url="http://davembush.github.com/response-redirect-executes-too-soon-on-the-server/" data-id="ckj5ybi84004dwsx2m4tthsz2" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -713,7 +257,7 @@ Application.Run(new Form1());
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/what-is-the-global-keyword-in-csharp/" data-id="ckivrrzfd006774x2b8i9bdjh" class="article-share-link">
+      <a data-url="http://davembush.github.com/what-is-the-global-keyword-in-csharp/" data-id="ckj5ybi9g0067wsx2xavzo397" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -729,10 +273,523 @@ Application.Run(new Form1());
 
 
   
+    <article id="post-gridviews-multiple-rows-per-record" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/gridviews-multiple-rows-per-record/">GridViews - Multiple Rows Per Record</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/gridviews-multiple-rows-per-record/" class="article-date"><time datetime="2008-12-17T12:57:14.000Z" itemprop="datePublished">2008-12-17</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2008/12/g04b0069.jpg" alt="G04B0069"> I don’t know about you, but I’ve had several occasions where I’ve needed to use the simplicity of the GridView control in ASP.NET.  DataBinding, Paging, Sorting, etc.  But I’ve also wanted to stack the information for a record in multiple rows. Most of the time this happens when I need to display data that would take up two or three times as much of the width as my layout will allow. The solution to this problem is quite simple: Use templated columns and Literal controls.  Assuming you are starting off with a GridView control that renders like this:</p>
+<p>Header1</p>
+<p>Header2</p>
+<p>Header3</p>
+<p>Header4</p>
+<p>Header5</p>
+<p>Data1</p>
+<p>Data2</p>
+<p>Data3</p>
+<p>Data4</p>
+<p>Data5</p>
+<p>etc…</p>
+<p>But we want to display the data as:</p>
+<p>Header1</p>
+<p>Header2</p>
+<p>Header3</p>
+<p>Header4</p>
+<p>Header5</p>
+<p>Data1</p>
+<p>Data2</p>
+<p>Data3</p>
+<p>Data4</p>
+<p>Data5</p>
+<p>etc…</p>
+<p>To get your GridView to display like this, you will need to:</p>
+<ol>
+<li>Turn Header3 and Header4 into a templated columns.</li>
+<li><p>Add the following code into the TemplatedField section for column 3</p>
+<headertemplate><br>   &lt;asp:Label ID=”Label3” runat=”server” Text=”Header3”&gt;&lt;/asp:Label&gt;<br>   &lt;asp:Literal ID=”Literal1” runat=”server” Text=”&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td colspan=&quot;2&quot;&gt;”&gt;&lt;/asp:Literal&gt;<br>   &lt;asp:Label ID=”Label4” runat=”server” Text=”Header4”&gt;&lt;/asp:Label&gt;<br></headertemplate> 
+</li>
+<li><p>You’ll want to modify the ItemTemplate and EditItemTemplate so that they have similar Literal tags and add the appropriate control after it for what WAS in column 4.</p>
+</li>
+</ol>
+<p>That’s all there is to it.  Admittedly, there is a bit more work here than just drag and drop, but it beats having to write all of the databinding, paging and sorting code by hand.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/gridviews-multiple-rows-per-record/" data-id="ckj5ybi6c0026wsx20rxwkbc6" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/gridview/">gridview</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/multiple-rows/">multiple rows</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/templated-columns/">templated columns</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-advanced-csharp-unsafe-mode" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/unsafe-mode-in-c/">Unsafe Mode in C#</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/unsafe-mode-in-c/" class="article-date"><time datetime="2008-12-15T13:14:08.000Z" itemprop="datePublished">2008-12-15</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/c/">c#</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2008/12/tp-vol4-006.jpg" alt="tp_vol4_006"> One of the “advantages” of using CSharp instead of VB.NET is that if programmers want to, they have the option of bypassing the memory management of .NET and working with memory directly.  This is called “unsafe” mode. While I will show you how to use this keyword, I have to tell you up front that I’ve been using CSharp since Beta 2 of .NET 1.0 and I’ve NEVER needed to switch into unsafe mode to do any of the work that I’ve done. I’ve even written code that bridged down to some unmanaged C++ code and still have not needed to use unsafe mode.  One of the main advantages of using .NET to begin with is the fact that .NET manages our memory for us.  I’ve worked on far too many C++ programs that leaked memory due to their complexity and bad architecture to purposely go back to that model. Yes, it is true that you might get a slight performance improvement by bypassing the memory management and working with the memory directly.  But is that slight improvement worth the risk of all of the issues that arise when using memory directly? If you find that you need to use unsafe mode, I would recommend that you consider writing that part of your code in a language that was designed for that level of coding.  Assembler or C++ are some good choices. If these are not options, here’s where the unsafe keyword comes in. Any code you wrap in the unsafe keyword:</p>
+<p>unsafe {<br>    // this code is unmanaged }</p>
+<p><a href="//11011.net/software/vspaste"></a>becomes unmanaged.  You will also need to add the /unsafe compiler switch to your compiler options. You can also make an entire method unsafe by adding the keyword to the method declaration:</p>
+<p>public unsafe void Foo(int *i)<br>{<br>    // i is a pointer that is unsafe }</p>
+<p><a href="//11011.net/software/vspaste"></a>In a future post, we’ll look at some ways of using pointers in CSharp code.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/unsafe-mode-in-c/" data-id="ckj5ybi4x000hwsx2f0krc2e9" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pointers/">pointers</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unsafe/">unsafe</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-advantages-of-using-class-diagram" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/advantages-of-using-class-diagram/">Advantages of Using Class Diagram</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/advantages-of-using-class-diagram/" class="article-date"><time datetime="2008-11-20T13:02:47.000Z" itemprop="datePublished">2008-11-20</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Did-you-know/">Did you know</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2008/11/misc-vol4-063.jpg" alt="misc_vol4_063"> One of the new tools that showed up in Visual Studio 2005 that I don’t see many people taking much advantage of is the Class Diagram. The class diagram displays the classes you drag onto it in a visual representation much like a UML class diagram does.  It also lets you see relationships between your classes.  But the greatest advantage of the Class Diagram is that it will write a lot of your code for you.  The Class Diagram is available in both CSharp and VB.NET and works similarly in both.  My description of the tool will be using CSharp in Visual Studio 2008.  There may be a few quirky differences if you are using VB.NET and/or Visual Studio 2005. I was reminded of this tool a couple of days ago when I needed to override a method but I couldn’t remember its name.  I could have spend a few minutes looking in the parent class for the name of the method I needed to override, but instead I created a new Class Diagram file and did a drag and drop of the class I was working on onto the Class Diagram’s surface.  This then let me right-click on the class and select “Intellisense” &gt; “Override members…” from the context menu. This will bring up a dialog that will list ALL of the classes the class inherits from (so it helps to know what class the method you want to override is in).  You can then check off the members you want to override from the list supplied.  When you press OK, the methods will be stubbed out for you in the source code.  All you need to do is provide the functionality. You can use this same type of process to add new methods, add properties, and add member variables. If you haven’t broken out the class diagram recently, I suggest you give it a try.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/advantages-of-using-class-diagram/" data-id="ckj5ybi4y000iwsx2zylhwfbb" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/class-diagram/">class diagram</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vb-net/">vb.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/visual-studio/">visual studio</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-systemexception-the-trust-relationship-between-the-primary-domain-and-the-trusted-domain-failed" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/systemexception-the-trust-relationship-between-the-primary-domain-and-the-trusted-domain-failed/">SystemException: The trust relationship between the primary domain and the trusted domain failed</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/systemexception-the-trust-relationship-between-the-primary-domain-and-the-trusted-domain-failed/" class="article-date"><time datetime="2008-11-18T11:14:06.000Z" itemprop="datePublished">2008-11-18</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2008/11/a03b0015.jpg" alt="A03B0015"> I hate long titles, but this is what everyone is going to be searching for if they get this error, so that’s the title today. I just got done fixing an error and when I went to Google, there were only five entries for this phrase and none of them solved the problem.  Some got me close and gave me a clue, but none of them said… </p>
+<blockquote>
+<p>Hey dummy, you forgot to put in the forms authentication section in your web.config file and now you are asking for role information.  What gives?!</p>
+</blockquote>
+<p>So, if you are getting this error, go check your web.config file for the forms authentication section.  I just did  a search in mine for “authentication” until I found the section that had been commented out. I’m not saying this IS your problem, but it was the solution to MY problem and it might just help someone to have it here.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/systemexception-the-trust-relationship-between-the-primary-domain-and-the-trusted-domain-failed/" data-id="ckj5ybi8h004vwsx2iafxjksz" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-bypass-vpn-for-regular-traffic" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/bypass-vpn-for-regular-traffic/">Bypass VPN for regular traffic</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/bypass-vpn-for-regular-traffic/" class="article-date"><time datetime="2008-08-26T08:08:24.000Z" itemprop="datePublished">2008-08-26</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Did-you-know/">Did you know</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2008/08/img-1380.jpg" alt="IMG_1380"> For as many places as I’ve been where they use VPNs, I’ve yet to find one that is set up correctly.  I suppose there is a good reason for this, but I consider the problem to be mostly Microsoft’s fault. I mean, wouldn’t you assume that if it were possible to use your regular connection for all of the network traffic EXCEPT for the traffic that needs to go through the VPN, that is what you would want?  But no.  Microsoft sets it up so that ALL of your traffic goes through the VPN connection. What this means is that getting a connection to a search engine in order to look for a solution to a problem will take about twice as long as it should since your traffic first has to go to the VPN server and then out to the search engine. Here’s how you fix it: <strong>In Vista:</strong> Go into the Control Panel and click the “Network and Sharing Center” icon. On the left panel of the resulting screen you should see a link, “Manage network connections.”  Click it. The next screen will have icons for all of your connections.  There should be one for your VPN.  Right-click it and select “Properties” from the menu. In the “Properties” screen, click the “Networking” tab and then select “Internet Protocol Version 4” and click the “Properties” button. Click the “Advanced” button.  This will bring up a new window where you can un-check “Use default gateway on remote network.” OK out to save everything. <strong>In XP:</strong> Go into the Control Panel and  click “Network Connections” Right click the icon for the VPN and select “Properties” from the menu. In the “Properties” screen, click the “Networking” tab and select “Internet Protocol” from the list and click the “Properties” button. On the window that pops up, click the “Advanced” button. Un-check the “Use default gateway on remote network” check box. <strong>What this does:</strong> Now the only traffic that will go to the VPN is traffic bound for the VPN on the same subnet as the subnet the VPN connection is on. If you need other traffic to also go through the VPN, you’ll need to play with the routing tables.   <strong>Other places talking about VPNs</strong> <a href="//standalone-sysadmin.blogspot.com/2008/08/update-on-vpn-issue.html">Update on the VPN Issue</a> - If there’s any kind of interest in a formal review of the Netgear SSL VPN device, I’ll be happy to type it out, but in a nutshell, if you’re dealing with a small office of users, and you want a firewall with VPN capabilities, … <a href="//blog.mischel.com/2008/08/20/should-vpn-be-this-hard/">Should VPN be this hard?</a> - Not a problem, as the Cisco security appliance we bought supports VPN. And configuring the Cisco IPSec VPN was quite simple. I was pretty happy when, with just an hour of looking at the documentation and fiddling with the configuration, …</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/bypass-vpn-for-regular-traffic/" data-id="ckj5ybi5o0019wsx276gq9bvv" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VPN/">VPN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Vista/">Vista</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xp/">xp</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-aspnet-ajax-using-json-heres-how" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/asp-net-ajax-using-json-here-s-how/">ASP.NET AJAX using JSON - Here&#39;s how.</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/asp-net-ajax-using-json-here-s-how/" class="article-date"><time datetime="2008-08-04T11:05:58.000Z" itemprop="datePublished">2008-08-04</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2008/08/image.png" alt="image"> Last week I wrote a post about <a href="/2008/07/30/using-json-in-aspnet/">how simple JSON is</a>. In it I explained the main differences between using JSON and using the update panel. I really started out thinking I’d get to how to write JSON code, but I ran out of space. Well, today, we get to the HOW. All JSON really is, is the ability to have JavaScript code call a WebService for our data, and write it into the HTML on the client side. If you know anything about how to write a WebService, this should be rather trivial because your web service is going to look just like any other web service with the exception of an added attribute.  To make a WebService accessible to JSON, add the following Attribute to your WebService class:</p>
+<p>[ScriptService]</p>
+<p>You will probably also need to add</p>
+<p>using System.Web.Script.Services;</p>
+<p>to the top of your page. Now, any WebMethod in your WebService can be called by your JavaScript on the client side. As with any AJAX code in ASP.NET, you’ll need to add a ScriptManager to your page. But, in addition, you’ll also need to add a Services section in your ScriptManager to tell the ASP.NET page to pull in the javascript that the WebService code will now produce for you. You should have this code at the top of the FORM section of your HTML.</p>
+<pre><code>&lt;asp:ScriptManager ID=&quot;ScriptManager1&quot; runat=&quot;server&quot;&gt;
+  &lt;Services&gt;
+    &lt;asp:ServiceReference path=&quot;~/WebService.asmx&quot; /&gt;
+  &lt;/Services&gt;
+&lt;/asp:ScriptManager&gt; 
+</code></pre><p>Where, “~/WebService.asmx” refers to the web service you want to be able to access. Now in the javascript event handler where you want to be able to call the WebService, you just call the WebService similar to how you would call any other function. In fact, if you write this code in the ASPX page, you will even get intellisense. So, assuming we have a class named “WebService” with a function called “HelloWorld” that returns a string, our calling code will look like:</p>
+<p>WebService.HelloWorld(Success,Fail,null);</p>
+<p>Note that our call takes three parameters, even though our function in the WebService does not take any parameters. The first parameter is a pointer to a JavaScript function to call if the call to the WebService succeeds. The second is a pointer to the JavaScript function to call if the WebService call fails, and the third parameter is a JavaScript context object to pass to the Success function. Since I don’t have any data I need to pass along, I just pass in NULL in the code above. If the WebService method takes parameters, the parameters are listed before the success, fail, and context parameters. If the WebService call fails, the JavaScript function that we specified for fail will be called. It needs to accept one parameter which will have the error message in it. You can use this to display an error message in an alert box. When the WebService returns successfully, the Success function will be called. This function takes two parameters. The first is the return value. The second is the context object we passed when we originally called the WebMethod. You can then use standard JavaScript to find an HTML element on the page to put the new content into:</p>
+<p>function Success(result,context)<br>{<br>document.getElementById(“fillMeAtLoadTime”).innerHTML = result;<br>}</p>
+<p>  And that’s really all there is to JSON. The rest is really just a matter of imagination and JavaScript. <strong>Other places talking about JSON:</strong></p>
+<ul>
+<li><a href="//weblogs.asp.net/sanjeevagarwal/archive/2008/07/29/Dynamically-create-ASP.NET-user-control-using-JQuery-and-JSON-enabled-Ajax-Web-Service.aspx">Dynamically create ASP.NET user control using JQuery and JSON …</a>- Dynamically create ASP.NET user control using JQuery and JSON enabled Ajax Web Service Please read my previous post Dynamically create ASP.NET user control using ASP.NET Ajax and Web Service to understand this approach. …</li>
+<li><a href="//explonet.blogspot.com/2008/07/aspnet-web-services-and-json.html">ASP.NET, Web Services and Json</a>- Implementing Json web services in ASP.NET is very easy:. - open Visual Web Developer 2008 Express Edition - create a new ASP.NET project - create a “Service” directory - inside “Service” create an “AJAX-enabled WCF Service” file named …</li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/asp-net-ajax-using-json-here-s-how/" data-id="ckj5ybi5a000twsx2aakg2s8m" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ajax/">ajax</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/json/">json</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-virtual-files-using-httpcontextrewritepath" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/virtual-files-using-httpcontext-rewritepath/">Virtual Files using HttpContext.RewritePath()</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/virtual-files-using-httpcontext-rewritepath/" class="article-date"><time datetime="2008-07-17T06:25:56.000Z" itemprop="datePublished">2008-07-17</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>One of the cool new tricks we are able to perform in ASP.NET that we were not able to use in ASP is the ability to have ASP.NET redirect file requests in the same way that mod_rewrite does under the Apache webserver. For example, we could have the browser ask for an image file that doesn’t exist on the file system and have ASP.NET serve up the file from the database. Or, if we wanted to protect some files, we could put them in a directory that was hard to guess and have ASP.NET load that file for us when the browser requested the file from what looked like a normal location. The magic that makes all this work is the 404 error handler, the Application_BeginRequest() event handler, and the HttpContext.RewritePath() method. So, the first thing we need to do is open up our Global.asax file and create an event handler for BeginRequest(). This event is the first thing that will get called when a request is made to ASP.NET.</p>
+<p>protected void Application_BeginRequest(Object sender, EventArgs e)<br>{<br>}</p>
+<p>Second, we will want to create a 404 error handler in IIS. You may have done this in prior applications, like ASP, to tell the user that a page no longer existed or to redirect the browser to a page whose name had changed. We are going to use it to force the Application _BeginRequest() method to fire even when a static file isn’t found. All you need to do is tell IIS that an ASPX file is the 404 handler. It doesn’t matter what you call it and it doesn’t matter if the file even exists on the server. The only thing that does matter is that you SAY that the file exists in the application directory that you’ve created your web application in. Now that you’ve specified your 404 handler, any file that can’t be found on the server will automatically fire the Application_BeginRequest event handler. So the next thing we need to do is add code in this method to check for the 404 condition.</p>
+<p>if (Request.ServerVariables[“QUERY_STRING”].Length &gt; 4 &amp;&amp;<br>Request.ServerVariables[“QUERY_STRING”].StartsWith(“404;”))</p>
+<p>{</p>
+<p>Context.Trace.Write(“QueryString &gt; 1”);</p>
+<p>String queryString =</p>
+<p>Request.ServerVariables[“QUERY_STRING”].Substring(4).ToLower();</p>
+<p>// strip off the http:// or https:// </p>
+<p>queryString = queryString.Replace(“http://“, “”)</p>
+<p>.Replace(“https://“, “”);</p>
+<p>// strip of the host section </p>
+<p>queryString = queryString.Substring(queryString.IndexOf(“/“) + 1);</p>
+<p>string applicationDirectory = Request.ApplicationPath;</p>
+<p>if (applicationDirectory.StartsWith(“/“))</p>
+<p>applicationDirectory = applicationDirectory.Substring(1);</p>
+<p>queryString = queryString.Substring(applicationDirectory.Length);</p>
+<p>if (queryString.ToCharArray()[0] != ‘/‘)</p>
+<p>queryString = “/“ + queryString;</p>
+<p>}</p>
+<p>  Remember from your ASP days, when a 404 error handler is called, the query string starts with “404;”, so this code is checking for that and stripping it out. Then it looks for the file that was being requested and strips off everything but the file location. This code will work if your application is in a subdirectory or if it is in the root of your domain, leaving you with an application relative reference to the file the browser was looking for. Once you have that, you can format the request to the real location and call</p>
+<p>HttpContext.Current.RewritePath(newLocation)</p>
+<p>Passing in the call to an ASPX file that will actually return the correct information. In the code that I originally wrote, this was looking for our virtual images directory and passed the call on to our virtual images handler which pulls the image out of the database.</p>
+<p>if (queryString.StartsWith(imagesDirectory))<br>{</p>
+<p>HttpContext.Current.RewritePath(“VirtualImage.aspx?”+queryString);</p>
+<p>return;</p>
+<p>}</p>
+<p>And, just to preempt any comments about performance, the VirtualImage.aspx file caches the results so that we are not constantly pulling the image from the database. Here’s the full handler:</p>
+<p>protected void Application_BeginRequest(Object sender, EventArgs e)<br>{</p>
+<p>if (Request.ServerVariables[“QUERY_STRING”].Length &gt; 4 &amp;&amp;</p>
+<p>Request.ServerVariables[“QUERY_STRING”].StartsWith(“404;”))</p>
+<p>{</p>
+<p>Context.Trace.Write(“QueryString &gt; 1”);</p>
+<p>String queryString =</p>
+<p>Request.ServerVariables[“QUERY_STRING”].Substring(4).ToLower();</p>
+<p>// strip off the http:// or https:// </p>
+<p>queryString = queryString.Replace(“http://“, “”)</p>
+<p>.Replace(“https://“, “”);</p>
+<p>// strip of the host section </p>
+<p>queryString = queryString.Substring(queryString.IndexOf(“/“) + 1);</p>
+<p>string applicationDirectory = Request.ApplicationPath;</p>
+<p>if (applicationDirectory.StartsWith(“/“))</p>
+<p>applicationDirectory = applicationDirectory.Substring(1);</p>
+<p>queryString = queryString.Substring(applicationDirectory.Length);</p>
+<p>if (queryString.ToCharArray()[0] != ‘/‘)</p>
+<p>queryString = “/“ + queryString;</p>
+<p>string imagesDirectory =</p>
+<p>ConfigurationManager.AppSettings[“VirtualImageDirectory”];</p>
+<p>if (queryString.StartsWith(imagesDirectory))</p>
+<p>{</p>
+<p>HttpContext.Current.</p>
+<p>RewritePath(“VirtualImage.aspx?”+queryString);</p>
+<p>return;</p>
+<p>}</p>
+<p>if (queryString.Contains(“app_themes”))</p>
+<p>HttpContext.Current.</p>
+<p>RewritePath(“ResolveRelativeReference.aspx?” +</p>
+<p>queryString);</p>
+<p>}</p>
+<p>}</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/virtual-files-using-httpcontext-rewritepath/" data-id="ckj5ybi9a005zwsx20iecdsl4" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
 
 
   <div id="page-nav">
-    <nav><ul class="pagination"><li><a class="page-prev" rel="prev" href="/page/25/"><i class="fa fa-chevron-left"></i> Prev</a></li><li><a class="page-number" href="/">1</a></li><li class="disabled"><span class="page-space">&hellip;</span></li><li><a class="page-number" href="/page/24/">24</a></li><li><a class="page-number" href="/page/25/">25</a></li><li class="active"><span class="page-number">26</span></li><li><a class="page-number" href="/page/27/">27</a></li><li><a class="page-number" href="/page/28/">28</a></li><li><a class="page-number" href="/page/29/">29</a></li><li><a class="page-next" rel="next" href="/page/27/">Next <i class="fa fa-chevron-right"></i></a></li></ul></nav>
+    <nav><ul class="pagination"><li><a class="page-prev" rel="prev" href="/page/25/"><i class="fa fa-chevron-left"></i> Prev</a></li><li><a class="page-number" href="/">1</a></li><li class="disabled"><span class="page-space">&hellip;</span></li><li><a class="page-number" href="/page/24/">24</a></li><li><a class="page-number" href="/page/25/">25</a></li><li class="active"><span class="page-number">26</span></li><li><a class="page-number" href="/page/27/">27</a></li><li><a class="page-number" href="/page/28/">28</a></li><li><a class="page-next" rel="next" href="/page/27/">Next <i class="fa fa-chevron-right"></i></a></li></ul></nav>
   </div>
 
 
@@ -772,7 +829,7 @@ Application.Run(new Form1());
   
   <div class="sidebar-module">
     <h4>Archives</h4>
-    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/11/">November 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/10/">October 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/09/">September 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/06/">June 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/11/">November 2009</a><span class="sidebar-module-list-count">7</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/11/">November 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/10/">October 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/09/">September 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/06/">June 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">8</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
   </div>
 
 
