@@ -15,6 +15,8 @@ date: 2009-10-12 06:00:00
 
 Since .NET first became available, passing data around during a request has become a lot easier.  The ability to set a property has made that so.  Still, there are times when setting a property just won’t do the trick.
 
+<!-- more -->
+
 One such time is getting data from the middle tier back up to the view separate from a DataBinding operation.  That is, you databind a control to the middle tier and that method needs to set a value that will be used elsewhere in the view, not in the item that is being bound.
 
 The natural, obvious tendency is to set a session variable.  But there is a better way.
@@ -25,10 +27,12 @@ Instead you can use the Items\[\] collection that is part of the HttpContext cla
 
 You might set your variable in the middle tier like this:
 
+``` csharp
 HttpContext.Current.Items\["myVar"\] = "Some Data Here";
+```
 
 And retrieve it later like this:
 
+``` csharp
 string myVar = (string)(HttpContext.Current.Items\["myVar"\]);
-
-.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, "Courier New", courier, monospace; background-color: #ffffff; /\*white-space: pre;\*/ } .csharpcode pre { margin: 0em; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }
+```
