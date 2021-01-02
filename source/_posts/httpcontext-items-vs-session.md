@@ -28,11 +28,11 @@ Instead you can use the Items\[\] collection that is part of the HttpContext cla
 You might set your variable in the middle tier like this:
 
 ``` csharp
-HttpContext.Current.Items\["myVar"\] = "Some Data Here";
+HttpContext.Current.Items["myVar"] = "Some Data Here";
 ```
 
 And retrieve it later like this:
 
 ``` csharp
-string myVar = (string)(HttpContext.Current.Items\["myVar"\]);
+string myVar = (string)(HttpContext.Current.Items["myVar"]);
 ```
