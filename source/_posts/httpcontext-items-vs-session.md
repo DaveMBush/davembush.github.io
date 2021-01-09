@@ -23,7 +23,7 @@ The natural, obvious tendency is to set a session variable.  But there is a bet
 
 The problem with session variables is that they have to be cleaned up manually or they will hang around longer than we actually need them.  This will use up more session memory than is required and can potentially cause side effects that will be difficult to debug.
 
-Instead you can use the Items\[\] collection that is part of the HttpContext class.  It works the same as a session variable, but it only hangs around for the duration of the request.  Once the information is sent back to the browser, the variables that were set in the Items\[\] collection go away.
+Instead, you can use the Items\[\] collection that is part of the HttpContext class.  It works the same as a session variable, but it only hangs around for the duration of the request.  Once the information is sent back to the browser, the variables that were set in the Items\[\] collection go away.
 
 You might set your variable in the middle tier like this:
 
