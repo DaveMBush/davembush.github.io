@@ -14,7 +14,7 @@
 <meta property="og:description" content="Since .NET first became available, passing data around during a request has become a lot easier.  The ability to set a property has made that so.  Still, there are times when setting a property just">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2009/10/ETHN0171.png">
-<meta property="og:updated_time" content="2021-01-02T16:02:57.869Z">
+<meta property="og:updated_time" content="2021-01-02T16:31:56.489Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HttpContext.Items[] vs Session[]">
 <meta name="twitter:description" content="Since .NET first became available, passing data around during a request has become a lot easier.  The ability to set a property has made that so.  Still, there are times when setting a property just">
@@ -117,7 +117,7 @@
 <p>One such time is getting data from the middle tier back up to the view separate from a DataBinding operation.  That is, you databind a control to the middle tier and that method needs to set a value that will be used elsewhere in the view, not in the item that is being bound.</p>
 <p>The natural, obvious tendency is to set a session variable.  But there is a better way.</p>
 <p>The problem with session variables is that they have to be cleaned up manually or they will hang around longer than we actually need them.  This will use up more session memory than is required and can potentially cause side effects that will be difficult to debug.</p>
-<p>Instead you can use the Items[] collection that is part of the HttpContext class.  It works the same as a session variable, but it only hangs around for the duration of the request.  Once the information is sent back to the browser, the variables that were set in the Items[] collection go away.</p>
+<p>Instead, you can use the Items[] collection that is part of the HttpContext class.  It works the same as a session variable, but it only hangs around for the duration of the request.  Once the information is sent back to the browser, the variables that were set in the Items[] collection go away.</p>
 <p>You might set your variable in the middle tier like this:</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HttpContext.Current.Items[<span class="string">"myVar"</span>] = <span class="string">"Some Data Here"</span>;</span><br></pre></td></tr></table></figure>
 <p>And retrieve it later like this:</p>
@@ -132,7 +132,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/httpcontext-items-vs-session/" data-id="ckjfwa53w0027eox2me97sod4" class="article-share-link">
+      <a data-url="http://davembush.github.com/httpcontext-items-vs-session/" data-id="ckjpxkg330026sgx22skieert" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

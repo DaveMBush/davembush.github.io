@@ -14,7 +14,7 @@
 <meta property="og:description" content="PDF Tables in iTextSharp work enough like HTML tables that the slight differences between the two make programming tables for a PDF a bit confusing the first time you try. I hope to describe some of">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2009/09/foodml04.jpg">
-<meta property="og:updated_time" content="2018-06-30T18:23:01.000Z">
+<meta property="og:updated_time" content="2021-01-09T16:34:33.921Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iTextSharp Tables">
 <meta name="twitter:description" content="PDF Tables in iTextSharp work enough like HTML tables that the slight differences between the two make programming tables for a PDF a bit confusing the first time you try. I hope to describe some of">
@@ -111,19 +111,26 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/uploads/2009/09/foodml04.jpg" alt="food-ml-04" title="food-ml-04"> PDF Tables in iTextSharp work enough like HTML tables that the slight differences between the two make programming tables for a PDF a bit confusing the first time you try. I hope to describe some of those differences here so that your experience might be a bit smoother than mine was as you start to use tables in your PDF code.  One of the first decisions you’ll need to make as you start working on your iTextSharp table is how many columns the table should have.  Keep in mind that the cells can be spanned, just like they can in HTML, so it is better to have too many columns than the bare minimum.  You can always adjust later. Once you’ve decided how many columns, you’ll need to decide how big you want each column to be.  Unlike HTML, the columns will not stretch if they are too small. Here is your initial code</p>
-<p>PdfPTable table= new PdfPTable(5);<br>float[] colWidths = {70, 70, 200, 70, 70};<br>table.SetWidths(colWidths);</p>
+        <p><img src="/uploads/2009/09/foodml04.jpg" alt="food-ml-04" title="food-ml-04"> PDF Tables in iTextSharp work enough like HTML tables that the slight differences between the two make programming tables for a PDF a bit confusing the first time you try.</p>
+<p>I hope to describe some of those differences here so that your experience might be a bit smoother than mine was as you start to use tables in your PDF code.</p>
+<p>One of the first decisions you’ll need to make as you start working on your iTextSharp table is how many columns the table should have.  Keep in mind that the cells can be spanned, just like they can in HTML, so it is better to have too many columns than the bare minimum.  You can always adjust later.</p>
+<p>Once you’ve decided how many columns, you’ll need to decide how big you want each column to be.  Unlike HTML, the columns will not stretch if they are too small.</p>
+<p>Here is your initial code:</p>
+<a id="more"></a>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">PdfPTable table= <span class="keyword">new</span> PdfPTable(<span class="number">5</span>);</span><br><span class="line"><span class="keyword">float</span>\[\] colWidths = &#123;<span class="number">70</span>, <span class="number">70</span>, <span class="number">200</span>, <span class="number">70</span>, <span class="number">70</span>&#125;;</span><br><span class="line">table.SetWidths(colWidths);</span><br></pre></td></tr></table></figure>
 <p>Keep in mind that the column widths are more of a weighting than an absolute unit. You’ll also need to determine how wide the iTextSharp table should be.  So far I’ve only needed to set this to 100%.</p>
-<p>table.WidthPercentage = (100.0f);</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">table.WidthPercentage = (<span class="number">100.0</span>f);</span><br></pre></td></tr></table></figure>
 <p>Next you’ll want to set the default cell information.  This took me a while to decipher, and I’m still not exactly sure I completely understand it.  But here is an example from some code  I’ve created that sets the borders to white and sets the padding to 10 points.</p>
-<p>table.DefaultCell.Border = (PdfPCell.BOTTOM_BORDER);<br>table.DefaultCell.BorderColor = New iTextSharp.text.Color(255, 255, 255);<br>table.DefaultCell.BorderColorBottom = New iTextSharp.text.Color(255, 255, 255);<br>table.DefaultCell.Padding = 10;</p>
-<p>Next it is just a matter of adding the cells in left to right, top to bottom order.  While there is a way to specify the row and column you want to place the content into using another API, the default API expects the information in order. You can do this using the AddCell() method.  Again, this method will take a string, so you can add the content directly.  But if you are going to need control over the font size, I recommend that you first create a PdfPCell() object that has the content, passing its constructor a Phrase() object.  This will allow much more control.</p>
-<p>table.AddCell(New PdfPCell(New Phrase(“Last Name”)));</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">table.DefaultCell.Border = (PdfPCell.BOTTOM_BORDER);</span><br><span class="line">table.DefaultCell.BorderColor = New iTextSharp.text.Color(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>);</span><br><span class="line">table.DefaultCell.BorderColorBottom = New iTextSharp.text.Color(<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>);</span><br><span class="line">table.DefaultCell.Padding = <span class="number">10</span>;</span><br></pre></td></tr></table></figure>
+<p>Next it is just a matter of adding the cells in left to right, top to bottom order.  While there is a way to specify the row and column you want to place the content into using another API, the default API expects the information in order.</p>
+<p>You can do this using the AddCell() method.  Again, this method will take a string, so you can add the content directly.  But if you are going to need control over the font size, I recommend that you first create a PdfPCell() object that has the content, passing its constructor a Phrase() object.  This will allow much more control.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">table.AddCell(<span class="function">New <span class="title">PdfPCell</span>(<span class="params">New Phrase(<span class="string">"Last Name"</span></span>)))</span>;</span><br></pre></td></tr></table></figure>
 <p>If you need to you can adjust the fonts for an entire row using a loop.</p>
-<p>foreach(PdfPCell c in (PdfPRow)(table.Rows(1)).Cells)<br>{<br>    c.Border = PdfPCell.BOTTOM_BORDER;<br>    c.BorderWidthBottom = 2;<br>    c.PaddingBottom = 4;<br>    c.PaddingTop = 2;<br>    (Chunk)(c.Phrase(0)).Font = headerFont;<br>}</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">foreach</span>(<span class="function">PdfPCell c <span class="title">in</span> (<span class="params">PdfPRow</span>)(<span class="params">table.Rows(<span class="number">1</span></span>)).Cells)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    c.Border = PdfPCell.BOTTOM_BORDER;</span><br><span class="line">    c.BorderWidthBottom = <span class="number">2</span>;</span><br><span class="line">    c.PaddingBottom = <span class="number">4</span>;</span><br><span class="line">    c.PaddingTop = <span class="number">2</span>;</span><br><span class="line">    (Chunk)(c.Phrase(<span class="number">0</span>)).Font = headerFont;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Finally, it might be useful to include a header row and a footer row.  This way, as your table spans pages, the header and footer rows print on each page. The code for this is really rather simple, even though it wasn’t clear the first time I looked. You place your header row as the first rows in your table and your footer row right after the header rows, prior to the real content.  Then you specify your header rows in your code as.</p>
-<p>table.HeaderRows = 2;<br>table.FooterRows = 1;</p>
-<p>Which would make the first two rows a header that displays on each page and the third row a footer that displays on each page. If you need to place your table at a specific location, you can use the column API to include the table in a column.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">table.HeaderRows = <span class="number">2</span>;</span><br><span class="line">table.FooterRows = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<p>Which would make the first two rows a header that displays on each page and the third row a footer that displays on each page.</p>
+<p>If you need to place your table at a specific location, you can use the column API to include the table in a column.</p>
 
       
     </div>
@@ -134,7 +141,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-tables/" data-id="ckjfwa54d002reox2gj7q4nn3" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-tables/" data-id="ckjpxkg3e002isgx2g0xvn8zv" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

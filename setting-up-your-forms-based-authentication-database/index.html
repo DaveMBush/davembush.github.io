@@ -14,7 +14,7 @@
 <meta property="og:description" content="I was recently asked if I would cover some topics related to Forms Based Authentication.  The person who requested this information has some specific issues that he wants covered that I won’t be cove">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2009/09/B01I0003.jpg">
-<meta property="og:updated_time" content="2018-06-30T18:23:01.000Z">
+<meta property="og:updated_time" content="2021-01-09T16:36:01.078Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Setting Up Your Forms Based Authentication Database">
 <meta name="twitter:description" content="I was recently asked if I would cover some topics related to Forms Based Authentication.  The person who requested this information has some specific issues that he wants covered that I won’t be cove">
@@ -114,24 +114,15 @@
         <p><img src="/uploads/2009/09/B01I0003.jpg" alt="B01I0003" title="B01I0003"></p>
 <p>I was recently asked if I would cover some topics related to Forms Based Authentication.  The person who requested this information has some specific issues that he wants covered that I won’t be covering for a while because I think there are some other issues that need to be covered first.</p>
 <p>One of those is setting up the database.</p>
+<a id="more"></a>
 <p>When I owned my hosting companies, I saw more confusion in this area than just about any other topic that came up.</p>
 <p>So here’s the step-by-step process you need to go through to set up your database for Forms Based Authentication.</p>
 <p>In your hosting company’s control panel, create the SQL database.  You’ll want to create a database with a size of at least 10 meg with 5 meg allocated to the log file and 5 meg allocated to the database.  You’ll also want to make sure the user you attach to the database has DBO rights.  You may need to contact support to enable this.</p>
 <p>Next, you’ll want to run aspnet_regsql.exe which you can find under c:\windows\Microsoft.NET\Framework\v2.0.50727.  This will provide you a wizard interface and will ultimately create the appropriate tables for you. The wizard is self explanatory, so I won’t repeat it here except to say that you’ll want to enter your connection information to connect to the server you just created your database on, not one of your databases locally.</p>
 <p>Next you’ll need to add the connection information to your web.config file for the application you are setting up Forms Based Authentication for.</p>
-<connectionstrings><br> <remove name="LocalSqlServer"><br> <add name="LocalSqlServer" connectionstring="Data Source=sqlserverGoesHere;
-    Initial Catalog=YourDatabaseName;
-    Persist Security Info=True;
-    User ID=YourSqlUserID;
-    password=YourSqlPassword" providername="System.Data.SqlClient"><br></add></remove></connectionstrings>
-
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">connectionStrings</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">remove</span> <span class="attr">name</span>=<span class="string">"LocalSqlServer"</span>/&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">add</span> <span class="attr">name</span>=<span class="string">"LocalSqlServer"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">connectionString</span>=<span class="string">"Data Source=sqlserverGoesHere;</span></span></span><br><span class="line"><span class="tag"><span class="string">    Initial Catalog=YourDatabaseName;</span></span></span><br><span class="line"><span class="tag"><span class="string">    Persist Security Info=True;</span></span></span><br><span class="line"><span class="tag"><span class="string">    User ID=YourSqlUserID;</span></span></span><br><span class="line"><span class="tag"><span class="string">    password=YourSqlPassword"</span></span></span><br><span class="line"><span class="tag">  <span class="attr">providerName</span>=<span class="string">"System.Data.SqlClient"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">connectionStrings</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <p>The “remove” element is needed because typically the machine.config file on the server has its own entry that you won’t be using.</p>
 <p>Unfortunately, you’ll need to create your own UI for adding users and assigning them to roles.  It isn’t that hard to do and once you’ve done it you can move the administration controls from project to project.  If I were you, I’d create the control set once in a special sub-directory so that I could move it from project to project.</p>
-<p><strong>Other places talking about Forms Based Authentication:</strong></p>
-<p><a href="//geekswithblogs.net/bjackett/archive/2009/09/03/single-sign-on-across-.net-web-apps-using-forms-based-authentication.aspx">Single Sign-On Across .Net Web Apps Using Forms Based Authentication</a> - Achieving single sign-on capabilities using Forms Based Authentication is much easier than I had initially expected, yet it took awhile to find the exact settings required. To get FBA working in SharePoint click here for a good starter …</p>
-<p><a href="//geekswithblogs.net/kjones/archive/2009/07/17/133567.aspx">Forms Based Authentication and Active Directory</a> - I recently had to configure Forms Based Authentication for our website (in my case SharePoint, but the same would apply to a plain ASP.NET website) and I wanted to configure it to use Active Directory for the account storage. …</p>
-<p><a href="//avinashkt.blogspot.com/2009/08/configuring-forms-based-authentication.html">Avinash: Configuring Forms Based Authentication (FBA) in SharePoint</a> - 6) Change Authentication Provider for Forms based site. 7) Change configuration files settings. 8) Change policy for Web Application 9) Add users/roles as site administrator (Primary and Secondary). 10) Check Forms Based Authentication …</p>
-<p><a href="//blog.sharepoint-voodoo.net/?p=6">Easy-Bake Forms Based Authentication</a> - In a hosted environment I often see situations where a customer wants to quickly and easily add Forms Based Authentication to their SharePoint Web Application. Unfortunately, it is neither quick nor easy to add this functionality, …</p>
 
       
     </div>
@@ -142,7 +133,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/setting-up-your-forms-based-authentication-database/" data-id="ckjfwa55u004jeox208dzyfjx" class="article-share-link">
+      <a data-url="http://davembush.github.com/setting-up-your-forms-based-authentication-database/" data-id="ckjpxkgde005csgx2h9vxe63f" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

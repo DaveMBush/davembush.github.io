@@ -118,7 +118,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/vs-and-vs-what-s-the-difference/" data-id="ckjfwa56v005seox23ah7xd7r" class="article-share-link">
+      <a data-url="http://davembush.github.com/vs-and-vs-what-s-the-difference/" data-id="ckjpxkghq008lsgx27taiibh8" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -176,7 +176,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/prevent-postback-on-buttons/" data-id="ckjfwa55d003zeox2tawxepgn" class="article-share-link">
+      <a data-url="http://davembush.github.com/prevent-postback-on-buttons/" data-id="ckjpxkgb4004bsgx252tggqb8" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -235,7 +235,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/why-programmers-can’t-program/" data-id="ckjfwa5770065eox2rbm60bzd" class="article-share-link">
+      <a data-url="http://davembush.github.com/why-programmers-can’t-program/" data-id="ckjpxkghg008dsgx2v9uby0ks" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -296,7 +296,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-each-and-async-gets/" data-id="ckjfwa54r0035eox2ggdqvzdy" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-each-and-async-gets/" data-id="ckjpxkg3z0033sgx2rc99cuzd" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -358,7 +358,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/determine-the-role-of-a-user-in-asp-net/" data-id="ckjfwa533001heox2tsi7yvlk" class="article-share-link">
+      <a data-url="http://davembush.github.com/determine-the-role-of-a-user-in-asp-net/" data-id="ckjpxkg2b001ksgx27bg29n03" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -417,7 +417,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/httpcontext-items-vs-session/" data-id="ckjfwa53w0027eox2me97sod4" class="article-share-link">
+      <a data-url="http://davembush.github.com/httpcontext-items-vs-session/" data-id="ckjpxkg330026sgx22skieert" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -477,7 +477,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/forms-authentication-–-manual-authentication/" data-id="ckjfwa53e001teox2kmt5tv6a" class="article-share-link">
+      <a data-url="http://davembush.github.com/forms-authentication-–-manual-authentication/" data-id="ckjpxkg2t001zsgx27yiw6mdh" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -524,25 +524,18 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><img src="/uploads/2009/09/B03B0015.jpg" alt="B03B0015" title="B03B0015"> I recently received a question from another programmer I know who’s been using PHP prior to ASP.NET that made me think harder about a problem we’ve all had in ASP.NET.  The basic problem is this:</p>
-<p>How do you dynamically change the class of a hyperlink based on the page name so that the hyperlink that represents the current page is styled differently than all of the other hyperlinks on our screen?  If you want you can substitute any other HTML element you want, but the problem remains the same.</p>
-<p>The first, most obvious answer would be to create a case statement of some sort.</p>
-<p>string fileName = AppRelativeVirtualPath<br>    .ToLower().Replace(“~/“,””).Replace(“/“,”_”)<br>    .Replace(“.aspx”,””);<br>switch(fileName)<br>{<br>     case “fileone”:<br>             m_hyperLinkFileOne.CssClass =<br>                “selectedClass”;<br>             break;<br>    // etc…<br>}</p>
-<p>But we all know just how ugly that code will get once we start adding pages to our site.   Yuck!  Unfortunately, this is exactly the code I’ve been recommending up until today.</p>
-<p>What was I thinking?!</p>
-<p>If you are familiar with ASP.NET at all, you should already be familiar with the Page_Load event handler.  I bet that’s where you do 90% of your page initialization.  But did you know that there is a load event that fires for each control?</p>
-<p>Further, you can have all of your controls point to the same load event handler.  So if we take advantage of this, we can write very tight code that automatically sets the class based on the current page name.</p>
-<p>// This code assumes that the ID of the hyperLink<br>//  controls follow<br>// the form of m_hyperLinkDestinationPageName<br>// ie, a link to default.aspx would become<br>// m_hyperLinkDefault<br>void HyperLinkLoad(Object sender, EventArgs args)<br>{<br>    // Only need to do this once if you have ViewState<br>    // enabled.<br>    if(!IsPostBack)<br>    {<br>        string fileName = AppRelativeVirtualPath<br>            .ToLower().Replace(“~/“,””).Replace(“/“,”_”)<br>            .Replace(“.aspx”,””);<br>        // sender will always point to the control that<br>        // fired the event so, assuming that only<br>        // asp:hyperlink controls call HyperLinkLoad<br>        if(“m_hyperlink”+file ==<br>           ((HyperLinkControl)sender)<br>           .ID.ToLower())<br>           ((HyperLinkControl)sender).CssClass=<br>              “selectedClass”;<br>    }<br>}</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/dynamically-change-class-attribute-from-asp-net/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/dynamically-change-class-attribute-from-asp-net/" data-id="ckjfwa53c001reox248dyjeru" class="article-share-link">
+      <a data-url="http://davembush.github.com/dynamically-change-class-attribute-from-asp-net/" data-id="ckjpxkg2l001ssgx2g6z5scro" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -588,30 +581,23 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/uploads/2009/09/foodml04.jpg" alt="food-ml-04" title="food-ml-04"> PDF Tables in iTextSharp work enough like HTML tables that the slight differences between the two make programming tables for a PDF a bit confusing the first time you try. I hope to describe some of those differences here so that your experience might be a bit smoother than mine was as you start to use tables in your PDF code.  One of the first decisions you’ll need to make as you start working on your iTextSharp table is how many columns the table should have.  Keep in mind that the cells can be spanned, just like they can in HTML, so it is better to have too many columns than the bare minimum.  You can always adjust later. Once you’ve decided how many columns, you’ll need to decide how big you want each column to be.  Unlike HTML, the columns will not stretch if they are too small. Here is your initial code</p>
-<p>PdfPTable table= new PdfPTable(5);<br>float[] colWidths = {70, 70, 200, 70, 70};<br>table.SetWidths(colWidths);</p>
-<p>Keep in mind that the column widths are more of a weighting than an absolute unit. You’ll also need to determine how wide the iTextSharp table should be.  So far I’ve only needed to set this to 100%.</p>
-<p>table.WidthPercentage = (100.0f);</p>
-<p>Next you’ll want to set the default cell information.  This took me a while to decipher, and I’m still not exactly sure I completely understand it.  But here is an example from some code  I’ve created that sets the borders to white and sets the padding to 10 points.</p>
-<p>table.DefaultCell.Border = (PdfPCell.BOTTOM_BORDER);<br>table.DefaultCell.BorderColor = New iTextSharp.text.Color(255, 255, 255);<br>table.DefaultCell.BorderColorBottom = New iTextSharp.text.Color(255, 255, 255);<br>table.DefaultCell.Padding = 10;</p>
-<p>Next it is just a matter of adding the cells in left to right, top to bottom order.  While there is a way to specify the row and column you want to place the content into using another API, the default API expects the information in order. You can do this using the AddCell() method.  Again, this method will take a string, so you can add the content directly.  But if you are going to need control over the font size, I recommend that you first create a PdfPCell() object that has the content, passing its constructor a Phrase() object.  This will allow much more control.</p>
-<p>table.AddCell(New PdfPCell(New Phrase(“Last Name”)));</p>
-<p>If you need to you can adjust the fonts for an entire row using a loop.</p>
-<p>foreach(PdfPCell c in (PdfPRow)(table.Rows(1)).Cells)<br>{<br>    c.Border = PdfPCell.BOTTOM_BORDER;<br>    c.BorderWidthBottom = 2;<br>    c.PaddingBottom = 4;<br>    c.PaddingTop = 2;<br>    (Chunk)(c.Phrase(0)).Font = headerFont;<br>}</p>
-<p>Finally, it might be useful to include a header row and a footer row.  This way, as your table spans pages, the header and footer rows print on each page. The code for this is really rather simple, even though it wasn’t clear the first time I looked. You place your header row as the first rows in your table and your footer row right after the header rows, prior to the real content.  Then you specify your header rows in your code as.</p>
-<p>table.HeaderRows = 2;<br>table.FooterRows = 1;</p>
-<p>Which would make the first two rows a header that displays on each page and the third row a footer that displays on each page. If you need to place your table at a specific location, you can use the column API to include the table in a column.</p>
-
+        <p><img src="/uploads/2009/09/foodml04.jpg" alt="food-ml-04" title="food-ml-04"> PDF Tables in iTextSharp work enough like HTML tables that the slight differences between the two make programming tables for a PDF a bit confusing the first time you try.</p>
+<p>I hope to describe some of those differences here so that your experience might be a bit smoother than mine was as you start to use tables in your PDF code.</p>
+<p>One of the first decisions you’ll need to make as you start working on your iTextSharp table is how many columns the table should have.  Keep in mind that the cells can be spanned, just like they can in HTML, so it is better to have too many columns than the bare minimum.  You can always adjust later.</p>
+<p>Once you’ve decided how many columns, you’ll need to decide how big you want each column to be.  Unlike HTML, the columns will not stretch if they are too small.</p>
+<p>Here is your initial code:</p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/itextsharp-tables/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-tables/" data-id="ckjfwa54d002reox2gj7q4nn3" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-tables/" data-id="ckjpxkg3e002isgx2g0xvn8zv" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -660,35 +646,18 @@
         <p><img src="/uploads/2009/09/B01I0003.jpg" alt="B01I0003" title="B01I0003"></p>
 <p>I was recently asked if I would cover some topics related to Forms Based Authentication.  The person who requested this information has some specific issues that he wants covered that I won’t be covering for a while because I think there are some other issues that need to be covered first.</p>
 <p>One of those is setting up the database.</p>
-<p>When I owned my hosting companies, I saw more confusion in this area than just about any other topic that came up.</p>
-<p>So here’s the step-by-step process you need to go through to set up your database for Forms Based Authentication.</p>
-<p>In your hosting company’s control panel, create the SQL database.  You’ll want to create a database with a size of at least 10 meg with 5 meg allocated to the log file and 5 meg allocated to the database.  You’ll also want to make sure the user you attach to the database has DBO rights.  You may need to contact support to enable this.</p>
-<p>Next, you’ll want to run aspnet_regsql.exe which you can find under c:\windows\Microsoft.NET\Framework\v2.0.50727.  This will provide you a wizard interface and will ultimately create the appropriate tables for you. The wizard is self explanatory, so I won’t repeat it here except to say that you’ll want to enter your connection information to connect to the server you just created your database on, not one of your databases locally.</p>
-<p>Next you’ll need to add the connection information to your web.config file for the application you are setting up Forms Based Authentication for.</p>
-<connectionstrings><br> <remove name="LocalSqlServer"><br> <add name="LocalSqlServer" connectionstring="Data Source=sqlserverGoesHere;
-    Initial Catalog=YourDatabaseName;
-    Persist Security Info=True;
-    User ID=YourSqlUserID;
-    password=YourSqlPassword" providername="System.Data.SqlClient"><br></add></remove></connectionstrings>
-
-<p>The “remove” element is needed because typically the machine.config file on the server has its own entry that you won’t be using.</p>
-<p>Unfortunately, you’ll need to create your own UI for adding users and assigning them to roles.  It isn’t that hard to do and once you’ve done it you can move the administration controls from project to project.  If I were you, I’d create the control set once in a special sub-directory so that I could move it from project to project.</p>
-<p><strong>Other places talking about Forms Based Authentication:</strong></p>
-<p><a href="//geekswithblogs.net/bjackett/archive/2009/09/03/single-sign-on-across-.net-web-apps-using-forms-based-authentication.aspx">Single Sign-On Across .Net Web Apps Using Forms Based Authentication</a> - Achieving single sign-on capabilities using Forms Based Authentication is much easier than I had initially expected, yet it took awhile to find the exact settings required. To get FBA working in SharePoint click here for a good starter …</p>
-<p><a href="//geekswithblogs.net/kjones/archive/2009/07/17/133567.aspx">Forms Based Authentication and Active Directory</a> - I recently had to configure Forms Based Authentication for our website (in my case SharePoint, but the same would apply to a plain ASP.NET website) and I wanted to configure it to use Active Directory for the account storage. …</p>
-<p><a href="//avinashkt.blogspot.com/2009/08/configuring-forms-based-authentication.html">Avinash: Configuring Forms Based Authentication (FBA) in SharePoint</a> - 6) Change Authentication Provider for Forms based site. 7) Change configuration files settings. 8) Change policy for Web Application 9) Add users/roles as site administrator (Primary and Secondary). 10) Check Forms Based Authentication …</p>
-<p><a href="//blog.sharepoint-voodoo.net/?p=6">Easy-Bake Forms Based Authentication</a> - In a hosted environment I often see situations where a customer wants to quickly and easily add Forms Based Authentication to their SharePoint Web Application. Unfortunately, it is neither quick nor easy to add this functionality, …</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/setting-up-your-forms-based-authentication-database/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/setting-up-your-forms-based-authentication-database/" data-id="ckjfwa55u004jeox208dzyfjx" class="article-share-link">
+      <a data-url="http://davembush.github.com/setting-up-your-forms-based-authentication-database/" data-id="ckjpxkgde005csgx2h9vxe63f" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
