@@ -14,7 +14,7 @@
 <meta property="og:description" content="In the last post I mentioned there were a few topics we need to close up today.  The two topics we’ve left undone are popping the attribute information off the stack when we hit a closing element and">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2009/08/tiger.jpg">
-<meta property="og:updated_time" content="2018-06-30T18:47:20.000Z">
+<meta property="og:updated_time" content="2021-01-16T15:00:58.645Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iTextSharp – HTML to PDF – Finishing Up">
 <meta name="twitter:description" content="In the last post I mentioned there were a few topics we need to close up today.  The two topics we’ve left undone are popping the attribute information off the stack when we hit a closing element and">
@@ -115,35 +115,8 @@
 <p>The first thing you’ll want to do when you hit a closing element is to retrieve its name again.  Just like we did at the beginning element.  Once you have that you can pop the attribute information off the stack(s).</p>
 <p>You’ll also want to undo any indentation that you applied during the opening element.</p>
 <p>To handle the paragraph break, I defined a _crlfAtEnd attribute in my resource file.  If it was defined as true, I added an extra line feed at the end to account for the gap.</p>
-<p> 1: isBlock = Resources.html2pdf</p>
-<p> 2:    .ResourceManager</p>
-<p> 3:    .GetString(tagName + “_isBlock”);</p>
-<p> 4: if (isBlock != null &amp;&amp; </p>
-<p> 5:    isBlock.ToLower() == “true”)</p>
-<p> 6: {</p>
-<p> 7:    isBlock = Resources.html2pdf</p>
-<p> 8:        .ResourceManager</p>
-<p> 9:        .GetString(tagName + “_crlfAtEnd”);</p>
-<p> 10:     if (isBlock != null &amp;&amp; </p>
-<p> 11:        isBlock.ToLower() == “true”)</p>
-<p> 12:    {</p>
-<p> 13:        et = stack.Peek();</p>
-<p> 14:        Font f = getCurrentFont();</p>
-<p> 15:        if (et is Phrase)</p>
-<p> 16:        {</p>
-<p> 17:            ((Phrase)(et)).Add(</p>
-<p> 18:                new Chunk(“\n\<br>“, f)); </p>
-<p> 19:            stack.Pop();</p>
-<p> 20:        }</p>
-<p> 21:    }</p>
-<p> 22:    p = new Paragraph();</p>
-<p> 23:    ((Paragraph)p).Add(“”);</p>
-<p> 24:    ((Paragraph)p).SetLeading(m_leading, 1);</p>
-<p> 25:    list.Add(p);</p>
-<p> 26:    stack.Push(p);</p>
-<p> 27: }</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">isBlock = Resources.html2pdf</span><br><span class="line">  .ResourceManager</span><br><span class="line">  .GetString(tagName + <span class="string">"_isBlock"</span>);</span><br><span class="line"><span class="keyword">if</span> (isBlock != <span class="literal">null</span> &amp;&amp;</span><br><span class="line">  isBlock.ToLower() == <span class="string">"true"</span>)</span><br><span class="line">&#123;</span><br><span class="line">  isBlock = Resources.html2pdf</span><br><span class="line">    .ResourceManager</span><br><span class="line">    .GetString(tagName + <span class="string">"_crlfAtEnd"</span>);</span><br><span class="line">  <span class="keyword">if</span> (isBlock != <span class="literal">null</span> &amp;&amp;</span><br><span class="line">    isBlock.ToLower() == <span class="string">"true"</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    et = stack.Peek();</span><br><span class="line">    Font f = getCurrentFont();</span><br><span class="line">    <span class="keyword">if</span> (et <span class="keyword">is</span> Phrase)</span><br><span class="line">    &#123;</span><br><span class="line">      ((Phrase)(et)).Add(</span><br><span class="line">        <span class="keyword">new</span> Chunk(<span class="string">"\n"</span>, f));</span><br><span class="line">      stack.Pop();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  p = <span class="keyword">new</span> Paragraph();</span><br><span class="line">  ((Paragraph)p).Add(<span class="string">""</span>);</span><br><span class="line">  ((Paragraph)p).SetLeading(m_leading, <span class="number">1</span>);</span><br><span class="line">  list.Add(p);</span><br><span class="line">  stack.Push(p);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>One problem I’ve had with this in the past is that this cr/lf gets added at the end even if the block is the last block.  I really need to find some way to detect that this is the last place this occurs either nested or in the outermost block.  But I’ll leave that enhancement for you.</p>
-<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; border: 0px;padding:0px; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
 
       
     </div>
@@ -154,7 +127,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-finishing-up/" data-id="ckjpxkg3c002gsgx2xi6uqiuq" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-finishing-up/" data-id="ckjzuiehi002ccgx2ro0x9hss" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

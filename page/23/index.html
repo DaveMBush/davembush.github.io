@@ -110,35 +110,8 @@
 <p>The first thing you’ll want to do when you hit a closing element is to retrieve its name again.  Just like we did at the beginning element.  Once you have that you can pop the attribute information off the stack(s).</p>
 <p>You’ll also want to undo any indentation that you applied during the opening element.</p>
 <p>To handle the paragraph break, I defined a _crlfAtEnd attribute in my resource file.  If it was defined as true, I added an extra line feed at the end to account for the gap.</p>
-<p> 1: isBlock = Resources.html2pdf</p>
-<p> 2:    .ResourceManager</p>
-<p> 3:    .GetString(tagName + “_isBlock”);</p>
-<p> 4: if (isBlock != null &amp;&amp; </p>
-<p> 5:    isBlock.ToLower() == “true”)</p>
-<p> 6: {</p>
-<p> 7:    isBlock = Resources.html2pdf</p>
-<p> 8:        .ResourceManager</p>
-<p> 9:        .GetString(tagName + “_crlfAtEnd”);</p>
-<p> 10:     if (isBlock != null &amp;&amp; </p>
-<p> 11:        isBlock.ToLower() == “true”)</p>
-<p> 12:    {</p>
-<p> 13:        et = stack.Peek();</p>
-<p> 14:        Font f = getCurrentFont();</p>
-<p> 15:        if (et is Phrase)</p>
-<p> 16:        {</p>
-<p> 17:            ((Phrase)(et)).Add(</p>
-<p> 18:                new Chunk(“\n\<br>“, f)); </p>
-<p> 19:            stack.Pop();</p>
-<p> 20:        }</p>
-<p> 21:    }</p>
-<p> 22:    p = new Paragraph();</p>
-<p> 23:    ((Paragraph)p).Add(“”);</p>
-<p> 24:    ((Paragraph)p).SetLeading(m_leading, 1);</p>
-<p> 25:    list.Add(p);</p>
-<p> 26:    stack.Push(p);</p>
-<p> 27: }</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">isBlock = Resources.html2pdf</span><br><span class="line">  .ResourceManager</span><br><span class="line">  .GetString(tagName + <span class="string">"_isBlock"</span>);</span><br><span class="line"><span class="keyword">if</span> (isBlock != <span class="literal">null</span> &amp;&amp;</span><br><span class="line">  isBlock.ToLower() == <span class="string">"true"</span>)</span><br><span class="line">&#123;</span><br><span class="line">  isBlock = Resources.html2pdf</span><br><span class="line">    .ResourceManager</span><br><span class="line">    .GetString(tagName + <span class="string">"_crlfAtEnd"</span>);</span><br><span class="line">  <span class="keyword">if</span> (isBlock != <span class="literal">null</span> &amp;&amp;</span><br><span class="line">    isBlock.ToLower() == <span class="string">"true"</span>)</span><br><span class="line">  &#123;</span><br><span class="line">    et = stack.Peek();</span><br><span class="line">    Font f = getCurrentFont();</span><br><span class="line">    <span class="keyword">if</span> (et <span class="keyword">is</span> Phrase)</span><br><span class="line">    &#123;</span><br><span class="line">      ((Phrase)(et)).Add(</span><br><span class="line">        <span class="keyword">new</span> Chunk(<span class="string">"\n"</span>, f));</span><br><span class="line">      stack.Pop();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  p = <span class="keyword">new</span> Paragraph();</span><br><span class="line">  ((Paragraph)p).Add(<span class="string">""</span>);</span><br><span class="line">  ((Paragraph)p).SetLeading(m_leading, <span class="number">1</span>);</span><br><span class="line">  list.Add(p);</span><br><span class="line">  stack.Push(p);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>One problem I’ve had with this in the past is that this cr/lf gets added at the end even if the block is the last block.  I really need to find some way to detect that this is the last place this occurs either nested or in the outermost block.  But I’ll leave that enhancement for you.</p>
-<p>.csharpcode, .csharpcode pre { font-size: small; color: black; font-family: consolas, “Courier New”, courier, monospace; background-color: #ffffff; /*white-space: pre;*/ } .csharpcode pre { margin: 0em; border: 0px;padding:0px; } .csharpcode .rem { color: #008000; } .csharpcode .kwrd { color: #0000ff; } .csharpcode .str { color: #006080; } .csharpcode .op { color: #0000c0; } .csharpcode .preproc { color: #cc6633; } .csharpcode .asp { background-color: #ffff00; } .csharpcode .html { color: #800000; } .csharpcode .attr { color: #ff0000; } .csharpcode .alt { background-color: #f4f4f4; width: 100%; margin: 0em; } .csharpcode .lnum { color: #606060; }</p>
 
       
     </div>
@@ -149,7 +122,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-finishing-up/" data-id="ckjpxkg3c002gsgx2xi6uqiuq" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-finishing-up/" data-id="ckjzuiehi002ccgx2ro0x9hss" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -200,32 +173,20 @@
 <p><em>“Using VB.net 2008, I want my project to be a Windows Forms Application, but upon startup, I want to check a few files to see if they exist and if they don’t I do not want the startup form to load. I just want the program to quit. If you have to start this type of application with a form, how do you keep the form from displaying?”</em></p>
 <p>If you program in CSharp, you probably already know the answer to this question, or at least you should.  If you don’t, you will when we finish here.  So since I consider this a VB.NET-specific question, I’m going to answer it using VB.NET syntax.</p>
 <p>When CSharp runs a Windows Forms application, it writes out the following code in Program.cs (in VS 2008, earlier versions put this in the main form).</p>
-<p>[STAThread]<br>static void Main()<br>{<br>    Application.EnableVisualStyles();<br>    Application.<br>        SetCompatibleTextRenderingDefault(false);<br>    Application.Run(new Form1());<br>}</p>
-<p><a href="//11011.net/software/vspaste"></a></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">STAThread</span>]</span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">Main</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Application.EnableVisualStyles();</span><br><span class="line">    Application.</span><br><span class="line">        SetCompatibleTextRenderingDefault(<span class="literal">false</span>);</span><br><span class="line">    Application.Run(<span class="keyword">new</span> Form1());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>In VB.NET there is no code that looks like this, because VB.NET writes the code for us behind the scenes.</p>
 <p>So to do what you want to do, we need to take over control of the Windows Form application.</p>
 <p>Since I’m assuming that you already have the Windows Form application created, the next thing you’ll want to do is to create a module.  You can name it what ever you want, but I’m going to name mine “Main” for purposes of this article.</p>
 <p>In your module, create a function called “main” that has the code CSharp would have given us.</p>
-<pre><code>Public Sub main()
-    Application.EnableVisualStyles()
-    Application.SetCompatibleTextRenderingDefault(False)
-    Application.Run(New Form1())
-End Sub 
-</code></pre><p><a href="//11011.net/software/vspaste"></a>Now go to your project properties and go to the Application tab.</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Public</span> <span class="keyword">Sub</span> main()</span><br><span class="line">    Application.EnableVisualStyles()</span><br><span class="line">    Application.SetCompatibleTextRenderingDefault(<span class="literal">False</span>)</span><br><span class="line">    Application.Run(<span class="keyword">New</span> Form1())</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+<p>Now go to your project properties and go to the Application tab.</p>
 <p><img src="/uploads/2009/08/image.png" alt="image" title="image"></p>
 <p>Find the check box that says, “Enable Application Framework” and un-check it.</p>
 <p><img src="/uploads/2009/08/image1.png" alt="image" title="image"></p>
-<p>Then change the startup object to “Sub Main”.”</p>
+<p>Then change the startup object to “Sub Main”</p>
 <p>At this point, your application should run as it always has.  To put the checks in that you requested, write that code prior to all the Application… statements that we put in sub main and put an if/then/end if statement around the Application… statements.</p>
-<p><a href="//11011.net/software/vspaste"></a></p>
-<pre><code>Public Sub main()
-    Dim ChecksWereOk As Boolean = False &apos; your checks here If ChecksWereOk Then Application.EnableVisualStyles()
-        Application. _
-            SetCompatibleTextRenderingDefault(False)
-        Application.Run(New Form1())
-    End If
-End Sub 
-</code></pre><p><a href="//11011.net/software/vspaste"></a>And that should do the trick for you.</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Public</span> <span class="keyword">Sub</span> main()</span><br><span class="line">    <span class="keyword">Dim</span> ChecksWereOk <span class="keyword">As</span> <span class="built_in">Boolean</span> = <span class="literal">False</span> <span class="comment">' your checks here If ChecksWereOk Then Application.EnableVisualStyles()</span></span><br><span class="line">        Application. _</span><br><span class="line">            SetCompatibleTextRenderingDefault(<span class="literal">False</span>)</span><br><span class="line">        Application.Run(<span class="keyword">New</span> Form1())</span><br><span class="line">    <span class="keyword">End</span> <span class="keyword">If</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Sub</span></span><br></pre></td></tr></table></figure>
+<p>And that should do the trick for you.</p>
 
       
     </div>
@@ -236,7 +197,7 @@ End Sub
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/vb-net-processing-before-winform-display/" data-id="ckjpxkggr007osgx2sq8x29zn" class="article-share-link">
+      <a data-url="http://davembush.github.com/vb-net-processing-before-winform-display/" data-id="ckjzuiek0005jcgx2zwx4i10i" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -286,20 +247,17 @@ End Sub
 <p>Last week we parsed the HTML and created code that keeps track of the various attributes we are going to need when we create the PDF.  Today we will finish the code and create the Elements that we can include in our PDF document.</p>
 <p>One consideration we will need to keep in mind as we write out the PDF is that we have pushed various font characteristics that may overlap onto our stack.</p>
 <p>To get the current font, we will need to combine the attributes.  For example, HTML that looks like this:</p>
-<p><u><i><b>this should be bold</b></i></u></p>
-
-<p><a href="//11011.net/software/vspaste"></a>Should render as bold, italics, underlined text.  But we only pushed one element at a time, so if all we look at is the last element we pushed onto the stack, all we will get is a bold font.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span><span class="tag">&lt;<span class="name">u</span>&gt;</span><span class="tag">&lt;<span class="name">i</span>&gt;</span><span class="tag">&lt;<span class="name">b</span>&gt;</span>this should be bold<span class="tag">&lt;/<span class="name">b</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span><span class="tag">&lt;/<span class="name">u</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Should render as bold, italics, underlined text.  But we only pushed one element at a time, so if all we look at is the last element we pushed onto the stack, all we will get is a bold font.</p>
 <p>To help with this, I created a helper method that does all the work of determining the correct current font and returning that to the caller.</p>
 <p>The first part of the method does the bulk of the work.</p>
-<p>string[] fontArray = fontCharacteristicStack.ToArray();<br>int fontIndex = 0;<br>fontNormalBoldItalic nbi = 0;<br>for (; fontIndex &lt; fontArray.Length; fontIndex++)<br>{<br>    switch (fontArray[fontIndex].ToLower())<br>    {<br>        case “bold”:<br>            nbi |= fontNormalBoldItalic.Bold;<br>            break;<br>        case “italic”:<br>            nbi |= fontNormalBoldItalic.Italic;<br>            break;<br>        case “bolditalic”:<br>        case “italicbold”:<br>            nbi |= fontNormalBoldItalic.BoldItalic;<br>            break;<br>        case “underline”:<br>            nbi |= fontNormalBoldItalic.Underline;<br>            break;<br>        case “boldunderline”:<br>        case “underlinebold”:<br>            nbi |= fontNormalBoldItalic.UnderlineBold;<br>            break;<br>        case “italicunderline”:<br>        case “underlineitalic”:<br>            nbi |= fontNormalBoldItalic.UnderlineItalic;<br>            break;<br>        case “underlinebolditalic”:<br>        case “underlineitalicbold”:<br>        case “boldunderlineitalic”:<br>        case “bolditalicunderline”:<br>        case “italicunderlinebold”:<br>        case “italicboldunderline”:<br>            nbi |= fontNormalBoldItalic.UnderlineBoldItalic;<br>            break;</p>
-<pre><code>}
-</code></pre><p>}</p>
-<p><a href="//11011.net/software/vspaste"></a>The fontNormalBoldItalic thing is an enumeration that I used to allow me to merge the font characteristics.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">string</span>[] fontArray = fontCharacteristicStack.ToArray();</span><br><span class="line"><span class="keyword">int</span> fontIndex = <span class="number">0</span>;</span><br><span class="line">fontNormalBoldItalic nbi = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (; fontIndex &lt; fontArray.Length; fontIndex++)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">switch</span> (fontArray[fontIndex].ToLower())</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"bold"</span>:</span><br><span class="line">            nbi |= fontNormalBoldItalic.Bold;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"italic"</span>:</span><br><span class="line">            nbi |= fontNormalBoldItalic.Italic;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"bolditalic"</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"italicbold"</span>:</span><br><span class="line">            nbi |= fontNormalBoldItalic.BoldItalic;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"underline"</span>:</span><br><span class="line">            nbi |= fontNormalBoldItalic.Underline;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"boldunderline"</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"underlinebold"</span>:</span><br><span class="line">            nbi |= fontNormalBoldItalic.UnderlineBold;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"italicunderline"</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"underlineitalic"</span>:</span><br><span class="line">            nbi |= fontNormalBoldItalic.UnderlineItalic;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"underlinebolditalic"</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"underlineitalicbold"</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"boldunderlineitalic"</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"bolditalicunderline"</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"italicunderlinebold"</span>:</span><br><span class="line">        <span class="keyword">case</span> <span class="string">"italicboldunderline"</span>:</span><br><span class="line">            nbi |= fontNormalBoldItalic.UnderlineBoldItalic;</span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The fontNormalBoldItalic thing is an enumeration that I used to allow me to merge the font characteristics.</p>
 <p>The second half gets the remainder of the font information which can be determined from the current element and applies the characteristics we determined above into the font.</p>
-<p>Font font = FontFactory.getFont(currentFontName);<br>string s = FontFactory.TIMES;<br>switch (nbi)<br>{<br>    case fontNormalBoldItalic.Bold:<br>        font.setStyle(Font.BOLD);<br>        break;<br>    case fontNormalBoldItalic.Italic:<br>        font.setStyle(Font.ITALIC);<br>        break;<br>    case fontNormalBoldItalic.BoldItalic:<br>        font.setStyle(Font.BOLDITALIC);<br>        break;<br>    case fontNormalBoldItalic.Underline:<br>        font.setStyle(Font.UNDERLINE);<br>        break;<br>    case fontNormalBoldItalic.UnderlineBold:<br>        font.setStyle(Font.UNDERLINE | Font.BOLD);<br>        break;<br>    case fontNormalBoldItalic.UnderlineItalic:<br>        font.setStyle(Font.UNDERLINE | Font.ITALIC);<br>        break;<br>    case fontNormalBoldItalic.UnderlineBoldItalic:<br>        font.setStyle(Font.UNDERLINE | Font.BOLDITALIC);<br>        break;<br>}<br>font.setSize(currentFontSize);<br>if (currentFontColor.StartsWith(“#”))<br>    font.setColor(System.Convert.ToInt32(currentFontColor.Substring(1, 2), 16),<br>        System.Convert.ToInt32(currentFontColor.Substring(3, 2), 16),<br>        System.Convert.ToInt32(currentFontColor.Substring(5, 2), 16));<br>else font.setColor(System.Drawing.Color.FromName(currentFontColor));<br>return font;</p>
-<p><a href="//11011.net/software/vspaste"></a>This is all call from our case statement when the element is text.</p>
-<p>case XmlNodeType.Text:<br>    et = stack.Peek();<br>    Font font = getCurrentFont();<br>    if (et is Phrase)<br>        ((Phrase)(et)).add(<br>            new Chunk(reader.Value.<br>                Replace(“ &amp; “, “ &amp; “).<br>                Replace(“&nbsp;”,” “), font));<br>    break;</p>
-<p><a href="//11011.net/software/vspaste"></a>You’ll notice that I’ve also added code at this point that translates the ampersand and the none breaking space so they render correctly in the PDF document.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">Font font = FontFactory.getFont(currentFontName);</span><br><span class="line"><span class="keyword">string</span> s = FontFactory.TIMES;</span><br><span class="line"><span class="keyword">switch</span> (nbi)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">case</span> fontNormalBoldItalic.Bold:</span><br><span class="line">        font.setStyle(Font.BOLD);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> fontNormalBoldItalic.Italic:</span><br><span class="line">        font.setStyle(Font.ITALIC);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> fontNormalBoldItalic.BoldItalic:</span><br><span class="line">        font.setStyle(Font.BOLDITALIC);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> fontNormalBoldItalic.Underline:</span><br><span class="line">        font.setStyle(Font.UNDERLINE);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> fontNormalBoldItalic.UnderlineBold:</span><br><span class="line">        font.setStyle(Font.UNDERLINE | Font.BOLD);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> fontNormalBoldItalic.UnderlineItalic:</span><br><span class="line">        font.setStyle(Font.UNDERLINE | Font.ITALIC);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> fontNormalBoldItalic.UnderlineBoldItalic:</span><br><span class="line">        font.setStyle(Font.UNDERLINE | Font.BOLDITALIC);</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br><span class="line">font.setSize(currentFontSize);</span><br><span class="line"><span class="keyword">if</span> (currentFontColor.StartsWith(<span class="string">"#"</span>))</span><br><span class="line">    font.setColor(System.Convert.ToInt32(currentFontColor.Substring(<span class="number">1</span>, <span class="number">2</span>), <span class="number">16</span>),</span><br><span class="line">        System.Convert.ToInt32(currentFontColor.Substring(<span class="number">3</span>, <span class="number">2</span>), <span class="number">16</span>),</span><br><span class="line">        System.Convert.ToInt32(currentFontColor.Substring(<span class="number">5</span>, <span class="number">2</span>), <span class="number">16</span>));</span><br><span class="line"><span class="keyword">else</span> font.setColor(System.Drawing.Color.FromName(currentFontColor));</span><br><span class="line"><span class="keyword">return</span> font;</span><br></pre></td></tr></table></figure>
+<p>This is all called from our case statement when the element is text.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> XmlNodeType.Text:</span><br><span class="line">    et = stack.Peek();</span><br><span class="line">    Font font = getCurrentFont();</span><br><span class="line">    <span class="keyword">if</span> (et <span class="keyword">is</span> Phrase)</span><br><span class="line">        ((Phrase)(et)).<span class="keyword">add</span>(</span><br><span class="line">            <span class="keyword">new</span> Chunk(reader.Value.</span><br><span class="line">                Replace(<span class="string">" &amp;amp; "</span>, <span class="string">" &amp; "</span>).</span><br><span class="line">                Replace(<span class="string">"&amp;nbsp;"</span>,<span class="string">" "</span>), font));</span><br><span class="line">    <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+<p>You’ll notice that I’ve also added code at this point that translates the ampersand and the none breaking space so they render correctly in the PDF document.</p>
 <p>Next time we address this topic we will try to close this all up with popping the attributes off the stack and dealing with the gaps between block elements that should (or should not) appear.</p>
 
       
@@ -311,7 +269,7 @@ End Sub
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-writing-the-pdf/" data-id="ckjpxkg3i002lsgx2knpqbyik" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-writing-the-pdf/" data-id="ckjzuiehk002ecgx2jb4xrrpo" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -430,7 +388,7 @@ stack.Push(p);
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-parsing-html/" data-id="ckjpxkg3d002hsgx2uexv2376" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-parsing-html/" data-id="ckjzuiehk002fcgx2hozgi4t1" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -500,7 +458,7 @@ stack.Push(p);
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itext-in-action-–-creating-and-manipulating-pdf/" data-id="ckjpxkg3a002dsgx2urtsvspz" class="article-share-link">
+      <a data-url="http://davembush.github.com/itext-in-action-–-creating-and-manipulating-pdf/" data-id="ckjzuiehl002gcgx2ogu4aufb" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -577,7 +535,7 @@ stack.Push(p);
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-splitter/" data-id="ckjpxkg4c003dsgx2ee1zhb3i" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-splitter/" data-id="ckjzuieia003acgx2xgq1btam" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -654,7 +612,7 @@ stack.Push(p);
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-cleaning-html/" data-id="ckjpxkg3j002nsgx2calbyjaf" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-cleaning-html/" data-id="ckjzuiehm002hcgx2umtv60e3" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -727,7 +685,7 @@ stack.Push(p);
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/manually-adding-event-handlers-in-vb-net/" data-id="ckjpxkg4i003jsgx2ww5j7b72" class="article-share-link">
+      <a data-url="http://davembush.github.com/manually-adding-event-handlers-in-vb-net/" data-id="ckjzuieij003icgx2sgfmjozh" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -793,7 +751,7 @@ stack.Push(p);
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-prerequisites/" data-id="ckjpxkg3l002psgx2vdrwjkk3" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-prerequisites/" data-id="ckjzuiehn002icgx2ey0d6apf" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -864,7 +822,7 @@ stack.Push(p);
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-positioning-text/" data-id="ckjpxkg3b002fsgx2egblvetn" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-positioning-text/" data-id="ckjzuieho002jcgx2uksg4nuc" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
