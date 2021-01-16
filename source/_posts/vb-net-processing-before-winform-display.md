@@ -22,7 +22,8 @@ If you program in CSharp, you probably already know the answer to this question,
 
 When CSharp runs a Windows Forms application, it writes out the following code in Program.cs (in VS 2008, earlier versions put this in the main form).
 
-\[STAThread\]
+``` csharp
+[STAThread]
 static void Main()
 {
     Application.EnableVisualStyles();
@@ -30,8 +31,7 @@ static void Main()
         SetCompatibleTextRenderingDefault(false);
     Application.Run(new Form1());
 }
-
-[](//11011.net/software/vspaste)
+```
 
 In VB.NET there is no code that looks like this, because VB.NET writes the code for us behind the scenes.
 
@@ -41,13 +41,15 @@ Since I’m assuming that you already have the Windows Form application created,
 
 In your module, create a function called “main” that has the code CSharp would have given us.
 
-    Public Sub main()
-        Application.EnableVisualStyles()
-        Application.SetCompatibleTextRenderingDefault(False)
-        Application.Run(New Form1())
-    End Sub 
+``` vb
+Public Sub main()
+    Application.EnableVisualStyles()
+    Application.SetCompatibleTextRenderingDefault(False)
+    Application.Run(New Form1())
+End Sub
+```
 
-[](//11011.net/software/vspaste)Now go to your project properties and go to the Application tab.
+Now go to your project properties and go to the Application tab.
 
 ![image](/uploads/2009/08/image.png "image")
 
@@ -55,18 +57,18 @@ Find the check box that says, “Enable Application Framework” and un-check it
 
 ![image](/uploads/2009/08/image1.png "image")
 
-Then change the startup object to “Sub Main".”
+Then change the startup object to “Sub Main”
 
 At this point, your application should run as it always has.  To put the checks in that you requested, write that code prior to all the Application… statements that we put in sub main and put an if/then/end if statement around the Application… statements.
 
-[](//11011.net/software/vspaste)
+``` vb
+Public Sub main()
+    Dim ChecksWereOk As Boolean = False ' your checks here If ChecksWereOk Then Application.EnableVisualStyles()
+        Application. _
+            SetCompatibleTextRenderingDefault(False)
+        Application.Run(New Form1())
+    End If
+End Sub
+```
 
-    Public Sub main()
-        Dim ChecksWereOk As Boolean = False ' your checks here If ChecksWereOk Then Application.EnableVisualStyles()
-            Application. _
-                SetCompatibleTextRenderingDefault(False)
-            Application.Run(New Form1())
-        End If
-    End Sub 
-
-[](//11011.net/software/vspaste)And that should do the trick for you.
+And that should do the trick for you.
