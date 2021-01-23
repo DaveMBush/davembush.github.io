@@ -22,40 +22,50 @@ _Once again, we are building on previous articles about using iTextSharp.  So i
 
 To place a block of text on the screen that is going to have multiple formats in it (bold, underline, etc) I use the ColumnText class.  This allows me to specify the rectangle or, if I want, some irregular shape, to place the text in.  I handle determining where this rectangle is on the page in the same way that I determine where an image should go.  I have the designer place a form field on the screen and then I use that to get my coordinates.
 
-float\[\] fieldPosition = null;
-fieldPosition = 
+``` csharp
+float[] fieldPosition = null;
+fieldPosition =
     fields.GetFieldPositions("fieldNameInThePDF");
-left = fieldPosition\[1\];
-right = fieldPosition\[3\];
-top = fieldPosition\[4\];
-bottom = fieldPosition\[2\];
+left = fieldPosition[1];
+right = fieldPosition[3];
+top = fieldPosition[4];
+bottom = fieldPosition[2];
 if (rotation == 90)
 {
-    left = fieldPosition\[2\];
-    right = fieldPosition\[4\];
-    top = pageSize.Right - fieldPosition\[1\];
-    bottom = pageSize.Right - fieldPosition\[3\];
+    left = fieldPosition[2];
+    right = fieldPosition[4];
+    top = pageSize.Right - fieldPosition[1];
+    bottom = pageSize.Right - fieldPosition[3];
 }
+```
 
 Once I have the position, the next thing I need to do is to create my ColumnText object.  This requires the same ContentByte object that we used for the images.
 
+``` csharp
 PdfContentByte over = stamp.GetOverContent(1);
 ColumnText ct = new ColumnText(over);
+```
 
 And now I can set the rectangle to print into.
 
+``` csharp
 ct.SetSimpleColumn(left, bottom, right, top,
     15, Element.ALIGN_LEFT);
+```
 
-[](//11011.net/software/vspaste)The 15 represents the leading you want (space between characters vertically). You may need to adjust that number.
+The 15 represents the leading you want (space between characters vertically). You may need to adjust that number.
 
 Once you have your rectangle, you can add paragraphs to it.  Paragraphs are composed of smaller units called chunks that can be formatted.  If you want a paragraph that is all formatted the same you can make a call that looks like this.
 
+``` csharp
 Paragraph p = new Paragraph(
-    new Chunk("Some Text here", 
+    new Chunk("Some Text here",
         FontFactory.GetFont(
           "Arial", 14, Font.BOLD, Color.RED)));
+```
 
-[](//11011.net/software/vspaste)and then add the paragraph to your rectangle
+and then add the paragraph to your rectangle
 
+``` csharp
 ct.AddElement(p);
+```

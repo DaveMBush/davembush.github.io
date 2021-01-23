@@ -20,13 +20,11 @@ In CSharp, there is no handles clause, so figuring out how to manually wire up t
 
 The syntax for adding event handlers manually is not that difficult.
 
-[](//11011.net/software/vspaste)
-
+``` vp
 AddHandler m_button.Click, AddressOf buttonClickMethod
+```
 
-[](//11011.net/software/vspaste)
-
-[](//11011.net/software/vspaste)If you’ve written any threading code, you’ll notice that this looks similar to the code you might have written for that.
+If you’ve written any threading code, you’ll notice that this looks similar to the code you might have written for that.
 
 The AddHandler statement takes two parameters.  The first is the event we are going to handle--in this case, the click event from the object that m_button is pointing to.
 
@@ -34,14 +32,16 @@ The second parameter is a pointer to a function that will handle the event.  Wh
 
 To reference a method in another object
 
-AddHandler m\_button.Click, \_
+``` vb
+AddHandler m_button.Click, _
     AddressOf SomeOtherObject.buttonClickMethod
+```
 
-[](//11011.net/software/vspaste)
+To reference a shared method
 
-[](//11011.net/software/vspaste)To reference a shared method
-
-AddHandler m\_button.Click, \_
+``` vb
+AddHandler m_button.Click, _
     AddressOf SomeClass.buttonClickMethod
+```
 
 Which gives us quite a bit of flexibility when we dynamically wire up our events.

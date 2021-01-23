@@ -25,12 +25,14 @@ A Chunk is our second object that we will be using.  The Chunk is the main obje
 
 Typical code to place text into a PDF document would look something like this
 
-p = new Paragraph(new Chunk("text that needs a font", 
+``` csharp
+p = new Paragraph(new Chunk("text that needs a font",
     FontFactory.GetFont("Arial", 10, Font.NORMAL, Color.BLACK)));
 p.Alignment = (Element.ALIGN_CENTER);
 ct.AddElement(p);
+```
 
-[](//11011.net/software/vspaste)where “ct” is an object of type ColumnText that we discussed last week.
+where “ct” is an object of type ColumnText that we discussed last week.
 
 The only other two classes we need to discuss are the list classes.  We use the List to create an item that will handle both the OL and UL tags.  The ListItem class will handle the individual items within the list.  The List constructor handles which of the two types of list we are dealing with by specifying true or false in the first parameter, numbered.
 

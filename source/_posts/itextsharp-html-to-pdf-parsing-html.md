@@ -25,8 +25,9 @@ The key to parsing the HTML is that it is in XHTML form.  This allows us to use
 
 Every time you Read() an XMLTextReader object, you will either be on a beginning tag, an ending tag, or text.  So the core of our loop looks something like this
 
-XmlTextReader reader = 
-    new XmlTextReader(xhtmlString, 
+``` csharp
+XmlTextReader reader =
+    new XmlTextReader(xhtmlString,
         XmlNodeType.Element, null);
 while (reader.Read())
 {
@@ -43,17 +44,18 @@ while (reader.Read())
     }
 
 }
+```
 
-[](//11011.net/software/vspaste)where xhtmlString is the cleaned up HTML code from last week.
+where xhtmlString is the cleaned up HTML code from last week.
 
 The core part of the translation is dependent on the fact that we have matching open and closing tags and that each time we hit an open tag, we can determine what the characteristics of that tag are.  Bold, underline, font, font size, etc.
 
 So each time we hit the open tag, we will look up the characteristics.  For simplicity, I put this information in a resource file so that I could just look it up using code that looks something like this:
 
-[](//11011.net/software/vspaste)
-
+``` csharp
 fontName = Resources.html2pdf .ResourceManager
     .GetString(tagName + "_fontName");
+```
 
 rather than having another long case statement in my code.
 
@@ -61,6 +63,7 @@ Once we have the information we want from the resource file, we place the curren
 
 Here’s the code that does that
 
+``` csharp
 if (!reader.IsEmptyElement)
 {
     fontName = Resources.html2pdf.
@@ -83,11 +86,10 @@ if (!reader.IsEmptyElement)
         ResourceManager.
         GetString(tagName + "_fontCharacteristics");
     if (fontCharacteristics != null)
-        currentFontCharacteristics = 
+        currentFontCharacteristics =
             fontCharacteristics;
 }
-
-[](//11011.net/software/vspaste)
+```
 
 Note that we only push the attributes of the element onto the stack if there is no content in the element.  This is because the closing node type will never be triggered on an element that has no content inside of it (BR and IMG tags, for example).
 
@@ -97,19 +99,20 @@ Frankly, the code for this was not fun to write.  Keep in mind too that there i
 
 Here’s that code
 
+``` csharp
 strIndent = Resources.html2pdf.ResourceManager.GetString(tagName + "_indent");
 isBlock = Resources.html2pdf.ResourceManager.GetString(tagName + "_isBlock");
 string isList = Resources.html2pdf.ResourceManager.GetString(tagName + "_isList");
 if (isBlock != null && isBlock.ToLower() == "true")
 {
-    string strIsList = 
+    string strIsList =
         Resources.html2pdf .ResourceManager
         .GetString(tagName + "_isULList");
-    
-    if (strIsList != null && 
+
+    if (strIsList != null &&
         strIsList.ToLower() == "true")
     {
-        p = new List(false, 
+        p = new List(false,
             System.Convert .ToSingle(strIndent));
     }
     else {
@@ -118,7 +121,7 @@ if (isBlock != null && isBlock.ToLower() == "true")
             .GetString(tagName + "isOLList");
         if (strIsList != null && strIsList.ToLower() == "true")
         {
-            p = new List(true, 
+            p = new List(true,
                 System.Convert.ToSingle(strIndent));
         }
         else {
@@ -144,8 +147,7 @@ if (isBlock != null && isBlock.ToLower() == "true")
     else list.Add(p);
     stack.Push(p);
 }
-
-[](//11011.net/software/vspaste)
+```
 
 You’ll notice that there is a bit of code in here that deals with a p variable.  This code is needed so that if we are dealing with a block tag, we have a paragraph or list item to put the other content inside of the block when we hit it.  If we are dealing with an inline tag, we deal with that when we add the text.
 
