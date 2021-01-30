@@ -122,7 +122,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-finishing-up/" data-id="ckk9vcsgn002clgx2vjbnyvh7" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-finishing-up/" data-id="ckkjufokw002f9wx20x6uf978" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -197,7 +197,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/vb-net-processing-before-winform-display/" data-id="ckk9vcsjr005glgx2ssmpx571" class="article-share-link">
+      <a data-url="http://davembush.github.com/vb-net-processing-before-winform-display/" data-id="ckkjufone005s9wx20heoef5v" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -269,7 +269,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-writing-the-pdf/" data-id="ckk9vcsgr002hlgx21m3cssv9" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-writing-the-pdf/" data-id="ckkjufokz002i9wx2zkprnn7a" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -346,7 +346,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-parsing-html/" data-id="ckk9vcsgs002ilgx2g4vye0ro" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-parsing-html/" data-id="ckkjufol0002k9wx2xgyv2b12" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -419,7 +419,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-cleaning-html/" data-id="ckk9vcsgt002jlgx2r8i3feoh" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-cleaning-html/" data-id="ckkjufol2002l9wx2xf9ccrt2" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -489,7 +489,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/manually-adding-event-handlers-in-vb-net/" data-id="ckk9vcsho003flgx22p38sigu" class="article-share-link">
+      <a data-url="http://davembush.github.com/manually-adding-event-handlers-in-vb-net/" data-id="ckkjufom3003p9wx2b6q1jp4k" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -555,7 +555,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-prerequisites/" data-id="ckk9vcsgr002glgx2qoaah610" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-prerequisites/" data-id="ckkjufokv002d9wx2bbbgf1tk" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -626,7 +626,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-positioning-text/" data-id="ckk9vcsgp002flgx28kg174bc" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-html-to-pdf-–-positioning-text/" data-id="ckkjufokw002e9wx2f2veti5o" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -675,46 +675,18 @@
         <p><img src="/uploads/2009/06/AutumnLeaves.jpg" alt="Maple leaves in Autumn." title="Maple leaves in Autumn."></p>
 <p>Last week I showed how to use form fields to control placement of dynamic data.</p>
 <p>But what if you want to dynamically place images in your PDF?  You can stuff them into a form field like you can with text.</p>
-<p>However, one of the items you can retrieve from the form field is its location on the screen.  Using this, a little math, and some iTextSharp image code, we can place images in our PDF where the form field was located.  Here’s how I do it.</p>
-<p>First, this code builds on the previous code I’ve already demonstrated in previous articles.  If this is your first time here, you’ll want to scroll to the bottom of this post where it says, “Other Posts in iTextSharp” and read them first.</p>
-<p>To retrieve the position of the form field, you’ll need to call the field’s GetFieldPositions() method.  It is plural because it is going to get the position of every field in the document with the name you specify.  For our purposes, we will assume that the field only exists once and is on the first page.</p>
-<p>float[] topImagePosition = null;<br>topImagePosition =<br>    fields.GetFieldPositions(“m_topPicture”);</p>
-<p><a href="//11011.net/software/vspaste"></a>The float array that is returned has five elements:</p>
-<ul>
-<li>Page Number (starting at 1)</li>
-<li>Left</li>
-<li>Bottom</li>
-<li>Right</li>
-<li>Top</li>
-</ul>
-<p>If the page rotation is 90 degrees, you’ll want to rotate the position information.  You can check the rotation using</p>
-<p>rotation = pdfReader.GetPageRotation(1);</p>
-<p><a href="//11011.net/software/vspaste"></a>Where GetPageRotation() takes a parameter representing the page number, starting at 1.</p>
-<p>You can rotate the positions using this code.</p>
-<p>left = topImagePosition[1];<br>right = topImagePosition[3];<br>top = topImagePosition[4];<br>bottom = topImagePosition[2];<br>if (rotation == 90)<br>{<br>    left = topImagePosition[2];<br>    right = topImagePosition[4];<br>    top = pageSize.Right - topImagePosition[1];<br>    bottom = pageSize.Right - topImagePosition[3];<br>}</p>
-<p><a href="//11011.net/software/vspaste"></a>Next, you’ll want to retrieve the image you want to display on the PDF.  There are APIs for retrieving the image from a web site, but most of the time you’ll be retrieving the image from your hard drive.  Here is the code to do that.</p>
-<p>iTextSharp.text.Image topImage =<br>    iTextSharp.text.Image.GetInstance(<br>    Server.MapPath(imagelocation +<br>    productRow.imagefilename));</p>
-<p><a href="//11011.net/software/vspaste"></a>Before we place the image on the page, the next thing you’ll want to do is scale the image so that it fits in the rectangle</p>
-<p>topImage.ScaleToFit(right - left, top - bottom);</p>
-<p><a href="//11011.net/software/vspaste"></a>And then we position it</p>
-<p>topImage.SetAbsolutePosition(<br>    left + ((right - left) - topImage.ScaledWidth) /<br>    2, top - topImage.ScaledHeight);</p>
-<p><a href="//11011.net/software/vspaste"></a>and then we put it into the PDF</p>
-<p>PdfContentByte contentByte = stamp.GetOverContent(1);<br>contentByte.AddImage(topImage);</p>
-<p><a href="//11011.net/software/vspaste"></a>Notice the contextByte thing.  That’s the critical part of how we get the images into the PDF.</p>
-<p>Finally, you’ll want to remove the field from the form so that it doesn’t show up.</p>
-<p>fields.RemoveField(“m_topPicture”);</p>
-<p><a href="//11011.net/software/vspaste"></a>I’m not sure this is really needed, but it doesn’t hurt to clean up things you no longer need.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/itextsharp-–-adding-images/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-adding-images/" data-id="ckk9vcsgp002elgx2j6l2919k" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-adding-images/" data-id="ckkjufokr00299wx2toy12ff3" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -763,40 +735,18 @@
         <p><img src="/uploads/2009/06/sahara.jpg" alt="sahara" title="sahara"></p>
 <p>Chances are, you’ll eventually want to use a dialog box in combination with some form elements, and when you do, you’ll probably want to implement some validation.</p>
 <p>True, there are some great validation routines available in jQuery, but they only validate on the client side.  They are, after all, Javascript.</p>
-<p>As you are probably aware, the advantage of using validation controls with ASP.NET is that they validate on both the client side and the server side and even if we assume that everyone using our web page is using Javascript and has it turned on, there is still the possibility that someone will turn Javascript off so they can circumvent your validations.</p>
-<p>So how do we use validation controls AND allow the form to be a jQuery dialog?</p>
-<p>First, let’s set up a simple web form that we can turn into a dialog.  I suggest using a panel control to put all of our form elements in so that we can set the default button.  We will then wrap the panel in a DIV tag that will become our dialog.</p>
-<p>Here is our main HTML for the form</p>
-<p><a href="//11011.net/software/vspaste"></a><a href="//11011.net/software/vspaste"></a></p>
-<pre><code>&lt;div id=&quot;dialog&quot; title=&quot;Enter your name&quot;&gt;
-&lt;asp:Panel DefaultButton=&quot;Button1&quot; ID=&quot;Panel1&quot; runat=&quot;server&quot;&gt;
-    &lt;asp:Label ID=&quot;Label1&quot; runat=&quot;server&quot; Text=&quot;Name:&quot;&gt;&lt;/asp:Label&gt;
-    &lt;asp:TextBox ID=&quot;TextBox1&quot; runat=&quot;server&quot; ValidationGroup=&quot;Dialog&quot;&gt;&lt;/asp:TextBox&gt;
-    &lt;asp:RequiredFieldValidator ID=&quot;RequiredFieldValidator1&quot; runat=&quot;server&quot; ControlToValidate=&quot;TextBox1&quot; Display=&quot;Dynamic&quot; ErrorMessage=&quot;Enter your name&quot; ValidationGroup=&quot;Dialog&quot;&gt;
-    &lt;/asp:RequiredFieldValidator&gt;
-    &lt;br /&gt;
-    &lt;asp:Button ID=&quot;Button1&quot; runat=&quot;server&quot; Text=&quot;Button&quot; ValidationGroup=&quot;Dialog&quot; /&gt;
-&lt;/asp:Panel&gt;&lt;/div&gt; 
-</code></pre><p><a href="//11011.net/software/vspaste"></a></p>
-<p>There are a couple of things to note:</p>
-<ol>
-<li>I’ve used the DefaultButton property to tell .NET that Button1 should fire if I’m in a control inside this dialog and I press the enter key.  You’ll need this if the page has other forms on it.</li>
-<li>I’ve also set the ValidationGroup for all of the appropriate controls on the page.  This is particularly important.  If you have other buttons that cause a postback that are not in the dialog, it will still try to run the validations because, as far as .NET is concerned the validation controls are visible and should be run.  By making them part of a validation group they will only fire when the Button1 control causes the post back.</li>
-</ol>
-<p>Next, we’ll want to turn this all into a dialog.  We do that in our Javascript file using the familiar syntax</p>
-<p>$(“#dialog”).dialog({ modal: true,<br>    bgiframe: true });</p>
-<p><a href="//11011.net/software/vspaste"></a>As long as all of your validation controls use client side validation, this should be all you need.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/jquery-dialog-–-with-validation-controls/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-dialog-–-with-validation-controls/" data-id="ckk9vcshb0035lgx2kcsogxmg" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-dialog-–-with-validation-controls/" data-id="ckkjufolk002z9wx2ao7jhuqa" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

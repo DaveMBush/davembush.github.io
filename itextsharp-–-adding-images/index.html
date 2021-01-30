@@ -6,7 +6,7 @@
   <title>iTextSharp – Adding Images | Dave&#39;s Notebook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Last week I showed how to use form fields to control placement of dynamic data. But what if you want to dynamically place images in your PDF?  You can stuff them into a form field like you can with t">
-<meta name="keywords" content="c#,iTextSharp,PDF,images">
+<meta name="keywords" content="c#,images,iTextSharp,PDF">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iTextSharp – Adding Images">
 <meta property="og:url" content="http://davembush.github.com/itextsharp-–-adding-images/index.html">
@@ -14,7 +14,7 @@
 <meta property="og:description" content="Last week I showed how to use form fields to control placement of dynamic data. But what if you want to dynamically place images in your PDF?  You can stuff them into a form field like you can with t">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2009/06/AutumnLeaves.jpg">
-<meta property="og:updated_time" content="2018-06-30T18:23:01.000Z">
+<meta property="og:updated_time" content="2021-01-30T14:59:44.162Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iTextSharp – Adding Images">
 <meta name="twitter:description" content="Last week I showed how to use form fields to control placement of dynamic data. But what if you want to dynamically place images in your PDF?  You can stuff them into a form field like you can with t">
@@ -114,11 +114,12 @@
         <p><img src="/uploads/2009/06/AutumnLeaves.jpg" alt="Maple leaves in Autumn." title="Maple leaves in Autumn."></p>
 <p>Last week I showed how to use form fields to control placement of dynamic data.</p>
 <p>But what if you want to dynamically place images in your PDF?  You can stuff them into a form field like you can with text.</p>
+<a id="more"></a>
 <p>However, one of the items you can retrieve from the form field is its location on the screen.  Using this, a little math, and some iTextSharp image code, we can place images in our PDF where the form field was located.  Here’s how I do it.</p>
 <p>First, this code builds on the previous code I’ve already demonstrated in previous articles.  If this is your first time here, you’ll want to scroll to the bottom of this post where it says, “Other Posts in iTextSharp” and read them first.</p>
 <p>To retrieve the position of the form field, you’ll need to call the field’s GetFieldPositions() method.  It is plural because it is going to get the position of every field in the document with the name you specify.  For our purposes, we will assume that the field only exists once and is on the first page.</p>
-<p>float[] topImagePosition = null;<br>topImagePosition =<br>    fields.GetFieldPositions(“m_topPicture”);</p>
-<p><a href="//11011.net/software/vspaste"></a>The float array that is returned has five elements:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">float</span>[] topImagePosition = <span class="literal">null</span>;</span><br><span class="line">topImagePosition =</span><br><span class="line">    fields.GetFieldPositions(<span class="string">"m_topPicture"</span>);</span><br></pre></td></tr></table></figure>
+<p>The float array that is returned has five elements:</p>
 <ul>
 <li>Page Number (starting at 1)</li>
 <li>Left</li>
@@ -127,22 +128,22 @@
 <li>Top</li>
 </ul>
 <p>If the page rotation is 90 degrees, you’ll want to rotate the position information.  You can check the rotation using</p>
-<p>rotation = pdfReader.GetPageRotation(1);</p>
-<p><a href="//11011.net/software/vspaste"></a>Where GetPageRotation() takes a parameter representing the page number, starting at 1.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rotation = pdfReader.GetPageRotation(<span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<p>Where <code>GetPageRotation()</code> takes a parameter representing the page number, starting at 1.</p>
 <p>You can rotate the positions using this code.</p>
-<p>left = topImagePosition[1];<br>right = topImagePosition[3];<br>top = topImagePosition[4];<br>bottom = topImagePosition[2];<br>if (rotation == 90)<br>{<br>    left = topImagePosition[2];<br>    right = topImagePosition[4];<br>    top = pageSize.Right - topImagePosition[1];<br>    bottom = pageSize.Right - topImagePosition[3];<br>}</p>
-<p><a href="//11011.net/software/vspaste"></a>Next, you’ll want to retrieve the image you want to display on the PDF.  There are APIs for retrieving the image from a web site, but most of the time you’ll be retrieving the image from your hard drive.  Here is the code to do that.</p>
-<p>iTextSharp.text.Image topImage =<br>    iTextSharp.text.Image.GetInstance(<br>    Server.MapPath(imagelocation +<br>    productRow.imagefilename));</p>
-<p><a href="//11011.net/software/vspaste"></a>Before we place the image on the page, the next thing you’ll want to do is scale the image so that it fits in the rectangle</p>
-<p>topImage.ScaleToFit(right - left, top - bottom);</p>
-<p><a href="//11011.net/software/vspaste"></a>And then we position it</p>
-<p>topImage.SetAbsolutePosition(<br>    left + ((right - left) - topImage.ScaledWidth) /<br>    2, top - topImage.ScaledHeight);</p>
-<p><a href="//11011.net/software/vspaste"></a>and then we put it into the PDF</p>
-<p>PdfContentByte contentByte = stamp.GetOverContent(1);<br>contentByte.AddImage(topImage);</p>
-<p><a href="//11011.net/software/vspaste"></a>Notice the contextByte thing.  That’s the critical part of how we get the images into the PDF.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">left = topImagePosition[<span class="number">1</span>];</span><br><span class="line">right = topImagePosition[<span class="number">3</span>];</span><br><span class="line">top = topImagePosition[<span class="number">4</span>];</span><br><span class="line">bottom = topImagePosition[<span class="number">2</span>];</span><br><span class="line"><span class="keyword">if</span> (rotation == <span class="number">90</span>)</span><br><span class="line">&#123;</span><br><span class="line">    left = topImagePosition[<span class="number">2</span>];</span><br><span class="line">    right = topImagePosition[<span class="number">4</span>];</span><br><span class="line">    top = pageSize.Right - topImagePosition[<span class="number">1</span>];</span><br><span class="line">    bottom = pageSize.Right - topImagePosition[<span class="number">3</span>];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Next, you’ll want to retrieve the image you want to display on the PDF.  There are APIs for retrieving the image from a web site, but most of the time you’ll be retrieving the image from your hard drive.  Here is the code to do that.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">iTextSharp.text.Image topImage =</span><br><span class="line">    iTextSharp.text.Image.GetInstance(</span><br><span class="line">    Server.MapPath(imagelocation +</span><br><span class="line">    productRow.imagefilename));</span><br></pre></td></tr></table></figure>
+<p>Before we place the image on the page, the next thing you’ll want to do is scale the image so that it fits in the rectangle</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">topImage.ScaleToFit(right - left, top - bottom);</span><br></pre></td></tr></table></figure>
+<p>And then we position it</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">topImage.SetAbsolutePosition(</span><br><span class="line">    left + ((right - left) - topImage.ScaledWidth) /</span><br><span class="line">    <span class="number">2</span>, top - topImage.ScaledHeight);</span><br></pre></td></tr></table></figure>
+<p>and then we put it into the PDF</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">PdfContentByte contentByte = stamp.GetOverContent(<span class="number">1</span>);</span><br><span class="line">contentByte.AddImage(topImage);</span><br></pre></td></tr></table></figure>
+<p>Notice the contextByte thing.  That’s the critical part of how we get the images into the PDF.</p>
 <p>Finally, you’ll want to remove the field from the form so that it doesn’t show up.</p>
-<p>fields.RemoveField(“m_topPicture”);</p>
-<p><a href="//11011.net/software/vspaste"></a>I’m not sure this is really needed, but it doesn’t hurt to clean up things you no longer need.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fields.RemoveField(<span class="string">"m_topPicture"</span>);</span><br></pre></td></tr></table></figure>
+<p>I’m not sure this is really needed, but it doesn’t hurt to clean up things you no longer need.</p>
 
       
     </div>
@@ -153,7 +154,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-adding-images/" data-id="ckk9vcsgp002elgx2j6l2919k" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-adding-images/" data-id="ckkjufokr00299wx2toy12ff3" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
