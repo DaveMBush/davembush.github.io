@@ -16,7 +16,7 @@ date: 2009-06-17 08:06:00
 
 While there are several sites on the Internet that provide examples of how to use iText, I’ve found that the documentation for iTextSharp is a little harder to come by.  So I thought it might be helpful if I provided some posts on how I use iTextSharp along with some of the gotchas I’ve encountered along the way.
 
--more-->
+<!-- more -->
 
 To use iTextSharp, you will need to add a reference to the library in your code, or simply drop the code into your bin directory of your ASP.NET application.
 
@@ -24,20 +24,22 @@ The main trick in translating the iText samples and documentation to iTextSharp 
 
 You’ll also need to know that the namespace for iTextSharp is different from iText.  Be sure to include the following line at the top of any code you write that uses iTextSharp
 
+``` csharp
 using iTextSharp.text;
 using iTextSharp.text.pdf;
-
-[](//11011.net/software/vspaste)
+```
 
 To get your ASP.NET page to return a PDF file, you’ll want to add the following code at the top of your Page_Load event handler:
 
+``` csharp
 Response.Clear();
 Response.ContentType = "application/pdf";
 Response.AddHeader("ContentType", "application/pdf");
-Response.AddHeader("Content-Disposition", 
+Response.AddHeader("Content-Disposition",
     "inline;filename=\\"FileName.pdf\\"");
+```
 
-[](//11011.net/software/vspaste)The Response.Clear() line clears out any input that has already been sent back to the browser.
+The `Response.Clear()` line clears out any input that has already been sent back to the browser.
 
 The next line tells the browser that what is coming back is a PDF, not HTML.
 
