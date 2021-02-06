@@ -118,7 +118,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/itextsharp-–-the-easy-way/" data-id="ckkjufoky002h9wx250psn58x" class="article-share-link">
+      <a data-url="http://davembush.github.com/itextsharp-–-the-easy-way/" data-id="ckku0wppl002k7kx2n7iadcws" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -177,85 +177,12 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/pdfs-using-itextsharp/" data-id="ckkjufom3003q9wx2l9suhekz" class="article-share-link">
+      <a data-url="http://davembush.github.com/pdfs-using-itextsharp/" data-id="ckku0wpqt003u7kx2u9o07f99" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PDF/">PDF</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iText/">iText</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iTextSharp/">iTextSharp</a></li></ul>
-
-
-    </footer>
-  </div>
-  
-</article>
-
-
-
-  
-    <article id="post-jquery-progressbar" class="article article-type-post" itemscope itemprop="blogPost">
-
-  <header class="article-header">
-    
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/jquery-progressbar/">jQuery Progressbar</a>
-    </h1>
-  
-
-
-  </header>
-
-  <div class="article-meta">
-    <div class="article-datetime">
-  <a href="/jquery-progressbar/" class="article-date"><time datetime="2009-05-20T11:48:00.000Z" itemprop="datePublished">2009-05-20</time></a>
-</div>
-
-    
-    
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/jQuery/">jQuery</a>
-  </div>
-
-
-  </div>
-  <div class="article-inner">
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="/uploads/2009/05/arct013.jpg" alt="arct-013" title="arct-013"> Once you venture into the land of AJAX you’ll soon discover the need to let your user know that some work is taking place in the background.  If you can, you’ll want to let them know just how long that work will take before they can continue.  For that, jQuery has the progress bar.</p>
-<p>Just like most of the other jQuery UI widgets, you’ll need to make sure you have a theme created.  You can see some of the earlier posts on jQuery UI to find out how to do that.</p>
-<p>To use the progress bar, you’ll need some HTML.</p>
-<div id="progressbar"></div>
-
-<p><a href="//11011.net/software/vspaste"></a>yep.  That’s all you need.  The progress bar will size itself to the containing div.</p>
-<p>Next, you’ll need some jQuery code.  For now we’ll go with something simple</p>
-<p>$(function() {<br>    $(“#progressbar”).progressbar({ value: 37 });<br>});</p>
-<p><a href="//11011.net/software/vspaste"></a></p>
-<p>Which will render a progress bar 37% complete</p>
-<p><img src="/uploads/2009/05/image3.png" alt="image" title="image"></p>
-<p>Of course a progress bar is suppose to show some status.  So let’s simulate some status using setTimeout()</p>
-<p>$(function() {<br>$(“#progressbar”).progressbar({ value: 0 });<br>setTimeout(updateProgress, 500);<br>});</p>
-<p>function updateProgress() {<br>  var progress;<br>  progress = $(“#progressbar”)<br>    .progressbar(“option”,”value”);<br>  if (progress &lt; 100) {<br>      $(“#progressbar”)<br>        .progressbar(“option”, “value”, progress + 1);<br>      setTimeout(updateProgress, 500);<br>  }<br>}</p>
-<p><a href="//11011.net/software/vspaste"></a>Here we are calling the updateProgress function every 1/2 second, retrieving the current value of the progress bar and incrementing it by one if it has not reached 100% done yet.</p>
-<p>If you need them, there is an event to handle when the progress bar has been changed and methods to disable, enable, and destroy the progress bar.</p>
-<p>It really is a pretty simple control.</p>
-
-      
-    </div>
-
-    
-      
-
-    
-
-    <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-progressbar/" data-id="ckkjufoln00329wx2i0m1b9pe" class="article-share-link">
-        <i class="fa fa-share"></i> Share
-      </a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery/">jQuery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/">javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/progressbar/">progressbar</a></li></ul>
 
 
     </footer>
@@ -301,16 +228,15 @@
 <p>But what I didn’t know and couldn’t expect is that we can make use of this string pool programmatically as well.</p>
 <p><strong>Why would you want to do this yourself?</strong></p>
 <p>Keep in mind that string concatenation in .NET requires the creation of a new object.  So, code such as this,</p>
-<p>String a = “abcd”;<br>String b = “efgh”;<br>a += b;</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">String a = <span class="string">"abcd"</span>;</span><br><span class="line">String b = <span class="string">"efgh"</span>;</span><br><span class="line">a += b;</span><br></pre></td></tr></table></figure>
 <p>creates a new object at line 3 every time it is executed.</p>
 <p>So that if we add the following line:</p>
-<p>b = “abcdefgh”;</p>
-<p><a href="//11011.net/software/vspaste"></a>we would not be pointing to the same object.  That is, a and b would contain the same content but would be pointing to two entirely different objects.</p>
-<p>if (a == b)<br>    Trace.Write(“A and B contain the same data”);</p>
-<p>if (String.ReferenceEquals(a,b))<br>    Trace.Write(“A and B are the same object”);</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b = <span class="string">"abcdefgh"</span>;</span><br></pre></td></tr></table></figure>
+<p>we would not be pointing to the same object.  That is, a and b would contain the same content but would be pointing to two entirely different objects.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (a == b)</span><br><span class="line">    Trace.Write(<span class="string">"A and B contain the same data"</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (String.ReferenceEquals(a,b))</span><br><span class="line">    Trace.Write(<span class="string">"A and B are the same object"</span>);</span><br></pre></td></tr></table></figure>
 <p><strong>String.Intern Consolidates The Data</strong></p>
 <p>By using String.Intern() we can get both evaluations to be true.</p>
-<p>String a = “abcd”;<br>String b = “efgh”;<br>a = String.Intern(a + b);<br>b = “abcdefgh”;</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">String a = <span class="string">"abcd"</span>;</span><br><span class="line">String b = <span class="string">"efgh"</span>;</span><br><span class="line">a = String.Intern(a + b);</span><br><span class="line">b = <span class="string">"abcdefgh"</span>;</span><br></pre></td></tr></table></figure>
 <p>Now both evaluations above will be true because line 3 places the string “abcdefgh” in the pool and line 4 uses that same string from the pool to assign to b.  Where we might have created two objects, we are now only creating one and referring to it both times.</p>
 <p>You could also use String.IsInterned(string) to determine if a string has already been placed in the string pool and execute optional code based on that.</p>
 <p><strong>When Would You Use This?</strong></p>
@@ -326,7 +252,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/net-string-pool-–-not-just-for-the-compiler/" data-id="ckkjufolz003j9wx2fv8w3sha" class="article-share-link">
+      <a data-url="http://davembush.github.com/net-string-pool-–-not-just-for-the-compiler/" data-id="ckku0wpqh003i7kx29lasa02c" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -380,13 +306,13 @@
 <p>So let’s further evaluate what is happening in our code when we use “” rather than using String.Empty.</p>
 <p><strong>Consider Real World Optimization</strong></p>
 <p>In the article referenced, he does one, and only one, bench mark to prove that “” is faster than String.Empty by putting the code in a loop that could be optimized out.</p>
-<p>if (string.Empty == null) { throw new Exception(); }</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="keyword">string</span>.Empty == <span class="literal">null</span>) &#123; <span class="keyword">throw</span> <span class="keyword">new</span> Exception(); &#125;</span><br></pre></td></tr></table></figure>
 <p>vs</p>
-<p>if (“” == null) { throw new Exception(); }</p>
-<p><a href="//11011.net/software/vspaste"></a>But what about a real world scenario where the code is NOT optimized out?</p>
-<p>String s = String.Empty;<a href="//11011.net/software/vspaste"></a></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (<span class="string">""</span> == <span class="literal">null</span>) &#123; <span class="keyword">throw</span> <span class="keyword">new</span> Exception(); &#125;</span><br></pre></td></tr></table></figure>
+<p>But what about a real world scenario where the code is NOT optimized out?</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String s = String.Empty;</span><br></pre></td></tr></table></figure>
 <p>vs</p>
-<p>String x = “”;<a href="//11011.net/software/vspaste"></a></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">String x = <span class="string">""</span>;</span><br></pre></td></tr></table></figure>
 <p>In my test, there was no noticeable difference.  Sometimes string.Empty was faster and sometimes the empty string was faster.   And I expect the reason they are about the same is because the compiler optimized out the assignment.</p>
 <p>In real life, I would expect String.Empty to take just slightly longer.  But not enough to make it worth worrying about.</p>
 <p><strong>Consider String Comparison Cost</strong></p>
@@ -407,7 +333,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/c-“”-better-than-string-empty/" data-id="ckkjufojg00109wx2c3mbfsjs" class="article-share-link">
+      <a data-url="http://davembush.github.com/c-“”-better-than-string-empty/" data-id="ckku0wpo900107kx2mu6v3e11" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -457,15 +383,13 @@
 <p><a href="//extractmethod.wordpress.com/2008/02/29/just-say-no-to-c-regions/">Just say No! to C# Regions « public abstract string[] Blog()</a></p>
 <p>and</p>
 <p><a href="//extractmethod.wordpress.com/2008/06/02/i-still-say-regions-are-not-usefulbut/">I still say Regions are not useful… but…</a></p>
-<p>arguing that not only should we NOT use code regions, but if we do, we are hiding “bad code.”  He uses words like “retarded,” “lame excuse for a preprocessor tag,” etc.</p>
+<p>Arguing that not only should we NOT use code regions, but if we do, we are hiding “bad code.”  He uses words like “retarded,” “lame excuse for a preprocessor tag,” etc.</p>
 <p>You’d think maybe this guy (gal?) just had a bad day when he wrote this, but no, he goes on to further defend his position in a later post.</p>
 <p>And what I don’t understand at all is how his original post ended up on DotNetKicks today.  It’s an old post that was written last year but was just kicked up to the front page?  I figure someone MUST agree with him or it wouldn’t be there.</p>
 <p>So, are Regions really as evil as Casademora argues that they are?</p>
 <p><strong>First what is a region?</strong></p>
-<p>#region Member Variables</p>
-<p>private bool _refreshState;<br>private bool _isRefresh;</p>
-<p>#endregion Member Variables</p>
-<p><a href="//11011.net/software/vspaste"></a>That’s a region.  See the #region and the #endregion preprocessor tags?  They define a named region in your code.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">region</span> Member Variables</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">bool</span> _refreshState;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">bool</span> _isRefresh;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endregion</span> Member Variables</span></span><br></pre></td></tr></table></figure>
+<p>That’s a region.  See the #region and the #endregion preprocessor tags?  They define a named region in your code.</p>
 <p><strong>Why do they exist?</strong></p>
 <p>Any code you surround with a region is collapsible, just like your methods and properties are.  If you collapse the region above, all you see in your editor is:</p>
 <p><img src="/uploads/2009/04/image1.png" alt="image" title="image"></p>
@@ -495,7 +419,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/just-say-“no-”-to-c-regions-really/" data-id="ckkjufolu003b9wx2x6xd8obt" class="article-share-link">
+      <a data-url="http://davembush.github.com/just-say-“no-”-to-c-regions-really/" data-id="ckku0wpq800377kx2qb0dn5rq" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -548,16 +472,15 @@
 </blockquote>
 <p>There are actually several ways to accomplish what you are trying to do.</p>
 <p>The first and most general solution would be to call the ToCharArray() method off the string.</p>
-<p>Dim strSplit() As String = myString.Split(“/“.ToCharArray())</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Dim</span> strSplit() <span class="keyword">As</span> <span class="built_in">String</span> = myString.Split(<span class="string">"/"</span>.ToCharArray())</span><br></pre></td></tr></table></figure>
 <p>The advantage to this method is that it will work regardless of what size the string is and it will use each character in the string as a delimiter.</p>
 <p>But what if you only have one character in your array?  Surely there is a shorter, cleaner statement we can use.</p>
 <p>As a matter of fact, there are several other options.  You could use Convert.ToChar() or Char.Parse()</p>
-<p>Dim strSplit() As String = _<br>   myString.Split(Convert.ToChar(“/“))</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Dim</span> strSplit() <span class="keyword">As</span> <span class="built_in">String</span> = _</span><br><span class="line">   myString.Split(Convert.ToChar(<span class="string">"/"</span>))</span><br></pre></td></tr></table></figure>
 <p>or</p>
-<p>Dim strSplit() As String = _<br>   myString.Split(Char.Parse(“/“))</p>
-<p><a href="//11011.net/software/vspaste"></a>But the easiest way to convert a single character string to a Char is simply to put a “c” after the closing quote:</p>
-<p>Dim strSplit() As String = myString.Split(“/“c)</p>
-<p><a href="//11011.net/software/vspaste"></a></p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Dim</span> strSplit() <span class="keyword">As</span> <span class="built_in">String</span> = _</span><br><span class="line">   myString.Split(<span class="built_in">Char</span>.Parse(<span class="string">"/"</span>))</span><br></pre></td></tr></table></figure>
+<p>But the easiest way to convert a single character string to a Char is simply to put a “c” after the closing quote:</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Dim</span> strSplit() <span class="keyword">As</span> <span class="built_in">String</span> = myString.Split(<span class="string">"/"</span>c)</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -568,7 +491,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/vb-net-char-from-string-with-option-strict/" data-id="ckkjufona005m9wx2boglv6ds" class="article-share-link">
+      <a data-url="http://davembush.github.com/vb-net-char-from-string-with-option-strict/" data-id="ckku0wprx005h7kx28wsc0fo6" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -633,7 +556,7 @@ if(slideValue &gt; -100)
     setTimeout(scrollWindow, 1000);
 }
 </code></pre><p>}</p>
-<p><a href="//11011.net/software/vspaste"></a>A couple things to note about this function:</p>
+<p>A couple things to note about this function:</p>
 <ul>
 <li>We are retrieving the current position of the slider using the .slider() method of the slider widget.</li>
 <li>We are assuming that the range of our slider is between 0 and -100.</li>
@@ -653,7 +576,7 @@ if(slideValue &gt; -100)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-auto-scrolling-the-slider/" data-id="ckkjufolj002y9wx2oekqg18n" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-auto-scrolling-the-slider/" data-id="ckku0wpq0002y7kx2pod35vtv" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -721,7 +644,7 @@ if(slideValue &gt; -100)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/unable-to-find-connection-for-object-web-config/" data-id="ckkjufon300599wx29v7xdari" class="article-share-link">
+      <a data-url="http://davembush.github.com/unable-to-find-connection-for-object-web-config/" data-id="ckku0wprs005b7kx2vgqiiq5w" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -792,12 +715,69 @@ if(slideValue &gt; -100)
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/jquery-using-slider-as-a-scrollbar/" data-id="ckkjufols00399wx21r4jfo81" class="article-share-link">
+      <a data-url="http://davembush.github.com/jquery-using-slider-as-a-scrollbar/" data-id="ckku0wpq800387kx25bclxymq" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jQuery/">jQuery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrollbar/">scrollbar</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/scrolling-content/">scrolling content</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/slider/">slider</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ui/">ui</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-infinite-302-loop-how-would-you-even-know" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/infinite-302-loop-how-would-you-even-know/">Infinite 302 Loop - How would you even know?</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/infinite-302-loop-how-would-you-even-know/" class="article-date"><time datetime="2009-03-11T11:08:36.000Z" itemprop="datePublished">2009-03-11</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a> / <a class="article-category-link" href="/categories/ASP-NET/ASP-NET-MVC/">ASP.NET MVC</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/03/trav-053.jpg" alt="trav-053"> It happens eventually to all web developers.  It’s happened to me twice in the last week.  You make one simple change to your web site and then you can no longer access it.  When you browse to it in IE you get some completely useless “We can’t access the page you are looking for” error.  In FireFox, it at least tells you that you have a “Redirect Loop” and in IE6, if you are fortunate enough to still be writing for that browser, you can see that it is blinking at you as it tries to retrieve the page(s) multiple times.  But how do you know what’s redirecting to what?  For that matter, other than running a browser that told you, how would you even know it was a 302 error? I know I’ve mentioned this before but it’s definitely worth repeating.  Get yourself a copy of <a href="//www.fiddler2.com">Fiddler</a>.  Fiddler is a proxy that runs on local host.  By default when you run it, it automatically installs itself as a proxy in IE so you really don’t have to know much more than how to install software to get up and running with it. When you access a web site with it, it will tell you everything that is going on.  What headers are being sent.  What headers are coming back from the server.  Files that are being requested.  Status codes that are coming back. Any time I have a client-side problem with my web sites, or any time I have a problem with my web sites that I can’t explain from the server side, I reach for Fiddler.  More often than not, it tells me or at least guides me to what the real problem is. For example, last week I was given the task of creating a 301 redirect from one domain to another.  I thought I had the code written correctly to do this, but when we went to access the domain it went into an infinite loop.  Obviously something was wrong, but what? When I ran similar code on other domains it worked correctly. When I ran Fiddler, I found that the page was redirecting to itself multiple times.  Odd.  What would make it do that? So back to my code, where I quickly discovered that I had left out a character in my replace function so that domain A was never being rewritten to domain B so domain A was constantly redirecting to itself. This morning’s error was a little more fun.  My designer was trying to install a module into DotNetNuke last night when the site suddenly “stopped working.” Same deal.  Only this time it is because there is some module that is redirecting from the home page to another page and then that other page is redirecting back to the home page. Again, I would have never been able to track this down if I hadn’t had Fiddler to help me. I’ve also used this to verify that javascript tracking codes are working correctly.  If you need to see traffic that is going between the browser and the server, Fiddler is the tool you are looking for.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/infinite-302-loop-how-would-you-even-know/" data-id="ckku0wppc002a7kx2giuro6yj" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/301/">301</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/302/">302</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/fiddler/">fiddler</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/infinite-loop/">infinite loop</a></li></ul>
 
 
     </footer>
@@ -851,7 +831,7 @@ if(slideValue &gt; -100)
   
   <div class="sidebar-module">
     <h4>Archives</h4>
-    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/11/">November 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/10/">October 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/09/">September 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/06/">June 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/05/">May 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/11/">November 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/10/">October 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/09/">September 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/06/">June 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">6</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/02/">February 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/01/">January 2008</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
   </div>
 
 
