@@ -33,7 +33,7 @@ function scrollWindow() {
     }
 }
 
-[](//11011.net/software/vspaste)A couple things to note about this function:
+A couple things to note about this function:
 
 *   We are retrieving the current position of the slider using the .slider() method of the slider widget.
 *   We are assuming that the range of our slider is between 0 and -100.

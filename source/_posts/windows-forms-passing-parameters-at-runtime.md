@@ -27,7 +27,7 @@ static void Main()
     Application.Run(new Form1());
 }
 
-[](//11011.net/software/vspaste)If you are using Visual Studio 2008 to build your applications, this code can be found in Program.cs. To accept parameters you will need to modify this method so that it accepts a string array as a parameter.  Most people name this parameter "args."
+If you are using Visual Studio 2008 to build your applications, this code can be found in Program.cs. To accept parameters you will need to modify this method so that it accepts a string array as a parameter.  Most people name this parameter "args."
 
 \[STAThread\]
 static void Main(String\[\] args)
@@ -50,5 +50,3 @@ static void Main(String\[\] args)
     Application.SetCompatibleTextRenderingDefault(false);
     Application.Run(new Form1());
 }
-
-[](//11011.net/software/vspaste)

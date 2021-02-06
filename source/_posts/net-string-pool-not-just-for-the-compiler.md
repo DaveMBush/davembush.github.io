@@ -24,32 +24,40 @@ But what I didn’t know and couldn’t expect is that we can make use of this s
 
 Keep in mind that string concatenation in .NET requires the creation of a new object.  So, code such as this,
 
+``` csharp
 String a = "abcd";
 String b = "efgh";
 a += b;
+```
 
 creates a new object at line 3 every time it is executed.
 
 So that if we add the following line:
 
+``` csharp
 b = "abcdefgh";
+```
 
-[](//11011.net/software/vspaste)we would not be pointing to the same object.  That is, a and b would contain the same content but would be pointing to two entirely different objects.
+we would not be pointing to the same object.  That is, a and b would contain the same content but would be pointing to two entirely different objects.
 
+``` csharp
 if (a == b)
     Trace.Write("A and B contain the same data");
 
 if (String.ReferenceEquals(a,b))
     Trace.Write("A and B are the same object");
+```
 
 **String.Intern Consolidates The Data**
 
 By using String.Intern() we can get both evaluations to be true.
 
+``` csharp
 String a = "abcd";
 String b = "efgh";
 a = String.Intern(a + b);
 b = "abcdefgh";
+```
 
 Now both evaluations above will be true because line 3 places the string “abcdefgh” in the pool and line 4 uses that same string from the pool to assign to b.  Where we might have created two objects, we are now only creating one and referring to it both times.
 

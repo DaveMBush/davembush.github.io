@@ -27,19 +27,27 @@ So let’s further evaluate what is happening in our code when we use “” rat
 
 In the article referenced, he does one, and only one, bench mark to prove that “” is faster than String.Empty by putting the code in a loop that could be optimized out.
 
+``` csharp
 if (string.Empty == null) { throw new Exception(); }
+```
 
 vs
 
+``` csharp
 if ("" == null) { throw new Exception(); }
+```
 
-[](//11011.net/software/vspaste)But what about a real world scenario where the code is NOT optimized out?
+But what about a real world scenario where the code is NOT optimized out?
 
-String s = String.Empty;[](//11011.net/software/vspaste)
+``` csharp
+String s = String.Empty;
+```
 
 vs
 
-String x = "";[](//11011.net/software/vspaste)
+``` csharp
+String x = "";
+```
 
 In my test, there was no noticeable difference.  Sometimes string.Empty was faster and sometimes the empty string was faster.   And I expect the reason they are about the same is because the compiler optimized out the assignment.
 

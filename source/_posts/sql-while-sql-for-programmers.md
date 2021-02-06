@@ -36,7 +36,7 @@ WHILE @someInt < 20
   END
 ```
 
-[](//11011.net/software/vspaste)and a DO WHILE loop would be something like:
+and a DO WHILE loop would be something like:
 
 ``` sql
 DECLARE @someInt as int

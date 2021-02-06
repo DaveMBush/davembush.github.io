@@ -31,7 +31,7 @@ public ActionResult About()
     return View();
 }
 
-[](//11011.net/software/vspaste)This would then call ~/Home/About
+This would then call ~/Home/About
 
 But what if the new page needs to have data sent along to it?
 
@@ -41,7 +41,7 @@ So, to pass data you would use
 
 ViewData\["Key"\] = objectData;
 
-[](//11011.net/software/vspaste)You can see that the sample project does this in the HomeController.Index method.
+You can see that the sample project does this in the HomeController.Index method.
 
 public ActionResult Index()
 {
@@ -49,11 +49,11 @@ public ActionResult Index()
     return View();
 }
 
-[](//11011.net/software/vspaste)And you can see that the Index.aspx file picks it up later:
+And you can see that the Index.aspx file picks it up later:
 
     <h2>**_<%_****_= Html.Encode(ViewData\["Message"\])_** **_%>_**</h2>
-    <p> To learn more about ASP.NET MVC visit 
+    <p> To learn more about ASP.NET MVC visit
         <a href="http://asp.net/mvc" title="ASP.NET MVC Website"> http://asp.net/mvc</a>.
-    </p> 
+    </p>
 
 Returning View() is not the only way of specifying the View we want to display from the Controller.  You can also return Redirect(), RedirectAction(), RedirectToRoute().

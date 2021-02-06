@@ -18,7 +18,7 @@ and
 
 [I still say Regions are not useful… but…](//extractmethod.wordpress.com/2008/06/02/i-still-say-regions-are-not-usefulbut/)
 
-arguing that not only should we NOT use code regions, but if we do, we are hiding “bad code.”  He uses words like “retarded,” “lame excuse for a preprocessor tag,” etc.
+Arguing that not only should we NOT use code regions, but if we do, we are hiding “bad code.”  He uses words like “retarded,” “lame excuse for a preprocessor tag,” etc.
 
 You’d think maybe this guy (gal?) just had a bad day when he wrote this, but no, he goes on to further defend his position in a later post.
 
@@ -28,14 +28,16 @@ So, are Regions really as evil as Casademora argues that they are?
 
 **First what is a region?**
 
+``` csharp
 #region Member Variables
 
 private bool _refreshState;
 private bool _isRefresh;
 
 #endregion Member Variables
+```
 
-[](//11011.net/software/vspaste)That’s a region.  See the #region and the #endregion preprocessor tags?  They define a named region in your code.
+That’s a region.  See the #region and the #endregion preprocessor tags?  They define a named region in your code.
 
 **Why do they exist?**
 

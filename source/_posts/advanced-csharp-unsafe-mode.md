@@ -16,10 +16,10 @@ date: 2008-12-15 08:14:08
 unsafe {
     // this code is unmanaged }
 
-[](//11011.net/software/vspaste)becomes unmanaged.  You will also need to add the /unsafe compiler switch to your compiler options. You can also make an entire method unsafe by adding the keyword to the method declaration:
+becomes unmanaged.  You will also need to add the /unsafe compiler switch to your compiler options. You can also make an entire method unsafe by adding the keyword to the method declaration:
 
 public unsafe void Foo(int *i)
 {
     // i is a pointer that is unsafe }
 
-[](//11011.net/software/vspaste)In a future post, we'll look at some ways of using pointers in CSharp code.
+In a future post, we'll look at some ways of using pointers in CSharp code.
