@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="The purpose of this article is to specify a working architecture that everyone can use for any Angular applications.  This architecture aims to achieve the following goals:  Ensure that all parts of a">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2020-01-16T10:29:30.160Z">
+<meta property="og:updated_time" content="2021-02-20T15:35:22.228Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="An Angular Application Architecture That Works">
 <meta name="twitter:description" content="The purpose of this article is to specify a working architecture that everyone can use for any Angular applications.  This architecture aims to achieve the following goals:  Ensure that all parts of a">
@@ -162,6 +162,10 @@
 <li><a href="https://indepth.dev/model-view-presenter-with-angular/" target="_blank" rel="noopener">Model View Presenter with Angular</a></li>
 </ul>
 <p>The basic idea is that you leave the component as the thing that only presents the data and receives notifications from the user. Any logic that is needed goes into an Angular service that is registered with the component using the viewProviders property of the @Component decorator.</p>
+<p>One thing to be careful of here is that you may be tempted, as I have been for a while, to pull the information from the service up into the view. The problem with this is that it is not an optimal implementation for change detections.</p>
+<p>The preferred method would be to use the model as it was originally intended and have the service set fields in the presentation layer so that change detection only happens when the data actually changes rather than every time the component is checked simply because your data has to be computed in a property or method every time.</p>
+<p>And while we are discussing change detection, you should also avoid changing the state of your component internally. By using OnPush notification, all changes have to come in on an <code>@Input()</code> field for the component to know it has to do change detection. You can, of course, get around this by using <code>markForCheck()</code> but the disadvantage there is that you may force change detection more often than it is actually needed.</p>
+<p>This is why we prefer the smart component/dumb component model. It forces many of these issues. To do this properly, you’ll probably need to create child components so you can take advantage of the <code>@Input()</code> fields.</p>
 <h3 id="Smart-Dumb"><a href="#Smart-Dumb" class="headerlink" title="Smart/Dumb"></a>Smart/Dumb</h3><p>Broadly speaking, Angular components can be classified as “Smart Components” or “Dumb Components”.  Smart Components get their data form the outside world and pass data out to the outside world.  In the architecture defined here, that will be from the NgRX store via selectors and into the NgRX store using Actions.</p>
 <p>Dumb Components render data they are passed via the @Input() decorators and fire events back up to the containing component via @Output() decorators.</p>
 <p>A lot of people understand these concepts but misunderstand how they apply to an Angular application. You can’t follow these rules simply by wrapping your Dumb Components in Smart Components. While this technically obeys the definition, the result is code that is hard to understand. What we want is a central location in our code that is always responsible for getting data to and from the store.</p>
@@ -239,6 +243,10 @@
 <p>Which leads to Reactive. Aside from the fact that we are using RxJS in Angular which is a Reactive library, this also means that we react to “events” that get fired.  This is essentially what is happening when you dispatch an action in NgRX, what you are effectively saying is, “someone do this thing for me.”</p>
 <p>In the past, you would have just coded for that process to start. Here, that action could just as easily happen on some other computer, or at least some other thread. And so, instead of coding “do this, then that, then this other thing.”  You are coding, “when I get notified, I’m going to do this and then, optionally, notify the system that I’m done.”</p>
 <p>And so, we favor Functional/Reactive programming because it makes our programs more stable but we admit that not everything can be done using a Functional/Reactive model.</p>
+<h2 id="Data-over-Presentation"><a href="#Data-over-Presentation" class="headerlink" title="Data over Presentation"></a>Data over Presentation</h2><p>This is a specific instance of the previous point, but I want to call it out directly because I recognize that it is not quite as obvious to most people as it is to me.</p>
+<p>Most programmers, because they are still thinking in an imperative model, think of their code in terms of the presentation layer. What this means in terms of how they code is that when an event occurs in the view, they tend to fire an action. Sometimes this is the right thing to do. But, if the action that just occurred in the view also changed the state of your data in someway, it would make more sense to observe the data change in your store and react to it there than to fire off an event from the view to do the same thing.</p>
+<p>By following the rule of Data over Presentation, you benefit in two ways. The first is that more of your code will transfer to whatever JavaScript framework or library becomes popular in the future because RxJS is agnostic to which one you use.</p>
+<p>Second, by observing the data using <code>distinctUntilChanged()</code> you can ensure that you only respond when the data actually changed instead every time it looks like there may have been a change.</p>
 
       
     </div>
@@ -249,7 +257,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/an-angular-application-architecture-that-works/" data-id="ckl3y6i2001um0gx28jkyb84y" class="article-share-link">
+      <a data-url="http://davembush.github.com/an-angular-application-architecture-that-works/" data-id="ckldw1ptt01umvcx2t15xqzyx" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
