@@ -143,6 +143,14 @@ You can read details of how this is implemented on the following two sites:
 
 The basic idea is that you leave the component as the thing that only presents the data and receives notifications from the user. Any logic that is needed goes into an Angular service that is registered with the component using the viewProviders property of the @Component decorator.
 
+One thing to be careful of here is that you may be tempted, as I have been for a while, to pull the information from the service up into the view. The problem with this is that it is not an optimal implementation for change detections.
+
+The preferred method would be to use the model as it was originally intended and have the service set fields in the presentation layer so that change detection only happens when the data actually changes rather than every time the component is checked simply because your data has to be computed in a property or method every time.
+
+And while we are discussing change detection, you should also avoid changing the state of your component internally. By using OnPush notification, all changes have to come in on an `@Input()` field for the component to know it has to do change detection. You can, of course, get around this by using `markForCheck()` but the disadvantage there is that you may force change detection more often than it is actually needed.
+
+This is why we prefer the smart component/dumb component model. It forces many of these issues. To do this properly, you'll probably need to create child components so you can take advantage of the `@Input()` fields.
+
 ### Smart/Dumb
 
 Broadly speaking, Angular components can be classified as "Smart Components" or "Dumb Components".  Smart Components get their data form the outside world and pass data out to the outside world.  In the architecture defined here, that will be from the NgRX store via selectors and into the NgRX store using Actions.
@@ -304,3 +312,13 @@ Which leads to Reactive. Aside from the fact that we are using RxJS in Angular w
 In the past, you would have just coded for that process to start. Here, that action could just as easily happen on some other computer, or at least some other thread. And so, instead of coding "do this, then that, then this other thing."  You are coding, "when I get notified, I'm going to do this and then, optionally, notify the system that I'm done."
 
 And so, we favor Functional/Reactive programming because it makes our programs more stable but we admit that not everything can be done using a Functional/Reactive model.
+
+## Data over Presentation
+
+This is a specific instance of the previous point, but I want to call it out directly because I recognize that it is not quite as obvious to most people as it is to me.
+
+Most programmers, because they are still thinking in an imperative model, think of their code in terms of the presentation layer. What this means in terms of how they code is that when an event occurs in the view, they tend to fire an action. Sometimes this is the right thing to do. But, if the action that just occurred in the view also changed the state of your data in someway, it would make more sense to observe the data change in your store and react to it there than to fire off an event from the view to do the same thing.
+
+By following the rule of Data over Presentation, you benefit in two ways. The first is that more of your code will transfer to whatever JavaScript framework or library becomes popular in the future because RxJS is agnostic to which one you use.
+
+Second, by observing the data using `distinctUntilChanged()` you can ensure that you only respond when the data actually changed instead of every time it looks like there may have been a change.
