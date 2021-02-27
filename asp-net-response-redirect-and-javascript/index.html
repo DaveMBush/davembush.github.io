@@ -14,7 +14,7 @@
 <meta property="og:description" content="Yesterday we covered issues surrounding using ASP.NET’s Response.Redirect in server side code. We noted that not handing it correctly could prevent code from running on the server that we want to run">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2009/01/toco-toucan.jpg">
-<meta property="og:updated_time" content="2018-06-30T18:23:01.000Z">
+<meta property="og:updated_time" content="2021-02-27T16:48:53.539Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ASP.NET Response.Redirect() and JavaScript">
 <meta name="twitter:description" content="Yesterday we covered issues surrounding using ASP.NET’s Response.Redirect in server side code. We noted that not handing it correctly could prevent code from running on the server that we want to run">
@@ -112,12 +112,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><img src="/uploads/2009/01/toco-toucan.jpg" alt="A toucan perched on a branch in Brazil."> Yesterday we covered issues surrounding using ASP.NET’s Response.Redirect in server side code. We noted that not handing it correctly could prevent code from running on the server that we want to run. The other issue is emitting Javascript in the server side in association with Response.Redirect(). This also leads to unexpected problems if you aren’t thinking about what is actually happening with your code.  Take this code as an example:</p>
-<pre><code>protected void Page_Load(object sender, EventArgs e)
-{
-    string myscript = @&quot;&lt;script language=&apos;javascript&apos;&gt;
-</code></pre><p>alert(‘hello world’);<br>“;<br>        ClientScript.RegisterClientScriptBlock<br>            (“”.GetType(), “s”, myscript);<br>        Response.Redirect(“~/newpage.aspx”,false);</p>
-<pre><code>}
-</code></pre><p>The question is, why does the javascript never display “hello world”? Actually, the javascript is typically a little more complicated than “hello world.” But the question is always, “Why didn’t my javascript execute? It works fine without the redirect.” Once again, we need to think more clearly about what we’ve actually written. What we’ve actually told the server to do is the following:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Page_Load</span>(<span class="params"><span class="keyword">object</span> sender, EventArgs e</span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">string</span> myscript = <span class="string">@"&lt;script language='javascript'&gt;</span></span><br><span class="line"><span class="string">alert('hello world');</span></span><br><span class="line"><span class="string">&lt;/script&gt;"</span>;</span><br><span class="line">        ClientScript.RegisterClientScriptBlock</span><br><span class="line">            (<span class="string">""</span>.GetType(), <span class="string">"s"</span>, myscript);</span><br><span class="line">        Response.Redirect(<span class="string">"~/newpage.aspx"</span>,<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>The question is, why does the javascript never display “hello world”? Actually, the javascript is typically a little more complicated than “hello world.” But the question is always, “Why didn’t my javascript execute? It works fine without the redirect.” Once again, we need to think more clearly about what we’ve actually written. What we’ve actually told the server to do is the following:</p>
 <ol>
 <li>Render the javascript to display “hello world” in an alert box on the client.</li>
 <li>Set the header (not the header element, but the header that tells the browser whether the code executed successfully or not) to “302 redirect.”</li>
@@ -133,7 +129,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-response-redirect-and-javascript/" data-id="ckldwnp73006nc0x2jtj9cwtv" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-response-redirect-and-javascript/" data-id="cklnyolj2003w60x2xh7shx0d" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

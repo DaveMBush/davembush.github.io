@@ -124,7 +124,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/tab-control-activetabindex-lost-on-postback/" data-id="ckldwnp7r008tc0x24g8m5cce" class="article-share-link">
+      <a data-url="http://davembush.github.com/tab-control-activetabindex-lost-on-postback/" data-id="cklnyoljj004i60x2gqaejavi" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -190,7 +190,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-mvc-model-bll-or-dal/" data-id="ckldwnp3s002rc0x2y6yxo2jo" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-mvc-model-bll-or-dal/" data-id="cklnyolg1000o60x2hhqi2yf4" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -237,12 +237,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><img src="/uploads/2009/01/toco-toucan.jpg" alt="A toucan perched on a branch in Brazil."> Yesterday we covered issues surrounding using ASP.NET’s Response.Redirect in server side code. We noted that not handing it correctly could prevent code from running on the server that we want to run. The other issue is emitting Javascript in the server side in association with Response.Redirect(). This also leads to unexpected problems if you aren’t thinking about what is actually happening with your code.  Take this code as an example:</p>
-<pre><code>protected void Page_Load(object sender, EventArgs e)
-{
-    string myscript = @&quot;&lt;script language=&apos;javascript&apos;&gt;
-</code></pre><p>alert(‘hello world’);<br>“;<br>        ClientScript.RegisterClientScriptBlock<br>            (“”.GetType(), “s”, myscript);<br>        Response.Redirect(“~/newpage.aspx”,false);</p>
-<pre><code>}
-</code></pre><p>The question is, why does the javascript never display “hello world”? Actually, the javascript is typically a little more complicated than “hello world.” But the question is always, “Why didn’t my javascript execute? It works fine without the redirect.” Once again, we need to think more clearly about what we’ve actually written. What we’ve actually told the server to do is the following:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Page_Load</span>(<span class="params"><span class="keyword">object</span> sender, EventArgs e</span>)</span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">string</span> myscript = <span class="string">@"&lt;script language='javascript'&gt;</span></span><br><span class="line"><span class="string">alert('hello world');</span></span><br><span class="line"><span class="string">&lt;/script&gt;"</span>;</span><br><span class="line">        ClientScript.RegisterClientScriptBlock</span><br><span class="line">            (<span class="string">""</span>.GetType(), <span class="string">"s"</span>, myscript);</span><br><span class="line">        Response.Redirect(<span class="string">"~/newpage.aspx"</span>,<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+<p>The question is, why does the javascript never display “hello world”? Actually, the javascript is typically a little more complicated than “hello world.” But the question is always, “Why didn’t my javascript execute? It works fine without the redirect.” Once again, we need to think more clearly about what we’ve actually written. What we’ve actually told the server to do is the following:</p>
 <ol>
 <li>Render the javascript to display “hello world” in an alert box on the client.</li>
 <li>Set the header (not the header element, but the header that tells the browser whether the code executed successfully or not) to “302 redirect.”</li>
@@ -258,7 +254,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-response-redirect-and-javascript/" data-id="ckldwnp73006nc0x2jtj9cwtv" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-response-redirect-and-javascript/" data-id="cklnyolj2003w60x2xh7shx0d" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -305,18 +301,11 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p><img src="/uploads/2009/01/tp-vol4-017.jpg" alt="tp_vol4_017"> I’ve seen this question a couple of times in various situations. The first involves Javascript and the second involves server side code. Both are caused by a misunderstanding of what this function does and how web pages work. Let’s start with the easy one: server side code.  You might have code that looks something like this:</p>
-<p>protected void Page_Load(object sender, EventArgs e)<br>{</p>
-<pre><code>// Do something here Response.Redirect(&quot;~/newpage.aspx&quot;);
-
-// do some more code here }
-</code></pre><p>The problem with this code, which is probably obvious to most of you, is that the “do some more code here” section will never fire because we’ve done a redirect right before it. But is this as obvious?</p>
-<p>protected void Page_Load(object sender, EventArgs e)<br>{</p>
-<pre><code>// Do something here Response.Redirect(&quot;~/newpage.aspx&quot;);
-</code></pre><p>}<br>protected void Button1_Click(object sender, EventArgs e)<br>{<br>    // do some more code here }</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Page_Load</span>(<span class="params"><span class="keyword">object</span> sender, EventArgs e</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Do something here</span></span><br><span class="line">    Response.Redirect(<span class="string">"~/newpage.aspx"</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// do some more code here</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>The problem with this code, which is probably obvious to most of you, is that the “do some more code here” section will never fire because we’ve done a redirect right before it. But is this as obvious?</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Page_Load</span>(<span class="params"><span class="keyword">object</span> sender, EventArgs e</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Do something here</span></span><br><span class="line">    Response.Redirect(<span class="string">"~/newpage.aspx"</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Button1_Click</span>(<span class="params"><span class="keyword">object</span> sender, EventArgs e</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// do some more code here</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>The problem here is that Page_Load is the first event to fire. Button1_Click() will never execute because we’ve done the redirect during our page load. Aside from the fact that you should not perform form processing code during Page_Load(), the other issue is that events can fire in any order. So maybe you were smart and processed your form in a Button.Click event handler, but have you accounted for the fact that your databinding code may need to put data in the database AFTER you run Response.Redirect()? There is a way around this. Response.Redirect() has two overloads. The first, which we are all very used to, is the one I’ve shown above. But all it does is call the second which has two parameters, the URL and a boolean value, to indicate if we should stop processing right away and return to the browser. The default that gets sent in with the first overload is TRUE. Go ahead and quit. By modifying our code to:</p>
-<p>protected void Page_Load(object sender, EventArgs e)<br>{</p>
-<pre><code>// Do something here Response.Redirect(&quot;~/newpage.aspx&quot;,false);
-</code></pre><p>}<br>protected void Button1_Click(object sender, EventArgs e)<br>{<br>    // do some more code here }</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Page_Load</span>(<span class="params"><span class="keyword">object</span> sender, EventArgs e</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Do something here</span></span><br><span class="line">    Response.Redirect(<span class="string">"~/newpage.aspx"</span>,<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Button1_Click</span>(<span class="params"><span class="keyword">object</span> sender, EventArgs e</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// do some more code here</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>we can be sure that our Button1_Click method, or databinding code, will be executed. Tomorrow we’ll look at the issues involved with Javascript.</p>
 
       
@@ -328,7 +317,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/response-redirect-executes-too-soon-on-the-server/" data-id="ckldwnp760070c0x2p5sjvxpc" class="article-share-link">
+      <a data-url="http://davembush.github.com/response-redirect-executes-too-soon-on-the-server/" data-id="cklnyolj7004460x2d2p7oz57" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -387,7 +376,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/what-is-the-global-keyword-in-csharp/" data-id="ckldwnp8x00bwc0x2c6ve5v7a" class="article-share-link">
+      <a data-url="http://davembush.github.com/what-is-the-global-keyword-in-csharp/" data-id="cklnyolk8005m60x2iml5apvd" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -477,7 +466,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/gridviews-multiple-rows-per-record/" data-id="ckldwnp4r0043c0x22rsvr8eu" class="article-share-link">
+      <a data-url="http://davembush.github.com/gridviews-multiple-rows-per-record/" data-id="cklnyolhk002260x2ay9ctees" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -538,7 +527,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/unsafe-mode-in-c/" data-id="ckldwnp1x001nc0x2y0zjd120" class="article-share-link">
+      <a data-url="http://davembush.github.com/unsafe-mode-in-c/" data-id="cklnyolfd000860x2g3z1m9hf" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -595,7 +584,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/advantages-of-using-class-diagram/" data-id="ckldwnp20001rc0x2h5r5lvp2" class="article-share-link">
+      <a data-url="http://davembush.github.com/advantages-of-using-class-diagram/" data-id="cklnyolfg000a60x2x9wkw6hc" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -656,7 +645,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/systemexception-the-trust-relationship-between-the-primary-domain-and-the-trusted-domain-failed/" data-id="ckldwnp7t008zc0x2m7cj4u6f" class="article-share-link">
+      <a data-url="http://davembush.github.com/systemexception-the-trust-relationship-between-the-primary-domain-and-the-trusted-domain-failed/" data-id="cklnyoljk004j60x2sx7iqi9e" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -711,7 +700,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/bypass-vpn-for-regular-traffic/" data-id="ckldwnp3y0030c0x202amq53y" class="article-share-link">
+      <a data-url="http://davembush.github.com/bypass-vpn-for-regular-traffic/" data-id="cklnyolgj000w60x20koeay9n" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
