@@ -15,6 +15,7 @@ date: 2009-01-28 05:10:10
 
 ![A toucan perched on a branch in Brazil.](/uploads/2009/01/toco-toucan.jpg) Yesterday we covered issues surrounding using ASP.NET's Response.Redirect in server side code. We noted that not handing it correctly could prevent code from running on the server that we want to run. The other issue is emitting Javascript in the server side in association with Response.Redirect(). This also leads to unexpected problems if you aren't thinking about what is actually happening with your code.  Take this code as an example:
 
+``` csharp
     protected void Page_Load(object sender, EventArgs e)
     {
         string myscript = @"<script language='javascript'>
@@ -25,6 +26,7 @@ alert('hello world');
         Response.Redirect("~/newpage.aspx",false);
 
     }
+```
 
 The question is, why does the javascript never display "hello world"? Actually, the javascript is typically a little more complicated than "hello world." But the question is always, "Why didn't my javascript execute? It works fine without the redirect." Once again, we need to think more clearly about what we've actually written. What we've actually told the server to do is the following:
 
