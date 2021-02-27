@@ -18,7 +18,8 @@ date: 2009-01-27 05:43:45
 protected void Page_Load(object sender, EventArgs e)
 {
 
-    // Do something here Response.Redirect("~/newpage.aspx");
+    // Do something here
+    Response.Redirect("~/newpage.aspx");
 
     // do some more code here
 }
@@ -30,7 +31,8 @@ The problem with this code, which is probably obvious to most of you, is that th
 protected void Page_Load(object sender, EventArgs e)
 {
 
-    // Do something here Response.Redirect("~/newpage.aspx");
+    // Do something here
+    Response.Redirect("~/newpage.aspx");
 
 }
 protected void Button1_Click(object sender, EventArgs e)
@@ -45,7 +47,8 @@ The problem here is that Page\_Load is the first event to fire. Button1\_Click()
 protected void Page_Load(object sender, EventArgs e)
 {
 
-    // Do something here Response.Redirect("~/newpage.aspx",false);
+    // Do something here
+    Response.Redirect("~/newpage.aspx",false);
 
 }
 protected void Button1_Click(object sender, EventArgs e)
