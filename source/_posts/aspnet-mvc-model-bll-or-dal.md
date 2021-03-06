@@ -20,6 +20,8 @@ Last week I introduced the ASP.NET MVC framework by talking a bit about what the
 
 While historically, MVC has been described in the way I stated--while the ASP.NET MVC guys have also portrayed the Model as BLL or below--I have to agree with John.  Here's why: At least as far as ASP.NET is concerned, the model is inherited from a specific class.  This means that any implementation code you place in the class will be forever tied to the class it inherits from.
 
+<!-- more -->
+
 So if in some point in the future you decide that a WebForms implementation would work out better for you, or you wanted to put a Windows Forms implementation on top of it, you'd have to do quite a bit of refactoring of your code just so you could.
 
 If instead you treat the Model as a "View Model" as John suggests, and have the View Model call the Business Logic Layer, you end up with two major benefits.

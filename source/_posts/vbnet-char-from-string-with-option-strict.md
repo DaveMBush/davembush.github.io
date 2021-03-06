@@ -21,6 +21,8 @@ date: 2009-04-08 04:35:14
 
 There are actually several ways to accomplish what you are trying to do.
 
+<!-- more -->
+
 The first and most general solution would be to call the ToCharArray() method off the string.
 
 ``` vb

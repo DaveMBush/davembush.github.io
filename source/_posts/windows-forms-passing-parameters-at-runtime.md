@@ -17,6 +17,8 @@ date: 2009-03-09 07:37:11
 
 > I've made a C# form application and I need to send a report name at runtime. How do I add an incoming parameter to the command line? Such as "crFORM.exe Shipform.rpt"
 
+<!-- more -->
+
 I have to assume the question relates more to how to retrieve the parameter in the code than how to pass it because the example shows how we'd pass it. All WinForms CSharp programs have a static method called Main() that looks something like this:
 
 ``` csharp

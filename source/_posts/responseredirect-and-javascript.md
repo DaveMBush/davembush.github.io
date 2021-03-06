@@ -15,6 +15,8 @@ date: 2009-01-28 05:10:10
 
 ![A toucan perched on a branch in Brazil.](/uploads/2009/01/toco-toucan.jpg) Yesterday we covered issues surrounding using ASP.NET's Response.Redirect in server side code. We noted that not handing it correctly could prevent code from running on the server that we want to run. The other issue is emitting Javascript in the server side in association with Response.Redirect(). This also leads to unexpected problems if you aren't thinking about what is actually happening with your code.  Take this code as an example:
 
+<!-- more -->
+
 ``` csharp
     protected void Page_Load(object sender, EventArgs e)
     {

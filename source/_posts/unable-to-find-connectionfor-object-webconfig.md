@@ -16,6 +16,8 @@ date: 2009-03-18 04:40:09
 
 First, a bit of background.
 
+<!-- more -->
+
 You'll open a dataset you've been working with for months and see the following error message:
 
 > Unable to find connection \[connectionName\] (web.config)1 for object 'Web.config'.  The connection string could not be found in application settings, or the data provider associated with the connection string could not be loaded.

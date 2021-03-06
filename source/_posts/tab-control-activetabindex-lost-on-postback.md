@@ -17,6 +17,8 @@ date: 2009-02-25 05:26:36
 
 If you've never seen the problem, you're lucky.  There are a couple of ways around the problem.  The first and easiest if it works in your situation is to put the tab in an update panel so that you never actually do a full postback.
 
+<!-- more -->
+
 However, there are times when this won't work.  In this particular case it is because one of the tabs holds the file upload control, which can't be used inside an update panel.  (Another problem we had to find a way around last week.) What do you do then? Turns out this is a bug in the way that the tab works.  This problem turns up in various situations.  If you are fighting the bug, the solution is actually pretty simple.
 
 First, put the following  javascript in your aspx or ascx file:

@@ -16,6 +16,8 @@ date: 2009-04-22 04:34:00
 
 ![B03B0055](/uploads/2009/04/b03b0055.jpg "B03B0055") On Monday, I was corrected in my assertion that creating multiple empty strings would create multiple objects.  Turns out the compiler automatically puts all of the strings that are exactly the same in a “string pool” so that there is only ever one empty string in the entire application you’ve created.
 
+<!-- more -->
+
 Duh! I should have known this, or at least I should have expected that this was so since it has been true with every other compiled language I’ve worked with.
 
 But what I didn’t know and couldn’t expect is that we can make use of this string pool programmatically as well.

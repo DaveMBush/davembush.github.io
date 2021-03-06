@@ -15,6 +15,8 @@ date: 2009-03-11 07:08:36
 
 ![trav-053](/uploads/2009/03/trav-053.jpg) It happens eventually to all web developers.  It's happened to me twice in the last week.  You make one simple change to your web site and then you can no longer access it.  When you browse to it in IE you get some completely useless "We can't access the page you are looking for" error.  In FireFox, it at least tells you that you have a "Redirect Loop" and in IE6, if you are fortunate enough to still be writing for that browser, you can see that it is blinking at you as it tries to retrieve the page(s) multiple times.  But how do you know what's redirecting to what?  For that matter, other than running a browser that told you, how would you even know it was a 302 error?
 
+<!-- more -->
+
 I know I've mentioned this before but it's definitely worth repeating.  Get yourself a copy of [Fiddler](//www.telerik.com/fiddler). 
 
 Fiddler is a proxy that runs on local host.  By default when you run it, it automatically installs itself as a proxy in IE so you really don't have to know much more than how to install software to get up and running with it. When you access a web site with it, it will tell you everything that is going on.  What headers are being sent.  What headers are coming back from the server.  Files that are being requested.  Status codes that are coming back. Any time I have a client-side problem with my web sites, or any time I have a problem with my web sites that I can't explain from the server side, I reach for Fiddler.  More often than not, it tells me or at least guides me to what the real problem is.

@@ -14,6 +14,8 @@ date: 2009-01-27 05:43:45
 
 ![tp_vol4_017](/uploads/2009/01/tp-vol4-017.jpg) I've seen this question a couple of times in various situations. The first involves Javascript and the second involves server side code. Both are caused by a misunderstanding of what this function does and how web pages work. Let's start with the easy one: server side code.  You might have code that looks something like this:
 
+<!-- more -->
+
 ``` csharp
 protected void Page_Load(object sender, EventArgs e)
 {

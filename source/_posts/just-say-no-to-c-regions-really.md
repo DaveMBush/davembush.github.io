@@ -20,6 +20,8 @@ and
 
 Arguing that not only should we NOT use code regions, but if we do, we are hiding “bad code.”  He uses words like “retarded,” “lame excuse for a preprocessor tag,” etc.
 
+<!-- more -->
+
 You’d think maybe this guy (gal?) just had a bad day when he wrote this, but no, he goes on to further defend his position in a later post.
 
 And what I don’t understand at all is how his original post ended up on DotNetKicks today.  It’s an old post that was written last year but was just kicked up to the front page?  I figure someone MUST agree with him or it wouldn’t be there.

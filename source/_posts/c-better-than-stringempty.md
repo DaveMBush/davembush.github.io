@@ -17,6 +17,8 @@ The argument is that since string.Empty doesn’t work in all situations, we sho
 
 But at what price?
 
+<!-- more -->
+
 First, it is impressive that he took the time to evaluate the performance hit that using String.Empty can cause.  I’m pretty sure his evaluation of using String.Empty in a case statement is from his attempt to do so only to find out he couldn’t.
 
 However, he seems to have overlooked the price of not using String.Empty.  Certainly, Microsoft didn’t put that there without thinking about what they were doing.
