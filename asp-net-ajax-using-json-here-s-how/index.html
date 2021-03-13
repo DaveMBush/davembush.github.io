@@ -6,7 +6,7 @@
   <title>ASP.NET AJAX using JSON - Here&#39;s how. | Dave&#39;s Notebook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="Last week I wrote a post about how simple JSON is. In it I explained the main differences between using JSON and using the update panel. I really started out thinking I’d get to how to write JSON cod">
-<meta name="keywords" content="ajax,asp.net,json">
+<meta name="keywords" content="asp.net,ajax,json">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ASP.NET AJAX using JSON - Here&#39;s how.">
 <meta property="og:url" content="http://davembush.github.com/asp-net-ajax-using-json-here-s-how/index.html">
@@ -14,7 +14,7 @@
 <meta property="og:description" content="Last week I wrote a post about how simple JSON is. In it I explained the main differences between using JSON and using the update panel. I really started out thinking I’d get to how to write JSON cod">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2008/08/image.png">
-<meta property="og:updated_time" content="2018-06-30T20:06:56.000Z">
+<meta property="og:updated_time" content="2021-03-13T16:16:45.358Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ASP.NET AJAX using JSON - Here&#39;s how.">
 <meta name="twitter:description" content="Last week I wrote a post about how simple JSON is. In it I explained the main differences between using JSON and using the update panel. I really started out thinking I’d get to how to write JSON cod">
@@ -111,25 +111,27 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p><img src="/uploads/2008/08/image.png" alt="image"> Last week I wrote a post about <a href="/2008/07/30/using-json-in-aspnet/">how simple JSON is</a>. In it I explained the main differences between using JSON and using the update panel. I really started out thinking I’d get to how to write JSON code, but I ran out of space. Well, today, we get to the HOW. All JSON really is, is the ability to have JavaScript code call a WebService for our data, and write it into the HTML on the client side. If you know anything about how to write a WebService, this should be rather trivial because your web service is going to look just like any other web service with the exception of an added attribute.  To make a WebService accessible to JSON, add the following Attribute to your WebService class:</p>
-<p>[ScriptService]</p>
+        <p><img src="/uploads/2008/08/image.png" alt="image"> Last week I wrote a post about <a href="/2008/07/30/using-json-in-aspnet/">how simple JSON is</a>.</p>
+<p>In it I explained the main differences between using JSON and using the update panel. I really started out thinking I’d get to how to write JSON code, but I ran out of space. Well, today, we get to the HOW.</p>
+<a id="more"></a>
+<p>All JSON really is, is the ability to have JavaScript code call a WebService for our data, and write it into the HTML on the client side.</p>
+<p>If you know anything about how to write a WebService, this should be rather trivial because your web service is going to look just like any other web service with the exception of an added attribute.  To make a WebService accessible to JSON, add the following Attribute to your WebService class:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="meta">ScriptService</span>]</span><br></pre></td></tr></table></figure>
 <p>You will probably also need to add</p>
-<p>using System.Web.Script.Services;</p>
-<p>to the top of your page. Now, any WebMethod in your WebService can be called by your JavaScript on the client side. As with any AJAX code in ASP.NET, you’ll need to add a ScriptManager to your page. But, in addition, you’ll also need to add a Services section in your ScriptManager to tell the ASP.NET page to pull in the javascript that the WebService code will now produce for you. You should have this code at the top of the FORM section of your HTML.</p>
-<pre><code>&lt;asp:ScriptManager ID=&quot;ScriptManager1&quot; runat=&quot;server&quot;&gt;
-  &lt;Services&gt;
-    &lt;asp:ServiceReference path=&quot;~/WebService.asmx&quot; /&gt;
-  &lt;/Services&gt;
-&lt;/asp:ScriptManager&gt; 
-</code></pre><p>Where, “~/WebService.asmx” refers to the web service you want to be able to access. Now in the javascript event handler where you want to be able to call the WebService, you just call the WebService similar to how you would call any other function. In fact, if you write this code in the ASPX page, you will even get intellisense. So, assuming we have a class named “WebService” with a function called “HelloWorld” that returns a string, our calling code will look like:</p>
-<p>WebService.HelloWorld(Success,Fail,null);</p>
-<p>Note that our call takes three parameters, even though our function in the WebService does not take any parameters. The first parameter is a pointer to a JavaScript function to call if the call to the WebService succeeds. The second is a pointer to the JavaScript function to call if the WebService call fails, and the third parameter is a JavaScript context object to pass to the Success function. Since I don’t have any data I need to pass along, I just pass in NULL in the code above. If the WebService method takes parameters, the parameters are listed before the success, fail, and context parameters. If the WebService call fails, the JavaScript function that we specified for fail will be called. It needs to accept one parameter which will have the error message in it. You can use this to display an error message in an alert box. When the WebService returns successfully, the Success function will be called. This function takes two parameters. The first is the return value. The second is the context object we passed when we originally called the WebMethod. You can then use standard JavaScript to find an HTML element on the page to put the new content into:</p>
-<p>function Success(result,context)<br>{<br>document.getElementById(“fillMeAtLoadTime”).innerHTML = result;<br>}</p>
-<p>  And that’s really all there is to JSON. The rest is really just a matter of imagination and JavaScript. <strong>Other places talking about JSON:</strong></p>
-<ul>
-<li><a href="//weblogs.asp.net/sanjeevagarwal/archive/2008/07/29/Dynamically-create-ASP.NET-user-control-using-JQuery-and-JSON-enabled-Ajax-Web-Service.aspx">Dynamically create ASP.NET user control using JQuery and JSON …</a>- Dynamically create ASP.NET user control using JQuery and JSON enabled Ajax Web Service Please read my previous post Dynamically create ASP.NET user control using ASP.NET Ajax and Web Service to understand this approach. …</li>
-<li><a href="//explonet.blogspot.com/2008/07/aspnet-web-services-and-json.html">ASP.NET, Web Services and Json</a>- Implementing Json web services in ASP.NET is very easy:. - open Visual Web Developer 2008 Express Edition - create a new ASP.NET project - create a “Service” directory - inside “Service” create an “AJAX-enabled WCF Service” file named …</li>
-</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> System.Web.Script.Services;</span><br></pre></td></tr></table></figure>
+<p>to the top of your page.</p>
+<p>Now, any WebMethod in your WebService can be called by your JavaScript on the client side. As with any AJAX code in ASP.NET, you’ll need to add a ScriptManager to your page.</p>
+<p>But, in addition, you’ll also need to add a Services section in your ScriptManager to tell the ASP.NET page to pull in the javascript that the WebService code will now produce for you.</p>
+<p>You should have this code at the top of the FORM section of your HTML.</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">asp:ScriptManager</span> <span class="attr">ID</span>=<span class="string">"ScriptManager1"</span> <span class="attr">runat</span>=<span class="string">"server"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">Services</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">asp:ServiceReference</span> <span class="attr">path</span>=<span class="string">"~/WebService.asmx"</span> /&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">Services</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">asp:ScriptManager</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Where, <code>~/WebService.asmx</code> refers to the web service you want to be able to access. Now in the javascript event handler where you want to be able to call the WebService, you just call the WebService similar to how you would call any other function. In fact, if you write this code in the ASPX page, you will even get intellisense. So, assuming we have a class named <code>WebService</code> with a function called “HelloWorld” that returns a string, our calling code will look like:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">WebService.HelloWorld(Success,Fail,<span class="literal">null</span>);</span><br></pre></td></tr></table></figure>
+<p>Note that our call takes three parameters, even though our function in the WebService does not take any parameters.</p>
+<p>The first parameter is a pointer to a JavaScript function to call if the call to the WebService succeeds.</p>
+<p>The second is a pointer to the JavaScript function to call if the WebService call fails, and the third parameter is a JavaScript context object to pass to the Success function.</p>
+<p>Since I don’t have any data I need to pass along, I just pass in NULL in the code above. If the WebService method takes parameters, the parameters are listed before the success, fail, and context parameters. If the WebService call fails, the JavaScript function that we specified for fail will be called. It needs to accept one parameter which will have the error message in it. You can use this to display an error message in an alert box. When the WebService returns successfully, the Success function will be called. This function takes two parameters. The first is the return value. The second is the context object we passed when we originally called the WebMethod. You can then use standard JavaScript to find an HTML element on the page to put the new content into:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Success</span>(<span class="params">result,context</span>) </span>&#123;</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">"fillMeAtLoadTime"</span>).innerHTML = result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>And that’s really all there is to JSON. The rest is really just a matter of imagination and JavaScript.</p>
 
       
     </div>
@@ -140,7 +142,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-ajax-using-json-here-s-how/" data-id="cklxx1ge1000m98x2uea6qa78" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-ajax-using-json-here-s-how/" data-id="ckm7xqrwg000l9cx2r1wzlva5" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
