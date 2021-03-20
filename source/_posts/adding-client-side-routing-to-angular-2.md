@@ -44,7 +44,7 @@ app.use(function(req,res){
     // a client side route
     // assuming a real file will have an extension
     // and a route will not.
-    if(req.url.indexOf('.')\> -1){
+    if(req.url.indexOf('.') > -1){
         res.status(404)        // HTTP status 404: Not Found
             .send('Not found');
     }

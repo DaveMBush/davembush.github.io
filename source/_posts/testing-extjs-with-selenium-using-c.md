@@ -35,7 +35,7 @@ You could do something like:
 [FindsBy(How = How.Custom,
     CustomFinderType = typeof(ExtByComponentQuery),
     Using = "#someId")]
-private IWebElement SomeId{get; \[UsedImplicitly\]set;}
+private IWebElement SomeId{get; [UsedImplicitly]set;}
 ```
 
 One of the side effects of using this extension is that you can now find any element using any valid EXTjs selector.
@@ -82,13 +82,13 @@ namespace ENT.Supporting
         {
             var script = string.Format(
 @"var r= Ext.ComponentQuery.query('{0}');
-var rarray = \[\];
+var rarray = [];
 for(e = 0;e < r.length;e++)
 { {
-    if(r\[e\].getEl() !== undefined)
-        rarray.push(r\[e\].getEl().dom);
+    if(r[e].getEl() !== undefined)
+        rarray.push(r[e].getEl().dom);
 }}
-return rarray;",_locator.Replace("'","\\\'"));
+return rarray;",_locator.Replace("'","\\'"));
             var javaScriptExecutor = context as IJavaScriptExecutor ??
                                      ((IWrapsDriver)context).WrappedDriver as IJavaScriptExecutor;
             if (javaScriptExecutor == null) return null;
@@ -135,7 +135,7 @@ public static string GetExtValue(this IWebElement element)
     var id = realElement.GetAttribute("id");
     var driver = wrapsDriver.WrappedDriver;
     var val = ((IJavaScriptExecutor)driver).ExecuteScript(
-        @"return Ext.getCmp(arguments\[0\]).getRawValue();",
+        @"return Ext.getCmp(arguments[0]).getRawValue();",
         id);
     if (val == null)
     {

@@ -25,7 +25,7 @@ Here is your initial code:
 
 ``` csharp
 PdfPTable table= new PdfPTable(5);
-float\[\] colWidths = {70, 70, 200, 70, 70};
+float[] colWidths = {70, 70, 200, 70, 70};
 table.SetWidths(colWidths);
 ```
 

@@ -35,7 +35,7 @@ If you are using Visual Studio 2008 to build your applications, this code can be
 
 ``` csharp
 [STAThread]
-static void Main(String\[\] args)
+static void Main(String[] args)
 {
     ...
 }
@@ -45,12 +45,12 @@ If a parameter was passed, args will have a length greater than zero.  To retri
 
 ``` csharp
 [STAThread]
-static void Main(String\[\] args)
+static void Main(String[] args)
 {
 
     if (args.Length > 0)
     {
-        string arg1 = args\[0\];
+        string arg1 = args[0];
         // do something appropriate with
         // arg1 here. }
     Application.EnableVisualStyles();

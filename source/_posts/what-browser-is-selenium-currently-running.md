@@ -28,7 +28,7 @@ Since we have multiple dropdowns that behave the same way, I made this code an e
 ``` csharp
 [FindsBy(How = How.Id, Using = "someIdHere"), CacheLookup]
 private IWebElement SomePropertyName
-    { get; \[UsedImplicitly\] set; }
+    { get; [UsedImplicitly] set; }
 ```
 
 Under the hood this creates a proxy to the real element.  What we need access to is the Driver object that this element is using to get at the element on the browser.  I do that by going after the element’s WrappedDriver property.  In most code you’ll see this cast to an IWrapsDriver interface.  But it is actually pointing to a RemoteWebDriver object.  If we cast the type to that, we can then go after the Capabilities object which will give us access to the BrowserName. And so, my resulting code looks something like this:

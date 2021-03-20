@@ -26,7 +26,7 @@ The temptation is to write code that looks something like this:
 ``` javascript
  $.each(json, function(index, entry)
 {
-    jQuery.get(entry\['url'\], function(html)
+    jQuery.get(entry['url'], function(html)
     {
         // insert the HTML here.
     }
@@ -42,7 +42,7 @@ But there is a fix.  Use the _ajax_ call instead and specify _async:false_ to f
 ``` javascript
 $.each(json, function(index, entry)
 {
-    jQuery.ajax({ url:  directory + '/' \+ entry\['url'\] , success: function(html)
+    jQuery.ajax({ url:  directory + '/' + entry['url'] , success: function(html)
         {
             // insert the HTML here.
         }

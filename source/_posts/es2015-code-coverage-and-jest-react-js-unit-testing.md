@@ -32,7 +32,9 @@ ES2015 Code Coverage Fix One
 
 OK, so the standard recommended fix for something like this is to place
 
-/\* istanbul ignore next */
+``` javascript
+/* istanbul ignore next */
+```
 
 Prior to those functions.  And it just so happens that both Jest and Babel provide a mechanism for adding this comment by using the auxiliaryCommentBefore option.
 
@@ -46,11 +48,15 @@ auxiliaryCommentBefore: 'istanbul ignore next'
 
 Your code will get transformed so that any functions added by Babel will end up looking like this:
 
-/\*istanbul ignore next\*/function babelFunctionHere()...
+``` javascript
+/*istanbul ignore next*/function babelFunctionHere()...
+```
 
 But in order for Istanbul to pickup this comment, the code needs to look like this:
 
-/\* istanbul ignore next */ function babelFunctionHere()...
+``` javascript
+/* istanbul ignore next */ function babelFunctionHere()...
+```
 
 While getting the spaces on either side of ‘istanbul ignore next’ is a simple matter, we have no real control over the space that is necessary between the comment marker and the function keyword.
 
@@ -67,7 +73,9 @@ There is a plug-in for Babel called ‘[transform-runtime](//www.npmjs.com/packa
 
 You can add this to either your .babelrc file or the Babel section of your package.json file by adding a “plugins” section
 
-"plugins": \["transform-runtime"\]
+``` json
+"plugins": ["transform-runtime"]
+```
 
 along with the “presets” section you should already have.
 
@@ -78,7 +86,9 @@ While using transform-runtime takes care of most of the issues, there are two fu
 
 The good news is, it is only two functions and they both show up as
 
+``` javascript
 function _interop...
+```
 
 If we can get a hold of the code as it is being transformed, we should be able to do a search and replace to get the correct ‘istanbul ignore next’ string in place prior to the functions.
 
@@ -97,11 +107,11 @@ Locate the src/index.js file in the node_modules/babel-jest directory.  At the 
 
 ``` javascript
 /**
- \* Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
+ * Copyright (c) 2014-present, Facebook, Inc. All rights reserved.
  *
- \* This source code is licensed under the BSD-style license found in the
- \* LICENSE file in the root directory of this source tree. An additional grant
- \* of patent rights can be found in the PATENTS file in the same directory.
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
  */
 
 'use strict';
@@ -115,7 +125,7 @@ module.exports = {
       return babel.transform(src, {
         auxiliaryCommentBefore: ' istanbul ignore next ',
         filename,
-        presets: \[jestPreset\],
+        presets: [jestPreset],
         retainLines: true,
       }).code;
     }
@@ -139,7 +149,7 @@ module.exports = {
       return babel.transform(src, {
 //        auxiliaryCommentBefore: ' istanbul ignore next ',
         filename,
-        presets: \[jestPreset\],
+        presets: [jestPreset],
         retainLines: true,
       }).code;
     }
@@ -154,7 +164,7 @@ You will notice that what gets returned is the resulting transform of the code.�
      return babel.transform(src, {
         auxiliaryCommentBefore: ' istanbul ignore next ',
         filename,
-        presets: \[jestPreset\],
+        presets: [jestPreset],
         retainLines: true,
       }).code;
 ```
@@ -165,11 +175,11 @@ What we want want to do is:
       return babel.transform(src, {
         //auxiliaryCommentBefore: ' istanbul ignore next ',
         filename,
-        presets: \[jestPreset\],
+        presets: [jestPreset],
         retainLines: true,
       }).code
-          .replace(/function\\s_interop/g,
-              ' /\* istanbul ignore next */ function _interop');
+          .replace(/function\s_interop/g,
+              ' /* istanbul ignore next */ function _interop');
 ```
 
 ES2015 Code Coverage With Jest - Summary

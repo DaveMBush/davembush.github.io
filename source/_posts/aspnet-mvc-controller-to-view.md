@@ -43,17 +43,22 @@ ViewData\["Key"\] = objectData;
 
 You can see that the sample project does this in the HomeController.Index method.
 
+``` csharp
 public ActionResult Index()
 {
-    ViewData\["Message"\] = "Welcome to ASP.NET MVC!";
+    ViewData["Message"] = "Welcome to ASP.NET MVC!";
     return View();
 }
+```
 
 And you can see that the Index.aspx file picks it up later:
 
-    <h2>**_<%_****_= Html.Encode(ViewData\["Message"\])_** **_%>_**</h2>
+``` html
+    <h2><%= Html.Encode(ViewData["Message"])%></h2>
     <p> To learn more about ASP.NET MVC visit
-        <a href="http://asp.net/mvc" title="ASP.NET MVC Website"> http://asp.net/mvc</a>.
+        <a href="http://asp.net/mvc" title="ASP.NET MVC Website">
+          http://asp.net/mvc</a>.
     </p>
+  ```
 
 Returning View() is not the only way of specifying the View we want to display from the Controller.  You can also return Redirect(), RedirectAction(), RedirectToRoute().

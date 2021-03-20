@@ -50,7 +50,7 @@ for(var i = 0;i < 10;i++){
     console.log(i);
 }
 
-console.log('final i: ' \+ i);
+console.log('final i: ' + i);
 ```
 
 What is the value of i when `console.log(‘final i: ‘ + i)` is executed?
@@ -130,7 +130,7 @@ catch(i){
     }
 }
 
-console.log('final i: ' \+ i);
+console.log('final i: ' + i);
 ```
 
 Which would give you the behavior you were probably expecting.  The code above will print out ‘final i: 20’ like you were probably expecting above.

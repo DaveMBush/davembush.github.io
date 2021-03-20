@@ -119,7 +119,7 @@ Your Karma.conf.js file should contain content that looks something like this:
 module.exports = function (config) {
     var path = require('path');
     config.set({
-        browsers: \['PhantomJS'\],
+        browsers: ['PhantomJS'],
         phantomjsLauncher: {
             cmd: {
                 win32: path.join(__dirname,
@@ -127,17 +127,17 @@ module.exports = function (config) {
             }
         },
         // this tells Karma to start Jasmine
-        frameworks: \['jasmine'\],
-        files: \[
+        frameworks: ['jasmine'],
+        files: [
            '../app/**/*.js',
            '../jsTests/app/**/*.js'
-        \],
+        ],
 
         // coverage reporter generates the coverage
-        reporters: \['progress', 'coverage'\],
+        reporters: ['progress', 'coverage'],
 
         preprocessors: {
-            '../app/**/*.js': \['coverage'\]
+            '../app/**/*.js': ['coverage']
         },
 
         // optionally, configure the reporter
@@ -162,7 +162,7 @@ var Server = require('karma').Server;
 
 gulp.task('test', function (done) {
     new Server({
-        configFile: __dirname + '\\\jsTests\\\karma.conf.js',
+        configFile: __dirname + '\\jsTests\\karma.conf.js',
         singleRun: true,
         browserNoActivityTimeout: 60000
     }, function () { done(); }).start();

@@ -88,11 +88,11 @@ You could provide your array, its own implementation of each:
 ``` javascript
 Array.prototype.each = function(callback){
     for(var i = 0;i < this.length;i++){
-        callback(this\[i\]);
+        callback(this[i]);
     }
 }
 
-var a = \[1,2,3\];
+var a = [1,2,3];
 
 a.each(function(item){
     console.log(item);

@@ -21,8 +21,8 @@ The IF statement we looked at on Tuesday was pretty tame compared to the WHILE c
 ``` sql
 DECLARE @someString as VARCHAR
 WHILE @someString='ABC' BEGIN
-   SELECT \* FROM someTABLE
-   SELECT \* FROM someOtherTABLE
+   SELECT * FROM someTABLE
+   SELECT * FROM someOtherTABLE
   END
 ```
 
@@ -32,7 +32,7 @@ So if you want a FOR/NEXT loop, you'll need to write:
 DECLARE @someInt as int
 SET @someInt = 0
 WHILE @someInt < 20
-  BEGIN /\* useful code here */ SET @someInt = @someInt \+ 1
+  BEGIN /* useful code here */ SET @someInt = @someInt + 1
   END
 ```
 
@@ -42,7 +42,7 @@ and a DO WHILE loop would be something like:
 DECLARE @someInt as int
 SET @someInt = 0
 WHILE @someInt = 0
-  BEGIN /\* useful code here */ IF *some exit condition */ SET @someInt = 1
+  BEGIN /* useful code here */ IF /*some exit condition */ SET @someInt = 1
   END
 ```
 

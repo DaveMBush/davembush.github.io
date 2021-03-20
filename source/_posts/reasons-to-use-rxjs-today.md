@@ -47,7 +47,7 @@ In pure JavaScript, you are typically writing code that either looks like this: 
 ``` javascript
 var someArray = [...data here...];
 for(var i = 0;i < array.length;i++) {
-    var a = someArray\[i\];
+    var a = someArray[i];
    ... do something with the data ...
 }
 ```

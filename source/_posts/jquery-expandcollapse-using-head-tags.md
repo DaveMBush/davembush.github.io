@@ -55,9 +55,9 @@ $(function() {
     var strHtml;
     $(".HEC h4").parent().each(function() {
         strHtml = $(this).html();
-        strHtml = strHtml.replace(/<\\/h4>/gi, "</h4><div class='content'>");
+        strHtml = strHtml.replace(/<\/h4>/gi, "</h4><div class='content'>");
         strHtml = strHtml.replace(/<h4/gi, "</div></div><div class='accordian'><h4");
-        strHtml = "<div><div>" \+ strHtml + "</div></div>";
+        strHtml = "<div><div>" + strHtml + "</div></div>";
         $(this).html(strHtml);
         $("h4").bind("click", function(event) {
             $(this).next().slideToggle("slow");

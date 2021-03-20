@@ -48,7 +48,7 @@ private static void ReceiveSAMLResponse(
         out samlResponseXml, out relayState);
     SAMLResponse resp = new SAMLResponse(samlResponseXml);
     XmlElement samlAssertionElement =
-        resp.GetSignedAssertions()\[0\];
+        resp.GetSignedAssertions()[0];
 
     // Verify the response's signature.
     XmlDocument doc = new XmlDocument();

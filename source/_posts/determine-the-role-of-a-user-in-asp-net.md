@@ -18,8 +18,8 @@ date: 2009-10-13 06:46:21
 
 There are several controls that allow you to display content based on the role a user is in, including:
 
-\- LoginView
-\- LoginStatus
+- LoginView
+- LoginStatus
 
 And the web.config file allows us to control which pages can be viewed based on which role a user is in.
 

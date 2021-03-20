@@ -143,7 +143,7 @@ if (isBlock != null && isBlock.ToLower() == "true")
     }
     if (isList != null && isList.ToLower() == "true")
         ((iTextSharp.text.List)
-            (list\[list.Count - 1\])).Add(p);
+            (list[list.Count - 1])).Add(p);
     else list.Add(p);
     stack.Push(p);
 }

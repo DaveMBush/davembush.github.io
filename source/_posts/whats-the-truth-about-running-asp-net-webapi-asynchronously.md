@@ -58,9 +58,9 @@ All the tests were run on an 8 core computer with 16 gig of RAM. The numbers are
 For a baseline, I ran WWWS against this end point:
 
 ``` csharp
-public IEnumerable<string\> Get() {
+public IEnumerable<string> Get() {
     System.Threading.Thread.Sleep(1000);
-    return new string\[\] { "value1", "value2" };
+    return new string[] { "value1", "value2" };
 }
 ```
 
@@ -73,7 +73,7 @@ I was able to run WWWS against the end-point for 20 seconds at a rate of 100 thr
 The next test was to see what performance improvements I could get by running the end-point asynchronously.
 
 ``` csharp
-public async Task<IEnumerable<string>\> Get(){
+public async Task<IEnumerable<string>> Get(){
     await Task.Delay(1000);
     return new string[] { "value1", "value2" };
 }
@@ -96,10 +96,10 @@ What would it be like if we added caching onto this? By using the `CacheOutput` 
 
 ``` csharp
 [CacheOutput(ClientTimeSpan = 50000,ServerTimeSpan = 50000)]
-public async Task<IEnumerable<string>\> Get()
+public async Task<IEnumerable<string>> Get()
 {
     await Task.Delay(1000);
-    return new string\[\] { "value1", "value2" };
+    return new string[] { "value1", "value2" };
 }
 ```
 

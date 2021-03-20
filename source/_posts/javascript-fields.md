@@ -99,7 +99,7 @@ var a = {
 }
 
 for(f in a) {
-    console.log(f + ': ' \+ a\[f\]);
+    console.log(f + ': ' + a[f]);
 }
 ```
 

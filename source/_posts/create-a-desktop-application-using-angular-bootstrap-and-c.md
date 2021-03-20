@@ -128,11 +128,11 @@ foreach (var resource in resourceNames)
     url = url.Replace(".", "/");
     var lastSlash = url.LastIndexOf("/",
         StringComparison.Ordinal);
-    url = url.Substring(0, lastSlash) + "." \+
+    url = url.Substring(0, lastSlash) + "." +
         url.Substring(lastSlash + 1);
 
     // Register the response with the URL
-    factory.RegisterHandler("http://local/" \+ url,
+    factory.RegisterHandler("http://local/" + url,
         ResourceHandler.FromStream(r));
 }
 ```
@@ -162,9 +162,9 @@ class RegisterWebsite
             url = url.Replace(".", "/");
             var lastSlash = url.LastIndexOf("/",
                 StringComparison.Ordinal);
-            url = url.Substring(0, lastSlash) + "." \+
+            url = url.Substring(0, lastSlash) + "." +
                 url.Substring(lastSlash + 1);
-            factory.RegisterHandler("http://local/" \+ url,
+            factory.RegisterHandler("http://local/" + url,
                  ResourceHandler.FromStream(r));
         }
     }
@@ -174,7 +174,7 @@ class RegisterWebsite
         var assembly = Assembly.GetExecutingAssembly();
         var textStream = assembly
             .GetManifestResourceStream("TopLevelNamespace."
-                \+ filename);
+                + filename);
         return textStream;
     }
 }
@@ -231,7 +231,7 @@ The easiest way to do this is to just run it off the top level $scope object.  
 
 ``` csharp
 _browser
-    .ExecuteScriptAsync("angular.element('\[ng-app\]').scope().$digest();");
+    .ExecuteScriptAsync("angular.element('[ng-app]').scope().$digest();");
 ```
 
 Alternatively, you could skip setting the watch and have your ExecuteScriptAsync call set the $scope variables directly using something like this:
@@ -239,8 +239,8 @@ Alternatively, you could skip setting the watch and have your ExecuteScriptAsync
 ``` csharp
 _browser.ExecuteScriptAsync(
   "angular.element('#IdOfViewThatHasAControllerAttached')."+
-  "scope().status = 'this is a new status';angular." \+
-  "element('\[ng-app\]').scope().$digest();");
+  "scope().status = 'this is a new status';angular." +
+  "element('[ng-app]').scope().$digest();");
 ```
 
 Where #IdOfViewThatHasAControllerAttached is an ID of a element in a view that you’ve associated with a controller.  You’ll still want your controller to pull from the C# JavaScript object for the initial load because the DIV may or may not be there when you do the push.  Personally, I prefer the $watch method.  There is less to think about on the C# side.

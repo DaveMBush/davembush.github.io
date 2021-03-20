@@ -32,10 +32,10 @@ Just to make sure we have the basics covered, we want to start with generic styl
 Since I generally use Bootstrap to theme my applications, this is what I’ll reference here. Using the angular-cli, the way you would add the CSS theme information is to include it in the angular-cli.json file of your application in the “styles” section.
 
 ``` css
-  "styles": \[
+  "styles": [
     "../node_modules/bootstrap/dist/css/bootstrap.css",
     "styles.css"
-  \],
+  ],
 ```
 
 If you have a component that you need to style in a way that is outside the bounds of the general CSS you’ve included, you can add CSS to the components CSS file. This all works as expected with one small exception. The CSS you add to this file only applies to the component and will override any other CSS that might already be applied by the general CSS.
@@ -80,7 +80,7 @@ An alternate way of setting style on the component container is by using the @Ho
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
-  styleUrls: \['./view.component.css'\]
+  styleUrls: ['./view.component.css']
 })
 export class ViewComponent implements OnInit {
   @HostBinding('style.backgroundColor')
@@ -103,7 +103,7 @@ The first thing you may try is to just style the markup.
 
 ``` css
 component-parent component-child {
-    /\* style stuff here */
+    /* style stuff here */
 }
 ```
 
@@ -132,10 +132,10 @@ To animate a component, you are going to need to add an animations section to th
 @Component({
   selector: 'app-view',
   templateUrl: './view.component.html',
-  styleUrls: \['./view.component.css'\],
-  animations: \[
-      /\* animation definitions here */
-  \]
+  styleUrls: ['./view.component.css'],
+  animations: [
+      /* animation definitions here */
+  ]
 })
 ```
 

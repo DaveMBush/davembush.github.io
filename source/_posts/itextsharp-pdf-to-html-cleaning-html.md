@@ -17,7 +17,7 @@ date: 2009-07-20 06:23:07
 
 ``` csharp
 if (!xhtmlString.ToLower().StartsWith("<p>"))
-    xhtmlString = "<p>" \+ xhtmlString + "</p>";
+    xhtmlString = "<p>" + xhtmlString + "</p>";
 ```
 
 The next thing I do is make sure that all of the white space that isn’t the space character is removed from the code.
@@ -26,8 +26,8 @@ The next thing I do is make sure that all of the white space that isn’t the sp
 xhtmlString = xhtmlString
     .Replace("\
 ", string.Empty)
-    .Replace("\\n", string.Empty)
-    .Replace("\\t", string.Empty);
+    .Replace("\n", string.Empty)
+    .Replace("\t", string.Empty);
 ```
 
 Then we want to change our BR tags to auto close.  Since I don’t deal with IMG tags in this code I don’t bother auto closing those tags.  If you decide to embellish this code to use the IMG tag, you’ll want to add code to fix that as well.
@@ -67,7 +67,7 @@ while (match.Success)
     match = match.NextMatch();
 }
 
-re = new System.Text.RegularExpressions.Regex("</\\\w+?>");
+re = new System.Text.RegularExpressions.Regex("</\\w+?>");
 match = re.Match(xhtmlString);
 while (match.Success)
 {
@@ -80,8 +80,8 @@ while (match.Success)
 Because the PDF code will treat each white space character as a character and HTML treats a string of white space characters as one space, I strip out any extra white space characters.  
 
 ``` csharp
-while (xhtmlString.Contains("\> "))
-    xhtmlString = xhtmlString.Replace("\> ", ">");
+while (xhtmlString.Contains("> "))
+    xhtmlString = xhtmlString.Replace("> ", ">");
 while (xhtmlString.Contains("  "))
     xhtmlString = xhtmlString.Replace("  ", " ");
 ```
@@ -101,7 +101,7 @@ while (length != xhtmlString.Length)
     length = xhtmlString.Length;
     xhtmlString = System.Text
         .RegularExpressions.Regex .Replace(xhtmlString,
-        "(<.+?\\\s+\\\w+=)(\[^\\"'\]\\\S*?)(\[\\\s>\])", "$1\\"$2\\"$3");
+        "(<.+?\\s+\\w+=)(\[^\"'\]\\S*?)(\[\\s>\])", "$1\"$2\"$3");
 
 }
 ```

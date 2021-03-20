@@ -36,7 +36,7 @@ Response.Clear();
 Response.ContentType = "application/pdf";
 Response.AddHeader("ContentType", "application/pdf");
 Response.AddHeader("Content-Disposition",
-    "inline;filename=\\"FileName.pdf\\"");
+    "inline;filename=\"FileName.pdf\"");
 ```
 
 The `Response.Clear()` line clears out any input that has already been sent back to the browser.

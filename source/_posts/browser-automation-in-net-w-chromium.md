@@ -43,7 +43,7 @@ var settings = new CefSettings
 settings.CefCommandLineArgs.Add("no-proxy-server", "1");
 
 Cef.OnContextInitialized = ()
-    =\> Cef.SetCookiePath("cookies", true);
+    => Cef.SetCookiePath("cookies", true);
 
 if (!Cef.Initialize(settings, shutdownOnProcessExit: false,
     performDependencyCheck: true))

@@ -41,7 +41,7 @@ Now to get this running.
 You’ll want to put the following in a cmd file and place the cmd file in the Selenium directory with all the other stuff on your Hub computer:
 
 ``` shell
-"{path to your java directory}\\java.exe" -jar
+"{path to your java directory}\java.exe" -jar
     selenium-server-standalone-2.44.0.jar -role hub
 ```
 
@@ -50,13 +50,13 @@ This will run the Hub on port 4444.  This is all you need to do.  You should e
 Here’s the script:
 
 ```shell
-"{path to your java directory}\\java.exe" -jar
+"{path to your java directory}\java.exe" -jar
     selenium-server-standalone-2.44.0.jar -role
     node -hub http://localhost:4444/grid/register/ -browser
     browserName=firefox,maxInstances=5,platform=WINDOWS -browser
     browserName="internet explorer",version=11,maxInstances=5,
     platform=WINDOWS,
-    -Dwebdriver.ie.driver=c:\\Selenium\\IEDriverServer.exe
+    -Dwebdriver.ie.driver=c:\Selenium\IEDriverServer.exe
 ```
 
 The first thing you should note is that we’ve specified the role as “node” with the –role node flag.
