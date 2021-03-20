@@ -106,66 +106,26 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>One of the cool new tricks we are able to perform in ASP.NET that we were not able to use in ASP is the ability to have ASP.NET redirect file requests in the same way that mod_rewrite does under the Apache webserver. For example, we could have the browser ask for an image file that doesn’t exist on the file system and have ASP.NET serve up the file from the database. Or, if we wanted to protect some files, we could put them in a directory that was hard to guess and have ASP.NET load that file for us when the browser requested the file from what looked like a normal location. The magic that makes all this work is the 404 error handler, the Application_BeginRequest() event handler, and the HttpContext.RewritePath() method. So, the first thing we need to do is open up our Global.asax file and create an event handler for BeginRequest(). This event is the first thing that will get called when a request is made to ASP.NET.</p>
-<p>protected void Application_BeginRequest(Object sender, EventArgs e)<br>{<br>}</p>
-<p>Second, we will want to create a 404 error handler in IIS. You may have done this in prior applications, like ASP, to tell the user that a page no longer existed or to redirect the browser to a page whose name had changed. We are going to use it to force the Application _BeginRequest() method to fire even when a static file isn’t found. All you need to do is tell IIS that an ASPX file is the 404 handler. It doesn’t matter what you call it and it doesn’t matter if the file even exists on the server. The only thing that does matter is that you SAY that the file exists in the application directory that you’ve created your web application in. Now that you’ve specified your 404 handler, any file that can’t be found on the server will automatically fire the Application_BeginRequest event handler. So the next thing we need to do is add code in this method to check for the 404 condition.</p>
-<p>if (Request.ServerVariables[“QUERY_STRING”].Length &gt; 4 &amp;&amp;<br>Request.ServerVariables[“QUERY_STRING”].StartsWith(“404;”))</p>
-<p>{</p>
-<p>Context.Trace.Write(“QueryString &gt; 1”);</p>
-<p>String queryString =</p>
-<p>Request.ServerVariables[“QUERY_STRING”].Substring(4).ToLower();</p>
-<p>// strip off the http:// or https:// </p>
-<p>queryString = queryString.Replace(“http://“, “”)</p>
-<p>.Replace(“https://“, “”);</p>
-<p>// strip of the host section </p>
-<p>queryString = queryString.Substring(queryString.IndexOf(“/“) + 1);</p>
-<p>string applicationDirectory = Request.ApplicationPath;</p>
-<p>if (applicationDirectory.StartsWith(“/“))</p>
-<p>applicationDirectory = applicationDirectory.Substring(1);</p>
-<p>queryString = queryString.Substring(applicationDirectory.Length);</p>
-<p>if (queryString.ToCharArray()[0] != ‘/‘)</p>
-<p>queryString = “/“ + queryString;</p>
-<p>}</p>
-<p>  Remember from your ASP days, when a 404 error handler is called, the query string starts with “404;”, so this code is checking for that and stripping it out. Then it looks for the file that was being requested and strips off everything but the file location. This code will work if your application is in a subdirectory or if it is in the root of your domain, leaving you with an application relative reference to the file the browser was looking for. Once you have that, you can format the request to the real location and call</p>
-<p>HttpContext.Current.RewritePath(newLocation)</p>
-<p>Passing in the call to an ASPX file that will actually return the correct information. In the code that I originally wrote, this was looking for our virtual images directory and passed the call on to our virtual images handler which pulls the image out of the database.</p>
-<p>if (queryString.StartsWith(imagesDirectory))<br>{</p>
-<p>HttpContext.Current.RewritePath(“VirtualImage.aspx?”+queryString);</p>
-<p>return;</p>
-<p>}</p>
+        <p>One of the cool new tricks we are able to perform in ASP.NET that we were not able to use in ASP is the ability to have ASP.NET redirect file requests in the same way that mod_rewrite does under the Apache webserver.</p>
+<p>For example, we could have the browser ask for an image file that doesn’t exist on the file system and have ASP.NET serve up the file from the database.</p>
+<p>Or, if we wanted to protect some files, we could put them in a directory that was hard to guess and have ASP.NET load that file for us when the browser requested the file from what looked like a normal location.</p>
+<p>The magic that makes all this work is the 404 error handler, the Application_BeginRequest() event handler, and the HttpContext.RewritePath() method.</p>
+<p>So, the first thing we need to do is open up our Global.asax file and create an event handler for BeginRequest().</p>
+<p>This event is the first thing that will get called when a request is made to ASP.NET.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Application_BeginRequest</span>(<span class="params">Object sender, EventArgs e</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Second, we will want to create a 404 error handler in IIS.</p>
+<p>You may have done this in prior applications, like ASP, to tell the user that a page no longer existed or to redirect the browser to a page whose name had changed.</p>
+<p>We are going to use it to force the <code>Application_BeginRequest()</code> method to fire even when a static file isn’t found.</p>
+<p>All you need to do is tell IIS that an ASPX file is the 404 handler. It doesn’t matter what you call it and it doesn’t matter if the file even exists on the server. The only thing that does matter is that you SAY that the file exists in the application directory that you’ve created your web application in.</p>
+<p>Now that you’ve specified your 404 handler, any file that can’t be found on the server will automatically fire the <code>Application_BeginRequest</code> event handler. So the next thing we need to do is add code in this method to check for the 404 condition.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (Request.ServerVariables[<span class="string">"QUERY_STRING"</span>].Length &gt; <span class="number">4</span> &amp;&amp;</span><br><span class="line">Request.ServerVariables[<span class="string">"QUERY_STRING"</span>].StartsWith(<span class="string">"404;"</span>))</span><br><span class="line">&#123;</span><br><span class="line">  Context.Trace.Write(<span class="string">"QueryString &gt; 1"</span>);</span><br><span class="line">  String queryString =</span><br><span class="line">    Request.ServerVariables[<span class="string">"QUERY_STRING"</span>].Substring(<span class="number">4</span>).ToLower();</span><br><span class="line"></span><br><span class="line">  <span class="comment">// strip off the http:// or https://</span></span><br><span class="line">  queryString = queryString.Replace(<span class="string">"http://"</span>, <span class="string">""</span>)</span><br><span class="line">    .Replace(<span class="string">"https://"</span>, <span class="string">""</span>);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// strip of the host section</span></span><br><span class="line">  queryString = queryString.Substring(queryString.IndexOf(<span class="string">"/"</span>) + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">string</span> applicationDirectory = Request.ApplicationPath;</span><br><span class="line">  <span class="keyword">if</span> (applicationDirectory.StartsWith(<span class="string">"/"</span>))</span><br><span class="line">    applicationDirectory = applicationDirectory.Substring(<span class="number">1</span>);</span><br><span class="line">  queryString = queryString.Substring(applicationDirectory.Length);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (queryString.ToCharArray()[<span class="number">0</span>] != <span class="string">'/'</span>)</span><br><span class="line">    queryString = <span class="string">"/"</span> + queryString;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Remember from your ASP days, when a 404 error handler is called, the query string starts with “404;”, so this code is checking for that and stripping it out. Then it looks for the file that was being requested and strips off everything but the file location. This code will work if your application is in a subdirectory or if it is in the root of your domain, leaving you with an application relative reference to the file the browser was looking for. Once you have that, you can format the request to the real location and call</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">HttpContext.Current.RewritePath(newLocation)</span><br></pre></td></tr></table></figure>
+<p>Passing in the call to an ASPX file that will actually return the correct information.</p>
+<p>In the code that I originally wrote, this was looking for our virtual images directory and passed the call on to our virtual images handler which pulls the image out of the database.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (queryString.StartsWith(imagesDirectory))</span><br><span class="line">&#123;</span><br><span class="line">  HttpContext.Current.RewritePath(<span class="string">"VirtualImage.aspx?"</span>+queryString);</span><br><span class="line">  <span class="keyword">return</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>And, just to preempt any comments about performance, the VirtualImage.aspx file caches the results so that we are not constantly pulling the image from the database. Here’s the full handler:</p>
-<p>protected void Application_BeginRequest(Object sender, EventArgs e)<br>{</p>
-<p>if (Request.ServerVariables[“QUERY_STRING”].Length &gt; 4 &amp;&amp;</p>
-<p>Request.ServerVariables[“QUERY_STRING”].StartsWith(“404;”))</p>
-<p>{</p>
-<p>Context.Trace.Write(“QueryString &gt; 1”);</p>
-<p>String queryString =</p>
-<p>Request.ServerVariables[“QUERY_STRING”].Substring(4).ToLower();</p>
-<p>// strip off the http:// or https:// </p>
-<p>queryString = queryString.Replace(“http://“, “”)</p>
-<p>.Replace(“https://“, “”);</p>
-<p>// strip of the host section </p>
-<p>queryString = queryString.Substring(queryString.IndexOf(“/“) + 1);</p>
-<p>string applicationDirectory = Request.ApplicationPath;</p>
-<p>if (applicationDirectory.StartsWith(“/“))</p>
-<p>applicationDirectory = applicationDirectory.Substring(1);</p>
-<p>queryString = queryString.Substring(applicationDirectory.Length);</p>
-<p>if (queryString.ToCharArray()[0] != ‘/‘)</p>
-<p>queryString = “/“ + queryString;</p>
-<p>string imagesDirectory =</p>
-<p>ConfigurationManager.AppSettings[“VirtualImageDirectory”];</p>
-<p>if (queryString.StartsWith(imagesDirectory))</p>
-<p>{</p>
-<p>HttpContext.Current.</p>
-<p>RewritePath(“VirtualImage.aspx?”+queryString);</p>
-<p>return;</p>
-<p>}</p>
-<p>if (queryString.Contains(“app_themes”))</p>
-<p>HttpContext.Current.</p>
-<p>RewritePath(“ResolveRelativeReference.aspx?” +</p>
-<p>queryString);</p>
-<p>}</p>
-<p>}</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">Application_BeginRequest</span>(<span class="params">Object sender, EventArgs e</span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (Request.ServerVariables[<span class="string">"QUERY_STRING"</span>].Length &gt; <span class="number">4</span> &amp;&amp;</span><br><span class="line">    Request.ServerVariables[<span class="string">"QUERY_STRING"</span>].StartsWith(<span class="string">"404;"</span>)) &#123;</span><br><span class="line">      Context.Trace.Write(<span class="string">"QueryString &gt; 1"</span>);</span><br><span class="line">      String queryString =</span><br><span class="line">        Request.ServerVariables[<span class="string">"QUERY_STRING"</span>]</span><br><span class="line">          .Substring(<span class="number">4</span>)</span><br><span class="line">          .ToLower();</span><br><span class="line"></span><br><span class="line">      <span class="comment">// strip off the http:// or https://</span></span><br><span class="line">      queryString = queryString</span><br><span class="line">        .Replace(<span class="string">"http://"</span>, <span class="string">""</span>)</span><br><span class="line">        .Replace(<span class="string">"https://"</span>, <span class="string">""</span>);</span><br><span class="line"></span><br><span class="line">      <span class="comment">// strip of the host section</span></span><br><span class="line">      queryString = queryString</span><br><span class="line">        .Substring(queryString.IndexOf(<span class="string">"/"</span>) + <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">string</span> applicationDirectory = Request.ApplicationPath;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (applicationDirectory.StartsWith(<span class="string">"/"</span>))</span><br><span class="line">        applicationDirectory = applicationDirectory.Substring(<span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">      queryString = queryString</span><br><span class="line">        .Substring(applicationDirectory.Length);</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (queryString.ToCharArray()[<span class="number">0</span>] != <span class="string">'/'</span>)</span><br><span class="line">        queryString = <span class="string">"/"</span> + queryString;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">string</span> imagesDirectory =</span><br><span class="line">      ConfigurationManager.AppSettings[<span class="string">"VirtualImageDirectory"</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (queryString.StartsWith(imagesDirectory)) &#123;</span><br><span class="line">      HttpContext.Current.</span><br><span class="line">        RewritePath(<span class="string">"VirtualImage.aspx?"</span>+queryString);</span><br><span class="line">      <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (queryString.Contains(<span class="string">"app_themes"</span>))</span><br><span class="line">    HttpContext.Current.</span><br><span class="line">      RewritePath(<span class="string">"ResolveRelativeReference.aspx?"</span> +</span><br><span class="line">      queryString);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -176,7 +136,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/virtual-files-using-httpcontext-rewritepath/" data-id="ckm7xqsbw007c9cx2ccua8au6" class="article-share-link">
+      <a data-url="http://davembush.github.com/virtual-files-using-httpcontext-rewritepath/" data-id="ckmhunzk7005hxcx2tknm9zl8" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -235,7 +195,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/why-you-can-t-cast-an-integer-to-a-string/" data-id="ckm7xqscm007z9cx2kg6x30qx" class="article-share-link">
+      <a data-url="http://davembush.github.com/why-you-can-t-cast-an-integer-to-a-string/" data-id="ckmhunzko005wxcx28vgouqq6" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -304,7 +264,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/image-map-control-and-javascript/" data-id="ckm7xqryh00259cx2i5erlyjt" class="article-share-link">
+      <a data-url="http://davembush.github.com/image-map-control-and-javascript/" data-id="ckmhunzc60025xcx21op94gy9" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -369,7 +329,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/object-oriented-programming-has-failed-us/" data-id="ckm7xqs78003p9cx2wafgcj9z" class="article-share-link">
+      <a data-url="http://davembush.github.com/object-oriented-programming-has-failed-us/" data-id="ckmhunzh5003mxcx2emy1vl6u" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -424,7 +384,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/formview-edit-and-add/" data-id="ckm7xqryb00209cx22tys8212" class="article-share-link">
+      <a data-url="http://davembush.github.com/formview-edit-and-add/" data-id="ckmhunzbz001zxcx216iwzspj" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -481,7 +441,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/overriding-events-in-vb-net/" data-id="ckm7xqs0i003m9cx25dgkhtx7" class="article-share-link">
+      <a data-url="http://davembush.github.com/overriding-events-in-vb-net/" data-id="ckmhunzh7003nxcx2xfblqimx" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -561,7 +521,7 @@ public void GetObjectData(SerializationInfo info,
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/serializable-attribute-vs-serializable-interface/" data-id="ckm7xqs8w004q9cx2zjicnkh6" class="article-share-link">
+      <a data-url="http://davembush.github.com/serializable-attribute-vs-serializable-interface/" data-id="ckmhunzi30044xcx2tnfgrzbv" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -620,7 +580,7 @@ public void GetObjectData(SerializationInfo info,
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/unauthorizedaccessexception-writing-to-hklm/" data-id="ckm7xqsau006g9cx2zwf2gdgn" class="article-share-link">
+      <a data-url="http://davembush.github.com/unauthorizedaccessexception-writing-to-hklm/" data-id="ckmhunzjo0054xcx2dg5cid3o" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -677,7 +637,7 @@ public void GetObjectData(SerializationInfo info,
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/datasets-objectdatasource-and-3-tier-asp-net/" data-id="ckm7xqrx600199cx2njolvrza" class="article-share-link">
+      <a data-url="http://davembush.github.com/datasets-objectdatasource-and-3-tier-asp-net/" data-id="ckmhunzb5001dxcx2rbn6dhws" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -734,7 +694,7 @@ public void GetObjectData(SerializationInfo info,
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/computed-columns-using-linq-to-sql-classes/" data-id="ckm7xqrx500189cx26acmhh65" class="article-share-link">
+      <a data-url="http://davembush.github.com/computed-columns-using-linq-to-sql-classes/" data-id="ckmhunzaw0017xcx2y0x33kpe" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

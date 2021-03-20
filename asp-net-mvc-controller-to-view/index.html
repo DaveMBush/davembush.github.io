@@ -14,7 +14,7 @@
 <meta property="og:description" content="A couple of weeks ago we looked at ASP.NET MVC routing in the MVC framework.  The routing controls which method in which controller gets called. The obvious next question is, how do we get from the c">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2009/04/ka-vol1-100.jpg">
-<meta property="og:updated_time" content="2021-02-06T17:42:24.173Z">
+<meta property="og:updated_time" content="2021-03-20T14:22:37.592Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ASP.NET MVC - Controller to View">
 <meta name="twitter:description" content="A couple of weeks ago we looked at ASP.NET MVC routing in the MVC framework.  The routing controls which method in which controller gets called. The obvious next question is, how do we get from the c">
@@ -125,13 +125,10 @@
 <p>So, to pass data you would use</p>
 <p>ViewData[“Key”] = objectData;</p>
 <p>You can see that the sample project does this in the HomeController.Index method.</p>
-<p>public ActionResult Index()<br>{<br>    ViewData[“Message”] = “Welcome to ASP.NET MVC!”;<br>    return View();<br>}</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> ActionResult <span class="title">Index</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ViewData[<span class="string">"Message"</span>] = <span class="string">"Welcome to ASP.NET MVC!"</span>;</span><br><span class="line">    <span class="keyword">return</span> View();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>And you can see that the Index.aspx file picks it up later:</p>
-<pre><code>&lt;h2&gt;**_&lt;%_****_= Html.Encode(ViewData\[&quot;Message&quot;\])_** **_%&gt;_**&lt;/h2&gt;
-&lt;p&gt; To learn more about ASP.NET MVC visit
-    &lt;a href=&quot;http://asp.net/mvc&quot; title=&quot;ASP.NET MVC Website&quot;&gt; http://asp.net/mvc&lt;/a&gt;.
-&lt;/p&gt;
-</code></pre><p>Returning View() is not the only way of specifying the View we want to display from the Controller.  You can also return Redirect(), RedirectAction(), RedirectToRoute().</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span><span class="tag">&lt;<span class="name">%=</span> <span class="attr">Html.Encode</span>(<span class="attr">ViewData</span>["<span class="attr">Message</span>"])%&gt;</span><span class="tag">&lt;/<span class="name">h2</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span> To learn more about ASP.NET MVC visit</span><br><span class="line">    <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://asp.net/mvc"</span> <span class="attr">title</span>=<span class="string">"ASP.NET MVC Website"</span>&gt;</span></span><br><span class="line">      http://asp.net/mvc<span class="tag">&lt;/<span class="name">a</span>&gt;</span>.</span><br><span class="line"><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>Returning View() is not the only way of specifying the View we want to display from the Controller.  You can also return Redirect(), RedirectAction(), RedirectToRoute().</p>
 
       
     </div>
@@ -142,7 +139,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-mvc-controller-to-view/" data-id="ckm7xqrwo000r9cx29t2n3h0g" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-mvc-controller-to-view/" data-id="ckmhunza8000rxcx215p6776y" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

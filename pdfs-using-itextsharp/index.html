@@ -14,7 +14,7 @@
 <meta property="og:description" content="There are several libraries on the market now that allow you to create PDF documents from your .NET applications.  The one I’ve chosen to use is extSharp, an open source library that is a port of the">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2009/06/iStock_000002747386Medium.jpg">
-<meta property="og:updated_time" content="2021-01-30T15:01:16.468Z">
+<meta property="og:updated_time" content="2021-03-20T14:43:08.955Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="PDFs Using iTextSharp">
 <meta name="twitter:description" content="There are several libraries on the market now that allow you to create PDF documents from your .NET applications.  The one I’ve chosen to use is extSharp, an open source library that is a port of the">
@@ -119,7 +119,7 @@
 <p>You’ll also need to know that the namespace for iTextSharp is different from iText.  Be sure to include the following line at the top of any code you write that uses iTextSharp</p>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> iTextSharp.text;</span><br><span class="line"><span class="keyword">using</span> iTextSharp.text.pdf;</span><br></pre></td></tr></table></figure>
 <p>To get your ASP.NET page to return a PDF file, you’ll want to add the following code at the top of your Page_Load event handler:</p>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Response.Clear();</span><br><span class="line">Response.ContentType = <span class="string">"application/pdf"</span>;</span><br><span class="line">Response.AddHeader(<span class="string">"ContentType"</span>, <span class="string">"application/pdf"</span>);</span><br><span class="line">Response.AddHeader(<span class="string">"Content-Disposition"</span>,</span><br><span class="line">    <span class="string">"inline;filename=\\"</span>FileName.pdf\\<span class="string">""</span>);</span><br></pre></td></tr></table></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Response.Clear();</span><br><span class="line">Response.ContentType = <span class="string">"application/pdf"</span>;</span><br><span class="line">Response.AddHeader(<span class="string">"ContentType"</span>, <span class="string">"application/pdf"</span>);</span><br><span class="line">Response.AddHeader(<span class="string">"Content-Disposition"</span>,</span><br><span class="line">    <span class="string">"inline;filename=\"FileName.pdf\""</span>);</span><br></pre></td></tr></table></figure>
 <p>The <code>Response.Clear()</code> line clears out any input that has already been sent back to the browser.</p>
 <p>The next line tells the browser that what is coming back is a PDF, not HTML.</p>
 <p>The “Content-Disposition” line allows the browser to know that we want the file IN the browser window rather than downloading the file.</p>
@@ -135,7 +135,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/pdfs-using-itextsharp/" data-id="ckm7xqs7e003r9cx2pqu7c9xk" class="article-share-link">
+      <a data-url="http://davembush.github.com/pdfs-using-itextsharp/" data-id="ckmhunzha003pxcx2s0j6l12s" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

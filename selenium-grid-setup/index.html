@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://davembush.github.com/uploads/2015/01/SeleniumGridSetup.png">
 <meta property="og:image" content="http://davembush.github.com/uploads/2015/01/Hub1.png">
 <meta property="og:image" content="http://davembush.github.com/uploads/2015/01/Node1.png">
-<meta property="og:updated_time" content="2020-06-20T14:06:34.525Z">
+<meta property="og:updated_time" content="2021-03-20T14:45:36.469Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Selenium Grid Setup">
 <meta name="twitter:description" content="My experience with setting up Selenium Grid was frustrated by the lack of information available about exactly what I needed to do to get this working. I’ve actually had this working for a while now a">
@@ -127,10 +127,10 @@
 <p>For the various browsers you want to run on that need a separate driver, like IE, you’ll also want to download and install the appropriate driver server from that same page and place the EXE on the computer that you plan to run that browser on.</p>
 <p>Now to get this running.</p>
 <p>You’ll want to put the following in a cmd file and place the cmd file in the Selenium directory with all the other stuff on your Hub computer:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">"&#123;path to your java directory&#125;\\java.exe" -jar</span><br><span class="line">    selenium-server-standalone-2.44.0.jar -role hub</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">"&#123;path to your java directory&#125;\java.exe" -jar</span><br><span class="line">    selenium-server-standalone-2.44.0.jar -role hub</span><br></pre></td></tr></table></figure>
 <p>This will run the Hub on port 4444.  This is all you need to do.  You should end up with a console window that looks like this: <img src="/uploads/2015/01/Hub1.png" alt="Hub" title="Hub"> The next script you will need to create is the script that will run the node.  Since I only need FireFox and IE11, I run this on the same computer.  I’ll first provide you with that script and then explain it so that you can adapt it for your own situation.</p>
 <p>Here’s the script:</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">"&#123;path to your java directory&#125;\\java.exe" -jar</span><br><span class="line">    selenium-server-standalone-2.44.0.jar -role</span><br><span class="line">    node -hub http://localhost:4444/grid/register/ -browser</span><br><span class="line">    browserName=firefox,maxInstances=5,platform=WINDOWS -browser</span><br><span class="line">    browserName="internet explorer",version=11,maxInstances=5,</span><br><span class="line">    platform=WINDOWS,</span><br><span class="line">    -Dwebdriver.ie.driver=c:\\Selenium\\IEDriverServer.exe</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">"&#123;path to your java directory&#125;\java.exe" -jar</span><br><span class="line">    selenium-server-standalone-2.44.0.jar -role</span><br><span class="line">    node -hub http://localhost:4444/grid/register/ -browser</span><br><span class="line">    browserName=firefox,maxInstances=5,platform=WINDOWS -browser</span><br><span class="line">    browserName="internet explorer",version=11,maxInstances=5,</span><br><span class="line">    platform=WINDOWS,</span><br><span class="line">    -Dwebdriver.ie.driver=c:\Selenium\IEDriverServer.exe</span><br></pre></td></tr></table></figure>
 <p>The first thing you should note is that we’ve specified the role as “node” with the –role node flag.</p>
 <p>Since we are a Node, we also have to tell the node where the Hub is so that it can register itself with the Hub.  That is what the –hub <a href="http://localhost:4444/grid/register/" target="_blank" rel="noopener">http://localhost:4444/grid/register/</a> parameter is for.  If you are placing a node on a computer other than the same computer as the Hub, you will obviously need to change the  URL to point back to the Hub computer instead  of localhost.</p>
 <p>Everything past this point tells the Hub what browsers are supported on this Node.  So, you’ll notice we have two –browser parameters.  One for FireFox and one for IE.  The browser parameter is all one long string.  To specify IE, you’ll want to specify “internet explorer”.  Note the quote marks and the space.  It took me a while to figure this part out.  The next browser parameter is maxInstances and it tells the Hub how many instances of the browser can run on this node.  I hardly ever have more than one running at a time, but specifying 5 allows me to run test even if something goes wrong.  If something does go wrong, the instance will eventually close itself.</p>
@@ -156,7 +156,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/selenium-grid-setup/" data-id="ckm7xqs8m004j9cx2z4j0twqr" class="article-share-link">
+      <a data-url="http://davembush.github.com/selenium-grid-setup/" data-id="ckmhunzi10043xcx2d2d67cwn" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
