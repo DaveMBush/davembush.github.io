@@ -12,6 +12,8 @@ One of the cool new tricks we are able to perform in ASP.NET that we were not ab
 
 For example, we could have the browser ask for an image file that doesn't exist on the file system and have ASP.NET serve up the file from the database.
 
+<!-- more -->
+
 Or, if we wanted to protect some files, we could put them in a directory that was hard to guess and have ASP.NET load that file for us when the browser requested the file from what looked like a normal location.
 
 The magic that makes all this work is the 404 error handler, the Application_BeginRequest() event handler, and the HttpContext.RewritePath() method.
