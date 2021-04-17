@@ -119,7 +119,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/virtual-files-using-httpcontext-rewritepath/" data-id="cknbroixp006s2cx2o82yzrtb" class="article-share-link">
+      <a data-url="http://davembush.github.com/virtual-files-using-httpcontext-rewritepath/" data-id="cknlrlw140056bsx2i34rz69f" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -178,7 +178,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/why-you-can-t-cast-an-integer-to-a-string/" data-id="cknbroiy8007o2cx25iouvd7e" class="article-share-link">
+      <a data-url="http://davembush.github.com/why-you-can-t-cast-an-integer-to-a-string/" data-id="cknlrlw1h005mbsx2t8kyvkrw" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -237,7 +237,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/object-oriented-programming-has-failed-us/" data-id="cknbroivf003i2cx2p5j8h2s2" class="article-share-link">
+      <a data-url="http://davembush.github.com/object-oriented-programming-has-failed-us/" data-id="cknlrlvzr003ibsx2edxkrz7z" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -309,7 +309,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/serializable-attribute-vs-serializable-interface/" data-id="cknbroiw1004h2cx2ay38alsp" class="article-share-link">
+      <a data-url="http://davembush.github.com/serializable-attribute-vs-serializable-interface/" data-id="cknlrlw050043bsx21h3v3xus" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -355,33 +355,19 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>I think the VB.NET Ternary Operator may be the last operator that I really miss in VB.NET from my curly brace language experience.  Although, I have to admit, I wouldn’t have missed it all that much if they never added it.  There just isn’t a whole lot of use for it. However, the Ternary operator is a REALLY nice feature to have available to you when you do need it.  It’s another one of those language features that falls under, “Just because it is there doesn’t mean you have to use it.” If you’ve ever run into a situation where you just need a simple evaluation and assign a variable based on it.  Like this:</p>
-<pre><code>Dim s As String 
-If Session(&quot;mySessionVar&quot;) Is Nothing Then 
-    s = String.Empty 
-Else 
-    s = Session(&quot;mySessionVar&quot;).ToString() 
-End If 
-</code></pre><p>  you’ll appreciate the new Ternary operator which shrinks it to:</p>
-<pre><code>Dim s As String 
-s = If(Session(&quot;mySessionVar&quot;) Is Nothing, _ 
-       String.Empty, Session(&quot;mySessionVar&quot;).ToString)
-</code></pre><p>Note that this NOT the same as</p>
-<pre><code>Dim s As String 
-s = IIf(Session(&quot;mySessionVar&quot;) Is Nothing, _ 
-       String.Empty, Session(&quot;mySessionVar&quot;).ToString)
-</code></pre><p>  Here’s the difference between the two. IIf will always evaluate the second and third parameter regardless of if the first parameter evaluates to true or false.  This is because IIf is a function, not an operator. If is an operator, and therefore only evaluates the second OR third parameter when they are the value that will ultimately be returned.  So, If() will run my code above without any errors while IIf will throw a null pointer exception when Session(“mySessionVar”) evaluates to nothing because it will try to apply ToString() to the object that is null</p>
-
+        <p>I think the VB.NET Ternary Operator may be the last operator that I really miss in VB.NET from my curly brace language experience.  Although, I have to admit, I wouldn’t have missed it all that much if they never added it.  There just isn’t a whole lot of use for it.</p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/the-vb-net-ternary-operator/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/the-vb-net-ternary-operator/" data-id="cknbroix0005u2cx257xwy8pj" class="article-share-link">
+      <a data-url="http://davembush.github.com/the-vb-net-ternary-operator/" data-id="cknlrlw0q004pbsx2zgug8asq" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -427,39 +413,20 @@ s = IIf(Session(&quot;mySessionVar&quot;) Is Nothing, _
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Yesterday we looked at the new var keyword in CSharp.  This makes CSharp variable declaration similar to VB.  After all, they’ve had the DIM keyword for years which essentially does the same thing. Today, we’re going to look at object initializers, which have been added to both CSharp and VB.  Let’s say we have a class named, “Customer” with the properties: FirstName, LastName, Address, City, and State.  If you wanted to initialize those properties as part of the object creation process you basically had two choices.  You could create a constructor with each of the properties represented as a parameter, or you could use the default constructor and then initialize each property individually immediately after you instantiate the object.  Using CSharp, that process would look something like:</p>
-<pre><code>Customer c = new Customer() 
-c.FirstName = &quot;Dave&quot;; 
-c.LastName = &quot;Bush&quot;;
-</code></pre><p>  in VB you could write code similar to the CSharp code above, with obvious syntax changes for VB, or you could use the WITH keyword to simplify it.</p>
-<pre><code>Dim c As New Customer() 
-With c 
-    .FirstName = &quot;Dave&quot; 
-    .LastName = &quot;Bush&quot; 
-End With 
-</code></pre><p>  The new versions of these languages make the initialization process a bit easier.  Now, your CSharp code can look like:</p>
-<pre><code>Customer c = new Customer() 
-{ 
-    FirstName = &quot;Dave&quot;, 
-    LastName = &quot;Bush&quot; 
-};
-</code></pre><p>  and your VB code can look like this:</p>
-<pre><code>Dim c As New Customer() With { _ 
-.FirstName = &quot;Dave&quot;, _ 
-.LastName = &quot;Bush&quot; _ 
-}
-</code></pre><p>  Keep in mind that the code that I just wrote compiles into the code I wrote using the old syntax.  This means that we can use this syntax in Visual Studio 2008 even if we are writing code for .NET 2.0.  Secondly, this means that it would still be faster to use the constructor with parameters if it is available. My fear is that some of the new features in the compilers will allow lazy programmers to write crappy code.  The point of the object initialization syntax is not to help you avoid creating parameterized constructors.  The point is to make your coding life easier when, and only when, the proper parameterized constructors do not exist.</p>
-
+        <p>Yesterday we looked at the new var keyword in CSharp.  This makes CSharp variable declaration similar to VB.  After all, they’ve had the DIM keyword for years which essentially does the same thing.</p>
+<p>Today, we’re going to look at object initializers, which have been added to both CSharp and VB.</p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/object-initialization-in-csharp-3-0-and-vb-net-9/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/object-initialization-in-csharp-3-0-and-vb-net-9/" data-id="cknbroive003h2cx297gruvbe" class="article-share-link">
+      <a data-url="http://davembush.github.com/object-initialization-in-csharp-3-0-and-vb-net-9/" data-id="cknlrlvzq003gbsx2mlmm8094" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -506,24 +473,18 @@ End With
     <div class="article-entry" itemprop="articleBody">
       
         <p>There have been several new features added to the CSharp language that will significantly reduce the amount of code that ends up in our source files.  It will not significantly reduce the amount of code that we have to write. One of those language features is the ability to create properties, <a href="/2007/11/22/simple-properties-in-c-35/" title="Simple properties in CSharp">which we looked at last week.</a> Another of those features is the new var keyword. So, instead of writing:</p>
-<p> MyClass c = new MyClass();</p>
-<p>  you can now write:</p>
-<p> var c = new MyClass();</p>
-<p>  Which isn’t a lot of code until you start qualifying the Class name with namespaces. During the beta cycle, I saw a demo that let you declare a variable, var c, and then several lines later initialize it with, new MyClass(), which gave the appearance that var was more like the var keyword in javascript, and therefore a variant than what it really is. In the release version of CSharp 3.0, if you use the var keyword to declare a variable, you MUST initialize it on the same line, or you will get a compiler error.  I suppose it makes writing the compiler a whole lot easier this way too. One other small thing to note, which should be obvious by now.  Since we have to initialize the variable to some object or value, and since we can’t initialize it anywhere other than on the line it is declared on, you can’t treat the variable as a variant.  A variable declared as var is as strongly typed as any other variable you would create.  So, if I did something like this:</p>
-<pre><code>var c = new MyClass(); 
-c = &quot;Some string here&quot;;
-</code></pre><p>I would get a compiler error because I’m trying to assign a string type to a MyClass variable.  var does not stand for “variant,” it stands for “variable.”  All the compiler does when it sees this is look at the type being assigned to the variable and replaces the var keyword with that type. So, when the compiler processes the code, it takes this:         var c = new MyClass(); and turns it into this: MyClass c = new MyClass(); Finally, it may be helpful to point out here that this whole process happens at compile time.  This should be obvious by the fact that this works in both .NET 2.0 code compiled with the CSharp 3.0 compiler as well as .NET 3.x code.  But, sometimes the obvious isn’t obvious until someone states it explicitly.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/csharp-adds-the-var-keyword/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/csharp-adds-the-var-keyword/" data-id="cknbroidd001l2cx2jorc0s8t" class="article-share-link">
+      <a data-url="http://davembush.github.com/csharp-adds-the-var-keyword/" data-id="cknlrlvxw001absx2nyyenmf9" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -570,25 +531,19 @@ c = &quot;Some string here&quot;;
     <div class="article-entry" itemprop="articleBody">
       
         <p>It’s such a little thing.  But, how much of our CSharp code looks something like this:</p>
-<pre><code>private string _propertyName;     
-
-public string PropertyName 
-{ 
-    get { return _propertyName; } 
-    set { _propertyName = value; } 
-}
-</code></pre><p>When I teach other programmers how to use CSharp (or VB) I always stress the importance of using properties instead of public member variables.  You never know when you’ll want your set to do some sort of validation and just about all of the databinding stuff requires us to use properties instead of member variables.  But, that’s a lot of code to write when all you want to do is wrap a member variable. Well, in CSharp 3.5, life just got a lot sweeter.  That code above just got replace with this: public string PropertyName { get; set; } You can still use the code above if you want to.  But, why write all that code, even if you write it using a code snippet, when you can just write that one line?</p>
-
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">string</span> _propertyName;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">string</span> PropertyName</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">get</span> &#123; <span class="keyword">return</span> _propertyName; &#125;</span><br><span class="line">    <span class="keyword">set</span> &#123; _propertyName = <span class="keyword">value</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/simple-properties-in-c-3-5/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/simple-properties-in-c-3-5/" data-id="cknbroiw7004p2cx2gp8zsxy3" class="article-share-link">
+      <a data-url="http://davembush.github.com/simple-properties-in-c-3-5/" data-id="cknlrlw040042bsx28juvy5f0" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -637,39 +592,18 @@ public string PropertyName
         <p>I saw this question and immediately thought, “You can’t!  An Enum is an Integer that has been restricted to the values it can accept.”</p>
 <p>And I was basically right.  But, I forgot that even with an integer you can do the following in CSharp:</p>
 <p><img src="/uploads/2016/03/image-2.png" alt="image" title="image"></p>
-<p>int i = 1 | 2;</p>
-<p>And in VB.NET</p>
-<p>Dim i As Integer = 1 Or 2</p>
-<p>To end up with a variable i equal to 3 because both do bitwise ands.</p>
-<p>So if I had an enumerated value</p>
-<p>enum F {<br>    thing1 = 1,<br>    thing2 = 2,<br>    thing3 = 4<br> }</p>
-<p>Or, in VB.NET</p>
-<p>Enum F<br>    thing1 = 1<br>    thing2 = 2<br>    thing3 = 4<br>End Enum</p>
-<p>You could then do the following in CSharp:</p>
-<p>F fvar;</p>
-<p>fvar = F.thing1 | F.thing2;</p>
-<p>Or you could do it in VB.NET like this:</p>
-<p>Dim fvar As F = F.thing1 Or F.thing2</p>
-<p>There’s just one small problem with doing all of this. </p>
-<p>If you evaluate fvar, you see that it is equal to 3 because we did not define 3 to be a specific value in our enumeration.  However, by adding the Flags attribute to our enum definition:</p>
-<p>[Flags]enum F {<br>    thing1 = 1,<br>    thing2 = 2,<br>    thing3 = 4<br>}</p>
-<p>Or</p>
-<p>&lt;Flags()&gt; _Enum F<br>    thing1 = 1<br>    thing2 = 2<br>    thing3 = 4<br>End Enum</p>
-<p>fvar will evaluate to:</p>
-<p>thing1 | thing2</p>
-<p>in CSharp and in VB.NET…</p>
-<p>Well, in VB.NET it still evaluates to 3.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/assign-multiple-enum-values-to-one-variable/#more">Read More</a>
+          </p>
+        
       
     </div>
 
     
-      
-
-    
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/assign-multiple-enum-values-to-one-variable/" data-id="cknbroi9c000q2cx269r65xby" class="article-share-link">
+      <a data-url="http://davembush.github.com/assign-multiple-enum-values-to-one-variable/" data-id="cknlrlvxe000ubsx2fxd46p9p" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
@@ -735,7 +669,7 @@ public string PropertyName
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/asp-net-gridview-edit-all-rows-at-once/" data-id="cknbroidk001q2cx2bkgjskfr" class="article-share-link">
+      <a data-url="http://davembush.github.com/asp-net-gridview-edit-all-rows-at-once/" data-id="cknlrlvya001tbsx2dobx4njn" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

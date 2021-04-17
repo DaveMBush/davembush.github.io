@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="I think the VB.NET Ternary Operator may be the last operator that I really miss in VB.NET from my curly brace language experience.  Although, I have to admit, I wouldn’t have missed it all that much i">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.000Z">
+<meta property="og:updated_time" content="2021-04-17T13:16:57.214Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The VB.NET Ternary Operator">
 <meta name="twitter:description" content="I think the VB.NET Ternary Operator may be the last operator that I really miss in VB.NET from my curly brace language experience.  Although, I have to admit, I wouldn’t have missed it all that much i">
@@ -109,22 +109,18 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>I think the VB.NET Ternary Operator may be the last operator that I really miss in VB.NET from my curly brace language experience.  Although, I have to admit, I wouldn’t have missed it all that much if they never added it.  There just isn’t a whole lot of use for it. However, the Ternary operator is a REALLY nice feature to have available to you when you do need it.  It’s another one of those language features that falls under, “Just because it is there doesn’t mean you have to use it.” If you’ve ever run into a situation where you just need a simple evaluation and assign a variable based on it.  Like this:</p>
-<pre><code>Dim s As String 
-If Session(&quot;mySessionVar&quot;) Is Nothing Then 
-    s = String.Empty 
-Else 
-    s = Session(&quot;mySessionVar&quot;).ToString() 
-End If 
-</code></pre><p>  you’ll appreciate the new Ternary operator which shrinks it to:</p>
-<pre><code>Dim s As String 
-s = If(Session(&quot;mySessionVar&quot;) Is Nothing, _ 
-       String.Empty, Session(&quot;mySessionVar&quot;).ToString)
-</code></pre><p>Note that this NOT the same as</p>
-<pre><code>Dim s As String 
-s = IIf(Session(&quot;mySessionVar&quot;) Is Nothing, _ 
-       String.Empty, Session(&quot;mySessionVar&quot;).ToString)
-</code></pre><p>  Here’s the difference between the two. IIf will always evaluate the second and third parameter regardless of if the first parameter evaluates to true or false.  This is because IIf is a function, not an operator. If is an operator, and therefore only evaluates the second OR third parameter when they are the value that will ultimately be returned.  So, If() will run my code above without any errors while IIf will throw a null pointer exception when Session(“mySessionVar”) evaluates to nothing because it will try to apply ToString() to the object that is null</p>
+        <p>I think the VB.NET Ternary Operator may be the last operator that I really miss in VB.NET from my curly brace language experience.  Although, I have to admit, I wouldn’t have missed it all that much if they never added it.  There just isn’t a whole lot of use for it.</p>
+<a id="more"></a>
+<p>However, the Ternary operator is a REALLY nice feature to have available to you when you do need it.  It’s another one of those language features that falls under, “Just because it is there doesn’t mean you have to use it.”</p>
+<p>If you’ve ever run into a situation where you just need a simple evaluation and assign a variable based on it.  Like this:</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Dim</span> s <span class="keyword">As</span> <span class="built_in">String</span></span><br><span class="line"><span class="keyword">If</span> Session(<span class="string">"mySessionVar"</span>) <span class="keyword">Is</span> <span class="literal">Nothing</span> <span class="keyword">Then</span></span><br><span class="line">    s = <span class="built_in">String</span>.Empty</span><br><span class="line"><span class="keyword">Else</span></span><br><span class="line">    s = Session(<span class="string">"mySessionVar"</span>).ToString()</span><br><span class="line"><span class="keyword">End</span> <span class="keyword">If</span></span><br></pre></td></tr></table></figure>
+<p>you’ll appreciate the new Ternary operator which shrinks it to:</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Dim</span> s <span class="keyword">As</span> <span class="built_in">String</span></span><br><span class="line">s = <span class="keyword">If</span>(Session(<span class="string">"mySessionVar"</span>) <span class="keyword">Is</span> <span class="literal">Nothing</span>, _</span><br><span class="line">    <span class="built_in">String</span>.Empty, Session(<span class="string">"mySessionVar"</span>).ToString)</span><br></pre></td></tr></table></figure>
+<p>Note that this NOT the same as</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Dim</span> s <span class="keyword">As</span> <span class="built_in">String</span></span><br><span class="line">s = <span class="built_in">IIf</span>(Session(<span class="string">"mySessionVar"</span>) <span class="keyword">Is</span> <span class="literal">Nothing</span>, _</span><br><span class="line">    <span class="built_in">String</span>.Empty, Session(<span class="string">"mySessionVar"</span>).ToString)</span><br></pre></td></tr></table></figure>
+<p>Here’s the difference between the two.</p>
+<p>IIf will always evaluate the second and third parameter regardless of if the first parameter evaluates to true or false.  This is because IIf is a function, not an operator.</p>
+<p>If is an operator, and therefore only evaluates the second OR third parameter when they are the value that will ultimately be returned.  So, If() will run my code above without any errors while IIf will throw a null pointer exception when Session(“mySessionVar”) evaluates to nothing because it will try to apply ToString() to the object that is null.</p>
 
       
     </div>
@@ -135,7 +131,7 @@ s = IIf(Session(&quot;mySessionVar&quot;) Is Nothing, _
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/the-vb-net-ternary-operator/" data-id="cknbroix0005u2cx257xwy8pj" class="article-share-link">
+      <a data-url="http://davembush.github.com/the-vb-net-ternary-operator/" data-id="cknlrlw0q004pbsx2zgug8asq" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

@@ -14,7 +14,7 @@
 <meta property="og:description" content="I saw this question and immediately thought, “You can’t!  An Enum is an Integer that has been restricted to the values it can accept.” And I was basically right.  But, I forgot that even with an integ">
 <meta property="og:locale" content="English">
 <meta property="og:image" content="http://davembush.github.com/uploads/2016/03/image-2.png">
-<meta property="og:updated_time" content="2018-06-30T18:23:01.000Z">
+<meta property="og:updated_time" content="2021-04-17T13:03:58.343Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Assign Multiple enum Values To One Variable">
 <meta name="twitter:description" content="I saw this question and immediately thought, “You can’t!  An Enum is an Integer that has been restricted to the values it can accept.” And I was basically right.  But, I forgot that even with an integ">
@@ -114,26 +114,24 @@
         <p>I saw this question and immediately thought, “You can’t!  An Enum is an Integer that has been restricted to the values it can accept.”</p>
 <p>And I was basically right.  But, I forgot that even with an integer you can do the following in CSharp:</p>
 <p><img src="/uploads/2016/03/image-2.png" alt="image" title="image"></p>
-<p>int i = 1 | 2;</p>
+<a id="more"></a>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> i = <span class="number">1</span> | <span class="number">2</span>;</span><br></pre></td></tr></table></figure>
 <p>And in VB.NET</p>
-<p>Dim i As Integer = 1 Or 2</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Dim</span> i <span class="keyword">As</span> <span class="built_in">Integer</span> = <span class="number">1</span> <span class="keyword">Or</span> <span class="number">2</span></span><br></pre></td></tr></table></figure>
 <p>To end up with a variable i equal to 3 because both do bitwise ands.</p>
 <p>So if I had an enumerated value</p>
-<p>enum F {<br>    thing1 = 1,<br>    thing2 = 2,<br>    thing3 = 4<br> }</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> F &#123;</span><br><span class="line">    thing1 = <span class="number">1</span>,</span><br><span class="line">    thing2 = <span class="number">2</span>,</span><br><span class="line">    thing3 = <span class="number">4</span></span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
 <p>Or, in VB.NET</p>
-<p>Enum F<br>    thing1 = 1<br>    thing2 = 2<br>    thing3 = 4<br>End Enum</p>
-<p>You could then do the following in CSharp:</p>
-<p>F fvar;</p>
-<p>fvar = F.thing1 | F.thing2;</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Enum</span> F</span><br><span class="line">    thing1 = <span class="number">1</span></span><br><span class="line">    thing2 = <span class="number">2</span></span><br><span class="line">    thing3 = <span class="number">4</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Enum</span></span><br><span class="line">``</span><br><span class="line"></span><br><span class="line">You could <span class="keyword">then</span> <span class="keyword">do</span> the following <span class="keyword">in</span> CSharp:</span><br><span class="line"></span><br><span class="line">``` csharp</span><br><span class="line">F fvar;</span><br><span class="line"></span><br><span class="line">fvar = F.thing1 | F.thing2;</span><br></pre></td></tr></table></figure>
 <p>Or you could do it in VB.NET like this:</p>
-<p>Dim fvar As F = F.thing1 Or F.thing2</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Dim</span> fvar <span class="keyword">As</span> F = F.thing1 <span class="keyword">Or</span> F.thing2</span><br></pre></td></tr></table></figure>
 <p>There’s just one small problem with doing all of this. </p>
 <p>If you evaluate fvar, you see that it is equal to 3 because we did not define 3 to be a specific value in our enumeration.  However, by adding the Flags attribute to our enum definition:</p>
-<p>[Flags]enum F {<br>    thing1 = 1,<br>    thing2 = 2,<br>    thing3 = 4<br>}</p>
+<figure class="highlight fsharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[Flags]enum F &#123;</span><br><span class="line">    thing1 = <span class="number">1</span>,</span><br><span class="line">    thing2 = <span class="number">2</span>,</span><br><span class="line">    thing3 = <span class="number">4</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>Or</p>
-<p>&lt;Flags()&gt; _Enum F<br>    thing1 = 1<br>    thing2 = 2<br>    thing3 = 4<br>End Enum</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;Flags()&gt; _Enum F</span><br><span class="line">    thing1 = <span class="number">1</span></span><br><span class="line">    thing2 = <span class="number">2</span></span><br><span class="line">    thing3 = <span class="number">4</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">Enum</span></span><br></pre></td></tr></table></figure>
 <p>fvar will evaluate to:</p>
-<p>thing1 | thing2</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">thing1 | thing2</span><br></pre></td></tr></table></figure>
 <p>in CSharp and in VB.NET…</p>
 <p>Well, in VB.NET it still evaluates to 3.</p>
 
@@ -146,7 +144,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/assign-multiple-enum-values-to-one-variable/" data-id="cknbroi9c000q2cx269r65xby" class="article-share-link">
+      <a data-url="http://davembush.github.com/assign-multiple-enum-values-to-one-variable/" data-id="cknlrlvxe000ubsx2fxd46p9p" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

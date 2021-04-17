@@ -5,18 +5,18 @@
   
   <title>Simple Properties in C# 3.5 | Dave&#39;s Notebook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="It’s such a little thing.  But, how much of our CSharp code looks something like this: private string _propertyName;       public string PropertyName  {      get { return _propertyName; }      set { _">
+  <meta name="description" content="It’s such a little thing.  But, how much of our CSharp code looks something like this: 1234567private string _propertyName;public string PropertyName&amp;#123;    get &amp;#123; return _propertyName; &amp;#125;">
 <meta name="keywords" content="c#,visual studio,tutorial">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Simple Properties in C# 3.5">
 <meta property="og:url" content="http://davembush.github.com/simple-properties-in-c-3-5/index.html">
 <meta property="og:site_name" content="Dave&#39;s Notebook">
-<meta property="og:description" content="It’s such a little thing.  But, how much of our CSharp code looks something like this: private string _propertyName;       public string PropertyName  {      get { return _propertyName; }      set { _">
+<meta property="og:description" content="It’s such a little thing.  But, how much of our CSharp code looks something like this: 1234567private string _propertyName;public string PropertyName&amp;#123;    get &amp;#123; return _propertyName; &amp;#125;">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.000Z">
+<meta property="og:updated_time" content="2021-04-17T13:18:07.677Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Simple Properties in C# 3.5">
-<meta name="twitter:description" content="It’s such a little thing.  But, how much of our CSharp code looks something like this: private string _propertyName;       public string PropertyName  {      get { return _propertyName; }      set { _">
+<meta name="twitter:description" content="It’s such a little thing.  But, how much of our CSharp code looks something like this: 1234567private string _propertyName;public string PropertyName&amp;#123;    get &amp;#123; return _propertyName; &amp;#125;">
   
     <link rel="alternate" href="/atom.xml" title="Dave&#39;s Notebook" type="application/atom+xml">
   
@@ -110,14 +110,11 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>It’s such a little thing.  But, how much of our CSharp code looks something like this:</p>
-<pre><code>private string _propertyName;     
-
-public string PropertyName 
-{ 
-    get { return _propertyName; } 
-    set { _propertyName = value; } 
-}
-</code></pre><p>When I teach other programmers how to use CSharp (or VB) I always stress the importance of using properties instead of public member variables.  You never know when you’ll want your set to do some sort of validation and just about all of the databinding stuff requires us to use properties instead of member variables.  But, that’s a lot of code to write when all you want to do is wrap a member variable. Well, in CSharp 3.5, life just got a lot sweeter.  That code above just got replace with this: public string PropertyName { get; set; } You can still use the code above if you want to.  But, why write all that code, even if you write it using a code snippet, when you can just write that one line?</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">string</span> _propertyName;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">string</span> PropertyName</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">get</span> &#123; <span class="keyword">return</span> _propertyName; &#125;</span><br><span class="line">    <span class="keyword">set</span> &#123; _propertyName = <span class="keyword">value</span>; &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>When I teach other programmers how to use CSharp (or VB) I always stress the importance of using properties instead of public member variables.  You never know when you’ll want your set to do some sort of validation and just about all of the databinding stuff requires us to use properties instead of member variables.  But, that’s a lot of code to write when all you want to do is wrap a member variable. Well, in CSharp 3.5, life just got a lot sweeter.  That code above just got replace with this:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">string</span> PropertyName &#123; <span class="keyword">get</span>; <span class="keyword">set</span>; &#125;</span><br></pre></td></tr></table></figure>
+<p>You can still use the code above if you want to.  But, why write all that code, even if you write it using a code snippet, when you can just write that one line?</p>
 
       
     </div>
@@ -128,7 +125,7 @@ public string PropertyName
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/simple-properties-in-c-3-5/" data-id="cknbroiw7004p2cx2gp8zsxy3" class="article-share-link">
+      <a data-url="http://davembush.github.com/simple-properties-in-c-3-5/" data-id="cknlrlw040042bsx28juvy5f0" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

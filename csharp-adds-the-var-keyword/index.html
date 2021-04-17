@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="There have been several new features added to the CSharp language that will significantly reduce the amount of code that ends up in our source files.  It will not significantly reduce the amount of co">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2018-06-30T20:06:57.000Z">
+<meta property="og:updated_time" content="2021-04-17T13:08:15.359Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CSharp adds the var keyword!">
 <meta name="twitter:description" content="There have been several new features added to the CSharp language that will significantly reduce the amount of code that ends up in our source files.  It will not significantly reduce the amount of co">
@@ -110,13 +110,21 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>There have been several new features added to the CSharp language that will significantly reduce the amount of code that ends up in our source files.  It will not significantly reduce the amount of code that we have to write. One of those language features is the ability to create properties, <a href="/2007/11/22/simple-properties-in-c-35/" title="Simple properties in CSharp">which we looked at last week.</a> Another of those features is the new var keyword. So, instead of writing:</p>
-<p> MyClass c = new MyClass();</p>
+<a id="more"></a>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MyClass c = <span class="keyword">new</span> MyClass();</span><br></pre></td></tr></table></figure>
 <p>  you can now write:</p>
-<p> var c = new MyClass();</p>
-<p>  Which isn’t a lot of code until you start qualifying the Class name with namespaces. During the beta cycle, I saw a demo that let you declare a variable, var c, and then several lines later initialize it with, new MyClass(), which gave the appearance that var was more like the var keyword in javascript, and therefore a variant than what it really is. In the release version of CSharp 3.0, if you use the var keyword to declare a variable, you MUST initialize it on the same line, or you will get a compiler error.  I suppose it makes writing the compiler a whole lot easier this way too. One other small thing to note, which should be obvious by now.  Since we have to initialize the variable to some object or value, and since we can’t initialize it anywhere other than on the line it is declared on, you can’t treat the variable as a variant.  A variable declared as var is as strongly typed as any other variable you would create.  So, if I did something like this:</p>
-<pre><code>var c = new MyClass(); 
-c = &quot;Some string here&quot;;
-</code></pre><p>I would get a compiler error because I’m trying to assign a string type to a MyClass variable.  var does not stand for “variant,” it stands for “variable.”  All the compiler does when it sees this is look at the type being assigned to the variable and replaces the var keyword with that type. So, when the compiler processes the code, it takes this:         var c = new MyClass(); and turns it into this: MyClass c = new MyClass(); Finally, it may be helpful to point out here that this whole process happens at compile time.  This should be obvious by the fact that this works in both .NET 2.0 code compiled with the CSharp 3.0 compiler as well as .NET 3.x code.  But, sometimes the obvious isn’t obvious until someone states it explicitly.</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> c = <span class="keyword">new</span> MyClass();</span><br></pre></td></tr></table></figure>
+<p>Which isn’t a lot of code until you start qualifying the Class name with namespaces.</p>
+<p>During the beta cycle, I saw a demo that let you declare a variable, var c, and then several lines later initialize it with, new MyClass(), which gave the appearance that var was more like the var keyword in javascript, and therefore a variant than what it really is.</p>
+<p>In the release version of CSharp 3.0, if you use the var keyword to declare a variable, you MUST initialize it on the same line, or you will get a compiler error.  I suppose it makes writing the compiler a whole lot easier this way too.</p>
+<p>One other small thing to note, which should be obvious by now.  Since we have to initialize the variable to some object or value, and since we can’t initialize it anywhere other than on the line it is declared on, you can’t treat the variable as a variant.  A variable declared as var is as strongly typed as any other variable you would create.  So, if I did something like this:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> c = <span class="keyword">new</span> MyClass();</span><br><span class="line">c = <span class="string">"Some string here"</span>;</span><br></pre></td></tr></table></figure>
+<p>I would get a compiler error because I’m trying to assign a string type to a MyClass variable.  <code>var</code> does not stand for “variant,” it stands for “variable.”  All the compiler does when it sees this is look at the type being assigned to the variable and replaces the var keyword with that type.</p>
+<p>So, when the compiler processes the code, it takes this:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> c = <span class="keyword">new</span> MyClass();</span><br></pre></td></tr></table></figure>
+<p>and turns it into this:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MyClass c = <span class="keyword">new</span> MyClass();</span><br></pre></td></tr></table></figure>
+<p>Finally, it may be helpful to point out here that this whole process happens at compile time.  This should be obvious by the fact that this works in both .NET 2.0 code compiled with the CSharp 3.0 compiler as well as .NET 3.x code.  But, sometimes the obvious isn’t obvious until someone states it explicitly.</p>
 
       
     </div>
@@ -127,7 +135,7 @@ c = &quot;Some string here&quot;;
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/csharp-adds-the-var-keyword/" data-id="cknbroidd001l2cx2jorc0s8t" class="article-share-link">
+      <a data-url="http://davembush.github.com/csharp-adds-the-var-keyword/" data-id="cknlrlvxw001absx2nyyenmf9" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       

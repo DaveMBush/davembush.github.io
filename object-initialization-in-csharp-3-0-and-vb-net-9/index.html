@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="Yesterday we looked at the new var keyword in CSharp.  This makes CSharp variable declaration similar to VB.  After all, they’ve had the DIM keyword for years which essentially does the same thing. To">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2018-06-23T18:40:37.000Z">
+<meta property="og:updated_time" content="2021-04-17T13:12:08.071Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Object Initialization in CSharp 3.0 and VB.NET 9">
 <meta name="twitter:description" content="Yesterday we looked at the new var keyword in CSharp.  This makes CSharp variable declaration similar to VB.  After all, they’ve had the DIM keyword for years which essentially does the same thing. To">
@@ -109,28 +109,19 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Yesterday we looked at the new var keyword in CSharp.  This makes CSharp variable declaration similar to VB.  After all, they’ve had the DIM keyword for years which essentially does the same thing. Today, we’re going to look at object initializers, which have been added to both CSharp and VB.  Let’s say we have a class named, “Customer” with the properties: FirstName, LastName, Address, City, and State.  If you wanted to initialize those properties as part of the object creation process you basically had two choices.  You could create a constructor with each of the properties represented as a parameter, or you could use the default constructor and then initialize each property individually immediately after you instantiate the object.  Using CSharp, that process would look something like:</p>
-<pre><code>Customer c = new Customer() 
-c.FirstName = &quot;Dave&quot;; 
-c.LastName = &quot;Bush&quot;;
-</code></pre><p>  in VB you could write code similar to the CSharp code above, with obvious syntax changes for VB, or you could use the WITH keyword to simplify it.</p>
-<pre><code>Dim c As New Customer() 
-With c 
-    .FirstName = &quot;Dave&quot; 
-    .LastName = &quot;Bush&quot; 
-End With 
-</code></pre><p>  The new versions of these languages make the initialization process a bit easier.  Now, your CSharp code can look like:</p>
-<pre><code>Customer c = new Customer() 
-{ 
-    FirstName = &quot;Dave&quot;, 
-    LastName = &quot;Bush&quot; 
-};
-</code></pre><p>  and your VB code can look like this:</p>
-<pre><code>Dim c As New Customer() With { _ 
-.FirstName = &quot;Dave&quot;, _ 
-.LastName = &quot;Bush&quot; _ 
-}
-</code></pre><p>  Keep in mind that the code that I just wrote compiles into the code I wrote using the old syntax.  This means that we can use this syntax in Visual Studio 2008 even if we are writing code for .NET 2.0.  Secondly, this means that it would still be faster to use the constructor with parameters if it is available. My fear is that some of the new features in the compilers will allow lazy programmers to write crappy code.  The point of the object initialization syntax is not to help you avoid creating parameterized constructors.  The point is to make your coding life easier when, and only when, the proper parameterized constructors do not exist.</p>
+        <p>Yesterday we looked at the new var keyword in CSharp.  This makes CSharp variable declaration similar to VB.  After all, they’ve had the DIM keyword for years which essentially does the same thing.</p>
+<p>Today, we’re going to look at object initializers, which have been added to both CSharp and VB.</p>
+<a id="more"></a>
+<p>Let’s say we have a class named, “Customer” with the properties: FirstName, LastName, Address, City, and State.  If you wanted to initialize those properties as part of the object creation process you basically had two choices.  You could create a constructor with each of the properties represented as a parameter, or you could use the default constructor and then initialize each property individually immediately after you instantiate the object.  Using CSharp, that process would look something like:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Customer c = <span class="keyword">new</span> Customer()</span><br><span class="line">c.FirstName = <span class="string">"Dave"</span>;</span><br><span class="line">c.LastName = <span class="string">"Bush"</span>;</span><br></pre></td></tr></table></figure>
+<p>in VB you could write code similar to the CSharp code above, with obvious syntax changes for VB, or you could use the WITH keyword to simplify it.</p>
+<figure class="highlight vb"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">Dim</span> c <span class="keyword">As</span> <span class="keyword">New</span> Customer()</span><br><span class="line"><span class="keyword">With</span> c</span><br><span class="line">  .FirstName = <span class="string">"Dave"</span></span><br><span class="line">  .LastName = <span class="string">"Bush"</span></span><br><span class="line"><span class="keyword">End</span> <span class="keyword">With</span></span><br></pre></td></tr></table></figure>
+<p>The new versions of these languages make the initialization process a bit easier.  Now, your CSharp code can look like:</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Customer c = <span class="keyword">new</span> Customer()</span><br><span class="line">&#123;</span><br><span class="line">    FirstName = <span class="string">"Dave"</span>,</span><br><span class="line">    LastName = <span class="string">"Bush"</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>and your VB code can look like this:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Dim c As New Customer() With &#123; _</span><br><span class="line">  .FirstName = <span class="string">"Dave"</span>, _</span><br><span class="line">  .LastName = <span class="string">"Bush"</span> _</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Keep in mind that the code that I just wrote compiles into the code I wrote using the old syntax.  This means that we can use this syntax in Visual Studio 2008 even if we are writing code for .NET 2.0.  Secondly, this means that it would still be faster to use the constructor with parameters if it is available.</p>
+<p>My fear is that some of the new features in the compilers will allow lazy programmers to write crappy code.  The point of the object initialization syntax is not to help you avoid creating parameterized constructors.  The point is to make your coding life easier when, and only when, the proper parameterized constructors do not exist.</p>
 
       
     </div>
@@ -141,7 +132,7 @@ End With
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/object-initialization-in-csharp-3-0-and-vb-net-9/" data-id="cknbroive003h2cx297gruvbe" class="article-share-link">
+      <a data-url="http://davembush.github.com/object-initialization-in-csharp-3-0-and-vb-net-9/" data-id="cknlrlvzq003gbsx2mlmm8094" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
