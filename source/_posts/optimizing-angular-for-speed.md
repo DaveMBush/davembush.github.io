@@ -78,7 +78,11 @@ There are two ways to solve this issue.
 
 The first, and most popular is to use a pipe, as described above.
 
-The second, and my preferred way, is to do ALL the calculations in my Selectors so that, by the time I'm binding, the data I already need, is available and is easy to detect.
+The second way you could achieve this goal is by assigning a member field the computed value during the component's `onChange` event.
+
+Finally, my preferred way, is to do ALL the calculations in my Selectors so that, by the time I'm binding, the data I already need is available and is easy to detect.
+
+For more information on this topic see my article [How to Avoid Binding to Computed Values in Angular](../how-to-avoid-binding-to-computed-values-in-angular/)
 
 ### NgRX Features
 
