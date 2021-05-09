@@ -74,9 +74,9 @@ It also looks a lot cleaner than the `() => state.subState` mechanism we started
 
 If your value is computed, Angular can't easily determine if the value has changed, unless it calculates it.
 
-There are two ways to solve this issue.
+There are three ways to solve this issue.
 
-The first, and most popular is to use a pipe, as described above.
+The first and most popular, is to use a pipe as described above.
 
 The second way you could achieve this goal is by assigning a member field the computed value during the component's `onChange` event.
 

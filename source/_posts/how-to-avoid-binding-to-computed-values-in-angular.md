@@ -15,7 +15,7 @@ First, what did I mean by that?
 
 <!-- more -->
 
-There three ways you might bind to a computed value.
+There two ways you might bind to a computed value.
 
 The most obvious way is by calling a method in the template's corresponding class. But, properties count to. To be clear, a property is some code that uses a `get` prefix.
 
@@ -24,16 +24,6 @@ get somePropertyNameHere() {
   return 'something here';
 }
 ```
-
-And the least obvious way of all is by assigning an inline object to a property.
-
-``` html
-<app-component [someProp]="{ foo: classMember }">
-```
-
-Every time this code renders, it creates a new object, regardless of where `classMember` comes from. `classMember` could be a field, a property or a method.  It won't matter.
-
-You particularly need to watch out for this when you are using `ngClass` or `ngStyle`.
 
 Now, you might think you need to avoid this when you use the square brackets to assign a variable to a component property, but this also goes for ngIf and ngFor code as well.
 
