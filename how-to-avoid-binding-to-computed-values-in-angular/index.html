@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="In my previous article about Angular Performance, I indicated that one of the many ways you can produce an Angular application that performs well is by ensuring that you bind to a computed value. Firs">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2021-05-08T18:47:19.995Z">
+<meta property="og:updated_time" content="2021-05-09T11:11:54.793Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="How to Avoid Binding to Computed Values in Angular">
 <meta name="twitter:description" content="In my previous article about Angular Performance, I indicated that one of the many ways you can produce an Angular application that performs well is by ensuring that you bind to a computed value. Firs">
@@ -108,13 +108,9 @@
         <p>In my previous article about <a href="../optimizing-angular-for-speed/">Angular Performance</a>, I indicated that one of the many ways you can produce an Angular application that performs well is by ensuring that you bind to a computed value.</p>
 <p>First, what did I mean by that?</p>
 <a id="more"></a>
-<p>There three ways you might bind to a computed value.</p>
+<p>There two ways you might bind to a computed value.</p>
 <p>The most obvious way is by calling a method in the template’s corresponding class. But, properties count to. To be clear, a property is some code that uses a <code>get</code> prefix.</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">get</span> somePropertyNameHere() &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="string">'something here'</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>And the least obvious way of all is by assigning an inline object to a property.</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">app-component</span> [<span class="attr">someProp</span>]=<span class="string">"&#123; foo: classMember &#125;"</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>Every time this code renders, it creates a new object, regardless of where <code>classMember</code> comes from. <code>classMember</code> could be a field, a property or a method.  It won’t matter.</p>
-<p>You particularly need to watch out for this when you are using <code>ngClass</code> or <code>ngStyle</code>.</p>
 <p>Now, you might think you need to avoid this when you use the square brackets to assign a variable to a component property, but this also goes for ngIf and ngFor code as well.</p>
 <p>What we are striving for is to not have the template recompute anything unless the data has actually changed.</p>
 <p>The only exception to this is the ngFor trackBy attribute which is used to ensure the whole list doesn’t re-render just because the array changed. I’m assuming you are using this.</p>
@@ -155,7 +151,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/how-to-avoid-binding-to-computed-values-in-angular/" data-id="ckog3nhhx002q70x2cld0l0bw" class="article-share-link">
+      <a data-url="http://davembush.github.com/how-to-avoid-binding-to-computed-values-in-angular/" data-id="ckoh2ueev002h04x2pya7gs9v" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
