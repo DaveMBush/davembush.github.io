@@ -78,7 +78,7 @@ There are three ways to solve this issue.
 
 The first and most popular, is to use a pipe as described above.
 
-The second way you could achieve this goal is by assigning a member field the computed value during the component's `onChange` event.
+The second way you could achieve this goal is by assigning a member field the computed value during the component's `ngOnChanges` event.
 
 Finally, my preferred way, is to do ALL the calculations in my Selectors so that, by the time I'm binding, the data I already need is available and is easy to detect.
 

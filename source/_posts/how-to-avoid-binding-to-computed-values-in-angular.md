@@ -45,15 +45,15 @@ The code you would normally place in the method of property of your component cl
 
 By doing this, Angular can see that the variable that is passed to it has changed, or not, and can determine when the code needs to be recomputed.
 
-## onChange()
+## ngOnChanges()
 
-Another way you might achieve the same goal is by trapping the `onChange()` event for the component.
+Another way you might achieve the same goal is by trapping the `ngOnChanges()` event for the component.
 
 Many times, any value that we would compute in a method or property to be pulled from the template is only going to change if an `@input` value changed.
 
-Instead of pulling the value and computing it on every change detection cycle, you can listen for the dependency during the onChange event and assign the new value to a class field and have your template look at the field instead.
+Instead of pulling the value and computing it on every change detection cycle, you can listen for the dependency during the `ngOnChanges` event and assign the new value to a class field and have your template look at the field instead.
 
-Be careful though. If you are lazy and recompute the field every time `onChange()` is called, you really haven't gained anything by it.  `onChange()` will pass into you exactly what changed and you can use that to determine if the value should be recomputed.
+Be careful though. If you are lazy and recompute the field every time `ngOnChanges()` is called, you really haven't gained anything by it.  `ngOnChanges()` will pass into you exactly what changed and you can use that to determine if the value should be recomputed.
 
 ## NgRX Store Selector
 
