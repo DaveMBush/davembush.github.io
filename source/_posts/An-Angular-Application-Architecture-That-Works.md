@@ -139,7 +139,7 @@ This is where component services come in.  If you are familiar with the Model Vi
 You can read details of how this is implemented on the following two sites:
 
 - [Model View Presenter, Angular, and Testing](https://davembush.github.io/model-view-presenter-angular-and-testing/)
-- [Model View Presenter with Angular](https://indepth.dev/model-view-presenter-with-angular/)
+- [Model View Presenter with Angular](https://dev.to/this-is-angular/model-view-presenter-with-angular-533h)
 
 The basic idea is that you leave the component as the thing that only presents the data and receives notifications from the user. Any logic that is needed goes into an Angular service that is registered with the component using the viewProviders property of the @Component decorator.
 
