@@ -6,14 +6,14 @@
   <title>Rethinking Action Names (Redux/NgRX) | Dave&#39;s Notebook</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="If you’ve been using some form of Redux, you are familiar with the basic flow of data through the Redux loop. Central to this flow are Actions, the messages that trigger code in our Reducer or Effect/">
-<meta name="keywords" content="angular,react,ngrx,redux">
+<meta name="keywords" content="angular,ngrx,react,redux">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Rethinking Action Names (Redux&#x2F;NgRX)">
 <meta property="og:url" content="http://davembush.github.com/rethinking-action-names-redux-ngrx/index.html">
 <meta property="og:site_name" content="Dave&#39;s Notebook">
 <meta property="og:description" content="If you’ve been using some form of Redux, you are familiar with the basic flow of data through the Redux loop. Central to this flow are Actions, the messages that trigger code in our Reducer or Effect/">
 <meta property="og:locale" content="English">
-<meta property="og:updated_time" content="2021-05-29T15:47:59.277Z">
+<meta property="og:updated_time" content="2021-05-31T17:30:24.681Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Rethinking Action Names (Redux&#x2F;NgRX)">
 <meta name="twitter:description" content="If you’ve been using some form of Redux, you are familiar with the basic flow of data through the Redux loop. Central to this flow are Actions, the messages that trigger code in our Reducer or Effect/">
@@ -122,7 +122,7 @@
 <h2 id="Rethinking-The-Problem"><a href="#Rethinking-The-Problem" class="headerlink" title="Rethinking The Problem"></a>Rethinking The Problem</h2><p>One way we can think about this problem is to look at other messaging systems, like the windows messaging system. It’s been a while since I’ve used the raw messages in Windows but I seem to recall a <code>WM_BUTTON</code> or <code>WM_BUTTON_CLICK</code> message that would get passed to my application when a button was clicked.  One message for every button in my system that had, as part of the payload, what button was clicked so my code could listen for that message for that button and do something because of it.</p>
 <p>We could do something similar with the code above. Instead of tying the actions to particular code we want to run, our actions could be more generic.<br>What if we had two generic messages, <code>Load</code> and <code>LoadResult</code>. The payload for these messages could then have a <code>LoadType</code> property that defined WHAT we were loading so that we could Load Employees, Addresses, and Phone Numbers all using the same two actions and we could also use <code>Load</code> and <code>LoadResult</code> to increment and decrement our wait state.</p>
 <p>This would work except we still have a problem.</p>
-<h2 id="That’s-Now-It-Was-Designed"><a href="#That’s-Now-It-Was-Designed" class="headerlink" title="That’s Now It Was Designed"></a>That’s Now It Was Designed</h2><p>Most of the tools we currently have in place to reduce the boiler plate code we need to write are based on a one-to-one relationship between actions and the code that gets run. This isn’t to say that we couldn’t adapt them but doing so would be more trouble than it is worth because we would be working against the intended design.</p>
+<h2 id="That’s-Not-How-It-Was-Designed"><a href="#That’s-Not-How-It-Was-Designed" class="headerlink" title="That’s Not How It Was Designed"></a>That’s Not How It Was Designed</h2><p>Most of the tools we currently have in place to reduce the boiler plate code we need to write are based on a one-to-one relationship between actions and the code that gets run. This isn’t to say that we couldn’t adapt them but doing so would be more trouble than it is worth because we would be working against the intended design.</p>
 <p>And so, I would suggest to you that the advice the current literature gives us about using Actions to trigger multiple blocks of code is wrong. Since Actions are primarily used as loosely coupled method calls, using them in unrelated places violates the Single Responsibility Principle and makes the code hard to follow.</p>
 <p>I’ve seen one code base where the code that gets triggered has absolutely nothing to do with the Action that triggers it. Not something in the simple case of LoadEmployee triggering Wait, but in more obscure relationship like <code>LoadCandyBars</code> triggering <code>LoadSteakDinner</code>.  The result is that the code becomes extremely difficult to follow. This is one of the biggest causes of bugs in this system.</p>
 <h2 id="Maybe-This-Will-Work"><a href="#Maybe-This-Will-Work" class="headerlink" title="Maybe This Will Work"></a>Maybe This Will Work</h2><p>For our discussion about the Wait state, I would suggest that we create a separate set of Actions for our Wait state, possibly WaitStart() and WaitEnd() that get fired when we fire EmployeeLoad() and EmployeeLoadResult(). You could wrap these calls in a function or method to ensure they always get called together, but the actions themselves need to be unique to make the code easier to follow.</p>
@@ -137,7 +137,7 @@
     
 
     <footer class="article-footer">
-      <a data-url="http://davembush.github.com/rethinking-action-names-redux-ngrx/" data-id="ckp9xewz3000adox2mqmxxfvs" class="article-share-link">
+      <a data-url="http://davembush.github.com/rethinking-action-names-redux-ngrx/" data-id="ckpcw473v000g1gx28a4hb4v1" class="article-share-link">
         <i class="fa fa-share"></i> Share
       </a>
       
