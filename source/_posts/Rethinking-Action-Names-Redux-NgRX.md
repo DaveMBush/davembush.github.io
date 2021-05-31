@@ -51,7 +51,7 @@ What if we had two generic messages, `Load` and `LoadResult`. The payload for th
 
 This would work except we still have a problem.
 
-## That's Now It Was Designed
+## That's Not How It Was Designed
 
 Most of the tools we currently have in place to reduce the boiler plate code we need to write are based on a one-to-one relationship between actions and the code that gets run. This isn't to say that we couldn't adapt them but doing so would be more trouble than it is worth because we would be working against the intended design.
 
