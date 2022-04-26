@@ -22,7 +22,7 @@ No, neither did I.  But then, most of the time I don’t write code where this 
 
 So here are some examples.
 
-<!-- more --->
+<!-- more -->
 
 Integer Types
 -------------

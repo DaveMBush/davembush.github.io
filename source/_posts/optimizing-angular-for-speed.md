@@ -1,6 +1,6 @@
 ---
 title: Optimizing Angular For Speed
-date: 2020-09-27 08:34:41
+date: 2022-04-23 08:34:41
 tags:
   - angular
   - performance
@@ -26,9 +26,13 @@ With OnPush, change detection on a component will happen only if one of the prop
 
 In my experience, this isn't going to generate enough of a performance difference that you can measure in seconds.  But it is going to make a difference overall and it is a generally quick win. So, start here.
 
-One quick way to make sure all of your future components use OnPush when using the CLI to generate components is to make sure you add in the OnPush configuration in your Angular.json file.
+One quick way to make sure all your future components use OnPush when using the CLI to generate components is to make sure you add in the OnPush configuration in your Angular.json file.
 
 You can find a good article about this [here](https://indepth.dev/overriding-angular-schematics/).
+
+### Small Components
+
+OnPush notification is only going to be useful if your components are small. Keep in mind that once change detection has determined the component is dirty and needs to be re-rendered, the WHOLE component will be re-rendered.
 
 ### Run Outside Zones
 
@@ -70,6 +74,16 @@ Many people aren't aware that NgRX has a Selector mechanism that allows for memo
 
 It also looks a lot cleaner than the `() => state.subState` mechanism we started out with.
 
+### Don't unravel Observables before you need to
+
+Because change detection is triggered when an @Input() value changes, you want to prevent @Input() values from changing until you absolutely have to change them.
+
+One way you can do this is to (only?) pass Observables into your @Input() and unravel them in your component just before you send the value to the component that needs to render the value.  Otherwise, every @Input() that saw that new value will be marked as dirty and the entire component tree will re-render even if you never actually used the new value.
+
+### Use distinctUntilChanged on your Observables
+
+Related to the above, you can prevent even more rendering by using distinctUntilChanged on your Observables so that nothing even looks like it changed unless it actually changed.
+
 ### Don't Bind to Computed Values
 
 If your value is computed, Angular can't easily determine if the value has changed, unless it calculates it.
@@ -88,6 +102,14 @@ For more information on this topic see my article [How to Avoid Binding to Compu
 
 And while we are on the subject of NgRX, instead of creating one monster state to rule them all in the AppModule, make use of the Features so that you are only instantiating the store reducers, effects, etc. as you need them.
 
+### Use RxJS distinct()
+
+Did you know that your component is probably re-rendering more times than it needs to?  This is because @Input() values will mark the component every time it thinks it might have received a new value. By using `distinct()` on the Observable, you can prevent this from happening.
+
+### Use RxJX replay()
+
+Another trick you can use is to use `replay()` on the Observable. There are various ways to configure this, but the advantage is this is yet another way of preventing calculations you don't really need. If the value isn't going to change as you render the content multiple times on the screen, you only need to compute once and allow `replay()` to memoize the return.
+
 ### Upgrade to IVY
 
 In general, I would suggest that you always keep your Angular version up to date.
@@ -96,8 +118,9 @@ While we are on the topic of upgrades.  In an enterprise environment, my suggest
 
 At a minimum, make sure you are using a version that uses the IVY rendering engine to take advantage of the performance gains it introduced.
 
+## Be smart about HTML and CSS
 
-## Style the Host of your Components
+### Style the Host of your Components
 
 Another place you can eak out a bit of performance without a lot of work is by eliminating the wrapping DIV element from your components.
 
@@ -111,7 +134,7 @@ Most Angular developers are unaware that when the HTML template is rendered, the
 </foo>
 ```
 
-Now, it is true that the \<foo\> will get ignored by the browser. But it still has to evaluate it and determine that it shouldn't do anything with it.
+Now, it is true that the \<foo\> will get ignored by the browser. But it still has to evaluate it and determine that it shouldn't do anything with it and it is extra context that has to be packaged by webpack.
 
 By styling \<foo\> to look like a DIV element by using
 
@@ -126,12 +149,17 @@ By styling \<foo\> to look like a DIV element by using
 
 we can eliminate the inner DIV from our component and gain a bit of performance without going to a lot of trouble. The amount of performance gain you will see will depends on how many child components are being displayed at any one time.
 
+### Don't overuse SASS/SCSS
 
-## Ahead of Time Compile
+My general advice is to use CSS for your application and SASS for your component library or theme. Although, even in your component library, most of what you need to do can be done easily with CSS.
 
-One optimization that has been around for a while is Ahead of Time compile. It has been around so long that I almost forget that it is optional. Make sure your code is using it.
+I admit. When LESS and SASS first came out, I saw all the advantages. Since then, I've been persuaded by three events.
 
-Ahead of Time compile ensures that the templates get compiled into JavaScript prior to being sent to the browser. A little extra time during the build process can save significant time on the client.
+First, if you write your Angular components small enough and you use view encapsulation, you shouldn't need any of the features that SASS would provide to you.
+
+Second, I've seen SASS abused more often than I've seen it used well. Once project I worked on ended up having 200 character class names because one of the developers was using & to concatenate the class names. The template code was cluttered with these long class names and it made the code difficult to read.
+
+Third, CSS has grown up. CSS variables now do most of what we may have needed to use SASS for. And, if you can keep your font and color information strictly in a theme.css file, you should never need to access them from your application components.
 
 ## Compile for Production
 

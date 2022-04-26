@@ -18,7 +18,7 @@ I was recently asked if I would cover some topics related to Forms Based Authent
 
 One of those is setting up the database.
 
-<!-- more --->
+<!-- more -->
 
 When I owned my hosting companies, I saw more confusion in this area than just about any other topic that came up.
 

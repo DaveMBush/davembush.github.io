@@ -22,7 +22,7 @@ Running Selenium in parallel from .NET seems to be a problem because, as of the 
 *   know how to use the Page Model pattern
 *   know how to use your chosen test harness.
 
-<!--- more -->
+<!-- more -->
 
 Here Is The Problem
 -------------------

@@ -6,7 +6,7 @@ tags:
 
 As I've considered all the issues I've seen over the years and, as I've talked with and interviewed with other developers, I've come to the conclusion that our industry has two main problems.  Fix these and all the other issues we face will solve themselves.
 
-<!--- more --->
+<!-- more -->
 
 ## Not Understanding the Problem
 
