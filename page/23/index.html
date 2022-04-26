@@ -231,23 +231,13 @@
         <p><img src="/uploads/2009/09/B01I0003.jpg" alt="B01I0003" title="B01I0003"></p>
 <p>I was recently asked if I would cover some topics related to Forms Based Authentication.  The person who requested this information has some specific issues that he wants covered that I won’t be covering for a while because I think there are some other issues that need to be covered first.</p>
 <p>One of those is setting up the database.</p>
-<!-- more --->
-
-<p>When I owned my hosting companies, I saw more confusion in this area than just about any other topic that came up.</p>
-<p>So here’s the step-by-step process you need to go through to set up your database for Forms Based Authentication.</p>
-<p>In your hosting company’s control panel, create the SQL database.  You’ll want to create a database with a size of at least 10 meg with 5 meg allocated to the log file and 5 meg allocated to the database.  You’ll also want to make sure the user you attach to the database has DBO rights.  You may need to contact support to enable this.</p>
-<p>Next, you’ll want to run aspnet_regsql.exe which you can find under c:\windows\Microsoft.NET\Framework\v2.0.50727.  This will provide you a wizard interface and will ultimately create the appropriate tables for you. The wizard is self explanatory, so I won’t repeat it here except to say that you’ll want to enter your connection information to connect to the server you just created your database on, not one of your databases locally.</p>
-<p>Next you’ll need to add the connection information to your web.config file for the application you are setting up Forms Based Authentication for.</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">connectionStrings</span>&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">remove</span> <span class="attr">name</span>=<span class="string">&quot;LocalSqlServer&quot;</span>/&gt;</span></span><br><span class="line"> <span class="tag">&lt;<span class="name">add</span> <span class="attr">name</span>=<span class="string">&quot;LocalSqlServer&quot;</span></span></span><br><span class="line"><span class="tag">  <span class="attr">connectionString</span>=<span class="string">&quot;Data Source=sqlserverGoesHere;</span></span></span><br><span class="line"><span class="string"><span class="tag">    Initial Catalog=YourDatabaseName;</span></span></span><br><span class="line"><span class="string"><span class="tag">    Persist Security Info=True;</span></span></span><br><span class="line"><span class="string"><span class="tag">    User ID=YourSqlUserID;</span></span></span><br><span class="line"><span class="string"><span class="tag">    password=YourSqlPassword&quot;</span></span></span><br><span class="line"><span class="tag">  <span class="attr">providerName</span>=<span class="string">&quot;System.Data.SqlClient&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">connectionStrings</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>The “remove” element is needed because typically the machine.config file on the server has its own entry that you won’t be using.</p>
-<p>Unfortunately, you’ll need to create your own UI for adding users and assigning them to roles.  It isn’t that hard to do and once you’ve done it you can move the administration controls from project to project.  If I were you, I’d create the control set once in a special sub-directory so that I could move it from project to project.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/setting-up-your-forms-based-authentication-database/#more">Read More</a>
+          </p>
+        
       
     </div>
-
-    
-      
 
     
 
