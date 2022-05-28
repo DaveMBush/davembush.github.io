@@ -52,7 +52,7 @@ You can turn things off using `__Zone_ignore_on_properties`.
 
 There is more information on this [here](https://github.com/angular/zone.js/blob/master/STANDARD-APIS.md).
 
-That being said, I've done some performance testing and it turns out that [Change Detection is not the first place to look if your screen is rendering slowly](./ng-zones-performance-impact/).
+That being said, I've done some performance testing and it turns out that [Change Detection is not the first place to look if your screen is rendering slowly](../ng-zones-performance-impact/).
 
 ### Use Pipes
 
