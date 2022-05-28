@@ -52,6 +52,8 @@ You can turn things off using `__Zone_ignore_on_properties`.
 
 There is more information on this [here](https://github.com/angular/zone.js/blob/master/STANDARD-APIS.md).
 
+That being said, I've done some performance testing and it turns out that [Change Detection is not the first place to look if your screen is rendering slowly](./ng-zones-performance-impact/).
+
 ### Use Pipes
 
 This tip is only really valuable in the cases where the Functional programming's pure functions is relevant.
@@ -73,16 +75,6 @@ This is one place where I'd spend the extra time to verify that my "optimization
 Many people aren't aware that NgRX has a Selector mechanism that allows for memoization.  This means when you call the Selector, if nothing it depends on has changed then you just get back the same answer you got the previous time you executed the method.
 
 It also looks a lot cleaner than the `() => state.subState` mechanism we started out with.
-
-### Don't unravel Observables before you need to
-
-Because change detection is triggered when an @Input() value changes, you want to prevent @Input() values from changing until you absolutely have to change them.
-
-One way you can do this is to (only?) pass Observables into your @Input() and unravel them in your component just before you send the value to the component that needs to render the value.  Otherwise, every @Input() that saw that new value will be marked as dirty and the entire component tree will re-render even if you never actually used the new value.
-
-### Use distinctUntilChanged on your Observables
-
-Related to the above, you can prevent even more rendering by using distinctUntilChanged on your Observables so that nothing even looks like it changed unless it actually changed.
 
 ### Don't Bind to Computed Values
 
