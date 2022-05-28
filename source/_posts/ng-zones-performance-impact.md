@@ -10,6 +10,7 @@ tags:
 I've been working on this article for a month, off and on. When I started, I set out to demonstrate the performance impact of change detection in Angular. In particular, I wanted to demonstrate that turning zones off would have a significant impact on performance even if you followed all my other advice regarding performance optimization.
 
 That is, if you had:
+<!-- more -->
 - Implement OnPush notification
 - Keep your components small
 - Use pure pipes
