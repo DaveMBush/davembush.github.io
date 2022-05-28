@@ -106,42 +106,13 @@
       
         <p>I’ve been working on this article for a month, off and on. When I started, I set out to demonstrate the performance impact of change detection in Angular. In particular, I wanted to demonstrate that turning zones off would have a significant impact on performance even if you followed all my other advice regarding performance optimization.</p>
 <p>That is, if you had:</p>
-<ul>
-<li>Implement OnPush notification</li>
-<li>Keep your components small</li>
-<li>Use pure pipes</li>
-<li>Use NgRX Selectors</li>
-<li>Use distinctUntilChanged on your Observables</li>
-<li>Don’t bind to computed values.</li>
-<li>User RxJS distinct()</li>
-<li>Use RxJS replay()</li>
-<li>Style the :host</li>
-<li>Use TrackBy x in ngFor</li>
-<li>Lazy-load routes</li>
-<li>Preload lazy-loaded routes</li>
-<li>Lazy-load resources</li>
-<li>Use virtual scrolling</li>
-<li>Don’t use nested data in your store</li>
-<li>Pre-load lookup tables.</li>
-<li>Use virtual arrays</li>
-<li>Tune your server</li>
-</ul>
-<p>Once you’ve done all those things, the only question left is “exactly how much time does the change detection cycle take if nothing has changed?”</p>
-<h2 id="First-Attempts"><a href="#First-Attempts" class="headerlink" title="First Attempts"></a>First Attempts</h2><p>Assuming that change detection would be an issue, I set out to determine how much of a performance impact I would see with some pretty simple code.  So I created a component that updated a value when a button was clicked.</p>
-<p>I then used the performance tools in developer tools to see just how long the update cycle would take.</p>
-<p>At first I thought I was on to something, but it was actually the compiler kicking in on the first run. When I clicked the button a second time, the performance was not any different regardless of where I put the changes.</p>
-<p>I thought maybe the difference was the number of @Inputs that were being watched, but even updating all those did not make any significant difference.  Even using prop drilling, if the component didn’t actually use the value from the @Input() there was no difference in performance.</p>
-<h2 id="How-Much-Time-Does-ChangeDetection-Take"><a href="#How-Much-Time-Does-ChangeDetection-Take" class="headerlink" title="How Much Time Does ChangeDetection Take?"></a>How Much Time Does ChangeDetection Take?</h2><p>So, today I set out to see just how much time change detection takes if nothing updates in the app.  Just trigger a change detection cycle.</p>
-<p>That’s easy, create a button that you can click nested in the inner most component.</p>
-<p>To get a better sense of timing I also created a tree of components 1000 levels deep.</p>
-<p>The entire click event where the change detection cycle occurs take about 20ms with the developer tools CPU performance set to 4x.</p>
-<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>If you are turning off zones as THE way of optimizing your performance you are masking architectural issues that should have been addressed first. Don’t let anyone tell you otherwise. It just isn’t true. Take it from someone who tried to prove it was.</p>
-
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/ngzones-performance-impact/#more">Read More</a>
+          </p>
+        
       
     </div>
-
-    
-      
 
     
 
