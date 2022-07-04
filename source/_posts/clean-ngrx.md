@@ -13,6 +13,8 @@ I've spent the last month fixing bugs that can all be summarized by the followin
 - Using Effects as Selectors
 - Components doing too much data manipulation
 
+<!-- more -->
+
 Unfortunately, the people who need to hear this the most are the ones who will never read this article. Some of what I'm about to say, I may have discovered over the last several years of programming but I'm sure I didn't discover this in isolation.
 
 So, lets review how NgRX should be used effectively.
