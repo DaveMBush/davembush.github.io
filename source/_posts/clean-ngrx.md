@@ -2,6 +2,9 @@
 title: Clean State Management with NgRx
 date: 2022-07-04 12:46:07
 tags:
+  - angular
+  - ngrx
+  - state-management
 ---
 
 Once again I've run into a situation where the code I'm looking at doesn't resemble how the code was meant to be written.
