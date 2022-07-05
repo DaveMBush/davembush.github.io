@@ -15,6 +15,7 @@ I've spent the last month fixing bugs that can all be summarized by the followin
 - Storing data manipulations that Selectors could perform
 - Using Effects as Selectors
 - Components doing too much data manipulation
+- Too many actions and indirection
 
 <!-- more -->
 
@@ -26,17 +27,19 @@ So, lets review how NgRX should be used effectively.
 
 If you've ever worked on a system with nested state data as part of one slice, you know that updating that nested data is a pain. For those of you who haven't, having to update that data makes your reducer 10 times longer and 3 times more complicated than it needs to be.
 
-This means, first, you've written more code than you need to so there is a higher possibility of errors.  But beyond that, the code your customer has to download is also larger than it needs to be.  Worse, because it runs every time the nested data is updated, the code performs slower than it needs to.
+This means, first, you've written more code than you need. This means there is a higher possibility of errors.  But beyond that, the code your customer has to download is also larger than it needs to be.  Worse, because it runs every time the nested data is updated, the code performs slower than it needs to.
+
+That last point might surprise you. Why does it run slower? Simply because you may end up running that code when it was not necessary.
 
 ## The Problem with Storing State the Way You Want to Use It
 
 Related to nested data is the urge to store state the way you want to use it later on in the application.
 
-The main problem with doing this is that you need to make sure that state gets updated correctly from every place you update the raw data. In the process, you will invariably run that update the derived state code multiple times when you could have only run it once.
+The main problem with doing this is that you need to make sure that state gets updated correctly from every place you update the raw data. In the process, you will invariably run the the derived state code multiple times when you could have only run it once or in many cases, not at all.
 
-Instead, you should modify the data into something your presentation needs using Selectors. Since everyone should be using the selectors to get the information they need, and that selector is looking at the raw data, you can be sure that everyone is getting the correct data.
+Instead, you should modify the data into something your presentation needs using Selectors. Since everyone should be using the Selectors to get the information they need, and that selector is looking at the raw data, you can be sure that everyone is getting the correct data. Also, if nothing is listening to the observable that the selector returns, you will not be running the selector code more times than is necessary.
 
-You have the advantage of taking advantage of memoization so that this data manipulation only happens when the data is needed and when it changes.
+You also have the advantage of taking advantage of memoization so that this data manipulation only happens when the data is needed and when it changes.
 
 ## Storing State
 
@@ -89,3 +92,17 @@ By pushing code as far down the stack as is practical, you reduce the amount of 
 So, how might you force yourself to think in this way? By following this simple rule: Presentational components should only 1) display the data they've been give or 2) fire events indicating that some action has taken place.
 
 There is another type of component generally referred to as "Smart" components. They too have a rule. They should only 1) retrieve data from the store via Selectors and 2) fire actions to update the Store or trigger an Effect.
+
+## Storing Ancillary State
+
+Thinking about your code this way leads to the last point I want to make. If your data is always your single source of truth, you'll want to store information in the Store that will help you determine things like sort order and filtering as well as other information that may be in your form.
+
+Personally, I tend to store all my form data in my store beyond, and including, the data I need to send back to the server. This helps me derive the data for my presentation layer and allows my actions to have smaller payloads.
+
+Many of you send all your form data with your action to update the database because you still think of the update as something the presentation layer is doing. The way I work with data is I just send an action that notifies the store that I want to update the data with the data from my form. The Effect grabs that data from the store and sends it to the server.
+
+## Conclusion
+
+While I've centered the discussion above to NgRX. The main ideas port to other methods of state management including things like Redux, MobX, and even Apollo GraphQL.
+
+By following the above architecture and design patterns your code will be easier to maintain, have fewer bugs and scale better.
