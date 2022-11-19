@@ -59,7 +59,7 @@ This solves the storing nested data issue.
 
 Apparently, some people think that the job of an effect is to manipulate data.  But as we've already established, manipulating data is the job of selectors. No, the job of Effects is to retrieve data from wherever we are persisting it and to update the persistent store with any changes we've made. If we need to manipulate data to do either of those, again, Selectors is where we would do this work.
 
-Once you've narrowed the job of your effects down to this, you no longer need to return multiple actions from an effect.  Ideally and effect should fire, at most one action.  But, no more than two.
+Once you've narrowed the job of your effects down to this, you no longer need to return multiple actions from an effect.  Ideally an effect should fire one action.  But, no more than two.
 
 ## The Job of Reducers
 
