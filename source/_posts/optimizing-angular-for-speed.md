@@ -256,6 +256,8 @@ One way to send less data back to the server is to send it back in its raw form 
 
 For this, I recommend a product called Normalizr.  This takes the nested data and breaks it into multiple tables. The product was originally written for client side code to make using Redux and NgRX easier.  But there are now server side implementations you can use that structure the data prior to sending it back so that you only send back one instance of the data you need rather than multiple instances because it is used by multiple parent rows.
 
+Better than using Normalizr, which is now a bit dated, you should consider only asking for un-normalized data from the server and dumping it into NgRX entities. You can use NgRX selectors to join the data back together however you need it. Now that everyone should at least be using HTTP2, the cost of making multiple request to the server at the same time is negligible.
+
 ### Pre-load Lookup Tables
 
 Along this same idea. Many times we have nested data that is the result from some lookup table. By using Normalizr, you could load those table up front and then only return the key into those tables and use Normalizr and NgRX Selectors to do the JOIN on the client side further reducing the overall amount of data that you need to retrieve at any one time.
@@ -278,7 +280,7 @@ You can also use this to cache the index.html file locally so you don't even hav
 
 I've yet to find my code is so slow that this actually makes sense but it is theoretically possible that you'd find even more performance by creating services using WebAssembly.  This would mean that you'd need to write the code in something other than TypeScript and Angularize it by wrapping it in TypeScript/Angular code.  But I've seen at least one article on the web where they did just that.
 
-### WebWorkers
+### WebWorkers and Shared Workers
 
 This is another place where there is at least a theoretical possibility that it would provide additional performance. At the very least, it can provide the appearance of performance.
 
