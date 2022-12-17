@@ -13,7 +13,7 @@
 <meta property="og:description" content="I was recently asked how I would optimize an Angular site for speed. Interestingly, I’ve never written about this explicitly even though I’ve actually done quite a bit of work related to this issue. F">
 <meta property="og:locale">
 <meta property="article:published_time" content="2022-12-17T13:34:41.000Z">
-<meta property="article:modified_time" content="2022-12-17T15:53:52.865Z">
+<meta property="article:modified_time" content="2022-12-17T16:08:56.531Z">
 <meta property="article:author" content="Dave M Bush">
 <meta property="article:tag" content="angular">
 <meta property="article:tag" content="performance">
@@ -179,8 +179,6 @@
 <h2 id="TrackBy-X-in-ngFor"><a href="#TrackBy-X-in-ngFor" class="headerlink" title="TrackBy X in ngFor"></a>TrackBy X in ngFor</h2><p>Another way to eek out a bit more performance is by implementing the TrackBy property in your ngFor loops.</p>
 <p>This is particularly useful when you are displaying a list that updates multiple times from the server.  On every refresh, because it is a brand new object, it will update the whole list.</p>
 <p>By using TrackBy, you can tell Angular to only update the elements in the list that have changed by whatever you specify in TrackBy.</p>
-<p>Be careful with this. If you are retrieving data where the ID stays the same but the content for that ID changes, what you most certainly don’t want to do is to TrackBy ID.</p>
-<p>In this case you would either not use TrackBy or maybe use ID in combination with LastUpdate date.  I’ve seen this implemented incorrectly way too often.</p>
 <h2 id="Lazy-Loading"><a href="#Lazy-Loading" class="headerlink" title="Lazy Loading"></a>Lazy Loading</h2><h3 id="Lazy-Load-Routes"><a href="#Lazy-Load-Routes" class="headerlink" title="Lazy Load Routes"></a>Lazy Load Routes</h3><p>Most applications have multiple routes that they access. But even if yours doesn’t you should set your code up to use Lazy Loading for three reasons.</p>
 <p>First, small apps grow up.  Eventually you will probably have multiple routes.  If your app is so small that it doesn’t, implementing Lazy Loading of routes isn’t going to hurt anything.</p>
 <p>Second, implementing Lazy Loading will break your code down further into multiple files. Most of the code in those files will never change so that, once they are loaded and cached as instructed above, the only code that will ever need to be downloaded is code in your route when it changes.</p>
