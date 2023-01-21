@@ -1,6 +1,6 @@
 ---
 title: Optimizing Angular For Speed
-date: 2022-04-23 08:34:41
+date: 2022-12-17 08:34:41
 tags:
   - angular
   - performance
@@ -32,7 +32,7 @@ You can find a good article about this [here](https://indepth.dev/overriding-ang
 
 ### Small Components
 
-OnPush notification is only going to be useful if your components are small. Keep in mind that once change detection has determined the component is dirty and needs to be re-rendered, the WHOLE component will be re-rendered.
+OnPush notification is only going to be useful if your components are small. Keep in mind that once change detection has determined the component is dirty and needs to be re-rendered, the WHOLE component will be re-calculated even though there is now no Virtual DOM diffing in IVY.
 
 ### Run Outside Zones
 
@@ -190,10 +190,6 @@ This is particularly useful when you are displaying a list that updates multiple
 
 By using TrackBy, you can tell Angular to only update the elements in the list that have changed by whatever you specify in TrackBy.
 
-Be careful with this. If you are retrieving data where the ID stays the same but the content for that ID changes, what you most certainly don't want to do is to TrackBy ID.
-
-In this case you would either not use TrackBy or maybe use ID in combination with LastUpdate date.  I've seen this implemented incorrectly way too often.
-
 ## Lazy Loading
 
 ### Lazy Load Routes
@@ -267,6 +263,12 @@ Along this same idea. Many times we have nested data that is the result from som
 I mentioned Virtual Scrolling above as one way to reduce the rendering time. By combining this with an concept I like to refer to as Virtual Arrays you can similarly only retrieve the data the user can see further reducing the perceived time to first render.
 
 A Virtual Array is an object that looks like an array from an API perspective but the implementation is actually using the database as the storage location.  You can either retrieve the data from the database whenever it is requested from the array or you can memoize the data so that it is only retrieved once.
+
+## Memory Management
+
+When most people think of performance, the immediate place they think of is, "how to impact performance of good code."  But the most overlooked performance issue in JavaScript generally is memory. Specifically memory leaks.
+
+There are now several tools available for detecting and tracking down memory leaks. Find one and use it.
 
 ## Micro Tweaks
 
