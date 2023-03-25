@@ -11,6 +11,8 @@ There are different opinions about whether or not to use return types in TypeScr
 
 First, let’s acknowledge the reasons why some people prefer not to use return types.
 
+<!-- more -->
+
 ## Reasons Against
 
 ### Verbosity and Redundancy
