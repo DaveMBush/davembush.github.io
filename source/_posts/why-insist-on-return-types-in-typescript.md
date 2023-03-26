@@ -78,3 +78,13 @@ Then, using AST, we can easily go through the code and determine what code needs
 ## Conclusion
 
 As you can see, I think that using return types in TypeScript is a good practice that can improve the quality of our code. Of course, there may be exceptions and trade-offs, depending on the context and preferences. But in general, I think that the benefits outweigh the costs.
+
+## References
+- [Why Explicity Return Type is a Good Thing](https://dev.to/arnelenero/why-explicit-return-type-is-a-good-thing-43lj)
+- [Reddit Thread Where The Majority Support Return Types](https://www.reddit.com/r/typescript/comments/ihpnme/opinion_on_explicit_return_types/)
+- [Make Returns Explicit](https://topher.io/writing/make-returns-explicit)
+- [When to Add Types and When to Infer in TypeScript](https://sebastiandedeyne.com/when-to-add-types-and-when-to-infer-in-typescript/)
+- [TypeScript Explicit vs Implicit](https://www.fun4code.com/typescript-explicit-vs-implicit/)
+- [Effective TypeScript (Book)](https://effectivetypescript.com/)
+
+There are more. While there are people who insist using return types is a bad thing. My research indicates that the overwhelming consensus from the community is that using return types for functions and methods is generally a good thing and that following the default rules of the eslint rule [explicit-function-return-types](https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/explicit-function-return-type.md) is the proper balance between using return types where they supply value an turning them off where they do not.
