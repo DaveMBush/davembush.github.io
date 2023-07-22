@@ -8,69 +8,64 @@ tags:
 - clean code
 ---
 
-In a land called Codeville, where clean code was a thrill,
-Lived a crafty coder named Ted, always ready for a skill.
-One fine day, he set out to make a beast,
-A creature named Flaparoo, from west to east.
+In the vibrant town of Bugville, known for its thrill,
+There lived a brisk coder named Sam, climbing up a skill hill.
+One day, he embarked on a project so grand,
+To craft an entity, a creature named ClutterSand.
 
 <!-- more -->
 
-The blueprint of Flaparoo, Ted's unique class,
-Needed a constructor to come to pass.
-A special method, indeed a neat tool,
-Which gets called when a class instance begins to pool.
+With properties and methods, the ClutterSand was vast,
+It needed a constructor, to echo its past.
+A special function, Sam knew it true,
+It's called when an instance, of the class, is brand new.
 
-Now Ted was learned, he knew what to do,
-The constructor's job is to initialize, true.
-Setting properties to their default or given state,
-He was careful, meticulous, not leaving it to fate.
+Sam, though clever, was fond of a trick,
+"Why not let the constructor perform more?", he picked.
+Logics, computations, actions so raw,
+In his constructor, he saw no flaw.
 
-But a thought occurred, a little sly,
-"Could my constructor do more?", he let out a sigh.
-Logic, calculations, actions anew,
-Could they find a place in his Flaparoo?
+His constructor, now bloated, did more than just spawn,
+It fetched data, it computed, from dusk to dawn.
+And as the ClutterSand grew, he felt a tad smug,
+Ignoring a rising tide, under his proverbial rug.
 
-Yet he paused, remembering lessons learned,
-Complex constructors left his code churned.
-Inheritance, polymorphism, often came to fray,
-Base class logic could lead subclasses astray.
+Inheritance and Polymorphism started to frown,
+Base class antics caused the subclasses to drown.
+Overridden properties, methods once lean,
+Now gave unpredictable results, the scene turned mean.
 
-For if a constructor held logic within its mirth,
-It might affect derived classes, giving issues birth.
-Assumptions of properties, methods overwritten,
-Led to unpredictable results, developers smitten.
+Guaranteed object initialization, once a steady rock,
+Now seemed more like an elusive flock.
+Objects weren't always ready when constructors were through,
+Leaving Sam puzzled, with a clue or two.
 
-And object initialization, that valuable guarantee,
-Could be thrown into chaos, as he came to see.
-Objects must be usable when the constructor was through,
-Or else, the purpose of it, would be askew.
+Then came the exceptions, with nowhere to hide,
+Complex tasks in constructor, made them collide.
+Who'd handle these exceptions? Sam started to wonder,
+As his codebase threatened to split asunder.
 
-A constructor laden with tasks complex,
-Can potentially throw exceptions, oh so vexed!
-Who handles them? What of the object's state?
-Such complications, it would certainly create.
+Unit tests, Sam's supposed trustworthy aid,
+Became a nightmare, a never-ending raid.
+With complex constructors, tests were a mess,
+Frustration peaked, causing undue stress.
 
-And what of unit tests, those faithful friends?
-With complex constructors, their patience ends.
-Hard to set up, harder to predict,
-Failed tests would come back to afflict.
+Transparency, predictability, pillars of good code,
+Began to wobble under the constructor's load.
+Debugging was like chasing shadows in the night,
+Sam's hasty decision didn't seem so right.
 
-Transparency and predictability, values held dear,
-With convoluted constructors, they disappear.
-Code should be easy to read, simple to chase,
-Or else, debugging turns into a wild goose chase.
+Days turned into nights, bug reports piled high,
+Sam's grand project was now but a sigh.
+A lesson learned, a principle reborn,
+A simple constructor, complex tasks must scorn.
 
-So Ted decided, in wisdom and grace,
-To keep his constructor a simple base.
-Flaparoo's properties, set and ready,
-With a constructor pure, stable, and steady.
+For constructors should be modest, diligent, and pure,
+To make the objects ready, stable, and sure.
+And for extra logic, another way must be sought,
+So, dear coder, let this lesson not be for naught.
 
-For extra tasks and logic, he used a different knack,
-Patterns like Factory and Builder, had his back.
-No need to overburden the constructor's role,
-For cleaner code was always his goal.
-
-And thus, the story of Ted, our coder so bright,
-A constructor's tale, from morning to night.
-Remember this fable, whenever you code,
-Keep your constructors simple, for a smooth road!
+Remember the tale of Sam and his ClutterSand,
+In the world of code, let simplicity command.
+Though the road was rough, and the journey was cruel,
+In the end, Sam learned the golden rule!
