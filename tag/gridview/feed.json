@@ -1,0 +1,20 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Dave's Notebook • All posts by \"gridview\" tag",
+    "description": null,
+    "home_page_url": "http://davembush.github.com",
+    "items": [
+        {
+            "id": "http://davembush.github.com/asp-net-gridview-edit-all-rows-at-once/",
+            "url": "http://davembush.github.com/asp-net-gridview-edit-all-rows-at-once/",
+            "title": "ASP.NET GridView Edit All Rows At Once",
+            "date_published": "2007-10-30T11:23:15.000Z",
+            "content_html": "<p>I just saw a question about this yesterday and realized that while I know how to do this, not everyone does.  So, here we go…</p>\n<p>Here’s the problem.  You want to be able to edit all the rows in the gridview at once instead of having to switch to edit mode and save one row at the time.  Normally, you’d want to do this when only a couple of items need to be changed per row and not the entire row’s worth of data.</p>\n<p><img src=\"/uploads/2016/03/image-1.png\" alt=\"image\" title=\"image\"></p>\n<p>Photo credit: <a href=\"//www.flickr.com/photos/tico24/16673795/\">tico_24</a> via <a href=\"//visualhunt.com\">VisualHunt.com</a> &#x2F; <a href=\"//creativecommons.org/licenses/by/2.0/\">CC BY</a></p>\n<span id=\"more\"></span>\n\n<p>You can do this easily if you make the columns that need to be edited templated columns and place editable controls in them (checkbox, textbox, etc)  You can then either make these controls “AutoPostback” controls, or you can provide a control at the bottom of the screen that triggers the update.  In either case, the code you are going to write at the codebehind level is going to be the same.</p>\n<p>For this example, we are going to assume that you only have one column that needs to be updated and that the control is a checkbox control.</p>\n<p>One of the issues you are going to run into with this is that you’ll need to know which row is associated with the control when it is updated.  The easiest way I’ve found of dealing with this problem is by adding a HiddenField control and databinding the row Id to it.  Since we are dealing with a CheckBox control, you will need to create an event handler for the Checked event.  The first parameter that will be passed into this event handler will be the sender.  Sender represents the control that fired the event.  In this case, it will represent the CheckBox control.</p>\n<p>The other control you’ll need to retrieve is the HiddenField control that you placed next to the check box.  You can retrieve this control by using the FindControl() method that is hanging off the parent control of the check box.  Assuming your HiddenField control is named “_hiddenFieldId” you can get the ID by using:</p>\n<figure class=\"highlight csharp\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br><span class=\"line\">2</span><br></pre></td><td class=\"code\"><pre><span class=\"line\"><span class=\"built_in\">string</span> id = (HiddenField)(((CheckBox)(Sender)).Parent</span><br><span class=\"line\">    .FindControl(<span class=\"string\">&quot;_hiddenFieldId&quot;</span>)).Text;</span><br></pre></td></tr></table></figure>\n\n<p>Now that you have the value of the ID and the value of the checkbox, you can update your database.</p>\n",
+            "tags": [
+                "asp.net",
+                "tutorial",
+                "gridview"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Dave's Notebook • All posts by \"partial content\" tag",
+    "description": null,
+    "home_page_url": "http://davembush.github.com",
+    "items": [
+        {
+            "id": "http://davembush.github.com/jquery-loading-partial-content/",
+            "url": "http://davembush.github.com/jquery-loading-partial-content/",
+            "title": "jQuery - Loading Partial Content",
+            "date_published": "2013-01-29T20:37:54.000Z",
+            "content_html": "<p><img src=\"/uploads/2008/12/misc-vol1-087.jpg\" alt=\"misc_vol1_087\"> In previous posts, I’ve covered the core architecture of jQuery.  How it works.  How you call methods.  A brief overview of what’s available.</p>\n<p>From here on out, we will focus more on specific solutions that jQuery can provide.  One of those is the ability to load partial content from the server and display it back in a section of our web page.</p>\n<span id=\"more\"></span>\n\n<p>There are several reasons why you might want to do this.  Remember back in the days of frames when we thought a good modular website meant trying to code the content in frames for the different sections of the website?  How quickly we found out that didn’t work!  To start with, the back button didn’t behave correctly, but there were other major problems with this approach as well.</p>\n<p>Using jQuery and some DIV tags, you can load content as you need it into the DIV tags using some pretty simple syntax.</p>\n<figure class=\"highlight javascript\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br></pre></td><td class=\"code\"><pre><span class=\"line\">$(<span class=\"string\">&#x27;#elementId&#x27;</span>).<span class=\"title function_\">load</span>(<span class=\"string\">&#x27;path/to/Content.htm&#x27;</span>);</span><br></pre></td></tr></table></figure>\n\n<p>That simple line of code will replace whatever is between the open and closing html tags represented by “#elementId with whatever content is in the file represented by ‘path&#x2F;to&#x2F;Content.htm’.</p>\n<p>If you want to, you can filter the data that is returned from the call to load by also specifying a selector:</p>\n<figure class=\"highlight javascript\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br></pre></td><td class=\"code\"><pre><span class=\"line\">$(<span class=\"string\">&#x27;#elementId&#x27;</span>).<span class=\"title function_\">load</span>(<span class=\"string\">&#x27;path/to/Content.htm .OnlyMatchThisClass&#x27;</span>);</span><br></pre></td></tr></table></figure>\n\n<p>And of course, if the URL is an ASPX page (or other dynamic content) you could pass in parameters on the query string to tell the server what data to retrieve.</p>\n<p>You can also send parameters to the server using a post by specifying a second parameter, data, that a set of name&#x2F;value pairs that will be sent to the server.  You can use this in combination with the serialize() method to pass the contents of form elements in with your request.  This is a step above what the MS-AJAX stuff does.  When you use the default AJAX that comes with ASP.NET, all of the form elements get posted to the server.  With this method, we are able to select exactly which form elements we are sending back and even what ASPX page we might be calling.</p>\n<p>Finally, we can pass a third parameter which is a call-back function that will be called by load when it completes.  Note, this is not to say it completed successfully, but only that it did complete.  It will be passed three parameters: the response text, the status, and the XMLHttpRequest object.</p>\n",
+            "tags": [
+                "jQuery",
+                "load",
+                "partial content"
+            ]
+        }
+    ]
+}

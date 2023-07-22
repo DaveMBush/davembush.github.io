@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Dave&#39;s Notebook"
+      href="http://davembush.github.com/rss.xml"
+    />
+    <link
+      rel="alternate"
+      type="application/atom+xml"
+      title="Dave&#39;s Notebook"
+      href="http://davembush.github.com/atom.xml"
+    />
+    <link
+      rel="alternate"
+      type="application/json"
+      title="Dave&#39;s Notebook"
+      href="http://davembush.github.com/feed.json"
+    />
+    <title>Dave&#39;s Notebook</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <meta property="og:type" content="website">
+<meta property="og:title" content="Dave&#39;s Notebook">
+<meta property="og:url" content="http://davembush.github.com/page/20/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:locale">
+<meta property="article:author" content="Dave M Bush">
+<meta name="twitter:card" content="summary">   
+    <link
+      href="//fonts.googleapis.com/css?family=Source+Code+Pro"
+      rel="stylesheet"
+      type="text/css"
+    />
+    
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+      integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      crossorigin="anonymous"
+    />
+
+    
+<link rel="stylesheet" href="/css/styles.css">
+ 
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+</html>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/rss.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        <li><a href="/atom.xml" title="Atom Feed"><i class="fa fa-light fa-atom"></i></a></li>
+        <li><a href="/atom.xml" title="JSON Feed">JSON</a></li>
+      </ul>
+      >
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          
+  
+    <article id="post-automated-web-application-functional-testing" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/automated-web-application-functional-testing/">Automated Web Application Functional Testing</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/automated-web-application-functional-testing/" class="article-date"><time datetime="2014-04-01T17:01:00.000Z" itemprop="datePublished">2014-04-01</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/TDD/">TDD</a> / <a class="article-category-link" href="/categories/TDD/Testing/">Testing</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2014/03/WebTestingCloud.png" alt="WebTestingCloud" title="WebTestingCloud"></p>
+<p>One problem we often have when performing application test is that if we are testing  applications that modify the database in some way, we can’t test without modifying the database.</p>
+<p>In an ideal world, one way you could deal with this issue is to create a test database that has known data.  But even then, you have to go through the effort of setting up the data prior to each test.</p>
+<p>To be clear, I’m not talking about unit test.  You should have unit test for most of your code.  I’ll handle what not to test in some other post.  But, at some point you will want to put together a suite of test that ensures that the application, as a whole, does what you expect it to do.</p>
+<p>So, the stated problem is this, “How do  we test a web application in such a way that we are always working with known data and in such a way that we do not ever modify the data in the database?”</p>
+<p>So far, I’ve not found a way that test the whole web application from the user interface down to the database.  But, I think I’ve found the next best thing.  Split the application in half between the view and the database and perform two, overlapping, integration test.  If both work, we can reasonably assume that the whole application works.</p>
+<h2 id="So-how-would-we-go-about-doing-this"><a href="#So-how-would-we-go-about-doing-this" class="headerlink" title="So how would we go about doing this?"></a>So how would we go about doing this?</h2><p>If you’ve designed your application correctly, you should have a seam somewhere in the center.  In my code it tends to either be at the business logic layer or at the data access layer.  What we want to do is to create a separate class, or set of classes that look just like the classes at that layer and swap them in while testing the top half of our application and use the real classes when testing the bottom half of the application and when using the application in production.</p>
+<p>We do this using dependency injection using your favorite dependency injection framework.  I’m not going to go into the details of dependency injection here.  Maybe some other day.  But this is a place where you would use it.</p>
+<h2 id="Test-the-top-half"><a href="#Test-the-top-half" class="headerlink" title="Test the top half"></a>Test the top half</h2><p>In the fake DAL or BLL classes, what you are going to do is return what amounts to hard coded values.  In a recent implementation, I stored the JSON representation of the values in a resource (RESX) file  using the parameters that were passed into the method call as keys so that I could retrieve that data. If you need to do an update, you will need to store that some place so that your test code can verify that it got passed down to the function that should have saved it to the database.</p>
+<p>By doing this, you can verify that your code from the presentation layer down to this seam works as it should.  Now we need to test the bottom half of our code.</p>
+<h2 id="Test-the-bottom-half"><a href="#Test-the-bottom-half" class="headerlink" title="Test the bottom half"></a>Test the bottom half</h2><p>This will be a bit easier.  What we do here is we have our test code run the code directly.  But, unlike when we run the code in production, we will wrap the code in transaction tracking starting with our setup method.  We turn on transaction tracking, get the database into the state that we need for testing, run our test, and then rollback the changes.  Assuming the transaction tracking works correctly, and we have to assume that our third party tools do, this test everything without modifying the database.</p>
+<p>Because we’ve tested both the top half of the code and the bottom half of the code, we now have a reasonable assurance that the code as a whole works as it should.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/automated-web-application-functional-testing/" data-id="cl2fb9o5j004jw8hi4a64gj6f" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/application-testing/" rel="tag">application testing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/dependency-injection/" rel="tag">dependency injection</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments</noscript>
+    <script src="https://giscus.app/client.js"
+        data-repo="DaveMBush/davembush.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzkwNzY1NTc="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOCEojzc4CRNna"
+        data-mapping="title"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="light"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+  </div>
+</section>
+
+
+  
+    <article id="post-tdd-isnt-all-about-testing" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/tdd-isn%E2%80%99t-all-about-testing/">TDD Isn’t All About Testing</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/tdd-isn%E2%80%99t-all-about-testing/" class="article-date"><time datetime="2014-03-25T17:07:00.000Z" itemprop="datePublished">2014-03-25</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/TDD/">TDD</a> / <a class="article-category-link" href="/categories/TDD/Testing/">Testing</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2014/03/tran-land-045.jpg" alt="tran-land-045" title="tran-land-045">While the artifact of Test Driven Development is test code, what you get out of test driven development far exceeds the test themselves. </p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/tdd-isn%E2%80%99t-all-about-testing/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/tdd-isn%E2%80%99t-all-about-testing/" data-id="cl2fb9o8a00isw8hido1jgr0w" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programming/" rel="tag">programming</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/" rel="tag">tdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test-driven-development/" rel="tag">test driven development</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-when-you-really-need-all-of-your-nunit-test-in-one-class" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/when-you-really-need-all-of-your-nunit-test-in-one-class/">When You Really Need All Of Your NUnit Test In One Class</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/when-you-really-need-all-of-your-nunit-test-in-one-class/" class="article-date"><time datetime="2014-03-18T17:16:00.000Z" itemprop="datePublished">2014-03-18</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/TDD/">TDD</a> / <a class="article-category-link" href="/categories/TDD/Testing/">Testing</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2014/03/arct-034.jpg"></p>
+<p>Last week <a href="/unit-test-structure/">I proposed a structure for unit test that follows the pre-condition, action, post-condition workflow</a>.  Basically what you would see in a Use Case document.</p>
+<p>The result of this structure when applied to a general NUnit class is that we will end up with our pre-condition and action in our setup method and our post-condition asserts in our test methods.</p>
+<p>The problem with this is that sometimes this doesn’t always fit what we are trying to do.</p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/when-you-really-need-all-of-your-nunit-test-in-one-class/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/when-you-really-need-all-of-your-nunit-test-in-one-class/" data-id="cl2fb9o9b00o4w8hi9zar2yog" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nunit/" rel="tag">nunit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/" rel="tag">tdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test-driven-development/" rel="tag">test driven development</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/testcasedata/" rel="tag">testcasedata</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/testcasesource/" rel="tag">testcasesource</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-unit-test-structure" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/unit-test-structure/">Unit Test Structure</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/unit-test-structure/" class="article-date"><time datetime="2014-03-11T08:38:00.000Z" itemprop="datePublished">2014-03-11</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/TDD/">TDD</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2014/03/UnitTestingScreen.png" alt="UnitTestingScreen" title="UnitTestingScreen">One of the recurring reasons I hear from people for why they are not implementing unit test in their code is because it takes too long.  On one level I get that.  But, my experience tells me that the real problem is more likely that they just don’t understand enough about how to implement unit testing to be able to do it well.</p>
+<p>This is like knowing you are supposed to “eat right” and “exercise” but not having anyone tell you how to do either in such a way that you can maintain the habit.</p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/unit-test-structure/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/unit-test-structure/" data-id="cl2fb9o8w00lnw8hi4dr903uh" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/" rel="tag">tdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test-driven-development/" rel="tag">test driven development</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unit-test/" rel="tag">unit test</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-debbie-done" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/%E2%80%9Cdebbie-done%E2%80%9D/">“Debbie-Done”</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/%E2%80%9Cdebbie-done%E2%80%9D/" class="article-date"><time datetime="2014-03-04T10:38:00.000Z" itemprop="datePublished">2014-03-04</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Testing/">Testing</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2014/02/88Tr.png" alt="88Tr" title="88Tr"></p>
+<p>A long long time ago, in what seems now like another world, I worked for a company as a <a target="_blank" rel="noopener" href="//en.wikipedia.org/wiki/Clipper_(programming_language)">Clipper programmer</a>.  While I was there I heard this story about a lady named Debbie.</p>
+<p>I was told that Debbie was a programmer who used to work for this company.  Debbie was a lazy programmer.  She worked harder at avoiding work than if she just did the job she was supposed to do.</p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/%E2%80%9Cdebbie-done%E2%80%9D/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/%E2%80%9Cdebbie-done%E2%80%9D/" data-id="cl2fb9o5w0062w8hi3czoh51c" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/agile/" rel="tag">agile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/programming/" rel="tag">programming</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/" rel="tag">tdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/testing/" rel="tag">testing</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-test-driven-specifications" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/test-driven-specifications/">Test Driven Specifications</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/test-driven-specifications/" class="article-date"><time datetime="2014-02-25T08:44:00.000Z" itemprop="datePublished">2014-02-25</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/TDD/">TDD</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2014/02/spider.jpg" alt="spider" title="spider">Several years ago, long before the community was actively talking about Test Driven Development, I worked for a short time at a company as a “bug fixer.”  That was my role.  They had hired me because they had some software that was “basically done” but “had some issues.”  It should only take a few weeks.</p>
+<p>The first thing they needed me to fix was that the website was supposed to send out email.  It turns out it was a configuration problem.  But they were so impressed (“the last guy we had in here spent two weeks on that problem and still hadn’t solved the problem.”) that they gave me more and more bugs.</p>
+<h2 id="This-Is-The-Job-That-Never-Ends"><a href="#This-Is-The-Job-That-Never-Ends" class="headerlink" title="This Is The Job That Never Ends"></a>This Is The Job That Never Ends</h2>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/test-driven-specifications/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/test-driven-specifications/" data-id="cl2fb9o8i00jvw8hi064n3ew7" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/agile/" rel="tag">agile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/" rel="tag">tdd</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/test-driven-development/" rel="tag">test driven development</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/testing/" rel="tag">testing</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-selenium-with-nunit-presentation" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/selenium-with-nunit-presentation/">Selenium with NUnit Presentation</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/selenium-with-nunit-presentation/" class="article-date"><time datetime="2014-02-17T23:00:00.000Z" itemprop="datePublished">2014-02-17</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Testing/">Testing</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2014/01/Selenium.png"></p>
+<p>On Monday 2&#x2F;17&#x2F;14 I gave a presentation at the CT .NET User’s Group on using Selenium and NUnit to test your web application.  The following is a list of resources from that presentation:</p>
+<ul>
+<li><a href="/uploads/2014/02/SeleniumDemoTest.zip">The demo code</a>.</li>
+<li><a target="_blank" rel="noopener" href="//docs.seleniumhq.org/download/">The Selenium IDE Plugin for FireFox and the IE Driver Server</a></li>
+<li><a target="_blank" rel="noopener" href="//www.nunit.org/">NUnit</a> </li>
+<li><a target="_blank" rel="noopener" href="//selenium.googlecode.com/git/docs/api/dotnet/index.html">Selenium CSharp API Documentation</a></li>
+<li><a target="_blank" rel="noopener" href="//docs.seleniumhq.org/docs/">Selenium Users Manual</a></li>
+</ul>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/selenium-with-nunit-presentation/" data-id="cl2fb9o8300hvw8hi76kr3ks8" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/c/" rel="tag">c#</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nunit/" rel="tag">nunit</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/selenium/" rel="tag">selenium</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments</noscript>
+    <script src="https://giscus.app/client.js"
+        data-repo="DaveMBush/davembush.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzkwNzY1NTc="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOCEojzc4CRNna"
+        data-mapping="title"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="light"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+  </div>
+</section>
+
+
+  
+    <article id="post-sql-while-sql-for-programmers" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/sql-while-sql-for-programmers/">SQL WHILE - SQL For Programmers</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/sql-while-sql-for-programmers/" class="article-date"><time datetime="2014-02-13T04:41:49.000Z" itemprop="datePublished">2014-02-12</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/SQL-For-Programmers/">SQL For Programmers</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>The IF statement we looked at on Tuesday was pretty tame compared to the WHILE construct. Actually, the main thing you need to keep in mind is that WHILE is all you have.  There is no such thing as a FOR loop or a DO WHILE loop.  So, you have to force WHILE to do those for you. The basic syntax of WHILE looks like this:</p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/sql-while-sql-for-programmers/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/sql-while-sql-for-programmers/" data-id="cl2fb9o8800ijw8hih4r4e5wx" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/do-while/" rel="tag">do while</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/for-next/" rel="tag">for next</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ms-sql/" rel="tag">ms-sql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/sql/" rel="tag">sql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tsql/" rel="tag">tsql</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/while/" rel="tag">while</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-vb-net-nullable-value-types" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/vb-net-nullable-types/">VB.NET Nullable Types</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/vb-net-nullable-types/" class="article-date"><time datetime="2014-01-16T02:46:57.000Z" itemprop="datePublished">2014-01-15</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/VB-NET/">VB.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/uploads/2009/07/tp_vol4_001.jpg" alt="tp_vol4_001" title="tp_vol4_001"> SQL has long had the ability to specify that a value is NULL even if it is a primitive type, but the only way you could have a NULL value in VB.NET is if you were dealing with an object. That is, until .NET 2.0</p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/vb-net-nullable-types/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/vb-net-nullable-types/" data-id="cl2fb9o9300msw8hicp4i5wvn" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nothing/" rel="tag">nothing</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/nullable/" rel="tag">nullable</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/value-types/" rel="tag">value types</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vb-net/" rel="tag">vb.net</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+    <article id="post-converting-a-datalist-to-a-listview" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/converting-a-datalist-to-a-listview/">Converting a DataList to a ListView</a>
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/converting-a-datalist-to-a-listview/" class="article-date"><time datetime="2013-12-26T01:15:26.000Z" itemprop="datePublished">2013-12-25</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/ASP-NET/">ASP.NET</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Yesterday, I spent the bulk of the day converting a DataList to a ListView.  I thought I’d spend a little time relating the process for those of you who might be interested in doing the same.</p>
+        
+          <p class="article-more-link">
+            <a class="btn btn-primary" href="/converting-a-datalist-to-a-listview/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/converting-a-datalist-to-a-listview/" data-id="cl2fb9o5p005aw8hi4cw589i8" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/asp-net/" rel="tag">asp.net</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/datalist/" rel="tag">datalist</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/listview/" rel="tag">listview</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+</article>
+
+
+
+  
+
+
+  <div id="page-nav">
+    <nav><ul class="pagination"><li><a class="page-prev" rel="prev" href="/page/19/"><i class="fa fa-chevron-left"></i> Prev</a></li><li><a class="page-number" href="/">1</a></li><li class="disabled"><span class="page-space">&hellip;</span></li><li><a class="page-number" href="/page/18/">18</a></li><li><a class="page-number" href="/page/19/">19</a></li><li class="active"><span class="page-number">20</span></li><li><a class="page-number" href="/page/21/">21</a></li><li><a class="page-number" href="/page/22/">22</a></li><li class="disabled"><span class="page-space">&hellip;</span></li><li><a class="page-number" href="/page/27/">27</a></li><li><a class="page-next" rel="next" href="/page/21/">Next <i class="fa fa-chevron-right"></i></a></li></ul></nav>
+  </div>
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/why-insist-on-return-types-in-typescript/">Why Insist On Return Types In TypeScript?</a>
+        </li>
+      
+        <li>
+          <a href="/optimizing-angular-for-speed/">Optimizing Angular For Speed</a>
+        </li>
+      
+        <li>
+          <a href="/using-workers-from-an-angular-library/">Using Workers from an Angular Library</a>
+        </li>
+      
+        <li>
+          <a href="/avoiding-ngrx-boilerplate/">Avoiding NgRx Boilerplate</a>
+        </li>
+      
+        <li>
+          <a href="/clean-state-management-with-ngrx/">Clean State Management with NgRx</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2023/03/">March 2023</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2022/12/">December 2022</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2022/11/">November 2022</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2022/07/">July 2022</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2022/05/">May 2022</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2021/09/">September 2021</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2021/05/">May 2021</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/11/">November 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/10/">October 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/06/">June 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Dave M Bush<br>
+      All opinions are my own and do not reflect any company I have or am currently working at.<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+</body>
+</html>

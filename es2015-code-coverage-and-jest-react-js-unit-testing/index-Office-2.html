@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Dave&#39;s Notebook"
+      href="http://davembush.github.com/rss.xml"
+    />
+    <link
+      rel="alternate"
+      type="application/atom+xml"
+      title="Dave&#39;s Notebook"
+      href="http://davembush.github.com/atom.xml"
+    />
+    <link
+      rel="alternate"
+      type="application/json"
+      title="Dave&#39;s Notebook"
+      href="http://davembush.github.com/feed.json"
+    />
+    <title>ES2015 Code Coverage and Jest (React JS Unit Testing) | Dave&#39;s Notebook</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <meta name="description" content="As I’ve mentioned before, I’m in the middle of putting together a React reference app and I’m doing it using Test Driven Development.  The problem is, the standard tools for implementing ES2015 code c">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ES2015 Code Coverage and Jest (React JS Unit Testing)">
+<meta property="og:url" content="http://davembush.github.com/es2015-code-coverage-and-jest-react-js-unit-testing/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:description" content="As I’ve mentioned before, I’m in the middle of putting together a React reference app and I’m doing it using Test Driven Development.  The problem is, the standard tools for implementing ES2015 code c">
+<meta property="og:locale">
+<meta property="og:image" content="http://davembush.github.com/uploads/2016/04/image-5.png">
+<meta property="article:published_time" content="2016-05-05T11:30:00.000Z">
+<meta property="article:modified_time" content="2021-03-20T14:33:29.000Z">
+<meta property="article:author" content="Dave M Bush">
+<meta property="article:tag" content="unit test">
+<meta property="article:tag" content="react.js">
+<meta property="article:tag" content="babel">
+<meta property="article:tag" content="es2015">
+<meta property="article:tag" content="es6">
+<meta property="article:tag" content="jest">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://davembush.github.com/uploads/2016/04/image-5.png">   
+    <link
+      href="//fonts.googleapis.com/css?family=Source+Code+Pro"
+      rel="stylesheet"
+      type="text/css"
+    />
+    
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+      integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      crossorigin="anonymous"
+    />
+
+    
+<link rel="stylesheet" href="/css/styles.css">
+ 
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+</html>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/rss.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        <li><a href="/atom.xml" title="Atom Feed"><i class="fa fa-light fa-atom"></i></a></li>
+        <li><a href="/atom.xml" title="JSON Feed">JSON</a></li>
+      </ul>
+      >
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-es2015-code-coverage-and-jest-react-js-unit-testing" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      ES2015 Code Coverage and Jest (React JS Unit Testing)
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/es2015-code-coverage-and-jest-react-js-unit-testing/" class="article-date"><time datetime="2016-05-05T11:30:00.000Z" itemprop="datePublished">2016-05-05</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Javascript/">Javascript</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>As I’ve <a href="/react-js-and-associated-bits/">mentioned before</a>, I’m in the middle of putting together a React reference app and I’m doing it using <a href="/test-driven-learning-an-experiment/">Test Driven Development</a>.  The problem is, the standard tools for implementing ES2015 code coverage with Jest make it hard to see at a glance if you have 100% code coverage or not because of some issues with the way Jest tells Babel to do the transformations by default, the way Babel transforms the code and implements the auxiliaryCommentBefore option and the way that Istanbul parses the ignore next comments.</p>
+<p>I’ve been working on solving this problem for the last month and a half off and on.  I’ve even posted a question about this on <a target="_blank" rel="noopener" href="//stackoverflow.com/questions/35986316/reactjs-0-9-code-coverage-with-es2015-class-keyword">Stack Overflow</a>, so I’m pretty sure no one else has a solution for this yet.  I’m not going to say my solution is the best way to solve this problem, but it is a solution, which is better than what we have so far.</p>
+<p><img src="/uploads/2016/04/image-5.png" alt="ES2015 Code Coverage and Jest" title="ES2015 Code Coverage and Jest"></p>
+<h2 id="Diagnostics"><a href="#Diagnostics" class="headerlink" title="Diagnostics"></a>Diagnostics</h2><p>By default, when Babel transforms your code, it inserts additional functions into the code that it can call to replace the code you wrote that does not yet conform to the syntax you’ve used.  This code gets inserted at the top of the file and shows up in your code coverage reports as several conditions that didn’t get fired.  Yes, it inserts code it never uses because the functions have to work under a variety of scenarios.</p>
+<p>For those who are interested in how I figured this out.  The transform results are located in node_modules&#x2F;jest-cli&#x2F;.haste_cache.</p>
+<h2 id="ES2015-Code-Coverage-Fix-One"><a href="#ES2015-Code-Coverage-Fix-One" class="headerlink" title="ES2015 Code Coverage Fix One"></a>ES2015 Code Coverage Fix One</h2><p>OK, so the standard recommended fix for something like this is to place</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* istanbul ignore next */</span></span><br></pre></td></tr></table></figure>
+
+<p>Prior to those functions.  And it just so happens that both Jest and Babel provide a mechanism for adding this comment by using the auxiliaryCommentBefore option.</p>
+<p>Only there are two problems with this.</p>
+<h3 id="Problem-One"><a href="#Problem-One" class="headerlink" title="Problem One"></a>Problem One</h3><p>If you just set the property like this:</p>
+<p>auxiliaryCommentBefore: ‘istanbul ignore next’</p>
+<p>Your code will get transformed so that any functions added by Babel will end up looking like this:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*istanbul ignore next*/</span><span class="keyword">function</span> <span class="title function_">babelFunctionHere</span>(<span class="params"></span>)...</span><br></pre></td></tr></table></figure>
+
+<p>But in order for Istanbul to pickup this comment, the code needs to look like this:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* istanbul ignore next */</span> <span class="keyword">function</span> <span class="title function_">babelFunctionHere</span>(<span class="params"></span>)...</span><br></pre></td></tr></table></figure>
+
+<p>While getting the spaces on either side of ‘istanbul ignore next’ is a simple matter, we have no real control over the space that is necessary between the comment marker and the function keyword.</p>
+<h3 id="Problem-Two"><a href="#Problem-Two" class="headerlink" title="Problem Two"></a>Problem Two</h3><p>The second problem with this “fix” is that even if modify the Babel code so that the comment gets inserted correctly, it doesn’t get inserted before EVERY function that Babel inserts.  If it inserts a group of functions, which it does regularly in my code, it only inserts the comment before the first function.</p>
+<h2 id="ES2015-Code-Coverage-Fix-Two"><a href="#ES2015-Code-Coverage-Fix-Two" class="headerlink" title="ES2015 Code Coverage Fix Two"></a>ES2015 Code Coverage Fix Two</h2><p>What if we didn’t insert the functions in our code?  Well, it just so happens that we can do that relatively easily.</p>
+<p>There is a plug-in for Babel called ‘<a target="_blank" rel="noopener" href="//www.npmjs.com/package/babel-plugin-transform-runtime">transform-runtime</a>’.  What this plug-in does is that it requires in the functions rather that pasting them into your code.  This way, the functions don’t exist in your code so Istanbul never sees the function block.  Pretty cool.</p>
+<p>You can add this to either your .babelrc file or the Babel section of your package.json file by adding a “plugins” section</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;plugins&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;transform-runtime&quot;</span><span class="punctuation">]</span></span><br></pre></td></tr></table></figure>
+
+<p>along with the “presets” section you should already have.</p>
+<h2 id="Remaining-Issue"><a href="#Remaining-Issue" class="headerlink" title="Remaining Issue"></a>Remaining Issue</h2><p>While using transform-runtime takes care of most of the issues, there are two functions that still don’t get covered.  In fact, when you look at the transform-runtime code, you find that they are explicitly excluded and if you include them, your code won’t transpile at all.</p>
+<p>The good news is, it is only two functions and they both show up as</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> _interop...</span><br></pre></td></tr></table></figure>
+
+<p>If we can get a hold of the code as it is being transformed, we should be able to do a search and replace to get the correct ‘istanbul ignore next’ string in place prior to the functions.</p>
+<p>Well, it just so happens that Jest has the ability to do exactly that.</p>
+<h2 id="ES2015-Code-Coverage-Final-Fix"><a href="#ES2015-Code-Coverage-Final-Fix" class="headerlink" title="ES2015 Code Coverage Final Fix"></a>ES2015 Code Coverage Final Fix</h2><p>I’m assuming you’ve already installed <a target="_blank" rel="noopener" href="//www.npmjs.com/package/babel-jest">babel-jest</a>, but just in case, if you have not, install it now.  Install it using –save-dev because we are going to want to be able to modify the code.</p>
+<h3 id="Quick-fix"><a href="#Quick-fix" class="headerlink" title="Quick fix:"></a>Quick fix:</h3><p>The proper way to fix this would be to write your own version of babel-jest.  But we are going for a quick fix.  Maybe we can get Facebook to implement the changes from this post.  Meanwhile, here is what you want to do.</p>
+<p>Locate the src&#x2F;index.js file in the node_modules&#x2F;babel-jest directory.  At the time of this writing, the current version looks like this:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Copyright (c) 2014-present, Facebook, Inc. All rights reserved.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * This source code is licensed under the BSD-style license found in the</span></span><br><span class="line"><span class="comment"> * LICENSE file in the root directory of this source tree. An additional grant</span></span><br><span class="line"><span class="comment"> * of patent rights can be found in the PATENTS file in the same directory.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">&#x27;use strict&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> babel = <span class="built_in">require</span>(<span class="string">&#x27;babel-core&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> jestPreset = <span class="built_in">require</span>(<span class="string">&#x27;babel-preset-jest&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="title function_">process</span>(<span class="params">src, filename</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (babel.<span class="property">util</span>.<span class="title function_">canCompile</span>(filename)) &#123;</span><br><span class="line">      <span class="keyword">return</span> babel.<span class="title function_">transform</span>(src, &#123;</span><br><span class="line">        <span class="attr">auxiliaryCommentBefore</span>: <span class="string">&#x27; istanbul ignore next &#x27;</span>,</span><br><span class="line">        filename,</span><br><span class="line">        <span class="attr">presets</span>: [jestPreset],</span><br><span class="line">        <span class="attr">retainLines</span>: <span class="literal">true</span>,</span><br><span class="line">      &#125;).<span class="property">code</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> src;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>The first change that you want to make here is to comment out the auxiliaryCommentBefore line.  We no longer need that.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">&#x27;use strict&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> babel = <span class="built_in">require</span>(<span class="string">&#x27;babel-core&#x27;</span>);</span><br><span class="line"><span class="keyword">const</span> jestPreset = <span class="built_in">require</span>(<span class="string">&#x27;babel-preset-jest&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  <span class="title function_">process</span>(<span class="params">src, filename</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (babel.<span class="property">util</span>.<span class="title function_">canCompile</span>(filename)) &#123;</span><br><span class="line">      <span class="keyword">return</span> babel.<span class="title function_">transform</span>(src, &#123;</span><br><span class="line"><span class="comment">//        auxiliaryCommentBefore: &#x27; istanbul ignore next &#x27;,</span></span><br><span class="line">        filename,</span><br><span class="line">        <span class="attr">presets</span>: [jestPreset],</span><br><span class="line">        <span class="attr">retainLines</span>: <span class="literal">true</span>,</span><br><span class="line">      &#125;).<span class="property">code</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> src;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>You will notice that what gets returned is the resulting transform of the code.  We want to execute a search and replace on the transformed code.  So, instead of</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> babel.<span class="title function_">transform</span>(src, &#123;</span><br><span class="line">   <span class="attr">auxiliaryCommentBefore</span>: <span class="string">&#x27; istanbul ignore next &#x27;</span>,</span><br><span class="line">   filename,</span><br><span class="line">   <span class="attr">presets</span>: [jestPreset],</span><br><span class="line">   <span class="attr">retainLines</span>: <span class="literal">true</span>,</span><br><span class="line"> &#125;).<span class="property">code</span>;</span><br></pre></td></tr></table></figure>
+
+<p>What we want want to do is:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> babel.<span class="title function_">transform</span>(src, &#123;</span><br><span class="line">  <span class="comment">//auxiliaryCommentBefore: &#x27; istanbul ignore next &#x27;,</span></span><br><span class="line">  filename,</span><br><span class="line">  <span class="attr">presets</span>: [jestPreset],</span><br><span class="line">  <span class="attr">retainLines</span>: <span class="literal">true</span>,</span><br><span class="line">&#125;).<span class="property">code</span></span><br><span class="line">    .<span class="title function_">replace</span>(<span class="regexp">/function\s_interop/g</span>,</span><br><span class="line">        <span class="string">&#x27; /* istanbul ignore next */ function _interop&#x27;</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="ES2015-Code-Coverage-With-Jest-Summary"><a href="#ES2015-Code-Coverage-With-Jest-Summary" class="headerlink" title="ES2015 Code Coverage With Jest - Summary"></a>ES2015 Code Coverage With Jest - Summary</h2><ol>
+<li>Download and install babel-plugin-transform-runtime.</li>
+<li>Add “plugins”: [“transform-runtime”] to either .babelrc or the babel section of your package.json file</li>
+<li>Download and install babel-jest</li>
+<li>Modify babel-jest&#x2F;src&#x2F;index.js as indicated above.</li>
+</ol>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/es2015-code-coverage-and-jest-react-js-unit-testing/" data-id="cl2fb9o66007sw8hi4464he0j" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/babel/" rel="tag">babel</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es2015/" rel="tag">es2015</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/es6/" rel="tag">es6</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/jest/" rel="tag">jest</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/react-js/" rel="tag">react.js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/unit-test/" rel="tag">unit test</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/javascript-types-nuance/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">JavaScript Types Nuance</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/are-you-average-or-awesome-9-ways-to-improve/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">Are You Average or Awesome? 9 Ways to Improve.</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments</noscript>
+    <script src="https://giscus.app/client.js"
+        data-repo="DaveMBush/davembush.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzkwNzY1NTc="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOCEojzc4CRNna"
+        data-mapping="title"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="light"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+  </div>
+</section>
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/why-insist-on-return-types-in-typescript/">Why Insist On Return Types In TypeScript?</a>
+        </li>
+      
+        <li>
+          <a href="/optimizing-angular-for-speed/">Optimizing Angular For Speed</a>
+        </li>
+      
+        <li>
+          <a href="/using-workers-from-an-angular-library/">Using Workers from an Angular Library</a>
+        </li>
+      
+        <li>
+          <a href="/avoiding-ngrx-boilerplate/">Avoiding NgRx Boilerplate</a>
+        </li>
+      
+        <li>
+          <a href="/clean-state-management-with-ngrx/">Clean State Management with NgRx</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2023/03/">March 2023</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2022/12/">December 2022</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2022/11/">November 2022</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2022/07/">July 2022</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2022/05/">May 2022</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2021/09/">September 2021</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2021/05/">May 2021</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/11/">November 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/10/">October 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/06/">June 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Dave M Bush<br>
+      All opinions are my own and do not reflect any company I have or am currently working at.<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+</body>
+</html>

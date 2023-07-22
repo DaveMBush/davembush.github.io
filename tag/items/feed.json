@@ -1,0 +1,20 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Dave's Notebook • All posts by \"items\" tag",
+    "description": null,
+    "home_page_url": "http://davembush.github.com",
+    "items": [
+        {
+            "id": "http://davembush.github.com/httpcontext-items-vs-session/",
+            "url": "http://davembush.github.com/httpcontext-items-vs-session/",
+            "title": "HttpContext.Items[] vs Session[]",
+            "date_published": "2009-10-12T10:00:00.000Z",
+            "content_html": "<p><img src=\"/uploads/2009/10/ETHN0171.png\" alt=\"ETHN0171\" title=\"ETHN0171\"></p>\n<p>Since .NET first became available, passing data around during a request has become a lot easier.  The ability to set a property has made that so.  Still, there are times when setting a property just won’t do the trick.</p>\n<span id=\"more\"></span>\n\n<p>One such time is getting data from the middle tier back up to the view separate from a DataBinding operation.  That is, you databind a control to the middle tier and that method needs to set a value that will be used elsewhere in the view, not in the item that is being bound.</p>\n<p>The natural, obvious tendency is to set a session variable.  But there is a better way.</p>\n<p>The problem with session variables is that they have to be cleaned up manually or they will hang around longer than we actually need them.  This will use up more session memory than is required and can potentially cause side effects that will be difficult to debug.</p>\n<p>Instead, you can use the Items[] collection that is part of the HttpContext class.  It works the same as a session variable, but it only hangs around for the duration of the request.  Once the information is sent back to the browser, the variables that were set in the Items[] collection go away.</p>\n<p>You might set your variable in the middle tier like this:</p>\n<figure class=\"highlight csharp\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br></pre></td><td class=\"code\"><pre><span class=\"line\">HttpContext.Current.Items[<span class=\"string\">&quot;myVar&quot;</span>] = <span class=\"string\">&quot;Some Data Here&quot;</span>;</span><br></pre></td></tr></table></figure>\n\n<p>And retrieve it later like this:</p>\n<figure class=\"highlight csharp\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br></pre></td><td class=\"code\"><pre><span class=\"line\"><span class=\"built_in\">string</span> myVar = (<span class=\"built_in\">string</span>)(HttpContext.Current.Items[<span class=\"string\">&quot;myVar&quot;</span>]);</span><br></pre></td></tr></table></figure>\n",
+            "tags": [
+                "httpcontext",
+                "items",
+                "session"
+            ]
+        }
+    ]
+}

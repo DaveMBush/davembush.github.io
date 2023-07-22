@@ -1,0 +1,20 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Dave's Notebook • All posts by \"libraries\" tag",
+    "description": null,
+    "home_page_url": "http://davembush.github.com",
+    "items": [
+        {
+            "id": "http://davembush.github.com/using-workers-from-an-angular-library/",
+            "url": "http://davembush.github.com/using-workers-from-an-angular-library/",
+            "title": "Using Workers from an Angular Library",
+            "date_published": "2022-12-03T20:21:48.000Z",
+            "content_html": "<p>This past week several of us have been working hard to implement a SharedWorker from a library. We found a number of articles on the web that demonstrated how to get Web Workers setup for Angular that all assumed the Web Worker was being generated in the main Angular app. We wanted to use a library and include that file in the main app.</p>\n<span id=\"more\"></span>\n\n<p>If that’s what you are trying to do, I hope this post saves you the time we spent this week figuring it out.</p>\n<h2 id=\"The-Problem\"><a href=\"#The-Problem\" class=\"headerlink\" title=\"The Problem\"></a>The Problem</h2><p>As all the article state, you need to use a generator to create the Web Worker files and modify your configs. The Angular documentation gives you the steps here: <a href=\"https://angular.io/guide/web-worker\">https://angular.io/guide/web-worker</a>.</p>\n<p>What isn’t clear from this documentation is that this ONLY works for apps. If you specify a library, the compiler doesn’t know what to do with it.</p>\n<h2 id=\"The-Solution\"><a href=\"#The-Solution\" class=\"headerlink\" title=\"The Solution\"></a>The Solution</h2><p>The solution is relatively simple. Create the worker files in the library. In the library put a file that implements the worker. In the worker file that the schematic generated in your app, import the worker file from the library.</p>\n<p>Everything else stays the same as is documented elsewhere.</p>\n",
+            "tags": [
+                "angular",
+                "web-workers",
+                "libraries"
+            ]
+        }
+    ]
+}

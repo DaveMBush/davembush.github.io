@@ -1,0 +1,22 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Dave's Notebook • All posts by \"char\" tag",
+    "description": null,
+    "home_page_url": "http://davembush.github.com",
+    "items": [
+        {
+            "id": "http://davembush.github.com/vb-net-char-from-string-with-option-strict/",
+            "url": "http://davembush.github.com/vb-net-char-from-string-with-option-strict/",
+            "title": "VB.NET - Char from String with Option Strict",
+            "date_published": "2009-04-08T08:35:14.000Z",
+            "content_html": "<p><img src=\"/uploads/2009/04/g04b0079.jpg\" alt=\"G04B0079\"> So here’s the question:</p>\n<blockquote>\n<p>I’m using String.Split() and need to pass in a Char or a Char array as the parameter.  If I pass in a string String.Split(“&#x2F;“) I get an error “Option Strict On disallows implicit conversions from ‘String’ to ‘Char’.”</p>\n<p>Obviously, the easiest way to fix this would be to turn off Option Strict, but I would prefer to keep it on.  So how do I pass in the Char instead of a String in this situation?”</p>\n</blockquote>\n<p>There are actually several ways to accomplish what you are trying to do.</p>\n<span id=\"more\"></span>\n\n<p>The first and most general solution would be to call the ToCharArray() method off the string.</p>\n<figure class=\"highlight vb\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br></pre></td><td class=\"code\"><pre><span class=\"line\"><span class=\"keyword\">Dim</span> strSplit() <span class=\"keyword\">As</span> <span class=\"type\">String</span> = myString.Split(<span class=\"string\">&quot;/&quot;</span>.ToCharArray())</span><br></pre></td></tr></table></figure>\n\n<p>The advantage to this method is that it will work regardless of what size the string is and it will use each character in the string as a delimiter.</p>\n<p>But what if you only have one character in your array?  Surely there is a shorter, cleaner statement we can use.</p>\n<p>As a matter of fact, there are several other options.  You could use Convert.ToChar() or Char.Parse()</p>\n<figure class=\"highlight vb\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br><span class=\"line\">2</span><br></pre></td><td class=\"code\"><pre><span class=\"line\"><span class=\"keyword\">Dim</span> strSplit() <span class=\"keyword\">As</span> <span class=\"type\">String</span> = _</span><br><span class=\"line\">   myString.Split(Convert.ToChar(<span class=\"string\">&quot;/&quot;</span>))</span><br></pre></td></tr></table></figure>\n\n<p>or</p>\n<figure class=\"highlight vb\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br><span class=\"line\">2</span><br></pre></td><td class=\"code\"><pre><span class=\"line\"><span class=\"keyword\">Dim</span> strSplit() <span class=\"keyword\">As</span> <span class=\"type\">String</span> = _</span><br><span class=\"line\">   myString.Split(<span class=\"type\">Char</span>.Parse(<span class=\"string\">&quot;/&quot;</span>))</span><br></pre></td></tr></table></figure>\n\n<p>But the easiest way to convert a single character string to a Char is simply to put a “c” after the closing quote:</p>\n<figure class=\"highlight vb\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br></pre></td><td class=\"code\"><pre><span class=\"line\"><span class=\"keyword\">Dim</span> strSplit() <span class=\"keyword\">As</span> <span class=\"type\">String</span> = myString.Split(<span class=\"string\">&quot;/&quot;</span>c)</span><br></pre></td></tr></table></figure>\n",
+            "tags": [
+                "vb.net",
+                "string",
+                "char",
+                "split",
+                "strict"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,21 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Dave's Notebook • All posts by \"error\" tag",
+    "description": null,
+    "home_page_url": "http://davembush.github.com",
+    "items": [
+        {
+            "id": "http://davembush.github.com/unable-to-find-connection-for-object-web-config/",
+            "url": "http://davembush.github.com/unable-to-find-connection-for-object-web-config/",
+            "title": "Unable to find connection...for object web.config",
+            "date_published": "2009-03-18T08:40:09.000Z",
+            "content_html": "<p><img src=\"/uploads/2009/03/j01c0089.jpg\" alt=\"J01C0089\"> I’ve seen this error a couple of different times.  Mostly from other people calling me with the problem.  So I still don’t know what ultimately causes the problem.  But if you’re having this problem, here’s how you fix it.</p>\n<p>First, a bit of background.</p>\n<span id=\"more\"></span>\n\n<p>You’ll open a dataset you’ve been working with for months and see the following error message:</p>\n<blockquote>\n<p>Unable to find connection [connectionName] (web.config)1 for object ‘Web.config’.  The connection string could not be found in application settings, or the data provider associated with the connection string could not be loaded.</p>\n</blockquote>\n<p>What has happened is that the list of connection strings the tables in your dataset use has become corrupt.  In the most recent case of this we ended up with two connection strings with the same name pointing to two different connections. Here’s what you need to do to start trouble-shooting the problem.</p>\n<ul>\n<li>Close the dataset window with the error.</li>\n<li>Right click the dataset in the solution explorer</li>\n<li>Select “Open with…” from the context menu</li>\n<li>Select “Source Code (Text) Editor” from the list and press the “OK” button.</li>\n</ul>\n<p>Your code will now be opened in text mode so you can view the XML.  You want to be careful at this point because if you mess things up too badly, you won’t have anything useful.  As things stand now there is hope of recovery.  A backup would be a good thing to make sure you have right about now. Near the top of the file, you’ll see a &lt;connections&gt; element with several &lt;connection&gt; elements within it.  Most datasets should only have one &lt;connection&gt; element.  If you are having trouble like I’ve described above, you’ll have at least two and one will be incorrect.  Delete it or otherwise fix it, save the file and reopen normally.  If you are lucky, everything will be working correctly again.</p>\n",
+            "tags": [
+                "connection string",
+                "dataset",
+                "error",
+                "web.config"
+            ]
+        }
+    ]
+}

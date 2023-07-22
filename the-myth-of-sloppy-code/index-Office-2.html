@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Dave&#39;s Notebook"
+      href="http://davembush.github.com/rss.xml"
+    />
+    <link
+      rel="alternate"
+      type="application/atom+xml"
+      title="Dave&#39;s Notebook"
+      href="http://davembush.github.com/atom.xml"
+    />
+    <link
+      rel="alternate"
+      type="application/json"
+      title="Dave&#39;s Notebook"
+      href="http://davembush.github.com/feed.json"
+    />
+    <title>The Myth of Sloppy Code | Dave&#39;s Notebook</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <meta name="description" content="Tightly coupled code runs faster. Tightly coupled code is easier to write. Test Driven Development increases development time. Test Driven Development negatively impacts code design. Knowing the name">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Myth of Sloppy Code">
+<meta property="og:url" content="http://davembush.github.com/the-myth-of-sloppy-code/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:description" content="Tightly coupled code runs faster. Tightly coupled code is easier to write. Test Driven Development increases development time. Test Driven Development negatively impacts code design. Knowing the name">
+<meta property="og:locale">
+<meta property="article:published_time" content="2016-10-18T10:30:00.000Z">
+<meta property="article:modified_time" content="2020-01-04T17:22:35.000Z">
+<meta property="article:author" content="Dave M Bush">
+<meta property="article:tag" content="tdd">
+<meta property="article:tag" content="agile">
+<meta property="article:tag" content="design patterns">
+<meta name="twitter:card" content="summary">   
+    <link
+      href="//fonts.googleapis.com/css?family=Source+Code+Pro"
+      rel="stylesheet"
+      type="text/css"
+    />
+    
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+      integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      crossorigin="anonymous"
+    />
+
+    
+<link rel="stylesheet" href="/css/styles.css">
+ 
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+</html>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/rss.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        <li><a href="/atom.xml" title="Atom Feed"><i class="fa fa-light fa-atom"></i></a></li>
+        <li><a href="/atom.xml" title="JSON Feed">JSON</a></li>
+      </ul>
+      >
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-the-myth-of-sloppy-code" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      The Myth of Sloppy Code
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/the-myth-of-sloppy-code/" class="article-date"><time datetime="2016-10-18T10:30:00.000Z" itemprop="datePublished">2016-10-18</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Programming-Best-Practice/">Programming Best Practice</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>Tightly coupled code runs faster.</li>
+<li>Tightly coupled code is easier to write.</li>
+<li>Test Driven Development increases development time.</li>
+<li>Test Driven Development negatively impacts code design.</li>
+<li>Knowing the names of design patterns isn’t important as long as you can use them.</li>
+<li>All my customer cares about is how soon they can have the product, not how clean the code is.</li>
+</ul>
+<p>All of these statements, and others like them, are excuses for not writing code correctly. And you know what an excuse is, right?</p>
+<blockquote>
+<p>The skin of a reason stuffed with a lie.</p>
+</blockquote>
+<figure>![](/uploads/2016/10/image-1.png "The Myth of Sloppy Code")<figcaption>Photo credit: [dynamosquito](//www.flickr.com/photos/dynamosquito/5866244470/) via [Visualhunt.com](//visualhunt.com) / [CC BY-SA](//creativecommons.org/licenses/by-sa/2.0/)</figcaption></figure>
+
+<span id="more"></span>  
+
+<p>Now, I could go through and argue each of the points above. But today, I want to look more at the attitude behind these statements.</p>
+<h2 id="It’s-All-in-Your-Head"><a href="#It’s-All-in-Your-Head" class="headerlink" title="It’s All in Your Head"></a>It’s All in Your Head</h2><p>Man is a funny being. We make decisions with our hearts and justify the decisions with our brains. Once you know this, you can hack it to your favor. But how does this relate to what we’ve been talking about? It is really quite simple. All of the best practices I’ve mentioned above require work to learn. We would rather not invest the time to learn how to do these well, and so rather than just saying, “this is not where I choose to spend my time right now” we say things like, “my management won’t let me do that” or “my way is more efficient” or at times, we even resort to vilifying the practice.</p>
+<p>I have the same issue when I try to convince management that their process needs to change. It took seven years for me to get one company to move their project management system from email to project management software. Why? Because what they were doing “worked” and they couldn’t see that doing something different would work better in any way.</p>
+<h2 id="A-Skin-of-a-Reason"><a href="#A-Skin-of-a-Reason" class="headerlink" title="A Skin of a Reason"></a>A Skin of a Reason</h2><p>So, let’s look at the parts of these myths that are true.</p>
+<p>First, it is true that while you are learning how to use any one of these best practices, it will in fact, take you longer to write your code. Tightly coupled code is easier to reason about and one could argue is therefore easier to write. Test Driven Development is one of the most difficult things to learn. And just like the myth that Agile&#x2F;Scrum&#x2F;Kanban doesn’t work, the myth that Test Driven Development doesn’t work is largely based on misconceptions about what Test Driven Development is. Initially, it will impact the time it takes for you to write your code. But the more interesting argument to me is that testing negatively impacts design. If you mean that you can’t use the design you are used to using and that design involves writing tightly coupled code. Yeah, I guess it does.</p>
+<p>Implementing design patterns is better than not. It is true. But that doesn’t mean you shouldn’t learn the names.</p>
+<p>Yes, your customer cares about how fast you can get the project done. But, that isn’t all they care about.</p>
+<h2 id="The-Lies"><a href="#The-Lies" class="headerlink" title="The Lies"></a>The Lies</h2><p>Just because something takes longer while you are learning how to do it, doesn’t mean it will always take longer. It probably took you a while to learn how to program proficiently too. That didn’t stop you did it? Does it take you as long to program now as when you first started? Of course not! Let’s look at this from another angle. As you’ve learned multiple languages, would you say that it made you a better or worse programmer? Unless you have a very strange perspective, you will probably answer better. Was the new language hard to learn? Of course. Did it take you longer to code using the new language than one you knew previously? Of course. Would you say the result of being proficient in both has made it easier or harder to code in both? Easier, right? Tightly coupled code is easier to write, but as the application grows, tightly coupled code becomes harder to add to and harder to maintain. It lends itself to code duplication and is more likely to be the code base that needs to be rewritten first.</p>
+<p>Tightly coupled code is also the hardest to tests and is probably the reason you don’t want to write test for your code. Because you write tightly coupled code, testing is MUCH harder than it should be. This leads you to have a firm belief that writing tests is hard as well. A vicious cycle.</p>
+<p>And if you believe that tightly coupled code is a proper design, you will believe that tightly coupled code hinders design. But in fact, writing tests will force you to write loosely coupled code. So, instead of hindering design, it actually helps it.</p>
+<p>I used to think not learning the correct names for design patterns didn’t matter. But the advantage of knowing the proper name for things is that we can all talk about something using the name rather than trying to explain what that thing is with lots of words. It saves time. But, there is another much more subtle reason why you need to learn the proper name for things. You might be calling a design pattern you are using by an incorrect name and confusing the people you are communicating with. And, finally, learning the names for all of the design patterns will expose you to design patterns you aren’t aware of, broadening your horizons.</p>
+<p>This last one is, or should be the most obvious. Getting the project done quickly isn’t ALL your customer cares about. It might be a relatively high priority, but I can assure you, if you explain to them that getting the project done as fast as possible will mean you have to rewrite the code if they want any changes, you’ll quickly find out that redoing work they’ve already paid for doesn’t sit well with them either.</p>
+<h2 id="Benefits"><a href="#Benefits" class="headerlink" title="Benefits"></a>Benefits</h2><p>It is a sad, sad truth that by convincing yourself that not investing in these best practices really is best for you and the clients you work for, you’ve also limited yourself to the quality of client you can work for. The places that pay well expect you to know how to do this stuff. They believe in good design. They believe in testing. They know how to implement design patterns.</p>
+<p>And guess what, these places also pay better too. It raises you beyond the level of “commodity programmer” and into the level of “rare gem” How do I know? This past year I’ve been doing a lot of interviewing. For various reasons, I decided to interview for jobs that pay 25% better than what I currently make. In the beginning, I did this because I figured it would expose me to people more like myself who wanted to be better. In the process, I discovered that the interview process is a little harder, but not impossible. I figured out what I still need to learn. And, I managed to beat my goal. Time to notch it up a bit more.</p>
+<h2 id="Are-You-Dead"><a href="#Are-You-Dead" class="headerlink" title="Are You Dead?"></a>Are You Dead?</h2><p>You hear stories all the time about people who can’t find work in our industry. When you ask, you find out that all they know is something that was hot 10 years ago or longer. Well, of course you can’t find a job. And it is no wonder the last company got rid of you. You provide no value.</p>
+<p>This past week I heard someone tell me the equivalent of, “I’m not going to learn anything new. Every time I do, it ends up being hot for a few years and then it is gone.” I was stunned. I fear for this guy. You might as well say, “I’m planning to retire in 10 years or less.” because that is what will happen to you. Worse, if you stop learning completely, you could end up with dementia or worse.</p>
+<p>My plan is to program until I’m at least 75. Longer if I stay healthy enough. Even if I could retire, I won’t. What would I do? I love programming. I love mentoring other programmers. I love learning new stuff.</p>
+<h2 id="Do-hard-stuff"><a href="#Do-hard-stuff" class="headerlink" title="Do hard stuff"></a>Do hard stuff</h2><p>And so what’s the point of all this? Do hard stuff. It will make you a better programmer.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/the-myth-of-sloppy-code/" data-id="cl2fb9o8m00kdw8hid4rb7jrc" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/agile/" rel="tag">agile</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/design-patterns/" rel="tag">design patterns</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/tdd/" rel="tag">tdd</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/revisiting-the-technical-interview/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">Revisiting The Technical Interview</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/getting-started-with-angular-2/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">Getting Started with Angular 2</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments</noscript>
+    <script src="https://giscus.app/client.js"
+        data-repo="DaveMBush/davembush.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzkwNzY1NTc="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOCEojzc4CRNna"
+        data-mapping="title"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="light"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+  </div>
+</section>
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/why-insist-on-return-types-in-typescript/">Why Insist On Return Types In TypeScript?</a>
+        </li>
+      
+        <li>
+          <a href="/optimizing-angular-for-speed/">Optimizing Angular For Speed</a>
+        </li>
+      
+        <li>
+          <a href="/using-workers-from-an-angular-library/">Using Workers from an Angular Library</a>
+        </li>
+      
+        <li>
+          <a href="/avoiding-ngrx-boilerplate/">Avoiding NgRx Boilerplate</a>
+        </li>
+      
+        <li>
+          <a href="/clean-state-management-with-ngrx/">Clean State Management with NgRx</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2023/03/">March 2023</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2022/12/">December 2022</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2022/11/">November 2022</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2022/07/">July 2022</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2022/05/">May 2022</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2021/09/">September 2021</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2021/05/">May 2021</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/11/">November 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/10/">October 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/06/">June 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Dave M Bush<br>
+      All opinions are my own and do not reflect any company I have or am currently working at.<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+</body>
+</html>

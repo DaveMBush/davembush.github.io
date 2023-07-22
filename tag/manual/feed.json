@@ -1,0 +1,22 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Dave's Notebook • All posts by \"manual\" tag",
+    "description": null,
+    "home_page_url": "http://davembush.github.com",
+    "items": [
+        {
+            "id": "http://davembush.github.com/forms-authentication-%E2%80%93-manual-authentication/",
+            "url": "http://davembush.github.com/forms-authentication-%E2%80%93-manual-authentication/",
+            "title": "Forms Authentication – Manual Authentication",
+            "date_published": "2009-10-05T11:45:05.000Z",
+            "content_html": "<p><img src=\"/uploads/2009/10/F03I0043.jpg\" alt=\"F03I0043\" title=\"F03I0043\"></p>\n<p>I’ve had several occasions in the past where I’ve needed to do my own authentication or I’ve needed to add some additional methods to the authentication process.</p>\n<p>As easy as Microsoft has made the authentication process, you might think that in order to manually authenticate you’d need to write all of your authentication code manually.  But nothing could be farther from the truth.</p>\n<span id=\"more\"></span>\n\n<p>In fact, most of the time all you need to do is trap an event handler in the existing login control.</p>\n<p>A couple of years ago, I was asked to create a login page that used a web service to authenticate the user.  I also needed to add another form field to the login screen, so it became obvious that to do this I’d need to turn the login control into a templated control.</p>\n<p>Once this was done it was a simple matter to trap the click event of the login button, authenticate against the web service, and then set the authentication cookie for ASP.NET.</p>\n<p>Since I can’t show you how to authenticate against the service–your implementation will almost certainly be different–we will skip that section.  But to set the cookie, all we need to do is to revert to the ASP.NET 1.1 way of setting up the login.</p>\n<figure class=\"highlight csharp\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br><span class=\"line\">2</span><br><span class=\"line\">3</span><br><span class=\"line\">4</span><br><span class=\"line\">5</span><br><span class=\"line\">6</span><br><span class=\"line\">7</span><br><span class=\"line\">8</span><br><span class=\"line\">9</span><br><span class=\"line\">10</span><br><span class=\"line\">11</span><br></pre></td><td class=\"code\"><pre><span class=\"line\"><span class=\"keyword\">if</span> (Request.QueryString[<span class=\"string\">&quot;ReturnUrl&quot;</span>] != <span class=\"literal\">null</span>)</span><br><span class=\"line\">&#123;</span><br><span class=\"line\">    FormsAuthentication.RedirectFromLoginPage</span><br><span class=\"line\">        (m_tbUsername.Text, persistentCookie);</span><br><span class=\"line\">&#125;</span><br><span class=\"line\"><span class=\"keyword\">else</span></span><br><span class=\"line\">&#123;</span><br><span class=\"line\">    FormsAuthentication.SetAuthCookie</span><br><span class=\"line\">        (m_tbUsername.Text, persistentCookie);</span><br><span class=\"line\">    Response.Redirect(<span class=\"string\">&quot;~/&quot;</span>);</span><br><span class=\"line\">&#125;</span><br></pre></td></tr></table></figure>\n\n<p>The first line checks to see if there was a Return URL specified.  If there was we can use the RedirectFromLoginPage API.  Otherwise, we need to set the Authentication Cookie manually and redirect on our  own.</p>\n<p>The persistentCookie parameter is true if we want the user to always be logged in.  Otherwise, the login is for the session.</p>\n",
+            "tags": [
+                "authentication",
+                "formsauthentication",
+                "manual",
+                "redirectfromloginpage",
+                "setauthcookie"
+            ]
+        }
+    ]
+}

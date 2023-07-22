@@ -1,0 +1,19 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Dave's Notebook • All posts by \"global\" tag",
+    "description": null,
+    "home_page_url": "http://davembush.github.com",
+    "items": [
+        {
+            "id": "http://davembush.github.com/what-is-the-global-keyword-in-csharp/",
+            "url": "http://davembush.github.com/what-is-the-global-keyword-in-csharp/",
+            "title": "What is the global keyword in CSharp?",
+            "date_published": "2008-12-29T12:01:15.000Z",
+            "content_html": "<p>During the Christmas break, I received the following question: What does C# global keyword actually do? Code example, from table adapter code:</p>\n<span id=\"more\"></span>\n\n<figure class=\"highlight csharp\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br><span class=\"line\">2</span><br><span class=\"line\">3</span><br><span class=\"line\">4</span><br><span class=\"line\">5</span><br><span class=\"line\">6</span><br><span class=\"line\">7</span><br><span class=\"line\">8</span><br></pre></td><td class=\"code\"><pre><span class=\"line\">[<span class=\"meta\">global::System.CodeDom.Compiler.GeneratedCodeAttribute(<span class=\"string\">&quot;System.Data.Design.TypedDataSetGenerator&quot;</span>, <span class=\"string\">&quot;2.0.0.0&quot;</span>)</span>]</span><br><span class=\"line\">[<span class=\"meta\">global::System.Serializable()</span>]</span><br><span class=\"line\">[<span class=\"meta\">global::System.ComponentModel.DesignerCategoryAttribute(<span class=\"string\">&quot;code&quot;</span>)</span>]</span><br><span class=\"line\">[<span class=\"meta\">global::System.ComponentModel.ToolboxItem(true)</span>]</span><br><span class=\"line\">[<span class=\"meta\">global::System.Xml.Serialization.XmlSchemaProviderAttribute(<span class=\"string\">&quot;GetTypedDataSetSchema&quot;</span>)</span>]</span><br><span class=\"line\">[<span class=\"meta\">global::System.Xml.Serialization.XmlRootAttribute(<span class=\"string\">&quot;AutoTwitDataSet&quot;</span>)</span>]</span><br><span class=\"line\">[<span class=\"meta\">global::System.ComponentModel.Design.HelpKeywordAttribute(<span class=\"string\">&quot;vs.data.DataSet&quot;</span>)</span>]</span><br><span class=\"line\"><span class=\"keyword\">public</span> <span class=\"keyword\">partial</span> <span class=\"keyword\">class</span> <span class=\"title\">AutoTwitDataSet</span> : <span class=\"title\">global</span>::<span class=\"title\">System.Data.DataSet</span> &#123;</span><br></pre></td></tr></table></figure>\n\n<p>The global keyword tells the compiler to start looking for the namespace or class starting from the root.  You’ll see it in system-generated code so that the code always works.  That way if you have a namespace right under your current namespace that is the same as the top-level namespace the code is trying to access, there won’t be a conflict.</p>\n<p>For example, say you have namespace A and namespace B and namespace B.A if I write code in namespace B.A that needs to reference a class in namespace A, without global:: I have no way of getting to it.  If I reference A.classname, the compiler will look for classname in B.A.  With global:: I can tell it to look for classname in global::A.classname and it will find classname in the proper location.</p>\n<p>This keyword snuck in during version 2.0.  Since most of us don’t need it, most of us don’t even know it exists.  I didn’t until this past weekend.</p>\n",
+            "tags": [
+                "c#",
+                "global"
+            ]
+        }
+    ]
+}

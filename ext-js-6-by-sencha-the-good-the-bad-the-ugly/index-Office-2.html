@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="Dave&#39;s Notebook"
+      href="http://davembush.github.com/rss.xml"
+    />
+    <link
+      rel="alternate"
+      type="application/atom+xml"
+      title="Dave&#39;s Notebook"
+      href="http://davembush.github.com/atom.xml"
+    />
+    <link
+      rel="alternate"
+      type="application/json"
+      title="Dave&#39;s Notebook"
+      href="http://davembush.github.com/feed.json"
+    />
+    <title>Ext JS 6 by Sencha - The Good, The Bad, The Ugly | Dave&#39;s Notebook</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1"
+    />
+    <meta name="description" content="Long time readers may remember that I started using Ext JS about 3 years ago.  At the time, I was using version 4.2.2.  I recently started a new contract where they are using Ext JS 6.0.1.  I have to">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ext JS 6 by Sencha - The Good, The Bad, The Ugly">
+<meta property="og:url" content="http://davembush.github.com/ext-js-6-by-sencha-the-good-the-bad-the-ugly/index.html">
+<meta property="og:site_name" content="Dave&#39;s Notebook">
+<meta property="og:description" content="Long time readers may remember that I started using Ext JS about 3 years ago.  At the time, I was using version 4.2.2.  I recently started a new contract where they are using Ext JS 6.0.1.  I have to">
+<meta property="og:locale">
+<meta property="article:published_time" content="2016-04-07T11:30:00.000Z">
+<meta property="article:modified_time" content="2020-02-08T17:57:00.000Z">
+<meta property="article:author" content="Dave M Bush">
+<meta property="article:tag" content="javascript">
+<meta property="article:tag" content="ext js">
+<meta name="twitter:card" content="summary">   
+    <link
+      href="//fonts.googleapis.com/css?family=Source+Code+Pro"
+      rel="stylesheet"
+      type="text/css"
+    />
+    
+
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+      integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+      crossorigin="anonymous"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      crossorigin="anonymous"
+    />
+
+    
+<link rel="stylesheet" href="/css/styles.css">
+ 
+
+  <meta name="generator" content="Hexo 6.3.0"></head>
+</html>
+
+<body>
+  <nav class="navbar navbar-inverse">
+  <div class="container">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#main-menu-navbar" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="main-menu-navbar">
+      <ul class="nav navbar-nav">
+        
+          <li><a class=""
+                 href="/index.html">Home</a></li>
+        
+          <li><a class=""
+                 href="/archives/">Archives</a></li>
+        
+      </ul>
+
+
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="/rss.xml" title="RSS Feed"><i class="fa fa-rss"></i></a></li>
+        <li><a href="/atom.xml" title="Atom Feed"><i class="fa fa-light fa-atom"></i></a></li>
+        <li><a href="/atom.xml" title="JSON Feed">JSON</a></li>
+      </ul>
+      >
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+  <div class="container">
+    <div class="blog-header">
+  <h1 class="blog-title">Dave&#39;s Notebook</h1>
+  
+</div>
+
+    <div class="row">
+        <div class="col-sm-8 blog-main">
+          <article id="post-ext-js-6-by-sencha-the-good-the-bad-the-ugly" class="article article-type-post" itemscope itemprop="blogPost">
+
+  <header class="article-header">
+    
+  
+    <h1 class="article-title" itemprop="name">
+      Ext JS 6 by Sencha - The Good, The Bad, The Ugly
+    </h1>
+  
+
+
+  </header>
+
+  <div class="article-meta">
+    <div class="article-datetime">
+  <a href="/ext-js-6-by-sencha-the-good-the-bad-the-ugly/" class="article-date"><time datetime="2016-04-07T11:30:00.000Z" itemprop="datePublished">2016-04-07</time></a>
+</div>
+
+    
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Javascript/">Javascript</a>
+  </div>
+
+
+  </div>
+  <div class="article-inner">
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Long time readers may remember that I started using Ext JS about 3 years ago.  At the time, I was using version 4.2.2.  I recently started a new contract where they are using Ext JS 6.0.1.  I have to say, this version solves a lot of the architectural issues I had with the 4.x series.  But, there are still problems.</p>
+<p>Since I’ve provided an evaluation of <a href="/angular-2-first-impressions-compared-to-angular-1/">Angular 2</a> and <a href="/react-js-and-associated-bits/">React JS</a>, I thought providing an evaluation of the current version of Ext JS would be appropriate since these three seem to be the main players in the corporate world.</p>
+<figure>![](/uploads/2016/04/image.png "Ext JS by Sencha - The Good, The Bad, The Ugly")<figcaption>Photo credit: [sanbeiji](//www.flickr.com/photos/sanbeiji/5606497634/) via [Visual Hunt](//visualhunt.com) / [CC BY-SA](//creativecommons.org/licenses/by-sa/2.0/)</figcaption></figure>
+
+<span id="more"></span>
+
+<h2 id="Ext-JS-The-Good"><a href="#Ext-JS-The-Good" class="headerlink" title="Ext JS - The Good"></a>Ext JS - The Good</h2><h3 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h3><p>I’ve always had three major complaints about Ext JS.  Of the three, the fact that Ext JS is nearly impossible to test is the one that drove me away.  In fact, I almost didn’t interview for the contract I have now because they are using Ext JS.  This is because the 4.2 version that I was using implemented what they called the MVC framework.  The problem is, the MVC framework they implemented was not anything <a href="/designPatterns">the Gang of Four</a> would recognize.  Once I realized that what they were calling MVC wasn’t really MVC, I was able to learn how to use the product much better.</p>
+<p>But being the TDD guy that I am, I was always frustrated by their implementation of MVC because in order to test anything in the Controller, I had to have the view available.  And while I tried several ways of mitigating this problem, I was never completely satisfied with the solution.  I ought to be able to test my controller without a view, or if I have to have a view, it should be some sort of fake view, or be able to render into a fake DOM like React JS does.</p>
+<p>But, in Ext JS 6, they’ve provided an alternate framework.  This time it is also more accurately named.  They have provided an MVVM implementation.  In the View, you provide your layout, declarative syntax to access the View’s state from the ViewModel and to specify the event handlers using listener blocks that tell the view what methods to call in the associated ViewController class.</p>
+<p>In the ViewController, your methods can access the ViewModel by calling getModel() and can set the state of the view by calling the ViewModel’s set() method.  Once this is done, the View can update using the ViewModel’s new state.</p>
+<p>What this means for testing is that I can test without the View by overriding the ViewContoller.getModel() method to return the ViewModel.  Run my test for a method and check the state of the ViewModel.  Look Ma, no View!</p>
+<h3 id="Everything-You-Need"><a href="#Everything-You-Need" class="headerlink" title="Everything You Need"></a>Everything You Need</h3><p>One of the biggest selling points for using Ext JS is that just about everything you could need is provided for you in once product.  Unlike Angular or React JS where one project provides the framework and another project or projects provide components, nearly everything you are going to need for your application is provided out of the box.  This is not to say that there aren’t third party providers for Ext JS, but the need for them is very limited.</p>
+<h3 id="Consistent-Rendering"><a href="#Consistent-Rendering" class="headerlink" title="Consistent Rendering"></a>Consistent Rendering</h3><p>One of the major attractions Ext has offered is that you don’t need to worry about cross browser rendering issues.  If you still need to support REALLY old browsers, this may still be a big selling point for you.  I think this will matter less in the future as the browsers continue to stabilize around standards.</p>
+<h3 id="Responsive-x2F-Adaptive"><a href="#Responsive-x2F-Adaptive" class="headerlink" title="Responsive&#x2F;Adaptive"></a>Responsive&#x2F;Adaptive</h3><p>Even though Ext JS uses a none standard way of rendering controls (see below) they do manage to achieve Adaptive and Responsive designs.</p>
+<h3 id="Ability-to-Control-DOM-Manipulation"><a href="#Ability-to-Control-DOM-Manipulation" class="headerlink" title="Ability to Control DOM Manipulation"></a>Ability to Control DOM Manipulation</h3><p>Finally, if you are having trouble achieving performance with the current way you are rending DOM changes, you will be happy to know that Ext JS does provide a way of turning of rendering to the DOM while you make all the changes and then turning it back on to do the final rendering.  But, at least my last usage of this, indicates that it doesn’t really turn off ALL DOM manipulation.  If you are inserting new DOM elements, those go out to the screen.  All Ext JS really does is to turn off their layout code.</p>
+<h3 id="Who-Ya-Gonna-Call"><a href="#Who-Ya-Gonna-Call" class="headerlink" title="Who Ya Gonna Call?"></a>Who Ya Gonna Call?</h3><p>One of the strongest reasons many organizations choose Ext JS is because the price of the license gives you access to Sencha support.  Companies I’ve worked for have used this for everything from “My code doesn’t work, what am I doing wrong?” and actually getting an answer to “I think you have a bug here.” and getting the bug fixed.  Kind of a private StackOverflow with direct access to the programmers who wrote the framework.</p>
+<h2 id="Ext-JS-The-Bad"><a href="#Ext-JS-The-Bad" class="headerlink" title="Ext JS - The Bad"></a>Ext JS - The Bad</h2><h3 id="Lock-In"><a href="#Lock-In" class="headerlink" title="Lock In"></a>Lock In</h3><p>If you decide to use Ext JS, you are really making a much more significant commitment than if you were choosing to use either Angular or React.  With either of those two, I can write standard JavaScript and I can mix and match several different existing frameworks.  Since just about everything in Ext JS is proprietary, mixing and matching is not only frowned upon, but they warn against it.  If you are using Ext JS, you are going to use ALL of Ext JS for everything.</p>
+<h3 id="Use-Strict"><a href="#Use-Strict" class="headerlink" title="Use Strict"></a>Use Strict</h3><p>Standard JS best practice recommends placing “use strict”; at the top of you IIFE block to protect you from making stupid mistakes.  Unfortunately, you can’t do this in your Ext JS code without having to work around the problems it produces.</p>
+<h3 id="String-Based"><a href="#String-Based" class="headerlink" title="String Based"></a>String Based</h3><p>Ext JS is probably the most string based language I’ve ever seen.  While they now have plugins for some of the more popular IDEs that mitigate against the risk this imposes on your code, in terms of good solid JavaScript, there are much better ways of writing code than what Ext JS forces you into.</p>
+<h3 id="Nesting-Issues"><a href="#Nesting-Issues" class="headerlink" title="Nesting Issues"></a>Nesting Issues</h3><p>As I mentioned above, Ext JS does their own layouts in order to achieve a presentation that will look the same regardless of what browser it is running on.  However, the cost of this is that if you nest components too deeply, rendering your view or changes to your view, will take significantly longer than anyone is willing to wait around for.  So, to get around this, you end up writing sub optimal code from just about every coding principle in existence.  Specifically, DRY and SRP are difficult to achieve using Ext JS views.</p>
+<h3 id="Version-X-0-0-is-Always-Broken"><a href="#Version-X-0-0-is-Always-Broken" class="headerlink" title="Version X.0.0 is Always Broken"></a>Version X.0.0 is Always Broken</h3><p>I’ve complained about this publicly before.  But it seems to me, and everyone else I talk with that has used Ext JS that every .0.0 version is buggy.  Things that used to work in the previous version no longer work.  Despite the assertion from Sencha that they have thousands of tests.  I always wonder what kind of code coverage they have and if they have a test that covers every feature for every component they have documented.</p>
+<h2 id="Ext-JS-The-Ugly"><a href="#Ext-JS-The-Ugly" class="headerlink" title="Ext JS - The Ugly"></a>Ext JS - The Ugly</h2><h3 id="Ugly-HTML"><a href="#Ugly-HTML" class="headerlink" title="Ugly HTML"></a>Ugly HTML</h3><p>There is a lot that is ugly about Ext JS, but nothing is more visibly ugly than the HTML it produces.  This is because, in order to produces a view that will render on any browser, they’ve resorted to using HTML tables to wrap just about every standard control.  This is getting better.  There is less HTML generated in Ext JS 6 than there was in Ext JS 4, but it is still relatively ugly.</p>
+<p>And that whole nesting issue could go away tomorrow if they would give up on trying to control the rendering of the view through JavaScript.  Why do with JavaScript what CSS was designed to do and does MUCH better?!</p>
+<h3 id="SASS-isn’t-SASS"><a href="#SASS-isn’t-SASS" class="headerlink" title="SASS isn’t SASS"></a>SASS isn’t SASS</h3><p>Up until version 6, Sencha’s theming engine used standard SASS.  With version 6, they’ve dumped standard SASS for their own implementation that mostly does what SASS does but has a few embellishments that aren’t all bad, except for the fact that they still kept the SASS extensions for the files and the syntax is mostly the same.</p>
+<h3 id="None-Standard-JavaScript"><a href="#None-Standard-JavaScript" class="headerlink" title="None Standard JavaScript"></a>None Standard JavaScript</h3><p>But of all the issues I have with Ext JS 6, the one that bugs me the most is that their framework provides something that runs on JavaScript but really isn’t JavaScript.  They have their own way of declaring a class.  Their own way of instantiating a class.  Their own requires engine.  Their own bundling and minification engine.</p>
+<p>And since I can’t even use “use strict”; in what they have now – something that has been around long enough that it should be supported by every seriously used framework in existence – it makes me wonder what future embellishments to the JavaScript language we won’t be able to use because Sencha thinks they have a better idea.</p>
+<p>Will I be able to use the “class” keyword in the future instead of Ext.define()?</p>
+<h3 id="None-Standard-Build-Tools"><a href="#None-Standard-Build-Tools" class="headerlink" title="None Standard Build Tools"></a>None Standard Build Tools</h3><p>Not only does Ext JS use none standard JavaScript, but they are using their own proprietary build tools to deploy the final applications.  Along with using their own version of SASS, they also have their own implementation of bundling and minification.  Why not use gulp or grunt and allow us to bundle our apps our way?  Oh, right, they have their own implementation of requires too.  And now they want to sell us proprietary testing tools.</p>
+<h2 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h2><p>So, is Ext JS for you?  That’s a good question.  You’ll need to evaluate if the good parts outweigh the bad parts.  It isn’t like either Angular or React have everything.  There is no perfect choice.  There is the best choice for you and your organization.</p>
+
+      
+    </div>
+
+    
+      
+
+    
+
+    <footer class="article-footer">
+      <a data-url="http://davembush.github.com/ext-js-6-by-sencha-the-good-the-bad-the-ugly/" data-id="cl2fb9o6d008bw8hi7njw1l5l" class="article-share-link">
+        <i class="fa fa-share"></i> Share
+      </a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ext-js/" rel="tag">ext js</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/javascript/" rel="tag">javascript</a></li></ul>
+
+
+    </footer>
+  </div>
+  
+    
+<ul id="article-nav" class="nav nav-pills nav-justified">
+  
+  <li role="presentation">
+    <a href="/an-explanation-of-the-flux-pattern/" id="article-nav-older" class="article-nav-link-wrap">
+      <i class="fa fa-chevron-left pull-left"></i>
+      <span class="article-nav-link-title">An Explanation of the Flux Pattern</span>
+    </a>
+  </li>
+  
+  
+  <li role="presentation">
+    <a href="/javascript-mvvm-you%E2%80%99re-probably-doing-it-wrong/" id="article-nav-newer" class="article-nav-link-wrap">
+      <span class="article-nav-link-title">JavaScript MVVM - You’re (Probably) Doing it Wrong</span>
+      <i class="fa fa-chevron-right pull-right"></i>
+    </a>
+  </li>
+  
+</ul>
+
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the comments</noscript>
+    <script src="https://giscus.app/client.js"
+        data-repo="DaveMBush/davembush.github.io"
+        data-repo-id="MDEwOlJlcG9zaXRvcnkxMzkwNzY1NTc="
+        data-category="Announcements"
+        data-category-id="DIC_kwDOCEojzc4CRNna"
+        data-mapping="title"
+        data-strict="1"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="light"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+  </div>
+</section>
+
+
+
+        </div>
+        <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+          
+  
+  <div class="sidebar-module">
+    <h4>Recents</h4>
+    <ul class="sidebar-module-list">
+      
+        <li>
+          <a href="/why-insist-on-return-types-in-typescript/">Why Insist On Return Types In TypeScript?</a>
+        </li>
+      
+        <li>
+          <a href="/optimizing-angular-for-speed/">Optimizing Angular For Speed</a>
+        </li>
+      
+        <li>
+          <a href="/using-workers-from-an-angular-library/">Using Workers from an Angular Library</a>
+        </li>
+      
+        <li>
+          <a href="/avoiding-ngrx-boilerplate/">Avoiding NgRx Boilerplate</a>
+        </li>
+      
+        <li>
+          <a href="/clean-state-management-with-ngrx/">Clean State Management with NgRx</a>
+        </li>
+      
+    </ul>
+  </div>
+
+
+  
+  <div class="sidebar-module">
+    <h4>Archives</h4>
+    <ul class="sidebar-module-list"><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2023/03/">March 2023</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2022/12/">December 2022</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2022/11/">November 2022</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2022/07/">July 2022</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2022/05/">May 2022</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2021/09/">September 2021</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2021/05/">May 2021</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/11/">November 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/10/">October 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/06/">June 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2020/01/">January 2020</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/10/">October 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/09/">September 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/08/">August 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/07/">July 2018</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/03/">March 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/02/">February 2018</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2018/01/">January 2018</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/12/">December 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/11/">November 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/10/">October 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/09/">September 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/08/">August 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/07/">July 2017</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/06/">June 2017</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/05/">May 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/04/">April 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/03/">March 2017</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/02/">February 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2017/01/">January 2017</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/12/">December 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/11/">November 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/10/">October 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/09/">September 2016</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/08/">August 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/07/">July 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/06/">June 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/05/">May 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/04/">April 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/03/">March 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/02/">February 2016</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2016/01/">January 2016</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/12/">December 2015</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/11/">November 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/10/">October 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/09/">September 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/08/">August 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/07/">July 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/06/">June 2015</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/05/">May 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/04/">April 2015</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/03/">March 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/02/">February 2015</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2015/01/">January 2015</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/12/">December 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/11/">November 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/10/">October 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/09/">September 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/08/">August 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/07/">July 2014</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/06/">June 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/05/">May 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/04/">April 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/03/">March 2014</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/02/">February 2014</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2014/01/">January 2014</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/12/">December 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/11/">November 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/10/">October 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/09/">September 2013</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/08/">August 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/07/">July 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/06/">June 2013</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/05/">May 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2013/01/">January 2013</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/09/">September 2012</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2012/08/">August 2012</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/10/">October 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2010/03/">March 2010</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/12/">December 2009</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/10/">October 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/09/">September 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/08/">August 2009</a><span class="sidebar-module-list-count">3</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/07/">July 2009</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/06/">June 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/04/">April 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/03/">March 2009</a><span class="sidebar-module-list-count">4</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/02/">February 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2009/01/">January 2009</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/12/">December 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/11/">November 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/08/">August 2008</a><span class="sidebar-module-list-count">2</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/07/">July 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/06/">June 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/05/">May 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2008/04/">April 2008</a><span class="sidebar-module-list-count">1</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/11/">November 2007</a><span class="sidebar-module-list-count">5</span></li><li class="sidebar-module-list-item"><a class="sidebar-module-list-link" href="/archives/2007/10/">October 2007</a><span class="sidebar-module-list-count">1</span></li></ul>
+  </div>
+
+
+
+
+        </div>
+    </div>
+  </div>
+  <footer class="blog-footer">
+  <div class="container">
+    <div id="footer-info" class="inner">
+      &copy; 2023 Dave M Bush<br>
+      All opinions are my own and do not reflect any company I have or am currently working at.<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js" integrity="sha384-8gBf6Y4YYq7Jx97PIqmTwLPin4hxIzQw5aDmUg/DDhul9fFpbbLcLh3nTIIDJKhx" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+</body>
+</html>

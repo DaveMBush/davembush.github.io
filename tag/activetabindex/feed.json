@@ -1,0 +1,22 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Dave's Notebook • All posts by \"activetabindex\" tag",
+    "description": null,
+    "home_page_url": "http://davembush.github.com",
+    "items": [
+        {
+            "id": "http://davembush.github.com/tab-control-activetabindex-lost-on-postback/",
+            "url": "http://davembush.github.com/tab-control-activetabindex-lost-on-postback/",
+            "title": "Tab Control ActiveTabIndex Lost on Postback",
+            "date_published": "2009-02-25T10:26:36.000Z",
+            "content_html": "<p><img src=\"/uploads/2009/02/tran-land-01.jpg\" alt=\"tran-land-01\"> I just got off the phone with a client who is using the MS-AJAX TabControl in one of his applications and any time he causes a postback, the tab resets to the first tab.</p>\n<p>If you’ve never seen the problem, you’re lucky.  There are a couple of ways around the problem.  The first and easiest if it works in your situation is to put the tab in an update panel so that you never actually do a full postback.</p>\n<span id=\"more\"></span>\n\n<p>However, there are times when this won’t work.  In this particular case it is because one of the tabs holds the file upload control, which can’t be used inside an update panel.  (Another problem we had to find a way around last week.) What do you do then? Turns out this is a bug in the way that the tab works.  This problem turns up in various situations.  If you are fighting the bug, the solution is actually pretty simple.</p>\n<p>First, put the following  javascript in your aspx or ascx file:</p>\n<figure class=\"highlight html\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br><span class=\"line\">2</span><br><span class=\"line\">3</span><br><span class=\"line\">4</span><br><span class=\"line\">5</span><br><span class=\"line\">6</span><br></pre></td><td class=\"code\"><pre><span class=\"line\"><span class=\"tag\">&lt;<span class=\"name\">script</span> <span class=\"attr\">type</span>=<span class=\"string\">&quot;text/javascript&quot;</span>&gt;</span><span class=\"language-javascript\"></span></span><br><span class=\"line\"><span class=\"language-javascript\">  <span class=\"keyword\">function</span> <span class=\"title function_\">TabChanged</span>(<span class=\"params\">sender, args</span>) &#123;</span></span><br><span class=\"line\"><span class=\"language-javascript\">    sender.<span class=\"title function_\">get_clientStateField</span>().<span class=\"property\">value</span> =</span></span><br><span class=\"line\"><span class=\"language-javascript\">      sender.<span class=\"title function_\">saveClientState</span>();</span></span><br><span class=\"line\"><span class=\"language-javascript\">  &#125;</span></span><br><span class=\"line\"><span class=\"language-javascript\"></span><span class=\"tag\">&lt;/<span class=\"name\">script</span>&gt;</span></span><br></pre></td></tr></table></figure>\n\n<p>And then wire up the TabChanged function to your tab control:</p>\n<figure class=\"highlight html\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br><span class=\"line\">2</span><br></pre></td><td class=\"code\"><pre><span class=\"line\"><span class=\"tag\">&lt;<span class=\"name\">ajaxControlToolkit:TabContainer</span> <span class=\"attr\">ID</span>=<span class=\"string\">&quot;TabContainer1&quot;</span> <span class=\"attr\">runat</span>=<span class=\"string\">&quot;server&quot;</span> <span class=\"attr\">OnClientActiveTabChanged</span>=<span class=\"string\">&quot;TabChanged&quot;</span> &gt;</span></span><br><span class=\"line\">&lt;/ajaxControlToolkit:TabContainer\\&gt; /&gt;</span><br></pre></td></tr></table></figure>\n\n<p>This will fix the problem.</p>\n",
+            "tags": [
+                "ajax",
+                "activetabindex",
+                "postback",
+                "tab control",
+                "tabcontrol"
+            ]
+        }
+    ]
+}

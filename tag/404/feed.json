@@ -1,0 +1,21 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Dave's Notebook • All posts by \"404\" tag",
+    "description": null,
+    "home_page_url": "http://davembush.github.com",
+    "items": [
+        {
+            "id": "http://davembush.github.com/asp-net-application-error-detecting-404-s/",
+            "url": "http://davembush.github.com/asp-net-application-error-detecting-404-s/",
+            "title": "ASP.NET Application_Error Detecting 404's",
+            "date_published": "2009-03-02T10:56:18.000Z",
+            "content_html": "<p><img src=\"/uploads/2009/02/misc-vol3-046.jpg\" alt=\"misc_vol3_046\"> For many of you, this is going to be a “Duh!” kind of post.  But while working on this today, I found so many people asking this question and so many others giving the wrong answer, I’m compelled to post anyhow. If you know the answer, then you are welcome to stop reading now.  I didn’t write this for you.  I wrote this for the hundreds of people who will search for this information and won’t be able to find the answer.  The fact of the matter is, that’s why I write most of what I write–so people searching for the information can find it.  So here’s the question: I’ve set up an Application_Error event handler in my Global.asax file and I have implemented a server transfer for errors.  Now I want to set up a specific page to handle 404 errors.  How do I detect a 404 error and call the 404-specific page? The main answer to this question involves retrieving the exception that triggered the event in the first place.  To do that, we call <code>Server.GetLastError()</code>:</p>\n<span id=\"more\"></span>\n\n<figure class=\"highlight csharp\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br></pre></td><td class=\"code\"><pre><span class=\"line\">Exception ex = Server.GetLastError();</span><br></pre></td></tr></table></figure>\n\n<p>What we need to do next is determine if the exception is an HttpException or something else.  Once we have determined that it is an HttpException we will have access to Http-specific properties and methods that will give us the rest of the information we are looking for.  In our case we want to call the GetHttpCode() method, which will return the Http status code and compare it to the number 404. Our resulting code looks like this:</p>\n<figure class=\"highlight csharp\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br><span class=\"line\">2</span><br><span class=\"line\">3</span><br><span class=\"line\">4</span><br><span class=\"line\">5</span><br><span class=\"line\">6</span><br><span class=\"line\">7</span><br><span class=\"line\">8</span><br><span class=\"line\">9</span><br><span class=\"line\">10</span><br><span class=\"line\">11</span><br><span class=\"line\">12</span><br></pre></td><td class=\"code\"><pre><span class=\"line\"><span class=\"function\"><span class=\"keyword\">void</span> <span class=\"title\">Application_Error</span>(<span class=\"params\"><span class=\"built_in\">object</span> sender, EventArgs e</span>)</span></span><br><span class=\"line\">&#123;</span><br><span class=\"line\">    Exception ex = Server.GetLastError();</span><br><span class=\"line\">    <span class=\"keyword\">if</span> (ex <span class=\"keyword\">is</span> HttpException)</span><br><span class=\"line\">    &#123;</span><br><span class=\"line\">        <span class=\"keyword\">if</span> (((HttpException)(ex)).GetHttpCode() == <span class=\"number\">404</span>)</span><br><span class=\"line\">            Server.Transfer(<span class=\"string\">&quot;~/Error404.aspx&quot;</span>);</span><br><span class=\"line\">    &#125;</span><br><span class=\"line\">    <span class=\"comment\">// Code that runs when an unhandled error occurs</span></span><br><span class=\"line\">    Server.Transfer(<span class=\"string\">&quot;~/DefaultError.aspx&quot;</span>);</span><br><span class=\"line\"></span><br><span class=\"line\">&#125;</span><br></pre></td></tr></table></figure>\n\n<p>That’s all there is to it.</p>\n",
+            "tags": [
+                "asp.net",
+                "404",
+                "application_error",
+                "exceptions"
+            ]
+        }
+    ]
+}

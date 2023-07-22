@@ -1,0 +1,21 @@
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Dave's Notebook • All posts by \"itext\" tag",
+    "description": null,
+    "home_page_url": "http://davembush.github.com",
+    "items": [
+        {
+            "id": "http://davembush.github.com/pdfs-using-itextsharp/",
+            "url": "http://davembush.github.com/pdfs-using-itextsharp/",
+            "title": "PDFs Using iTextSharp",
+            "date_published": "2009-06-17T12:06:00.000Z",
+            "content_html": "<p><img src=\"/uploads/2009/06/iStock_000002747386Medium.jpg\" alt=\"iStock_000002747386Medium\" title=\"iStock_000002747386Medium\"> There are several libraries on the market now that allow you to create PDF documents from your .NET applications.  The one I’ve chosen to use is <a href=\"//sourceforge.net/projects/itextsharp/\">extSharp</a>, an open source library that is a port of the open source library for Java,  <a href=\"//www.lowagie.com/iText/\">iText</a>.</p>\n<p>While there are several sites on the Internet that provide examples of how to use iText, I’ve found that the documentation for iTextSharp is a little harder to come by.  So I thought it might be helpful if I provided some posts on how I use iTextSharp along with some of the gotchas I’ve encountered along the way.</p>\n<span id=\"more\"></span>\n\n<p>To use iTextSharp, you will need to add a reference to the library in your code, or simply drop the code into your bin directory of your ASP.NET application.</p>\n<p>The main trick in translating the iText samples and documentation to iTextSharp is that iTextSharp makes the Java properties in iText (get_PropertyName_()&#x2F;set_PropertyName_()) .NET properties, (PropertyName).</p>\n<p>You’ll also need to know that the namespace for iTextSharp is different from iText.  Be sure to include the following line at the top of any code you write that uses iTextSharp</p>\n<figure class=\"highlight csharp\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br><span class=\"line\">2</span><br></pre></td><td class=\"code\"><pre><span class=\"line\"><span class=\"keyword\">using</span> iTextSharp.text;</span><br><span class=\"line\"><span class=\"keyword\">using</span> iTextSharp.text.pdf;</span><br></pre></td></tr></table></figure>\n\n<p>To get your ASP.NET page to return a PDF file, you’ll want to add the following code at the top of your Page_Load event handler:</p>\n<figure class=\"highlight csharp\"><table><tr><td class=\"gutter\"><pre><span class=\"line\">1</span><br><span class=\"line\">2</span><br><span class=\"line\">3</span><br><span class=\"line\">4</span><br><span class=\"line\">5</span><br></pre></td><td class=\"code\"><pre><span class=\"line\">Response.Clear();</span><br><span class=\"line\">Response.ContentType = <span class=\"string\">&quot;application/pdf&quot;</span>;</span><br><span class=\"line\">Response.AddHeader(<span class=\"string\">&quot;ContentType&quot;</span>, <span class=\"string\">&quot;application/pdf&quot;</span>);</span><br><span class=\"line\">Response.AddHeader(<span class=\"string\">&quot;Content-Disposition&quot;</span>,</span><br><span class=\"line\">    <span class=\"string\">&quot;inline;filename=\\&quot;FileName.pdf\\&quot;&quot;</span>);</span><br></pre></td></tr></table></figure>\n\n<p>The <code>Response.Clear()</code> line clears out any input that has already been sent back to the browser.</p>\n<p>The next line tells the browser that what is coming back is a PDF, not HTML.</p>\n<p>The “Content-Disposition” line allows the browser to know that we want the file IN the browser window rather than downloading the file.</p>\n<p>Finally, yes, I know there are two ContentType lines.  But I took this from working code and while I can’t remember why I wrote it like that, it works.  If you can get it working with only one line, go for it.</p>\n<p>Now that we have the basics out of the way, we can concentrate on actually generating PDFs in future posts.</p>\n",
+            "tags": [
+                "asp.net",
+                "iTextSharp",
+                "PDF",
+                "iText"
+            ]
+        }
+    ]
+}
