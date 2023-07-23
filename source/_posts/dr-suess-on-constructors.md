@@ -8,6 +8,8 @@ tags:
 - clean code
 ---
 
+<img src="/dr-suess-on-constructors/BugsVilleSam.png" style="width: 100%;" />
+
 In the vibrant town of Bugville, known for its thrill,
 There lived a brisk coder named Sam, climbing up a skill hill.
 One day, he embarked on a project so grand,
