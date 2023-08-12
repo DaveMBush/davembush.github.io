@@ -1,5 +1,5 @@
 ---
-title: Dr Suess on Constructors
+title: Dr Seuss on Constructors
 date: 2023-07-22 10:21:00
 tags:
 - constructors
@@ -8,7 +8,7 @@ tags:
 - clean code
 ---
 
-<img src="/dr-suess-on-constructors/BugsVilleSam.png" style="width: 100%;" />
+<img src="/dr-seuss-on-constructors/BugsVilleSam.png" style="width: 100%;" />
 
 In the vibrant town of Bugville, known for its thrill,
 There lived a brisk coder named Sam, climbing up a skill hill.
