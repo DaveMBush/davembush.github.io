@@ -5,8 +5,8 @@
         <link>http://davembush.github.com</link>
         <description></description>
         <language>English</language>
-        <pubDate>Sat, 23 Sep 2023 08:34:41 -0400</pubDate>
-        <lastBuildDate>Sat, 23 Sep 2023 08:34:41 -0400</lastBuildDate>
+        <pubDate>Thu, 23 Nov 2023 08:34:41 -0500</pubDate>
+        <lastBuildDate>Thu, 23 Nov 2023 08:34:41 -0500</lastBuildDate>
         <category>project management</category>
         <category>code coverage</category>
         <category>tdd</category>
@@ -384,7 +384,7 @@
             <category>angular</category>
             <category>performance</category>
             <category>best practice</category>
-            <pubDate>Sat, 23 Sep 2023 08:34:41 -0400</pubDate>
+            <pubDate>Thu, 23 Nov 2023 08:34:41 -0500</pubDate>
             <description><![CDATA[ &lt;p&gt;I was recently asked how I would optimize an Angular site for speed. Interestingly, I’ve never written about this explicitly even though I’ve done a lot of work related to this issue.&lt;/p&gt;
 &lt;p&gt;For the purposes of this article, I’m going to assume you have already implemented most of the things that Angular gives you “for free.” For example, we won’t discuss “Tree Shaking” or “AOT.” Those are given.&lt;/p&gt;
 &lt;p&gt;Here are my 30 or so tips on how to optimize an Angular application for speed.&lt;/p&gt;
@@ -427,6 +427,7 @@
 &lt;h3 id=&#34;NgRX-Features&#34;&gt;&lt;a href=&#34;#NgRX-Features&#34; class=&#34;headerlink&#34; title=&#34;NgRX Features&#34;&gt;&lt;/a&gt;NgRX Features&lt;/h3&gt;&lt;p&gt;And while we are on the subject of NgRX, instead of creating one monster state to rule them all in the AppModule, use the Features to only instantiate the store reducers, effects, etc., as you need them.&lt;/p&gt;
 &lt;h3 id=&#34;Use-RxJS-distinct&#34;&gt;&lt;a href=&#34;#Use-RxJS-distinct&#34; class=&#34;headerlink&#34; title=&#34;Use RxJS distinct()&#34;&gt;&lt;/a&gt;Use RxJS distinct()&lt;/h3&gt;&lt;p&gt;Did you know that your component is probably re-rendering more times than needed? This is because &lt;code&gt;@Input()&lt;/code&gt; values will mark the component every time it thinks it might have received a new value. You can prevent this by using &lt;code&gt;distinctUntilChanged()&lt;/code&gt; on the Observable.&lt;/p&gt;
 &lt;h3 id=&#34;Use-RxJX-replay&#34;&gt;&lt;a href=&#34;#Use-RxJX-replay&#34; class=&#34;headerlink&#34; title=&#34;Use RxJX replay()&#34;&gt;&lt;/a&gt;Use RxJX replay()&lt;/h3&gt;&lt;p&gt;Another trick you can use is to use &lt;code&gt;replay()&lt;/code&gt; on the Observable. There are various ways to configure this, but the advantage is that this is another way to prevent calculations you don’t need. If the value isn’t going to change as you render the content multiple times on the screen, you only need to compute once and allow &lt;code&gt;replay()&lt;/code&gt; to memoize the return.&lt;/p&gt;
+&lt;p&gt;Be careful with this trick though, because using it incorrectly can cause memory leaks.&lt;/p&gt;
 &lt;h3 id=&#34;Upgrade-to-IVY&#34;&gt;&lt;a href=&#34;#Upgrade-to-IVY&#34; class=&#34;headerlink&#34; title=&#34;Upgrade to IVY&#34;&gt;&lt;/a&gt;Upgrade to IVY&lt;/h3&gt;&lt;p&gt;In general, I suggest that you always keep your Angular version up to date.&lt;/p&gt;
 &lt;p&gt;While we are on the topic of upgrades, in an enterprise environment, I suggest never to fall more than 2 major versions behind and never use the current major version. I keep my team using the latest version of the major version before the current version. This keeps us relatively current but far enough behind that someone else has figured out all the quirks of the version we are using.&lt;/p&gt;
 &lt;p&gt;At a minimum, ensure you use a version that uses the IVY rendering engine to take advantage of the performance gains it introduced.&lt;/p&gt;
@@ -458,6 +459,27 @@
 
 &lt;p&gt;It may not be obvious, but you should evaluate your DOM when the page is rendered with foobar equal to false. What you’ll see may surprise you. Inside of ng-content will be all the elements that are projected into the ng-content DOM element, but they will all be hidden.&lt;/p&gt;
 &lt;p&gt;So what? So, they will all have to be evaluated by the browser even though they aren’t visible. This is a waste of resources and time rendering.&lt;/p&gt;
+&lt;h3 id=&#34;Data-Binding-Issues&#34;&gt;&lt;a href=&#34;#Data-Binding-Issues&#34; class=&#34;headerlink&#34; title=&#34;Data Binding Issues&#34;&gt;&lt;/a&gt;Data Binding Issues&lt;/h3&gt;&lt;h4 id=&#34;innerHTML&#34;&gt;&lt;a href=&#34;#innerHTML&#34; class=&#34;headerlink&#34; title=&#34;innerHTML&#34;&gt;&lt;/a&gt;innerHTML&lt;/h4&gt;&lt;p&gt;Did you know that binding data to &lt;code&gt;innerHTML&lt;/code&gt; is slower than binding to the interpolation markers within the element?&lt;/p&gt;
+&lt;p&gt;Often we use&lt;/p&gt;
+&lt;figure class=&#34;highlight html&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;div&lt;/span&gt; [&lt;span class=&#34;attr&#34;&gt;innerHTML&lt;/span&gt;]=&lt;span class=&#34;string&#34;&gt;&amp;quot;someValue&amp;quot;&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;div&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;instead of&lt;/p&gt;
+&lt;figure class=&#34;highlight html&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;tag&#34;&gt;&amp;lt;&lt;span class=&#34;name&#34;&gt;div&lt;/span&gt;&amp;gt;&lt;/span&gt;&amp;#123;&amp;#123;someValue&amp;#125;&amp;#125;&lt;span class=&#34;tag&#34;&gt;&amp;lt;/&lt;span class=&#34;name&#34;&gt;div&lt;/span&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;to get around string sanitation issues (which is another problem) but then we get someone on our team who is just learning Angular and they do this by default.&lt;/p&gt;
+&lt;p&gt;In both cases, however, you’ll find if you measure the performance that the interpolation markers are significantly faster than the innerHTML binding.&lt;/p&gt;
+&lt;h4 id=&#34;Avoid-Binding-to-Functions&#34;&gt;&lt;a href=&#34;#Avoid-Binding-to-Functions&#34; class=&#34;headerlink&#34; title=&#34;Avoid Binding to Functions&#34;&gt;&lt;/a&gt;Avoid Binding to Functions&lt;/h4&gt;&lt;p&gt;Another place where you can eak out a bit of performance is by avoiding binding to functions. If you to, you can use a pipe to memoize the return value of the function. But, using a pipe is the lazy man’s way of optimizing against the function issue.&lt;/p&gt;
+&lt;p&gt;Why? Because you are still have the overhead of calling a function every time change detection runs, you just aren’t doing the calculation every time. It is better than doing the calculation but it is worse than binding to a field where the change detector can see if anything changed before it does anything else.&lt;/p&gt;
+&lt;p&gt;In the interviews we run, we have a section that covers this issue. Code is clearly calling a function inside the template.  We are happy with the “use a pipe” answer. But I’m even more impressed if someone says something like, “This should all be done on the server, or if it can’t be done on the server, it should be done when we retrieve the data from the server.”&lt;/p&gt;
+&lt;p&gt;But this can’t always be done. So, if you are going to bind to a function, ask yourself, “how far down the stack can I move this functionality?”&lt;/p&gt;
+&lt;p&gt;In order of possibilities, I’d suggest:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Do the calculation in the pipe if nothing else is possible&lt;/li&gt;
+&lt;li&gt;Do the calculation in the component’s TS file when the @Input() value changes&lt;/li&gt;
+&lt;li&gt;Do the calculation in a Selector that the component is looking at&lt;/li&gt;
+&lt;li&gt;Do the calculation right after you retrieve the data from the server&lt;/li&gt;
+&lt;li&gt;Do the calculation on the server&lt;/li&gt;
+&lt;/ul&gt;
 &lt;h3 id=&#34;SVG-references-vs-SVG-inlining&#34;&gt;&lt;a href=&#34;#SVG-references-vs-SVG-inlining&#34; class=&#34;headerlink&#34; title=&#34;SVG references vs SVG inlining&#34;&gt;&lt;/a&gt;SVG references vs SVG inlining&lt;/h3&gt;&lt;p&gt;Another similar, hidden performance issue is the use of SVG Inlining. When you inject an SVG image into the page using inlining, the browser must evaluate the DOM elements. If you inline the same SVG image multiple times, the browser has to evaluate the DOM elements multiple times.&lt;/p&gt;
 &lt;p&gt;The cure is to inline the SVG images once, and then, when you need to display the image, you can reference it using the SVG reference mechanism. There are multiple ways you might do this. One is to load them up front using a sprite and inject the sprite into the DOM. Another would be to inject the SVG image into the DOM using JavaScript the first time it is used and then reference it from that point forward.&lt;/p&gt;
 &lt;h3 id=&#34;Measure-your-CSS&#34;&gt;&lt;a href=&#34;#Measure-your-CSS&#34; class=&#34;headerlink&#34; title=&#34;Measure your CSS&#34;&gt;&lt;/a&gt;Measure your CSS&lt;/h3&gt;&lt;p&gt;The most overlooked area of performance I know of is measuring CSS. I can’t go into a lot of detail about this here because it would take far too much time to explain (and read about) but there are good articles on the internet that discuss measuring browser performance using flame charts and other mechanisms that are part of your browser’s developer tools.&lt;/p&gt;
