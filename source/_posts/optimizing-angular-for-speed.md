@@ -1,6 +1,6 @@
 ---
 title: Optimizing Angular For Speed
-date: 2023-09-23 08:34:41
+date: 2023-11-23 08:34:41
 tags:
   - angular
   - performance
@@ -117,6 +117,22 @@ Did you know that your component is probably re-rendering more times than needed
 
 Another trick you can use is to use `replay()` on the Observable. There are various ways to configure this, but the advantage is that this is another way to prevent calculations you don't need. If the value isn't going to change as you render the content multiple times on the screen, you only need to compute once and allow `replay()` to memoize the return.
 
+Be careful with this trick though, because using it incorrectly can cause memory leaks.
+
+### Use RxJS asapScheduler
+
+There are times when you need to schedule a task to run as soon as possible but asynchronously.
+
+You might think the best way to do this is by using interval(0) or some other mechanism.
+
+Maybe you want to use debounceTime(0) or throttleTime(0) to prevent the task from running too often.
+
+Did you know that RxJS has another scheduler, called the asapScheduler that allows you to run things faster than the default scheduler?
+
+The default scheduler uses the "macro queue". This is what setTimeout() uses. The asapScheduler uses the "micro queue" which is what Promise.resolve uses.
+
+The difference is that if you schedule something with setTimeout(), and then run something with Promise.resolve(), the Promise.resolve() will run first. Make those asynchronous calls seems a bit more synchronous.
+
 ### Upgrade to IVY
 
 In general, I suggest that you always keep your Angular version up to date.
@@ -202,6 +218,58 @@ The other crazy implementation I've seen recently is using ngIf inside ng-conten
 It may not be obvious, but you should evaluate your DOM when the page is rendered with foobar equal to false. What you'll see may surprise you. Inside of ng-content will be all the elements that are projected into the ng-content DOM element, but they will all be hidden.
 
 So what? So, they will all have to be evaluated by the browser even though they aren't visible. This is a waste of resources and time rendering.
+
+### Data Binding Issues
+
+#### innerHTML
+
+Did you know that binding data to `innerHTML` is slower than binding to the interpolation markers within the element?
+
+Often, we use
+
+``` html
+<div [innerHTML]="someValue"></div>
+```
+
+instead of
+
+``` html
+<div>{{someValue}}</div>
+```
+
+to get around string sanitation issues (which is another problem) but then we get someone on our team who is just learning Angular and they do this by default.
+
+In both cases, however, you'll find if you measure the performance that the interpolation markers are significantly faster than the innerHTML binding.
+
+#### Avoid Binding to Functions
+
+We mentioned this above but, another place where you can eak out a bit of performance is by avoiding binding to functions. If you do, you can use a pipe to memoize the return value of the function. But, using a pipe is the lazy man's way of optimizing against the function issue.
+
+Why? Because you are still have the overhead of calling a function every time change detection runs, you just aren't doing the calculation every time. It is better than doing the calculation but it is worse than binding to a field where the change detector can see if anything changed before it does anything else.
+
+In the interviews we run, we have a section that covers this issue. Code is clearly calling a function inside the template.  We are happy with the "use a pipe" answer. But I'm even more impressed if someone says something like, "This should all be done on the server, or if it can't be done on the server, it should be done when we retrieve the data from the server."
+
+But this can't always be done. So, if you are going to bind to a function, ask yourself, "how far down the stack can I move this functionality?"
+
+In order of possibilities, I'd suggest:
+
+- Do the calculation in the pipe if nothing else is possible
+- Do the calculation in the component's TS file when the @Input() value changes
+- Do the calculation in a Selector that the component is looking at
+- Do the calculation right after you retrieve the data from the server
+- Do the calculation on the server
+
+### HostBinding()
+
+Related to binding to functions, keep in mind that @HostBinding is databinding.  If you @HostBinding is using a function, it has the same issues as binding to a function in the template.
+
+### Dynamic CSS Classes
+
+There are multiple ways of dynamically adding classes to an element. Each one of them, essentially do the same thing. But worse, they all do them individually. So, if you end up using all three methods in your code, you are going to make at least 3 calls to the DOM to add or remove the class.
+
+Currently, using `ngClass` adds and removes each class in it individually. You'd think it would be optimized to add them more efficiently but currently (2023-11-11) they do not.
+
+I'm hoping this gets fixed by the next major version of Angular.
 
 ### SVG references vs SVG inlining
 
