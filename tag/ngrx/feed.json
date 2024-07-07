@@ -5,6 +5,17 @@
     "home_page_url": "http://davembush.github.com",
     "items": [
         {
+            "id": "http://davembush.github.com/smart-ngrx/",
+            "url": "http://davembush.github.com/smart-ngrx/",
+            "title": "smart-ngrx",
+            "date_published": "2024-07-07T17:36:27.000Z",
+            "content_html": "<p>Imagine an NgRX world where you almost never knew you were using NgRX. A world where you never had to write a <code>reducer</code>, <code>action</code>, or <code>effect</code>. A world where you never had to call <code>store.dispatch()</code>. A world where the data you worked automatically persist to the server. A world where the data is retrieved from the server as it is needed and removed from memory when it is not, or never removed if that’s what you want. A world where the data automatically refreshes from the server, or you can use websocket messages to refresh the data and, in either case, the only data that refreshes is the data the code is actively using. A world where optimistic UI is built into the framework.</p>\n<span id=\"more\"></span>\n\n<p>Introducing <a href=\"https://www.npmjs.com/package/@smarttools/smart-ngrx\">SmartNgRX</a>. A framework I’ve been working on for over a year that does everything I just mentioned and more. It’s a framework that is built on top of NgRX and works with your existing NgRX code.</p>\n<p>The full documentation is available at <a href=\"https://davembush.github.io/SmartNgRX/home\">SmartNgRX Documentation</a> but let me give you a brief overview of how it works.</p>\n<h2 id=\"Brief-Overview\"><a href=\"#Brief-Overview\" class=\"headerlink\" title=\"Brief Overview\"></a>Brief Overview</h2><p>First, there are two providers you will need to add to your application. The first is <code>provideSmartNgRX()</code> which is added to the <code>providers</code> array in you <code>AppModule</code>. The second is <code>provideSmartNgRX()</code> which is added to the module, or route, nearest where you’ll use it.</p>\n<p>These two providers setup the configuration information that SmartNgRX will need to work. They control things such as how often to refresh the data, when to remove unused data from memory, what service to call to retrieve the data for an NgRX slice looks like and what a placeholder row looks like for a particular slice of data.</p>\n<p>In order for you to define the service an the SmartNgRX effect will call, you’ll need to create an EffectService. This service is where you control how the CRUD operations interact with the server. This and the selectors are the only code you’ll need to write.</p>\n<p>Which brings us to the selectors. Instead of using the <code>createSelector</code> function from NgRX, you’ll use the <code>createSmartNgRXSelector</code> function from SmartNgRX. This function defines the relationship between a parent selector and any children it may have.</p>\n<p>That’s it. All the other code you normally write is handled by SmartNgRX.</p>\n<p>Give it a try and let me know what you think.</p>\n",
+            "tags": [
+                "angular",
+                "ngrx"
+            ]
+        },
+        {
             "id": "http://davembush.github.com/avoiding-ngrx-boilerplate/",
             "url": "http://davembush.github.com/avoiding-ngrx-boilerplate/",
             "title": "Avoiding NgRx Boilerplate",

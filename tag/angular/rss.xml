@@ -5,8 +5,8 @@
         <link>http://davembush.github.com</link>
         <description></description>
         <language>English</language>
-        <pubDate>Sat, 09 Mar 2024 08:34:41 -0500</pubDate>
-        <lastBuildDate>Sat, 09 Mar 2024 08:34:41 -0500</lastBuildDate>
+        <pubDate>Sun, 07 Jul 2024 13:36:27 -0400</pubDate>
+        <lastBuildDate>Sun, 07 Jul 2024 13:36:27 -0400</lastBuildDate>
         <category>project management</category>
         <category>code coverage</category>
         <category>tdd</category>
@@ -378,6 +378,26 @@
         <category>constructors</category>
         <category>clean code</category>
         <item>
+            <guid isPermalink="true">http://davembush.github.com/smart-ngrx/</guid>
+            <title>smart-ngrx</title>
+            <link>http://davembush.github.com/smart-ngrx/</link>
+            <category>angular</category>
+            <category>ngrx</category>
+            <pubDate>Sun, 07 Jul 2024 13:36:27 -0400</pubDate>
+            <description><![CDATA[ &lt;p&gt;Imagine an NgRX world where you almost never knew you were using NgRX. A world where you never had to write a &lt;code&gt;reducer&lt;/code&gt;, &lt;code&gt;action&lt;/code&gt;, or &lt;code&gt;effect&lt;/code&gt;. A world where you never had to call &lt;code&gt;store.dispatch()&lt;/code&gt;. A world where the data you worked automatically persist to the server. A world where the data is retrieved from the server as it is needed and removed from memory when it is not, or never removed if that’s what you want. A world where the data automatically refreshes from the server, or you can use websocket messages to refresh the data and, in either case, the only data that refreshes is the data the code is actively using. A world where optimistic UI is built into the framework.&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+
+&lt;p&gt;Introducing &lt;a href=&#34;https://www.npmjs.com/package/@smarttools/smart-ngrx&#34;&gt;SmartNgRX&lt;/a&gt;. A framework I’ve been working on for over a year that does everything I just mentioned and more. It’s a framework that is built on top of NgRX and works with your existing NgRX code.&lt;/p&gt;
+&lt;p&gt;The full documentation is available at &lt;a href=&#34;https://davembush.github.io/SmartNgRX/home&#34;&gt;SmartNgRX Documentation&lt;/a&gt; but let me give you a brief overview of how it works.&lt;/p&gt;
+&lt;h2 id=&#34;Brief-Overview&#34;&gt;&lt;a href=&#34;#Brief-Overview&#34; class=&#34;headerlink&#34; title=&#34;Brief Overview&#34;&gt;&lt;/a&gt;Brief Overview&lt;/h2&gt;&lt;p&gt;First, there are two providers you will need to add to your application. The first is &lt;code&gt;provideSmartNgRX()&lt;/code&gt; which is added to the &lt;code&gt;providers&lt;/code&gt; array in you &lt;code&gt;AppModule&lt;/code&gt;. The second is &lt;code&gt;provideSmartNgRX()&lt;/code&gt; which is added to the module, or route, nearest where you’ll use it.&lt;/p&gt;
+&lt;p&gt;These two providers setup the configuration information that SmartNgRX will need to work. They control things such as how often to refresh the data, when to remove unused data from memory, what service to call to retrieve the data for an NgRX slice looks like and what a placeholder row looks like for a particular slice of data.&lt;/p&gt;
+&lt;p&gt;In order for you to define the service an the SmartNgRX effect will call, you’ll need to create an EffectService. This service is where you control how the CRUD operations interact with the server. This and the selectors are the only code you’ll need to write.&lt;/p&gt;
+&lt;p&gt;Which brings us to the selectors. Instead of using the &lt;code&gt;createSelector&lt;/code&gt; function from NgRX, you’ll use the &lt;code&gt;createSmartNgRXSelector&lt;/code&gt; function from SmartNgRX. This function defines the relationship between a parent selector and any children it may have.&lt;/p&gt;
+&lt;p&gt;That’s it. All the other code you normally write is handled by SmartNgRX.&lt;/p&gt;
+&lt;p&gt;Give it a try and let me know what you think.&lt;/p&gt;
+ ]]></description>
+        </item>
+        <item>
             <guid isPermalink="true">http://davembush.github.com/optimizing-angular-for-speed/</guid>
             <title>Optimizing Angular For Speed</title>
             <link>http://davembush.github.com/optimizing-angular-for-speed/</link>
@@ -546,6 +566,8 @@
 &lt;h2 id=&#34;Micro-Tweaks&#34;&gt;&lt;a href=&#34;#Micro-Tweaks&#34; class=&#34;headerlink&#34; title=&#34;Micro Tweaks&#34;&gt;&lt;/a&gt;Micro Tweaks&lt;/h2&gt;&lt;h2 id=&#34;Avoid-Iterators&#34;&gt;&lt;a href=&#34;#Avoid-Iterators&#34; class=&#34;headerlink&#34; title=&#34;Avoid Iterators&#34;&gt;&lt;/a&gt;Avoid Iterators&lt;/h2&gt;&lt;p&gt;As a general rule, using forEach, for&amp;#x2F;of, Array.map, Array.forEach, etc is slower than using for&amp;#x2F;next because all but the for&amp;#x2F;next loop uses the iterator under the hood which has a significant cost. If you know your loop is going to be small, it probably doesn’t matter but if you are iterating over a large array, you should consider using for&amp;#x2F;next instead.&lt;/p&gt;
 &lt;p&gt;I’ve created a forNext() function that takes an array and a callback function so that I still enjoy the benefits of forEach without the cost of using the iterator.&lt;/p&gt;
 &lt;p&gt;For an extra (micro) performance boost, you should make the callback function a standard, named, function instead of an anonymous or fat arrow function.&lt;/p&gt;
+&lt;h2 id=&#34;Leverage-Iterators&#34;&gt;&lt;a href=&#34;#Leverage-Iterators&#34; class=&#34;headerlink&#34; title=&#34;Leverage Iterators&#34;&gt;&lt;/a&gt;Leverage Iterators&lt;/h2&gt;&lt;p&gt;On the other hand, if there is a lot of setup code in your loop to get you to a point where you can start processing the loop, and you do that pre-processing multiple times per instance, you might consider creating your own iterator and doing your setup in the constructor so you can iterate through the data without having to do the setup each time.&lt;/p&gt;
+&lt;p&gt;Use the right tool for the job 😁.&lt;/p&gt;
 &lt;h2 id=&#34;Avoid-Duplicate-Work&#34;&gt;&lt;a href=&#34;#Avoid-Duplicate-Work&#34; class=&#34;headerlink&#34; title=&#34;Avoid Duplicate Work&#34;&gt;&lt;/a&gt;Avoid Duplicate Work&lt;/h2&gt;&lt;h3 id=&#34;Arrays&#34;&gt;&lt;a href=&#34;#Arrays&#34; class=&#34;headerlink&#34; title=&#34;Arrays&#34;&gt;&lt;/a&gt;Arrays&lt;/h3&gt;&lt;p&gt;One obvious place to avoid duplicate work is with the Array map, filter, reduce, etc. functions. When you use these functions chained to each other, you are creating a new array for each function in the chain.&lt;/p&gt;
 &lt;p&gt;Again, this may not make a significant difference with a sort array, but it can be a significant performance hit with a large array.&lt;/p&gt;
 &lt;h3 id=&#34;RxJS&#34;&gt;&lt;a href=&#34;#RxJS&#34; class=&#34;headerlink&#34; title=&#34;RxJS&#34;&gt;&lt;/a&gt;RxJS&lt;/h3&gt;&lt;p&gt;You’ll also find that you are performing more work than you need to because you are using RxJS operators such as combineLatest() incorrectly.&lt;/p&gt;
