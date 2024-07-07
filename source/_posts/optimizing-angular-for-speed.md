@@ -1,6 +1,6 @@
 ---
 title: Optimizing Angular For Speed
-date: 2023-11-23 08:34:41
+date: 2024-03-09 08:34:41
 tags:
   - angular
   - performance
@@ -188,7 +188,7 @@ Simple CSS is performant CSS.
 
 ### ng-content Bad Practices
 
-I've only recently realized that some of you are doing some pretty strange things with `ng-content``, and then you wonder why your application is slow.
+I've only recently realized that some of you are doing some pretty strange things with `ng-content`, and then you wonder why your application is slow.
 
 As a refresher, `ng-content`` is what you use when you want to use content projection to pass content into a component. For example, if you wanted to pass in a list of items to a component, you might do something like this:
 
@@ -417,6 +417,50 @@ When most people think of performance, they immediately think of "how to impact 
 There are now several tools available for detecting and tracking down memory leaks. Find one and use it.
 
 ## Micro Tweaks
+
+## Avoid Iterators
+
+As a general rule, using forEach, for/of, Array.map, Array.forEach, etc is slower than using for/next because all but the for/next loop uses the iterator under the hood which has a significant cost. If you know your loop is going to be small, it probably doesn't matter but if you are iterating over a large array, you should consider using for/next instead.
+
+I've created a forNext() function that takes an array and a callback function so that I still enjoy the benefits of forEach without the cost of using the iterator.
+
+For an extra (micro) performance boost, you should make the callback function a standard, named, function instead of an anonymous or fat arrow function.
+
+## Leverage Iterators
+
+On the other hand, if there is a lot of setup code in your loop to get you to a point where you can start processing the loop, and you do that pre-processing multiple times per instance, you might consider creating your own iterator and doing your setup in the constructor so you can iterate through the data without having to do the setup each time.
+
+Use the right tool for the job 😁.
+
+## Avoid Duplicate Work
+
+### Arrays
+
+One obvious place to avoid duplicate work is with the Array map, filter, reduce, etc. functions. When you use these functions chained to each other, you are creating a new array for each function in the chain.
+
+Again, this may not make a significant difference with a sort array, but it can be a significant performance hit with a large array.
+
+### RxJS
+
+You'll also find that you are performing more work than you need to because you are using RxJS operators such as combineLatest() incorrectly.
+
+Here's a tip. If you are using combineLatest() to combine selectors, consider creating a selector instead. In this way, you'll take advantage of the memoization that NgRX provides.
+
+Speaking of Selectors, avoid using factory selectors aka parameterized selectors. They can't take advantage of memoization. Instead, make the parameter part of the state and use a normal selector. While this isn't always possible, when you can do this, you'll naturally take advantage of memoization and improve your performance.
+
+### DevTools
+
+Unless you use the profiling tools that are part of the browser's developer tools, you won't know where your performance issues are. You can't fix what you can't measure.
+
+Get comfortable with the performance tools in your browser's developer tools. They are your best friend when it comes to optimizing your application.
+
+### Control your object's shape
+
+Under the hood, every object you create generates a Class in the browser's memory. Even object literals end up creating a Class. This is a way the browser tries to optimize your code. Great.
+
+Now the bad news. If you add a field to an object, or reorder the fields in an object, the browser has to create a new Class for that object or decide it isn't worth it and forget about using that optimization for the object. Something as simple as using the spread operator and then putting the changed field at the end of the object can cause the browser to deoptimize the object.
+
+If you can, create your objects as classes and, when you change the object, use the class to do it so you can keep the shape of the object the same as it is being used.
 
 ### Service Workers
 
