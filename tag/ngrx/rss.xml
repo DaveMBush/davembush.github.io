@@ -5,8 +5,8 @@
         <link>http://davembush.github.com</link>
         <description></description>
         <language>English</language>
-        <pubDate>Sat, 20 Jul 2024 11:12:03 -0400</pubDate>
-        <lastBuildDate>Sat, 20 Jul 2024 11:12:03 -0400</lastBuildDate>
+        <pubDate>Mon, 14 Oct 2024 07:12:03 -0400</pubDate>
+        <lastBuildDate>Mon, 14 Oct 2024 07:12:03 -0400</lastBuildDate>
         <category>project management</category>
         <category>code coverage</category>
         <category>tdd</category>
@@ -385,7 +385,7 @@
             <category>angular</category>
             <category>ngrx</category>
             <category>smart-ngrx</category>
-            <pubDate>Sat, 20 Jul 2024 11:12:03 -0400</pubDate>
+            <pubDate>Mon, 14 Oct 2024 07:12:03 -0400</pubDate>
             <description><![CDATA[ &lt;p&gt;Last week, I announced a project I had been working on for over 10 months. I call it &lt;a href=&#34;/smart-ngrx/&#34;&gt;SmartNgRX&lt;/a&gt; and it solves many common issues most of us have using SmartNgRX, including the boilerplate issue, over-fetching, and memory pressure caused by stale data.&lt;/p&gt;
 &lt;p&gt;Today I want to talk about a few things I learned while creating SmartNgRX that can be applied globally to any project.&lt;/p&gt;
 &lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
@@ -412,16 +412,18 @@
 &lt;h2 id=&#34;Too-Many-Actions-and-Reducers&#34;&gt;&lt;a href=&#34;#Too-Many-Actions-and-Reducers&#34; class=&#34;headerlink&#34; title=&#34;Too Many Actions and Reducers&#34;&gt;&lt;/a&gt;Too Many Actions and Reducers&lt;/h2&gt;&lt;p&gt;I’ve been saying this for several years and still managed to get this “wrong” while writing my code.&lt;/p&gt;
 &lt;p&gt;Here’s the basic issue. Reducers and Effects have specific purposes. Where I went wrong is with my reducers. But I’ll address both Reducers and Effects here.&lt;/p&gt;
 &lt;p&gt;But first, let’s take a detour and talk about an ideal NgRX setup.&lt;/p&gt;
-&lt;p&gt;The Redux pattern, generally, and NgRX, specifically, were created to store states predictably. “State only” is my motto. This means that logic should be kept out of our NgRX code. This keeps our NgRX code simple and reduces bugs. You wouldn’t believe some of the code I’ve seen that violates this principle. Then again, maybe you could. You’ve probably written it.&lt;/p&gt;
+&lt;h3 id=&#34;Ideal-NgRX-Setup&#34;&gt;&lt;a href=&#34;#Ideal-NgRX-Setup&#34; class=&#34;headerlink&#34; title=&#34;Ideal NgRX Setup&#34;&gt;&lt;/a&gt;Ideal NgRX Setup&lt;/h3&gt;&lt;p&gt;The Redux pattern, generally, and NgRX, specifically, were created to store states predictably. “State only” is my motto. This means that logic should be kept out of our NgRX code. This keeps our NgRX code simple and reduces bugs. You wouldn’t believe some of the code I’ve seen that violates this principle. Then again, maybe you could. You’ve probably written it.&lt;/p&gt;
 &lt;p&gt;So, if we want to keep logic out of NgRX, where should it go?&lt;/p&gt;
-&lt;p&gt;It goes in a service. When you call an action, it should already have the data in the form that NgRX ultimately needs. The reducer can then take this data and store it in the store without doing anything to it.&lt;/p&gt;
+&lt;h3 id=&#34;Action-Services&#34;&gt;&lt;a href=&#34;#Action-Services&#34; class=&#34;headerlink&#34; title=&#34;Action Services&#34;&gt;&lt;/a&gt;Action Services&lt;/h3&gt;&lt;p&gt;It goes in a service. When you call an action, it should already have the data in the form that NgRX ultimately needs. The reducer can then take this data and store it in the store without doing anything to it.&lt;/p&gt;
 &lt;p&gt;Notice how small my reducer code is.&lt;/p&gt;
-&lt;p&gt;Similarly, when you call an effect, it should already have the data to do whatever it needs. Again, in an ideal world, all the effect does is call what I’ve come to term the effect service. The effect service can do whatever work needs to be done.&lt;/p&gt;
+&lt;h3 id=&#34;Effects-Service&#34;&gt;&lt;a href=&#34;#Effects-Service&#34; class=&#34;headerlink&#34; title=&#34;Effects Service&#34;&gt;&lt;/a&gt;Effects Service&lt;/h3&gt;&lt;p&gt;Similarly, when you call an effect, it should already have the data to do whatever it needs. Again, in an ideal world, all the effect does is call what I’ve come to term the effect service. The effect service can do whatever work needs to be done.&lt;/p&gt;
 &lt;p&gt;For example, say you are calling the server, but the shape of the data you get back isn’t what your application will need. The place to do the transformation is in the effect service. Not in the effect.&lt;/p&gt;
-&lt;p&gt;By doing this, you’ll only need actions that perform basic CRUD operations. You shouldn’t see actions for every possible way you could change the state of your application. Most of that can, and should, be handled in a service.&lt;/p&gt;
+&lt;p&gt;By doing this, you’ll only need actions that perform basic CRUD operations. You shouldn’t see actions for every possible way you could change the state of your application. Most of that can, and should, be handled in an Action Service.&lt;/p&gt;
 &lt;p&gt;There has been a lot of noise in the community about using the “facade” pattern with NgRX but most implementations I’ve seen just put a class in front of the same actions we’ve always had. This is not a facade pattern. This is just a bulky, excessive layer in front of what we’ve always been doing.&lt;/p&gt;
 &lt;p&gt;What I’m doing is closer to a facade pattern because now all those action calls become calls to a service. The service does the transformations and dispatches whatever action is appropriate to update the store.&lt;/p&gt;
-&lt;p&gt;Moreover, by doing this, the question of using the command or event patterns with NgRX becomes moot. The argument for using the event pattern is that your actions now give you some idea of what triggered them by using the action name as the where. In the pattern I’ve described, 100% of your actions (should) get triggered by the same code every time if you’ve structured things correctly.  That code gets triggered by multiple other places just like any other function in your code does. Now, you can evaluate the call stack. You can still use the event pattern. But, there isn’t a strong argument for it anymore.&lt;/p&gt;
+&lt;h3 id=&#34;Increased-Performance&#34;&gt;&lt;a href=&#34;#Increased-Performance&#34; class=&#34;headerlink&#34; title=&#34;Increased Performance&#34;&gt;&lt;/a&gt;Increased Performance&lt;/h3&gt;&lt;p&gt;By using the facade pattern as I’ve laid out above, you also have the potential of increasing the performance of your application. Another motto I’ve developed is “keep as much out of the NgRX stream as possible.” What that means is that if you can fire one action instead of more than one, you should.&lt;/p&gt;
+&lt;p&gt;Why is this? Because every action has to be handled by every effect and reducer in your code even if it doesn’t need it. Think of ever ofType() call as an IF that has to be evaluated. And, similarly, every on() call in the reducers is another IF that has to be evaluated. These add up.&lt;/p&gt;
+&lt;h3 id=&#34;Command-or-Event-Pattern&#34;&gt;&lt;a href=&#34;#Command-or-Event-Pattern&#34; class=&#34;headerlink&#34; title=&#34;Command or Event Pattern&#34;&gt;&lt;/a&gt;Command or Event Pattern&lt;/h3&gt;&lt;p&gt;By following these tip, the question of using the command or event patterns with NgRX becomes moot. The argument for using the event pattern is that your actions now give you some idea of what triggered them by using the action name as the where. In the pattern I’ve described, 100% of your actions (should) get triggered by the same code every time if you’ve structured things correctly.  That code gets triggered by multiple other places just like any other function in your code does. Now, you can evaluate the call stack. You can still use the event pattern. But, there isn’t a strong argument for it anymore.&lt;/p&gt;
 &lt;p&gt;The best part about using this pattern is that I’m in a great position to convert SmartNgRX to use Signals instead of Observables and most of my code won’t change.&lt;/p&gt;
 &lt;p&gt;As far as NgRX code is concerned, the only NgRX place you should have any logic at all is in Selectors, but that’s a topic for another day.&lt;/p&gt;
  ]]></description>
