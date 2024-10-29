@@ -1,6 +1,6 @@
 ---
 title: smart-ngrx
-date: 2024-07-07 13:36:27
+date: 2024-10-29 13:36:27
 tags:
   - ngrx
   - angular
@@ -16,13 +16,13 @@ The full documentation is available at [SmartNgRX Documentation](https://davembu
 
 ## Brief Overview
 
-First, there are two providers you will need to add to your application. The first is `provideSmartNgRX()` which is added to the `providers` array in you `AppModule`. The second is `provideSmartNgRX()` which is added to the module, or route, nearest where you'll use it.
+First, there are two providers you will need to add to your application. The first is `provideSmartNgRX()` which is added to the `providers` array in you `AppModule`. The second is `provideSmartFeatureEntities()` which is added to the module, or route, nearest where you'll use it.
 
 These two providers setup the configuration information that SmartNgRX will need to work. They control things such as how often to refresh the data, when to remove unused data from memory, what service to call to retrieve the data for an NgRX slice looks like and what a placeholder row looks like for a particular slice of data.
 
-In order for you to define the service an the SmartNgRX effect will call, you'll need to create an EffectService. This service is where you control how the CRUD operations interact with the server. This and the selectors are the only code you'll need to write.
+For you to define the service an the SmartNgRX effect will call, you'll need to create an EffectService. This service is where you control how the CRUD operations interact with the server. This and the selectors are the only code you'll need to write.
 
-Which brings us to the selectors. Instead of using the `createSelector` function from NgRX, you'll use the `createSmartNgRXSelector` function from SmartNgRX. This function defines the relationship between a parent selector and any children it may have.
+Which brings us to the selectors. Instead of using the `createSelector` function from NgRX, you'll use the `createSmartNgRXSelector` function from SmartNgRX. This function defines the relationship between a parent selector and any children it may have. You can use selectors created with createSmartNgRXSelector with selectors created with createSelector and mix and match them as needed.
 
 That's it. All the other code you normally write is handled by SmartNgRX.
 
