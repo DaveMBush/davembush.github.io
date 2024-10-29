@@ -1,6 +1,6 @@
 ---
 title: Optimizing Angular For Speed
-date: 2024-03-09 08:34:41
+date: 2024-10-14 08:34:41
 tags:
   - angular
   - performance
@@ -71,6 +71,14 @@ Use this optimization tip intelligently, though. Sometimes, values might be "the
 If OnPush isn't giving you all the optimization that you are looking for, creating a pure Pipe is the next step along the same lines.
 
 However, this is one place where I'd spend the extra time to verify that my "optimization" isn't making the performance worse.
+
+### NgRX Actions
+
+Fire as few NgRX Actions as possible. What that means is that if you can fire one action instead of more than one, you should.
+
+Why is this? Because every action has to be handled by every effect and reducer in your code even if it doesn't need it. Think of ever ofType() call as an IF that has to be evaluated. And, similarly, every on() call in the reducers is another IF that has to be evaluated. These add up.
+
+See my article about [What I learned writing SmartNgRX](/what-i-learned-writing-smartngrx/) for more information on this topic.
 
 ### Use NgRX Selectors
 

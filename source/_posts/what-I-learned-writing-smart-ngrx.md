@@ -1,6 +1,6 @@
 ---
-title: what I learned writing smart-ngrx
-date: 2024-07-20 11:12:03
+title: What I Learned Writing SmartNgRX
+date: 2024-10-14 7:12:03
 tags:
   - ngrx
   - angular
@@ -10,6 +10,8 @@ tags:
 Last week, I announced a project I had been working on for over 10 months. I call it [SmartNgRX](/smart-ngrx/) and it solves many common issues most of us have using SmartNgRX, including the boilerplate issue, over-fetching, and memory pressure caused by stale data.
 
 Today I want to talk about a few things I learned while creating SmartNgRX that can be applied globally to any project.
+
+<!-- more -->
 
 ## No Boilerplate Needed
 
@@ -70,7 +72,7 @@ A casual glance will show you that all I've done is wrap the `createActionGroup`
 
 You'll notice that I've also cached the `ActionGroup` so that if you call it again, you'll get the same `ActionGroup` back. This simple optimization allows you to use the factory function to retrieve the action wherever you need it instead of passing it around. In my case, I needed this because the library doesn't expose the actions used by NgRX and I wanted to let the developers using SmartNgRX use the actions in their code if they desired.
 
-## Reducers
+### Reducers
 
 Similarly, I've wrapped `createReducer` with a factory function that takes the feature and entity name and returns a reducer. Again, this is all you need to ensure the reducer is unique.
 
@@ -102,7 +104,7 @@ export function reducerFactory<T extends SmartNgRXRowBase>(
 }
 ```
 
-## Effects
+### Effects
 
 Finally, I've wrapped `createEffect` with a factory function that takes the feature and entity name and returns an effect. This is the same as the other two examples.
 
@@ -187,25 +189,39 @@ Here's the basic issue. Reducers and Effects have specific purposes. Where I wen
 
 But first, let's take a detour and talk about an ideal NgRX setup.
 
-The Redux pattern, generally, and NgRX, specifically, were created to store states predictably. "State only" is my motto. This means that logic should be kept out of our NgRX code. This keeps our NgRX code simple and reduces bugs. You wouldn't believe some of the code I've seen that violates this principle. Then again, you could. You've probably written it.
+### Ideal NgRX Setup
+
+The Redux pattern, generally, and NgRX, specifically, were created to store states predictably. "State only" is my motto. This means that logic should be kept out of our NgRX code. This keeps our NgRX code simple and reduces bugs. You wouldn't believe some of the code I've seen that violates this principle. Then again, maybe you could. You've probably written it.
 
 So, if we want to keep logic out of NgRX, where should it go?
+
+### Action Services
 
 It goes in a service. When you call an action, it should already have the data in the form that NgRX ultimately needs. The reducer can then take this data and store it in the store without doing anything to it.
 
 Notice how small my reducer code is.
 
+### Effects Service
+
 Similarly, when you call an effect, it should already have the data to do whatever it needs. Again, in an ideal world, all the effect does is call what I've come to term the effect service. The effect service can do whatever work needs to be done.
 
 For example, say you are calling the server, but the shape of the data you get back isn't what your application will need. The place to do the transformation is in the effect service. Not in the effect.
 
-By doing this, you'll only need actions that perform basic CRUD operations. You shouldn't see actions for every possible way you could change the state of your application. Most of that can, and should, be handled in a service.
+By doing this, you'll only need actions that perform basic CRUD operations. You shouldn't see actions for every possible way you could change the state of your application. Most of that can, and should, be handled in an Action Service.
 
 There has been a lot of noise in the community about using the "facade" pattern with NgRX but most implementations I've seen just put a class in front of the same actions we've always had. This is not a facade pattern. This is just a bulky, excessive layer in front of what we've always been doing.
 
 What I'm doing is closer to a facade pattern because now all those action calls become calls to a service. The service does the transformations and dispatches whatever action is appropriate to update the store.
 
-Moreover, by doing this, the question of using the command or event patterns with NgRX becomes moot. The argument for using the event pattern is that your actions now give you some idea of what triggered them by using the action name as the where. In the pattern I've described, 100% of your actions (should) get triggered by the same code every time if you've structured things correctly.  That code gets triggered by multiple other places just like any other function in your code does. Now, you can evaluate the call stack. You can still use the event pattern. But, there isn't a strong argument for it anymore.
+### Increased Performance
+
+By using the facade pattern as I've laid out above, you also have the potential of increasing the performance of your application. Another motto I've developed is "keep as much out of the NgRX stream as possible." What that means is that if you can fire one action instead of more than one, you should.
+
+Why is this? Because every action has to be handled by every effect and reducer in your code even if it doesn't need it. Think of every ofType() call as an IF that has to be evaluated. And, similarly, every on() call in the reducers is another IF that has to be evaluated. These add up.
+
+### Command or Event Pattern
+
+By following these tip, the question of using the command or event patterns with NgRX becomes moot. The argument for using the event pattern is that your actions now give you some idea of what triggered them by using the action name as the where. In the pattern I've described, 100% of your actions (should) get triggered by the same code every time if you've structured things correctly.  That code gets triggered by multiple other places just like any other function in your code does. Now, you can evaluate the call stack. You can still use the event pattern. But, there isn't a strong argument for it anymore.
 
 The best part about using this pattern is that I'm in a great position to convert SmartNgRX to use Signals instead of Observables and most of my code won't change.
 
