@@ -13,7 +13,7 @@
 <meta property="og:description" content="Over the course of working on SmartNgRX, I’ve discovered the secret to making NgRX blazing fast. A way that is so obvious now that I know about it, I’m surprised this isn’t the recommended way to use">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-12-15T16:29:45.000Z">
-<meta property="article:modified_time" content="2024-12-19T15:13:19.199Z">
+<meta property="article:modified_time" content="2024-12-19T15:26:03.319Z">
 <meta property="article:author" content="Dave M Bush">
 <meta property="article:tag" content="angular">
 <meta property="article:tag" content="ngrx">
@@ -114,6 +114,8 @@
         <p>Over the course of working on SmartNgRX, I’ve discovered the secret to making NgRX blazing fast. A way that is so obvious now that I know about it, I’m surprised this isn’t the recommended way to use it.</p>
 <p>As most discoveries occur, I’m building on the backs of giants. In this case, I’m specifically building on the back of the increasingly popular NgRX facade pattern (done well) and a statement with regard to Angular Signals that says “Don’t use Signal Effects.”</p>
 <p>There are, of course, other minor improvements but these are the top two catalysts for what I want to share with you today.</p>
+<span id="more"></span>
+
 <h2 id="Facade-Pattern"><a href="#Facade-Pattern" class="headerlink" title="Facade Pattern"></a>Facade Pattern</h2><p>Several guys at the place I work now, have been using the NgRX facade pattern for a while. Even when I interview, people mention it. What most have never been able to convince me of is why I’d want to use it. Where I’ve gotten stuck is that most people use it as nothing more than a pass-through to plain old vanilla NgRX.</p>
 <p>That is, they’ll create a facade class that basically looks like this:</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">class</span> [<span class="title class_">Name</span>]<span class="title class_">Facade</span> &#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params"><span class="keyword">private</span> <span class="attr">store</span>: <span class="title class_">Store</span></span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line">  [actionName]() &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">store</span>.<span class="title function_">dispatch</span>(<span class="keyword">new</span> [<span class="title class_">Name</span>]<span class="title class_">Actions</span>.<span class="title class_">SomeAction</span>());</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
