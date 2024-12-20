@@ -72,13 +72,13 @@ If OnPush isn't giving you all the optimization that you are looking for, creati
 
 However, this is one place where I'd spend the extra time to verify that my "optimization" isn't making the performance worse.
 
-### NgRX Actions
+### NgRX
 
-Fire as few NgRX Actions as possible. What that means is that if you can fire one action instead of more than one, you should.
+Use NgRX to ONLY manage your state. Reducers should only update state. Effects should only retrieve data from the server and dispatch one and only one action.
 
-Why is this? Because every action has to be handled by every effect and reducer in your code even if it doesn't need it. Think of ever ofType() call as an IF that has to be evaluated. And, similarly, every on() call in the reducers is another IF that has to be evaluated. These add up.
+For futher optimization, consider calling the service you'd normally call from your effect directly instead of dispatching through the effect.
 
-See my article about [What I learned writing SmartNgRX](/what-i-learned-writing-smartngrx/) for more information on this topic.
+See my article about [What I learned writing SmartNgRX](/what-i-learned-writing-smartngrx/) and [NgRx Performance Improvements](/ngrx-performance-improvements/) for more information on this topic.
 
 ### Use NgRX Selectors
 

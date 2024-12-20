@@ -213,12 +213,6 @@ There has been a lot of noise in the community about using the "facade" pattern 
 
 What I'm doing is closer to a facade pattern because now all those action calls become calls to a service. The service does the transformations and dispatches whatever action is appropriate to update the store.
 
-### Increased Performance
-
-By using the facade pattern as I've laid out above, you also have the potential of increasing the performance of your application. Another motto I've developed is "keep as much out of the NgRX stream as possible." What that means is that if you can fire one action instead of more than one, you should.
-
-Why is this? Because every action has to be handled by every effect and reducer in your code even if it doesn't need it. Think of every ofType() call as an IF that has to be evaluated. And, similarly, every on() call in the reducers is another IF that has to be evaluated. These add up.
-
 ### Command or Event Pattern
 
 By following these tip, the question of using the command or event patterns with NgRX becomes moot. The argument for using the event pattern is that your actions now give you some idea of what triggered them by using the action name as the where. In the pattern I've described, 100% of your actions (should) get triggered by the same code every time if you've structured things correctly.  That code gets triggered by multiple other places just like any other function in your code does. Now, you can evaluate the call stack. You can still use the event pattern. But, there isn't a strong argument for it anymore.
