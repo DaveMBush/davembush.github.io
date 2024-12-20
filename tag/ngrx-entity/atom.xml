@@ -379,10 +379,10 @@
     <category term="ngrx-entity" />
     <category term="ngrx-effects" />
     <entry>
-        <id>http://davembush.github.com/ngrx-performance-improvements/</id>
-        <title>NgRX Performance Improvements</title>
-        <link rel="alternate" href="http://davembush.github.com/ngrx-performance-improvements/"/>
-        <content type="html">&lt;p&gt;Over the course of working on SmartNgRX, I’ve discovered the secret to making NgRX blazing fast. A way that is so obvious now that I know about it, I’m surprised this isn’t the recommended way to use it.&lt;/p&gt;
+        <id>http://davembush.github.com/ngrx-performance-improvement/</id>
+        <title>NgRX Performance Improvement</title>
+        <link rel="alternate" href="http://davembush.github.com/ngrx-performance-improvement/"/>
+        <content type="html">&lt;p&gt;Over the course of working on &lt;a href=&#34;https://github.com/DaveMBush/SmartNgRX&#34;&gt;SmartNgRX&lt;/a&gt;, I’ve discovered a secret to making NgRX faster. A way that is so obvious now that I know about it, I’m surprised this isn’t the recommended way to use NgRX.&lt;/p&gt;
 &lt;p&gt;As most discoveries occur, I’m building on the backs of giants. In this case, I’m specifically building on the back of the increasingly popular NgRX facade pattern (done well) and a statement with regard to Angular Signals that says “Don’t use Signal Effects.”&lt;/p&gt;
 &lt;p&gt;There are, of course, other minor improvements but these are the top two catalysts for what I want to share with you today.&lt;/p&gt;
 &lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
@@ -445,7 +445,7 @@
 &lt;/tr&gt;
 &lt;/tbody&gt;&lt;/table&gt;
 &lt;blockquote&gt;
-&lt;p&gt;TL &amp;#x3D; Tight Loop (for&amp;#x2F;next loop)&lt;br&gt;SL &amp;#x3D; Spaced Loop ( using rxjs of().pipe(repeat({count: 10000, delay: 100 })))&lt;/p&gt;
+&lt;p&gt;TL &amp;#x3D; Tight Loop (for&amp;#x2F;next loop)&lt;br&gt;SL &amp;#x3D; Spaced Loop ( using rxjs of().pipe(repeat({count: 1000, delay: 100 })))&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;p&gt;In both the tight loop and the spaced loop, the direct call outperforms dispatching to the effect. But, the difference is not significant for most applications and should be considered a micro-optimization.&lt;/p&gt;
 &lt;p&gt;On the other hand, if you are doing a lot of dispatching to effects at any one time, these difference could add up and you might want to consider using the direct call.&lt;/p&gt;
