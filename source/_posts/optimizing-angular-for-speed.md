@@ -1,6 +1,6 @@
 ---
 title: Optimizing Angular For Speed
-date: 2024-10-14 08:34:41
+date: 2025-01-12 08:34:41
 tags:
   - angular
   - performance
@@ -14,6 +14,14 @@ For the purposes of this article, I'm going to assume you have already implement
 Here are my 30 or so tips on how to optimize an Angular application for speed.
 
 <!-- more -->
+## Remove Code
+
+Before we get started looking at ways to improve the performance our our application, the first thing we should do is look at ways to eliminate code. The fastest code in the world is the code that doesn't run. In the case of JavaScript, generally, this also means code that doesn't load. So, always evaluate if the code you are adding is necessary.
+
+To that end, you should also evaluate your code for duplicate code. Not just code within the code you write, but code you might be importing from other libraries that are unintentionally duplicating each other. Could you remove a library that is redundant?
+
+Be ruthless here because the more code you load, the more code the JavaScript engine has to parse, compile, and ultimately try to optimize.
+
 ## Change Detection
 
 ### OnPush Notification
@@ -278,6 +286,28 @@ There are multiple ways of dynamically adding classes to an element. Each one of
 Currently, using `ngClass` adds and removes each class in it individually. You'd think it would be optimized to add them more efficiently but currently (2023-11-11) they do not.
 
 I'm hoping this gets fixed by the next major version of Angular.
+
+### Dynamic Styles
+
+You want to avoid adding styles to your elements. Period. This is a performance issue because it deoptimizes the browsers ability to optimize style recalculations. Instead, consider dynamically creating a class and adding the class to the element. If you code it correctly, everything else should be able to use that same class for the same dynamic styling.
+
+### Avoid The Universal Selector
+
+Adding the universal selector (*) to your CSS, especially to the end of a selector, increases the time to recompute the styles. Just avoid this.
+
+### Avoid unqualified pseudo-classes and psuedo-elements
+
+Doing so is practically the same as saying `*::psuedo` which has the same performance issues as using the raw universal selector.
+
+### CSS Classes always win
+
+Related to the styling issue above, all your styling should be done using CSS classes. This is because using classes are practically free compared to other styling methods.
+
+Related to this, Angular's method of implementing emulated view encapsulation is to scope the host element to a random element. Attributes are known to be slower than classes with regard to style recalculations.
+
+There is a patch for this issue that you can apply to your project. It is available [here](https://github.com/laurentgoudet/angular-ie11-bug/commit/13896b53fc61c424ff5c6f98c58cc9ccc0f7d502). While originally written to address an issue with IE11 in 2019, the problem still exist, to a lesser extent, in modern browsers. That is modern browsers process attributes significantly faster than IE11 did but they are still enough slower that using classes instead of attributes will improve your performance.
+
+If you want to apply this patch to your project, you can use either `pnpm`'s `patch` command or `yarn`'s `patch-package` command to apply the patch once you've made the changes to the code.
 
 ### SVG references vs SVG inlining
 
