@@ -3,7 +3,7 @@
     <id>http://davembush.github.com</id>
     <title>Dave&#39;s Notebook</title>
     <link href="http://davembush.github.com" />
-    <updated>2024-12-15T16:29:45.000Z</updated>
+    <updated>2025-01-12T13:34:41.000Z</updated>
     <category term="project management" />
     <category term="code coverage" />
     <category term="tdd" />
@@ -379,108 +379,6 @@
     <category term="ngrx-entity" />
     <category term="ngrx-effects" />
     <entry>
-        <id>http://davembush.github.com/ngrx-performance-improvement/</id>
-        <title>NgRX Performance Improvement</title>
-        <link rel="alternate" href="http://davembush.github.com/ngrx-performance-improvement/"/>
-        <content type="html">&lt;p&gt;Over the course of working on &lt;a href=&#34;https://github.com/DaveMBush/SmartNgRX&#34;&gt;SmartNgRX&lt;/a&gt;, I’ve discovered a secret to making NgRX faster. A way that is so obvious now that I know about it, I’m surprised this isn’t the recommended way to use NgRX.&lt;/p&gt;
-&lt;p&gt;As most discoveries occur, I’m building on the backs of giants. In this case, I’m specifically building on the back of the increasingly popular NgRX facade pattern (done well) and a statement with regard to Angular Signals that says “Don’t use Signal Effects.”&lt;/p&gt;
-&lt;p&gt;There are, of course, other minor improvements but these are the top two catalysts for what I want to share with you today.&lt;/p&gt;
-&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
-
-&lt;h2 id=&#34;Facade-Pattern&#34;&gt;&lt;a href=&#34;#Facade-Pattern&#34; class=&#34;headerlink&#34; title=&#34;Facade Pattern&#34;&gt;&lt;/a&gt;Facade Pattern&lt;/h2&gt;&lt;p&gt;Several guys at the place I work now, have been using the NgRX facade pattern for a while. Even when I interview, people mention it. What most have never been able to convince me of is why I’d want to use it. Where I’ve gotten stuck is that most people use it as nothing more than a pass-through to plain old vanilla NgRX.&lt;/p&gt;
-&lt;p&gt;That is, they’ll create a facade class that basically looks like this:&lt;/p&gt;
-&lt;figure class=&#34;highlight typescript&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; [&lt;span class=&#34;title class_&#34;&gt;Name&lt;/span&gt;]&lt;span class=&#34;title class_&#34;&gt;Facade&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;title function_&#34;&gt;constructor&lt;/span&gt;(&lt;span class=&#34;params&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;store&lt;/span&gt;: &lt;span class=&#34;title class_&#34;&gt;Store&lt;/span&gt;&lt;/span&gt;) &amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  [actionName]() &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;variable language_&#34;&gt;this&lt;/span&gt;.&lt;span class=&#34;property&#34;&gt;store&lt;/span&gt;.&lt;span class=&#34;title function_&#34;&gt;dispatch&lt;/span&gt;(&lt;span class=&#34;keyword&#34;&gt;new&lt;/span&gt; [&lt;span class=&#34;title class_&#34;&gt;Name&lt;/span&gt;]&lt;span class=&#34;title class_&#34;&gt;Actions&lt;/span&gt;.&lt;span class=&#34;title class_&#34;&gt;SomeAction&lt;/span&gt;());&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;And create methods for each action.&lt;/p&gt;
-&lt;p&gt;If that’s you, I’m sorry. You’re doing it wrong.&lt;/p&gt;
-&lt;p&gt;But going back to my article about what I learned building (SmartNgRX)[&lt;a href=&#34;https://davembush.github.io/what-i-learned-writing-smartngrx/]&#34;&gt;https://davembush.github.io/what-i-learned-writing-smartngrx/]&lt;/a&gt;, what you want to do in the facade pattern is to do everything that isn’t related to NgRX in the facade and then dispatch the action from the facade to update the resulting state.&lt;/p&gt;
-&lt;p&gt;By doing this, you’re able to keep your NgRX code clean and simple.&lt;/p&gt;
-&lt;h2 id=&#34;Dispatch-Time&#34;&gt;&lt;a href=&#34;#Dispatch-Time&#34; class=&#34;headerlink&#34; title=&#34;Dispatch Time&#34;&gt;&lt;/a&gt;Dispatch Time&lt;/h2&gt;&lt;p&gt;In SmartNgRX, one of the things I do is buffer the dispatch actions that retrieve the IDs so I can dispatch them all at once. Originally, I put the buffering code in an effect. But one day I thought, “What if I buffer the IDs and THEN dispatch the actions?”  It turns out that is faster.&lt;/p&gt;
-&lt;p&gt;That’s when I realized (and found out I was wrong - see below) that when you dispatch an action, NgRX has to run it through every typeOf() in your effects regardless of if the effect needs to process it or not.  It’s a lot like the chick going around the farm yard asking “Are you my mother?” instead of mama chicken coming to the chick and saying “I’m your mother, come here and I’ll take care of you.”&lt;/p&gt;
-&lt;p&gt;Reducers are a bit different. If you are using the newest on() syntax for reducers, this translates to a map statement so you end up with the benefits of O(1) time. If you are using older syntax, you have an increasingly complex switch statement that is O(n) time until switch statements are optimized.&lt;/p&gt;
-&lt;p&gt;The take away from this, I thought, is that you want as few effects as possible in your code.&lt;/p&gt;
-&lt;p&gt;I almost titled this article “Ban NgRX Effects” but that wouldn’t give you the full picture.&lt;/p&gt;
-&lt;h2 id=&#34;Signals&#34;&gt;&lt;a href=&#34;#Signals&#34; class=&#34;headerlink&#34; title=&#34;Signals&#34;&gt;&lt;/a&gt;Signals&lt;/h2&gt;&lt;p&gt;And then I stumbled across a video about Signals where Alex Rickabaugh from the Angular Core team said “(Don’t use Effects)[&lt;a href=&#34;https://www.youtube.com/watch?v=aKxcIQMWSNU&amp;ab_channel=TechStackNation%5D&#34;&gt;https://www.youtube.com/watch?v=aKxcIQMWSNU&amp;amp;ab_channel=TechStackNation]&lt;/a&gt;.”&lt;/p&gt;
-&lt;p&gt;And then it struck me. If I’m using a facade, I don’t need to use effects.&lt;/p&gt;
-&lt;p&gt;Think about why we typically use effects. Isn’t it so that we can ultimately call a service that will grab data from the server? And then, what do we do with that data? We fire an action to update the state.&lt;/p&gt;
-&lt;h2 id=&#34;Ban-Effects&#34;&gt;&lt;a href=&#34;#Ban-Effects&#34; class=&#34;headerlink&#34; title=&#34;Ban Effects&#34;&gt;&lt;/a&gt;Ban Effects&lt;/h2&gt;&lt;p&gt;Instead, why not just call the service directly from our facade?&lt;/p&gt;
-&lt;figure class=&#34;highlight typescript&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; [&lt;span class=&#34;title class_&#34;&gt;Name&lt;/span&gt;]&lt;span class=&#34;title class_&#34;&gt;Facade&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;title function_&#34;&gt;constructor&lt;/span&gt;(&lt;span class=&#34;params&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;service&lt;/span&gt;: [&lt;span class=&#34;title class_&#34;&gt;Name&lt;/span&gt;]&lt;span class=&#34;title class_&#34;&gt;Service&lt;/span&gt;&lt;/span&gt;) &amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  [methodName]() &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;comment&#34;&gt;// For optimistic updates, dispatch an action to update the state here.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;variable language_&#34;&gt;this&lt;/span&gt;.&lt;span class=&#34;property&#34;&gt;service&lt;/span&gt;.[methodName]().&lt;span class=&#34;title function_&#34;&gt;pipe&lt;/span&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      &lt;span class=&#34;comment&#34;&gt;// process data from the backend and then&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      &lt;span class=&#34;comment&#34;&gt;// dispatch an action to update the state&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    ).&lt;span class=&#34;title function_&#34;&gt;subscribe&lt;/span&gt;();&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;Even better would be to use promises:&lt;/p&gt;
-&lt;figure class=&#34;highlight typescript&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; [&lt;span class=&#34;title class_&#34;&gt;Name&lt;/span&gt;]&lt;span class=&#34;title class_&#34;&gt;Facade&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;title function_&#34;&gt;constructor&lt;/span&gt;(&lt;span class=&#34;params&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;service&lt;/span&gt;: [&lt;span class=&#34;title class_&#34;&gt;Name&lt;/span&gt;]&lt;span class=&#34;title class_&#34;&gt;Service&lt;/span&gt;&lt;/span&gt;) &amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  [methodName]() &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;comment&#34;&gt;// For optimistic updates, dispatch an action to update the state here.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;const&lt;/span&gt; resultawait &lt;span class=&#34;title function_&#34;&gt;lastValueFrom&lt;/span&gt;(&lt;span class=&#34;variable language_&#34;&gt;this&lt;/span&gt;.&lt;span class=&#34;property&#34;&gt;service&lt;/span&gt;.[methodName]());&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;comment&#34;&gt;// process data from the backend and then&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;comment&#34;&gt;// dispatch an action to update the state&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;Now, you don’t need effects.&lt;/p&gt;
-&lt;p&gt;The additional beauty of this is that you should be able to use NgRX Signals instead of NgRX from your facade with very little effort.  The methods you put in withMethods() will be correspond to your Actions. computed() signals will be your selectors. Done. With some nice dependency injection added in, you can switch between the two with ease.&lt;/p&gt;
-&lt;p&gt;There are, of course, other improvements you can make to your code. For example, your code will generally run faster if you are using NgRX Entities for your state management and retrieve the data from the server as you need it. You could roll your own, but I’ve already done that work for you.  Check out the &lt;a href=&#34;https://github.com/DaveMBush/SmartNgRX&#34;&gt;SmartNgRX&lt;/a&gt; library.&lt;/p&gt;
-&lt;h2 id=&#34;Timings&#34;&gt;&lt;a href=&#34;#Timings&#34; class=&#34;headerlink&#34; title=&#34;Timings&#34;&gt;&lt;/a&gt;Timings&lt;/h2&gt;&lt;p&gt;And then I went to actually prove everything I’ve said above.&lt;/p&gt;
-&lt;p&gt;I created a simple Angular application that dispatches an action to an effect and then had that effect call a service that would return an action asynchronously that would then be dispatched to a reducer.&lt;/p&gt;
-&lt;p&gt;I also added 50 other effects that just had ofType() to emulate the need to check for every action.&lt;/p&gt;
-&lt;p&gt;No matter how I ran this code, I could not see any timing difference between using one effect or 50 effects. So, my statement above that started me on this journey was wrong. We, evidently, do not suffer a performance hit based on the number of effects we have.&lt;/p&gt;
-&lt;p&gt;However, I did find some interesting performance marks that still indicate that you might want to call your effects services directly.&lt;/p&gt;
-&lt;p&gt;Along with the code I mentioned above, I modified the code to call the service directly and then dispatch the resulting action.&lt;/p&gt;
-&lt;p&gt;Here are the results from running the code on my computer:&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th&gt;&lt;/th&gt;
-&lt;th&gt;TL w&amp;#x2F; Effects&lt;/th&gt;
-&lt;th&gt;TL Direct&lt;/th&gt;
-&lt;th&gt;SL w&amp;#x2F; Effects&lt;/th&gt;
-&lt;th&gt;SL Direct&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;&lt;tr&gt;
-&lt;td&gt;Average&lt;/td&gt;
-&lt;td&gt;176.2232ms&lt;/td&gt;
-&lt;td&gt;0.0158ms&lt;/td&gt;
-&lt;td&gt;0.3688ms&lt;/td&gt;
-&lt;td&gt;0.1875ms&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td&gt;Max Time&lt;/td&gt;
-&lt;td&gt;202ms&lt;/td&gt;
-&lt;td&gt;0.7000ms&lt;/td&gt;
-&lt;td&gt;1.1000ms&lt;/td&gt;
-&lt;td&gt;0.4000ms&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;&lt;/table&gt;
-&lt;blockquote&gt;
-&lt;p&gt;TL &amp;#x3D; Tight Loop (for&amp;#x2F;next loop)&lt;br&gt;SL &amp;#x3D; Spaced Loop ( using rxjs of().pipe(repeat({count: 1000, delay: 100 })))&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;In both the tight loop and the spaced loop, the direct call outperforms dispatching to the effect. But, the difference is not significant for most applications and should be considered a micro-optimization.&lt;/p&gt;
-&lt;p&gt;On the other hand, if you are doing a lot of dispatching to effects at any one time, these difference could add up and you might want to consider using the direct call.&lt;/p&gt;
-&lt;h2 id=&#34;Other-Considerations&#34;&gt;&lt;a href=&#34;#Other-Considerations&#34; class=&#34;headerlink&#34; title=&#34;Other Considerations&#34;&gt;&lt;/a&gt;Other Considerations&lt;/h2&gt;&lt;p&gt;While banning effects for performance reasons may not be useful for most existing applications, there are other reasons you might want to consider banning them.&lt;/p&gt;
-&lt;p&gt;As I’ve moved from organization to organization, I’ve seen some pretty ugly NgRX code. Much of it is due to the complexity of effects. If the people using NgRX were not forced to use RxJS because of the effects, the code would be easier to read and we’d avoid a lot of the effect chaining that I’ve seen. While effects themselves aren’t particularly slow, chaining the effects and using RxJS operators can be.&lt;/p&gt;
-&lt;p&gt;Since I’ve already removed the effects from SmartNgRX, and there is a slight performance benefit from doing so, I’m not going to revert that change. Especially since it should allow me to use 99% of the same code to implement the Signals version.&lt;/p&gt;
-</content>
-        <category term="angular" />
-        <category term="ngrx" />
-        <category term="ngrx-store" />
-        <category term="ngrx-entity" />
-        <category term="ngrx-effects" />
-        <updated>2024-12-15T16:29:45.000Z</updated>
-    </entry>
-    <entry>
-        <id>http://davembush.github.com/smart-ngrx/</id>
-        <title>smart-ngrx</title>
-        <link rel="alternate" href="http://davembush.github.com/smart-ngrx/"/>
-        <content type="html">&lt;p&gt;Imagine an NgRX world where you almost never knew you were using NgRX. A world where you never had to write a &lt;code&gt;reducer&lt;/code&gt;, &lt;code&gt;action&lt;/code&gt;, or &lt;code&gt;effect&lt;/code&gt;. A world where you never had to call &lt;code&gt;store.dispatch()&lt;/code&gt;. A world where the data you worked automatically persist to the server. A world where the data is retrieved from the server as it is needed and removed from memory when it is not, or never removed if that’s what you want. A world where the data automatically refreshes from the server, or you can use websocket messages to refresh the data and, in either case, the only data that refreshes is the data the code is actively using. A world where optimistic UI is built into the framework.&lt;/p&gt;
-&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
-
-&lt;p&gt;Introducing &lt;a href=&#34;https://www.npmjs.com/package/@smarttools/smart-ngrx&#34;&gt;SmartNgRX&lt;/a&gt;. A framework I’ve been working on for over a year that does everything I just mentioned and more. It’s a framework that is built on top of NgRX and works with your existing NgRX code.&lt;/p&gt;
-&lt;p&gt;The full documentation is available at &lt;a href=&#34;https://davembush.github.io/SmartNgRX/home&#34;&gt;SmartNgRX Documentation&lt;/a&gt; but let me give you a brief overview of how it works.&lt;/p&gt;
-&lt;h2 id=&#34;Brief-Overview&#34;&gt;&lt;a href=&#34;#Brief-Overview&#34; class=&#34;headerlink&#34; title=&#34;Brief Overview&#34;&gt;&lt;/a&gt;Brief Overview&lt;/h2&gt;&lt;p&gt;First, there are two providers you will need to add to your application. The first is &lt;code&gt;provideSmartNgRX()&lt;/code&gt; which is added to the &lt;code&gt;providers&lt;/code&gt; array in you &lt;code&gt;AppModule&lt;/code&gt;. The second is &lt;code&gt;provideSmartFeatureEntities()&lt;/code&gt; which is added to the module, or route, nearest where you’ll use it.&lt;/p&gt;
-&lt;p&gt;These two providers setup the configuration information that SmartNgRX will need to work. They control things such as how often to refresh the data, when to remove unused data from memory, what service to call to retrieve the data for an NgRX slice looks like and what a placeholder row looks like for a particular slice of data.&lt;/p&gt;
-&lt;p&gt;For you to define the service an the SmartNgRX effect will call, you’ll need to create an EffectService. This service is where you control how the CRUD operations interact with the server. This and the selectors are the only code you’ll need to write.&lt;/p&gt;
-&lt;p&gt;Which brings us to the selectors. Instead of using the &lt;code&gt;createSelector&lt;/code&gt; function from NgRX, you’ll use the &lt;code&gt;createSmartNgRXSelector&lt;/code&gt; function from SmartNgRX. This function defines the relationship between a parent selector and any children it may have. You can use selectors created with createSmartNgRXSelector with selectors created with createSelector and mix and match them as needed.&lt;/p&gt;
-&lt;p&gt;That’s it. All the other code you normally write is handled by SmartNgRX.&lt;/p&gt;
-&lt;p&gt;Give it a try and let me know what you think.&lt;/p&gt;
-</content>
-        <category term="angular" />
-        <category term="ngrx" />
-        <updated>2024-10-29T17:36:27.000Z</updated>
-    </entry>
-    <entry>
         <id>http://davembush.github.com/optimizing-angular-for-speed/</id>
         <title>Optimizing Angular For Speed</title>
         <link rel="alternate" href="http://davembush.github.com/optimizing-angular-for-speed/"/>
@@ -687,7 +585,109 @@
         <category term="angular" />
         <category term="performance" />
         <category term="best practice" />
-        <updated>2024-10-14T12:34:41.000Z</updated>
+        <updated>2025-01-12T13:34:41.000Z</updated>
+    </entry>
+    <entry>
+        <id>http://davembush.github.com/ngrx-performance-improvement/</id>
+        <title>NgRX Performance Improvement</title>
+        <link rel="alternate" href="http://davembush.github.com/ngrx-performance-improvement/"/>
+        <content type="html">&lt;p&gt;Over the course of working on &lt;a href=&#34;https://github.com/DaveMBush/SmartNgRX&#34;&gt;SmartNgRX&lt;/a&gt;, I’ve discovered a secret to making NgRX faster. A way that is so obvious now that I know about it, I’m surprised this isn’t the recommended way to use NgRX.&lt;/p&gt;
+&lt;p&gt;As most discoveries occur, I’m building on the backs of giants. In this case, I’m specifically building on the back of the increasingly popular NgRX facade pattern (done well) and a statement with regard to Angular Signals that says “Don’t use Signal Effects.”&lt;/p&gt;
+&lt;p&gt;There are, of course, other minor improvements but these are the top two catalysts for what I want to share with you today.&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+
+&lt;h2 id=&#34;Facade-Pattern&#34;&gt;&lt;a href=&#34;#Facade-Pattern&#34; class=&#34;headerlink&#34; title=&#34;Facade Pattern&#34;&gt;&lt;/a&gt;Facade Pattern&lt;/h2&gt;&lt;p&gt;Several guys at the place I work now, have been using the NgRX facade pattern for a while. Even when I interview, people mention it. What most have never been able to convince me of is why I’d want to use it. Where I’ve gotten stuck is that most people use it as nothing more than a pass-through to plain old vanilla NgRX.&lt;/p&gt;
+&lt;p&gt;That is, they’ll create a facade class that basically looks like this:&lt;/p&gt;
+&lt;figure class=&#34;highlight typescript&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; [&lt;span class=&#34;title class_&#34;&gt;Name&lt;/span&gt;]&lt;span class=&#34;title class_&#34;&gt;Facade&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;title function_&#34;&gt;constructor&lt;/span&gt;(&lt;span class=&#34;params&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;store&lt;/span&gt;: &lt;span class=&#34;title class_&#34;&gt;Store&lt;/span&gt;&lt;/span&gt;) &amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  [actionName]() &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;variable language_&#34;&gt;this&lt;/span&gt;.&lt;span class=&#34;property&#34;&gt;store&lt;/span&gt;.&lt;span class=&#34;title function_&#34;&gt;dispatch&lt;/span&gt;(&lt;span class=&#34;keyword&#34;&gt;new&lt;/span&gt; [&lt;span class=&#34;title class_&#34;&gt;Name&lt;/span&gt;]&lt;span class=&#34;title class_&#34;&gt;Actions&lt;/span&gt;.&lt;span class=&#34;title class_&#34;&gt;SomeAction&lt;/span&gt;());&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;And create methods for each action.&lt;/p&gt;
+&lt;p&gt;If that’s you, I’m sorry. You’re doing it wrong.&lt;/p&gt;
+&lt;p&gt;But going back to my article about what I learned building (SmartNgRX)[&lt;a href=&#34;https://davembush.github.io/what-i-learned-writing-smartngrx/]&#34;&gt;https://davembush.github.io/what-i-learned-writing-smartngrx/]&lt;/a&gt;, what you want to do in the facade pattern is to do everything that isn’t related to NgRX in the facade and then dispatch the action from the facade to update the resulting state.&lt;/p&gt;
+&lt;p&gt;By doing this, you’re able to keep your NgRX code clean and simple.&lt;/p&gt;
+&lt;h2 id=&#34;Dispatch-Time&#34;&gt;&lt;a href=&#34;#Dispatch-Time&#34; class=&#34;headerlink&#34; title=&#34;Dispatch Time&#34;&gt;&lt;/a&gt;Dispatch Time&lt;/h2&gt;&lt;p&gt;In SmartNgRX, one of the things I do is buffer the dispatch actions that retrieve the IDs so I can dispatch them all at once. Originally, I put the buffering code in an effect. But one day I thought, “What if I buffer the IDs and THEN dispatch the actions?”  It turns out that is faster.&lt;/p&gt;
+&lt;p&gt;That’s when I realized (and found out I was wrong - see below) that when you dispatch an action, NgRX has to run it through every typeOf() in your effects regardless of if the effect needs to process it or not.  It’s a lot like the chick going around the farm yard asking “Are you my mother?” instead of mama chicken coming to the chick and saying “I’m your mother, come here and I’ll take care of you.”&lt;/p&gt;
+&lt;p&gt;Reducers are a bit different. If you are using the newest on() syntax for reducers, this translates to a map statement so you end up with the benefits of O(1) time. If you are using older syntax, you have an increasingly complex switch statement that is O(n) time until switch statements are optimized.&lt;/p&gt;
+&lt;p&gt;The take away from this, I thought, is that you want as few effects as possible in your code.&lt;/p&gt;
+&lt;p&gt;I almost titled this article “Ban NgRX Effects” but that wouldn’t give you the full picture.&lt;/p&gt;
+&lt;h2 id=&#34;Signals&#34;&gt;&lt;a href=&#34;#Signals&#34; class=&#34;headerlink&#34; title=&#34;Signals&#34;&gt;&lt;/a&gt;Signals&lt;/h2&gt;&lt;p&gt;And then I stumbled across a video about Signals where Alex Rickabaugh from the Angular Core team said “(Don’t use Effects)[&lt;a href=&#34;https://www.youtube.com/watch?v=aKxcIQMWSNU&amp;ab_channel=TechStackNation%5D&#34;&gt;https://www.youtube.com/watch?v=aKxcIQMWSNU&amp;amp;ab_channel=TechStackNation]&lt;/a&gt;.”&lt;/p&gt;
+&lt;p&gt;And then it struck me. If I’m using a facade, I don’t need to use effects.&lt;/p&gt;
+&lt;p&gt;Think about why we typically use effects. Isn’t it so that we can ultimately call a service that will grab data from the server? And then, what do we do with that data? We fire an action to update the state.&lt;/p&gt;
+&lt;h2 id=&#34;Ban-Effects&#34;&gt;&lt;a href=&#34;#Ban-Effects&#34; class=&#34;headerlink&#34; title=&#34;Ban Effects&#34;&gt;&lt;/a&gt;Ban Effects&lt;/h2&gt;&lt;p&gt;Instead, why not just call the service directly from our facade?&lt;/p&gt;
+&lt;figure class=&#34;highlight typescript&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;11&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; [&lt;span class=&#34;title class_&#34;&gt;Name&lt;/span&gt;]&lt;span class=&#34;title class_&#34;&gt;Facade&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;title function_&#34;&gt;constructor&lt;/span&gt;(&lt;span class=&#34;params&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;service&lt;/span&gt;: [&lt;span class=&#34;title class_&#34;&gt;Name&lt;/span&gt;]&lt;span class=&#34;title class_&#34;&gt;Service&lt;/span&gt;&lt;/span&gt;) &amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  [methodName]() &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;comment&#34;&gt;// For optimistic updates, dispatch an action to update the state here.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;variable language_&#34;&gt;this&lt;/span&gt;.&lt;span class=&#34;property&#34;&gt;service&lt;/span&gt;.[methodName]().&lt;span class=&#34;title function_&#34;&gt;pipe&lt;/span&gt;(&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      &lt;span class=&#34;comment&#34;&gt;// process data from the backend and then&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;      &lt;span class=&#34;comment&#34;&gt;// dispatch an action to update the state&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    ).&lt;span class=&#34;title function_&#34;&gt;subscribe&lt;/span&gt;();&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;Even better would be to use promises:&lt;/p&gt;
+&lt;figure class=&#34;highlight typescript&#34;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&#34;gutter&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&#34;code&#34;&gt;&lt;pre&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;keyword&#34;&gt;class&lt;/span&gt; [&lt;span class=&#34;title class_&#34;&gt;Name&lt;/span&gt;]&lt;span class=&#34;title class_&#34;&gt;Facade&lt;/span&gt; &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &lt;span class=&#34;title function_&#34;&gt;constructor&lt;/span&gt;(&lt;span class=&#34;params&#34;&gt;&lt;span class=&#34;keyword&#34;&gt;private&lt;/span&gt; &lt;span class=&#34;attr&#34;&gt;service&lt;/span&gt;: [&lt;span class=&#34;title class_&#34;&gt;Name&lt;/span&gt;]&lt;span class=&#34;title class_&#34;&gt;Service&lt;/span&gt;&lt;/span&gt;) &amp;#123;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  [methodName]() &amp;#123;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;comment&#34;&gt;// For optimistic updates, dispatch an action to update the state here.&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;keyword&#34;&gt;const&lt;/span&gt; resultawait &lt;span class=&#34;title function_&#34;&gt;lastValueFrom&lt;/span&gt;(&lt;span class=&#34;variable language_&#34;&gt;this&lt;/span&gt;.&lt;span class=&#34;property&#34;&gt;service&lt;/span&gt;.[methodName]());&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;comment&#34;&gt;// process data from the backend and then&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;    &lt;span class=&#34;comment&#34;&gt;// dispatch an action to update the state&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;  &amp;#125;&lt;/span&gt;&lt;br&gt;&lt;span class=&#34;line&#34;&gt;&amp;#125;&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;Now, you don’t need effects.&lt;/p&gt;
+&lt;p&gt;The additional beauty of this is that you should be able to use NgRX Signals instead of NgRX from your facade with very little effort.  The methods you put in withMethods() will be correspond to your Actions. computed() signals will be your selectors. Done. With some nice dependency injection added in, you can switch between the two with ease.&lt;/p&gt;
+&lt;p&gt;There are, of course, other improvements you can make to your code. For example, your code will generally run faster if you are using NgRX Entities for your state management and retrieve the data from the server as you need it. You could roll your own, but I’ve already done that work for you.  Check out the &lt;a href=&#34;https://github.com/DaveMBush/SmartNgRX&#34;&gt;SmartNgRX&lt;/a&gt; library.&lt;/p&gt;
+&lt;h2 id=&#34;Timings&#34;&gt;&lt;a href=&#34;#Timings&#34; class=&#34;headerlink&#34; title=&#34;Timings&#34;&gt;&lt;/a&gt;Timings&lt;/h2&gt;&lt;p&gt;And then I went to actually prove everything I’ve said above.&lt;/p&gt;
+&lt;p&gt;I created a simple Angular application that dispatches an action to an effect and then had that effect call a service that would return an action asynchronously that would then be dispatched to a reducer.&lt;/p&gt;
+&lt;p&gt;I also added 50 other effects that just had ofType() to emulate the need to check for every action.&lt;/p&gt;
+&lt;p&gt;No matter how I ran this code, I could not see any timing difference between using one effect or 50 effects. So, my statement above that started me on this journey was wrong. We, evidently, do not suffer a performance hit based on the number of effects we have.&lt;/p&gt;
+&lt;p&gt;However, I did find some interesting performance marks that still indicate that you might want to call your effects services directly.&lt;/p&gt;
+&lt;p&gt;Along with the code I mentioned above, I modified the code to call the service directly and then dispatch the resulting action.&lt;/p&gt;
+&lt;p&gt;Here are the results from running the code on my computer:&lt;/p&gt;
+&lt;table&gt;
+&lt;thead&gt;
+&lt;tr&gt;
+&lt;th&gt;&lt;/th&gt;
+&lt;th&gt;TL w&amp;#x2F; Effects&lt;/th&gt;
+&lt;th&gt;TL Direct&lt;/th&gt;
+&lt;th&gt;SL w&amp;#x2F; Effects&lt;/th&gt;
+&lt;th&gt;SL Direct&lt;/th&gt;
+&lt;/tr&gt;
+&lt;/thead&gt;
+&lt;tbody&gt;&lt;tr&gt;
+&lt;td&gt;Average&lt;/td&gt;
+&lt;td&gt;176.2232ms&lt;/td&gt;
+&lt;td&gt;0.0158ms&lt;/td&gt;
+&lt;td&gt;0.3688ms&lt;/td&gt;
+&lt;td&gt;0.1875ms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;Max Time&lt;/td&gt;
+&lt;td&gt;202ms&lt;/td&gt;
+&lt;td&gt;0.7000ms&lt;/td&gt;
+&lt;td&gt;1.1000ms&lt;/td&gt;
+&lt;td&gt;0.4000ms&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;&lt;/table&gt;
+&lt;blockquote&gt;
+&lt;p&gt;TL &amp;#x3D; Tight Loop (for&amp;#x2F;next loop)&lt;br&gt;SL &amp;#x3D; Spaced Loop ( using rxjs of().pipe(repeat({count: 1000, delay: 100 })))&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;In both the tight loop and the spaced loop, the direct call outperforms dispatching to the effect. But, the difference is not significant for most applications and should be considered a micro-optimization.&lt;/p&gt;
+&lt;p&gt;On the other hand, if you are doing a lot of dispatching to effects at any one time, these difference could add up and you might want to consider using the direct call.&lt;/p&gt;
+&lt;h2 id=&#34;Other-Considerations&#34;&gt;&lt;a href=&#34;#Other-Considerations&#34; class=&#34;headerlink&#34; title=&#34;Other Considerations&#34;&gt;&lt;/a&gt;Other Considerations&lt;/h2&gt;&lt;p&gt;While banning effects for performance reasons may not be useful for most existing applications, there are other reasons you might want to consider banning them.&lt;/p&gt;
+&lt;p&gt;As I’ve moved from organization to organization, I’ve seen some pretty ugly NgRX code. Much of it is due to the complexity of effects. If the people using NgRX were not forced to use RxJS because of the effects, the code would be easier to read and we’d avoid a lot of the effect chaining that I’ve seen. While effects themselves aren’t particularly slow, chaining the effects and using RxJS operators can be.&lt;/p&gt;
+&lt;p&gt;Since I’ve already removed the effects from SmartNgRX, and there is a slight performance benefit from doing so, I’m not going to revert that change. Especially since it should allow me to use 99% of the same code to implement the Signals version.&lt;/p&gt;
+</content>
+        <category term="angular" />
+        <category term="ngrx" />
+        <category term="ngrx-store" />
+        <category term="ngrx-entity" />
+        <category term="ngrx-effects" />
+        <updated>2024-12-15T16:29:45.000Z</updated>
+    </entry>
+    <entry>
+        <id>http://davembush.github.com/smart-ngrx/</id>
+        <title>smart-ngrx</title>
+        <link rel="alternate" href="http://davembush.github.com/smart-ngrx/"/>
+        <content type="html">&lt;p&gt;Imagine an NgRX world where you almost never knew you were using NgRX. A world where you never had to write a &lt;code&gt;reducer&lt;/code&gt;, &lt;code&gt;action&lt;/code&gt;, or &lt;code&gt;effect&lt;/code&gt;. A world where you never had to call &lt;code&gt;store.dispatch()&lt;/code&gt;. A world where the data you worked automatically persist to the server. A world where the data is retrieved from the server as it is needed and removed from memory when it is not, or never removed if that’s what you want. A world where the data automatically refreshes from the server, or you can use websocket messages to refresh the data and, in either case, the only data that refreshes is the data the code is actively using. A world where optimistic UI is built into the framework.&lt;/p&gt;
+&lt;span id=&#34;more&#34;&gt;&lt;/span&gt;
+
+&lt;p&gt;Introducing &lt;a href=&#34;https://www.npmjs.com/package/@smarttools/smart-ngrx&#34;&gt;SmartNgRX&lt;/a&gt;. A framework I’ve been working on for over a year that does everything I just mentioned and more. It’s a framework that is built on top of NgRX and works with your existing NgRX code.&lt;/p&gt;
+&lt;p&gt;The full documentation is available at &lt;a href=&#34;https://davembush.github.io/SmartNgRX/home&#34;&gt;SmartNgRX Documentation&lt;/a&gt; but let me give you a brief overview of how it works.&lt;/p&gt;
+&lt;h2 id=&#34;Brief-Overview&#34;&gt;&lt;a href=&#34;#Brief-Overview&#34; class=&#34;headerlink&#34; title=&#34;Brief Overview&#34;&gt;&lt;/a&gt;Brief Overview&lt;/h2&gt;&lt;p&gt;First, there are two providers you will need to add to your application. The first is &lt;code&gt;provideSmartNgRX()&lt;/code&gt; which is added to the &lt;code&gt;providers&lt;/code&gt; array in you &lt;code&gt;AppModule&lt;/code&gt;. The second is &lt;code&gt;provideSmartFeatureEntities()&lt;/code&gt; which is added to the module, or route, nearest where you’ll use it.&lt;/p&gt;
+&lt;p&gt;These two providers setup the configuration information that SmartNgRX will need to work. They control things such as how often to refresh the data, when to remove unused data from memory, what service to call to retrieve the data for an NgRX slice looks like and what a placeholder row looks like for a particular slice of data.&lt;/p&gt;
+&lt;p&gt;For you to define the service an the SmartNgRX effect will call, you’ll need to create an EffectService. This service is where you control how the CRUD operations interact with the server. This and the selectors are the only code you’ll need to write.&lt;/p&gt;
+&lt;p&gt;Which brings us to the selectors. Instead of using the &lt;code&gt;createSelector&lt;/code&gt; function from NgRX, you’ll use the &lt;code&gt;createSmartNgRXSelector&lt;/code&gt; function from SmartNgRX. This function defines the relationship between a parent selector and any children it may have. You can use selectors created with createSmartNgRXSelector with selectors created with createSelector and mix and match them as needed.&lt;/p&gt;
+&lt;p&gt;That’s it. All the other code you normally write is handled by SmartNgRX.&lt;/p&gt;
+&lt;p&gt;Give it a try and let me know what you think.&lt;/p&gt;
+</content>
+        <category term="angular" />
+        <category term="ngrx" />
+        <updated>2024-10-29T17:36:27.000Z</updated>
     </entry>
     <entry>
         <id>http://davembush.github.com/what-i-learned-writing-smartngrx/</id>
