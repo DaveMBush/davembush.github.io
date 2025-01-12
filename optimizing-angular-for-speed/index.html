@@ -13,7 +13,7 @@
 <meta property="og:description" content="I was recently asked how I would optimize an Angular site for speed. Interestingly, I’ve never written about this explicitly even though I’ve done a lot of work related to this issue. For the purposes">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-10-14T12:34:41.000Z">
-<meta property="article:modified_time" content="2024-12-19T15:19:36.975Z">
+<meta property="article:modified_time" content="2025-01-12T20:05:03.483Z">
 <meta property="article:author" content="Dave M Bush">
 <meta property="article:tag" content="angular">
 <meta property="article:tag" content="performance">
@@ -113,6 +113,9 @@
 <p>For the purposes of this article, I’m going to assume you have already implemented most of the things that Angular gives you “for free.” For example, we won’t discuss “Tree Shaking” or “AOT.” Those are given.</p>
 <p>Here are my 30 or so tips on how to optimize an Angular application for speed.</p>
 <span id="more"></span>
+<h2 id="Remove-Code"><a href="#Remove-Code" class="headerlink" title="Remove Code"></a>Remove Code</h2><p>Before we get started looking at ways to improve the performance our our application, the first thing we should do is look at ways to eliminate code. The fastest code in the world is the code that doesn’t run. In the case of JavaScript, generally, this also means code that doesn’t load. So, always evaluate if the code you are adding is necessary.</p>
+<p>To that end, you should also evaluate your code for duplicate code. Not just code within the code you write, but code you might be importing from other libraries that are unintentionally duplicating each other. Could you remove a library that is redundant?</p>
+<p>Be ruthless here because the more code you load, the more code the JavaScript engine has to parse, compile, and ultimately try to optimize.</p>
 <h2 id="Change-Detection"><a href="#Change-Detection" class="headerlink" title="Change Detection"></a>Change Detection</h2><h3 id="OnPush-Notification"><a href="#OnPush-Notification" class="headerlink" title="OnPush Notification"></a>OnPush Notification</h3><p>Much has been written about how Angular Change Detection works, so I’m not going to go into much detail about this other than reiterate the basics.</p>
 <p>Without OnPush notification, angular will check the component to see if anything changes whenever an event occurs. This means something as simple as a mouse move will cause change detection evaluation.</p>
 <p>With OnPush, change detection on a component will happen only if one of the component’s properties (field marked with @Input() attribute) has changed or if you’ve explicitly told Angular that a change has occurred.</p>
@@ -217,6 +220,13 @@
 <h3 id="Dynamic-CSS-Classes"><a href="#Dynamic-CSS-Classes" class="headerlink" title="Dynamic CSS Classes"></a>Dynamic CSS Classes</h3><p>There are multiple ways of dynamically adding classes to an element. Each one of them, essentially do the same thing. But worse, they all do them individually. So, if you end up using all three methods in your code, you are going to make at least 3 calls to the DOM to add or remove the class.</p>
 <p>Currently, using <code>ngClass</code> adds and removes each class in it individually. You’d think it would be optimized to add them more efficiently but currently (2023-11-11) they do not.</p>
 <p>I’m hoping this gets fixed by the next major version of Angular.</p>
+<h3 id="Dynamic-Styles"><a href="#Dynamic-Styles" class="headerlink" title="Dynamic Styles"></a>Dynamic Styles</h3><p>You want to avoid adding styles to your elements. Period. This is a performance issue because it deoptimizes the browsers ability to optimize style recalculations. Instead, consider dynamically creating a class and adding the class to the element. If you code it correctly, everything else should be able to use that same class for the same dynamic styling.</p>
+<h3 id="Avoid-The-Universal-Selector"><a href="#Avoid-The-Universal-Selector" class="headerlink" title="Avoid The Universal Selector"></a>Avoid The Universal Selector</h3><p>Adding the universal selector (*) to your CSS, especially to the end of a selector, increases the time to recompute the styles. Just avoid this.</p>
+<h3 id="Avoid-unqualified-pseudo-classes-and-psuedo-elements"><a href="#Avoid-unqualified-pseudo-classes-and-psuedo-elements" class="headerlink" title="Avoid unqualified pseudo-classes and psuedo-elements"></a>Avoid unqualified pseudo-classes and psuedo-elements</h3><p>Doing so is practically the same as saying <code>*::psuedo</code> which has the same performance issues as using the raw universal selector.</p>
+<h3 id="CSS-Classes-always-win"><a href="#CSS-Classes-always-win" class="headerlink" title="CSS Classes always win"></a>CSS Classes always win</h3><p>Related to the styling issue above, all your styling should be done using CSS classes. This is because using classes are practically free compared to other styling methods.</p>
+<p>Related to this, Angular’s method of implementing emulated view encapsulation is to scope the host element to a random element. Attributes are known to be slower than classes with regard to style recalculations.</p>
+<p>There is a patch for this issue that you can apply to your project. It is available <a target="_blank" rel="noopener" href="https://github.com/laurentgoudet/angular-ie11-bug/commit/13896b53fc61c424ff5c6f98c58cc9ccc0f7d502">here</a>. While originally written to address an issue with IE11 in 2019, the problem still exist, to a lesser extent, in modern browsers. That is modern browsers process attributes significantly faster than IE11 did but they are still enough slower that using classes instead of attributes will improve your performance.</p>
+<p>If you want to apply this patch to your project, you can use either <code>pnpm</code>‘s <code>patch</code> command or <code>yarn</code>‘s <code>patch-package</code> command to apply the patch once you’ve made the changes to the code.</p>
 <h3 id="SVG-references-vs-SVG-inlining"><a href="#SVG-references-vs-SVG-inlining" class="headerlink" title="SVG references vs SVG inlining"></a>SVG references vs SVG inlining</h3><p>Another similar, hidden performance issue is the use of SVG Inlining. When you inject an SVG image into the page using inlining, the browser must evaluate the DOM elements. If you inline the same SVG image multiple times, the browser has to evaluate the DOM elements multiple times.</p>
 <p>The cure is to inline the SVG images once, and then, when you need to display the image, you can reference it using the SVG reference mechanism. There are multiple ways you might do this. One is to load them up front using a sprite and inject the sprite into the DOM. Another would be to inject the SVG image into the DOM using JavaScript the first time it is used and then reference it from that point forward.</p>
 <h3 id="Measure-your-CSS"><a href="#Measure-your-CSS" class="headerlink" title="Measure your CSS"></a>Measure your CSS</h3><p>The most overlooked area of performance I know of is measuring CSS. I can’t go into a lot of detail about this here because it would take far too much time to explain (and read about) but there are good articles on the internet that discuss measuring browser performance using flame charts and other mechanisms that are part of your browser’s developer tools.</p>
@@ -415,7 +425,7 @@
   <footer class="blog-footer">
   <div class="container">
     <div id="footer-info" class="inner">
-      &copy; 2024 Dave M Bush<br>
+      &copy; 2025 Dave M Bush<br>
       All opinions are my own and do not reflect any company I have or am currently working at.<br>
       Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
