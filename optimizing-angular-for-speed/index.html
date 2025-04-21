@@ -13,7 +13,7 @@
 <meta property="og:description" content="I was recently asked how I would optimize an Angular site for speed. Interestingly, I’ve never written about this explicitly even though I’ve done a lot of work related to this issue. For the purposes">
 <meta property="og:locale">
 <meta property="article:published_time" content="2025-01-12T13:34:41.000Z">
-<meta property="article:modified_time" content="2025-01-12T20:36:25.810Z">
+<meta property="article:modified_time" content="2025-04-21T14:52:45.109Z">
 <meta property="article:author" content="Dave M Bush">
 <meta property="article:tag" content="angular">
 <meta property="article:tag" content="performance">
@@ -280,6 +280,10 @@
 <p>A Virtual Array is an object that looks like an array from an API perspective, but the implementation uses the database as the storage location. You can either retrieve the data from the database whenever it is requested from the array or memoize it so that it is only retrieved once.</p>
 <h2 id="Memory-Management"><a href="#Memory-Management" class="headerlink" title="Memory Management"></a>Memory Management</h2><p>When most people think of performance, they immediately think of “how to impact the performance of good code.” But the most overlooked performance issue in JavaScript generally is memory. Specifically memory leaks.</p>
 <p>There are now several tools available for detecting and tracking down memory leaks. Find one and use it.</p>
+<h2 id="Flow-Control"><a href="#Flow-Control" class="headerlink" title="Flow Control"></a>Flow Control</h2><p>Now that we have flow control syntax available, you should be using that instead of directives that perform the same function. Flow control skips one of the steps that directives use.</p>
+<p>What is flow control? Using <code>@if(...)</code> instead of *ngIf is one example.</p>
+<h2 id="Signals"><a href="#Signals" class="headerlink" title="Signals"></a>Signals</h2><p>Specifically, use input&#x2F;output signals on your form and use effect()s and computed() instead of ngOnChanges().</p>
+<p>The more signals you use, the better off your performance will be. But input&#x2F;output signals is the place to start.</p>
 <h2 id="Micro-Tweaks"><a href="#Micro-Tweaks" class="headerlink" title="Micro Tweaks"></a>Micro Tweaks</h2><h2 id="Avoid-Iterators"><a href="#Avoid-Iterators" class="headerlink" title="Avoid Iterators"></a>Avoid Iterators</h2><p>As a general rule, using forEach, for&#x2F;of, Array.map, Array.forEach, etc is slower than using for&#x2F;next because all but the for&#x2F;next loop uses the iterator under the hood which has a significant cost. If you know your loop is going to be small, it probably doesn’t matter but if you are iterating over a large array, you should consider using for&#x2F;next instead.</p>
 <p>I’ve created a forNext() function that takes an array and a callback function so that I still enjoy the benefits of forEach without the cost of using the iterator.</p>
 <p>For an extra (micro) performance boost, you should make the callback function a standard, named, function instead of an anonymous or fat arrow function.</p>
