@@ -454,6 +454,18 @@ When most people think of performance, they immediately think of "how to impact 
 
 There are now several tools available for detecting and tracking down memory leaks. Find one and use it.
 
+## Flow Control
+
+Now that we have flow control syntax available, you should be using that instead of directives that perform the same function. Flow control skips one of the steps that directives use.
+
+What is flow control? Using `@if(...)` instead of *ngIf is one example.
+
+## Signals
+
+Specifically, use input/output signals on your form and use effect()s and computed() instead of ngOnChanges().
+
+The more signals you use, the better off your performance will be. But input/output signals is the place to start.
+
 ## Micro Tweaks
 
 ## Avoid Iterators
